@@ -1,0 +1,121 @@
+{
+  "id": 1,
+  "eng": {
+    "packs": [
+      {
+        "id": 2,
+        "name": "kid",
+        "levels": [
+          {
+            "id": 3,
+            "clue": "body parts",
+            "words": [
+              {
+                "chunks": "FI,NG,ER",
+                "word": "FINGER"
+              },
+              {
+                "chunks": "BO,DY",
+                "word": "BODY"
+              },
+              {
+                "chunks": "ST,OM,ACH",
+                "word": "STOMACH"
+              },
+              {
+                "chunks": "FE,ET",
+                "word": "FEET"
+              },
+              {
+                "chunks": "WR,IST",
+                "word": "WRIST"
+              },
+              {
+                "chunks": "HEA,RT",
+                "word": "HEART"
+              },
+              {
+                "chunks": "KN,EE",
+                "word": "KNEE"
+              }
+            ]
+          },
+          {
+            "id": 4,
+            "clue": "trees",
+            "words": [
+              {
+                "chunks": "BAO,BAB",
+                "word": "BAOBAB"
+              },
+              {
+                "chunks": "BO,DY",
+                "word": "BODY"
+              },
+              {
+                "chunks": "ST,OM,ACH",
+                "word": "STOMACH"
+              },
+              {
+                "chunks": "FE,ET",
+                "word": "FEET"
+              },
+              {
+                "chunks": "WR,IST",
+                "word": "WRIST"
+              },
+              {
+                "chunks": "HEA,RT",
+                "word": "HEART"
+              },
+              {
+                "chunks": "RE,DW,OOD",
+                "word": "REDWOOD"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "name": "child",
+        "levels": [
+          {
+            "id": 6,
+            "clue": "animals",
+            "words": [
+              {
+                "chunks": "RA,BB,IT",
+                "word": "RABBIT"
+              },
+              {
+                "chunks": "BO,DY",
+                "word": "BODY"
+              },
+              {
+                "chunks": "ST,OM,ACH",
+                "word": "STOMACH"
+              },
+              {
+                "chunks": "FE,ET",
+                "word": "FEET"
+              },
+              {
+                "chunks": "WR,IST",
+                "word": "WRIST"
+              },
+              {
+                "chunks": "HEA,RT",
+                "word": "HEART"
+              },
+              {
+                "chunks": "KN,EE",
+                "word": "KNEE"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

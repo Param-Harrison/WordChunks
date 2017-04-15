@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">WordChunks</string>
+    <string name="play_button_text">play</string>
+    <string name="daily_button_text">daily puzzle</string>
+    <string name="shop_button_text">shop</string>
+    <string name="settings_hint">settings</string>
+    <string name="title_select_level_pack">select level pack</string>
+    <string name="back_hint">back</string>
+    <string name="title_select_level">select level</string>
+
+</resources>

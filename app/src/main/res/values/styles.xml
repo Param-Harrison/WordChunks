@@ -1,0 +1,53 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="WordChunksAppTheme" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+
+        <!-- Background from: https://www.toptal.com/designers/subtlepatterns/food/ -->
+        <item name="android:windowBackground">@drawable/main_screen_background</item>
+    </style>
+
+    <style name="WordChunksAppTheme.FullScreen">
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <style name="MainButtonStyle">
+        <item name="android:layout_width">250dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:fontFamily">@font/nunitoextrabold</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:paddingStart">15dp</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <style name="PlayButtonStyle" parent="MainButtonStyle">
+        <item name="android:background">@drawable/btn_play_shape</item>
+        <item name="android:drawableStart">@drawable/ic_play_circle_filled_white_24dp</item>
+        <item name="android:text">@string/play_button_text</item>
+        <item name="android:drawableTint">#b7362c</item>
+        <item name="android:textColor">#b7362c</item>
+    </style>
+
+    <style name="DailyButtonStyle" parent="MainButtonStyle">
+        <item name="android:background">@drawable/btn_daily_shape</item>
+        <item name="android:drawableStart">@drawable/ic_extension_white_24dp</item>
+        <item name="android:text">@string/daily_button_text</item>
+        <item name="android:drawableTint">#007448</item>
+        <item name="android:textColor">#007448</item>
+    </style>
+
+    <style name="ShopButtonStyle" parent="MainButtonStyle">
+        <item name="android:background">@drawable/btn_shop_shape</item>
+        <item name="android:drawableStart">@drawable/ic_shopping_cart_white_24dp</item>
+        <item name="android:drawableTint">#29649D</item>
+        <item name="android:text">@string/shop_button_text</item>
+        <item name="android:textColor">#29649D</item>
+    </style>
+
+</resources>

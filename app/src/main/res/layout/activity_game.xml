@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/game_screen_bg"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/back_hint"
+            android:onClick="onBackArrowClick"
+            android:src="@drawable/ic_keyboard_arrow_left_white_48dp" />
+
+        <TextView
+            android:id="@+id/level_clue"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/nunitoextrabold"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#30000000"
+        android:fontFamily="@font/nunitoblackitalic"
+        android:text="Solutions"
+        android:textAlignment="center"
+        android:textColor="#dbbbd0"
+        android:textSize="16sp" />
+
+
+    <ListView
+        android:id="@+id/words_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff" />
+
+    <GridView
+        android:id="@+id/chunks_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="4" />
+
+</LinearLayout>
