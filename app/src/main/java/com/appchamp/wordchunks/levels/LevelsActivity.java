@@ -1,4 +1,4 @@
-package com.appchamp.wordchunks.ui;
+package com.appchamp.wordchunks.levels;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,10 +11,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.appchamp.wordchunks.R;
+import com.appchamp.wordchunks.game.GameActivity;
 import com.appchamp.wordchunks.models.Level;
 import com.appchamp.wordchunks.models.Pack;
-import com.appchamp.wordchunks.ui.adapters.LevelAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
@@ -23,16 +24,15 @@ import io.realm.RealmConfiguration;
 
 public class LevelsActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    private ListView mListView;
+    private ListView listView;
 
-    private LevelAdapter mAdapter;
+    private LevelsAdapter adapter;
 
     private Realm realm;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_levels);
 
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
@@ -42,37 +42,33 @@ public class LevelsActivity extends AppCompatActivity implements AdapterView.OnI
         long packId = intent.getLongExtra("PACK_ID", -1);
 
         if (packId != -1) {
-            if (mAdapter == null) {
-                Pack pack = realm.where(Pack.class).equalTo("id", packId).findFirst();
 
-                List<Level> levels = pack.getLevels();
+            adapter = new LevelsAdapter(new ArrayList<>(0));
 
-                //This is the GridView adapter
-                mAdapter = new LevelAdapter(this);
-                mAdapter.setData(levels);
+            Pack pack = realm.where(Pack.class).equalTo("id", packId).findFirst();
 
-                //This is the GridView which will display the list of cities
-                mListView = (ListView) findViewById(R.id.levels_list);
-                mListView.setAdapter(mAdapter);
-                mListView.setOnItemClickListener(LevelsActivity.this);
-                mAdapter.notifyDataSetChanged();
-                mListView.invalidate();
-            }
+            List<Level> levels = pack.getLevels();
+
+            adapter.replaceLevels(levels);
+
+            listView = (ListView) findViewById(R.id.levels_list);
+            listView.setAdapter(adapter);
+            listView.setOnItemClickListener(LevelsActivity.this);
         }
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Level clickedLevel = (Level) mAdapter.getItem(position);
-        Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra("LEVEL_ID", clickedLevel.getId());
-        startActivity(intent);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         realm.close(); // Remember to close Realm when done.
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Level clickedLevel = (Level) adapter.getItem(position);
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("LEVEL_ID", clickedLevel.getId());
+        startActivity(intent);
     }
 
     public void onBackArrowClick(View v) {

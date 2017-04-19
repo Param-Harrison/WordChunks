@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:gravity="center"
-              android:orientation="horizontal">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#595959"
+    android:gravity="center"
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/chunk"
+        android:fontFamily="@font/nunitobold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:textColor="#ffffff"/>
+        android:textColor="#ffffff"
+        tools:text="RER" />
 
-</LinearLayout>
+</RelativeLayout>

@@ -15,24 +15,24 @@
                 "word": "FINGER"
               },
               {
-                "chunks": "BO,DY",
-                "word": "BODY"
+                "chunks": "BO,DY,AA",
+                "word": "BODYAA"
               },
               {
                 "chunks": "ST,OM,ACH",
                 "word": "STOMACH"
               },
               {
-                "chunks": "FE,ET",
-                "word": "FEET"
+                "chunks": "FE,ET,EE",
+                "word": "FEETEE"
               },
               {
-                "chunks": "WR,IST",
-                "word": "WRIST"
+                "chunks": "WR,IST,KK",
+                "word": "WRISTKK"
               },
               {
-                "chunks": "HEA,RT",
-                "word": "HEART"
+                "chunks": "HEA,RT,LL",
+                "word": "HEARTLL"
               },
               {
                 "chunks": "KN,EE",

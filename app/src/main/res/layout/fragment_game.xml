@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?android:attr/actionBarSize">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/back_hint"
+            android:onClick="onBackArrowClick"
+            android:src="@drawable/ic_keyboard_arrow_left_white_48dp" />
+
+        <TextView
+            android:id="@+id/level_clue"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/nunitoextrabold"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            tools:text="body parts" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#30000000"
+        android:fontFamily="@font/nunitoblackitalic"
+        android:text="Solutions"
+        android:textAlignment="center"
+        android:textColor="#b7362c"
+        android:textSize="16sp" />
+
+    <GridView
+        android:id="@+id/words_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="#ffffff"
+        android:numColumns="2"
+        tools:layout_height="150dp"
+        tools:listitem="@layout/word_griditem" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
+
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="#ffffff"
+
+            android:paddingStart="10dp">
+
+            <TextView
+                android:id="@+id/inputFormTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/nunitobold"
+                android:gravity="center_vertical"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                tools:text="SOMEWORD" />
+
+            <ImageView
+                android:id="@+id/clear_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center_vertical"
+                android:background="#b7362c"
+                android:paddingEnd="7dp"
+                android:paddingStart="7dp"
+                android:src="@drawable/ic_cancel_white_24dp" />
+
+        </RelativeLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="send"
+            android:textAllCaps="false" />
+
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/chunks_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center"
+        android:horizontalSpacing="5dp"
+        android:numColumns="4"
+        android:verticalSpacing="5dp"
+        tools:layout_height="150dp"
+        tools:listitem="@layout/chunk_griditem" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="hint"
+        android:textAllCaps="false" />
+
+</LinearLayout>

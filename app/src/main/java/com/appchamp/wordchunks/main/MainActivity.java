@@ -1,4 +1,4 @@
-package com.appchamp.wordchunks.ui;
+package com.appchamp.wordchunks.main;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,9 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 
 import com.appchamp.wordchunks.R;
 import com.appchamp.wordchunks.models.Unscramble;
+import com.appchamp.wordchunks.packs.PacksActivity;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import java.io.IOException;
@@ -19,11 +21,16 @@ import java.io.InputStream;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import xyz.hanks.library.SmallBang;
 
 
 public class MainActivity extends AppCompatActivity {
 
     private SlidingMenu menu;
+
+    private SmallBang smallBang;
+
+    private ImageView kittyView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +41,15 @@ public class MainActivity extends AppCompatActivity {
         initLeftMenu();
 
         initRealm();
+
+        smallBang = SmallBang.attach2Window(this);
+        kittyView = (ImageView) findViewById(R.id.kitty_img);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                kittyView.callOnClick();
+//            }
+//        }, 200);
     }
 
     @Override
@@ -42,8 +58,11 @@ public class MainActivity extends AppCompatActivity {
             menu.showContent(true);
             return;
         }
-
         super.onBackPressed();
+    }
+
+    public void onKittyClick(View view) {
+//        smallBang.bang(view);
     }
 
     public void onPlayClick(View v) {
@@ -79,16 +98,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initRealm() {
-
         RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
 
         SharedPreferences sharedPreferences =
                 PreferenceManager.getDefaultSharedPreferences(this);
-        // Load from file "initial.json" first time
+        // Load from file "data.json" first time
         if (sharedPreferences.getBoolean("FIRST", true)) {
             InputStream stream;
             try {
-                stream = getAssets().open("initial.json");
+                stream = getAssets().open("data.json");
             } catch (IOException e) {
                 return;
             }
@@ -105,5 +123,4 @@ public class MainActivity extends AppCompatActivity {
             sharedPreferences.edit().putBoolean("FIRST", false).apply();
         }
     }
-
 }

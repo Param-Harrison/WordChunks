@@ -11,7 +11,7 @@
         android:theme="@style/WordChunksAppTheme.FullScreen">
 
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".main.MainActivity"
             android:configChanges="keyboard|screenSize|orientation"
             android:label="@string/app_name">
             <intent-filter>
@@ -20,11 +20,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.PacksActivity"/>
+        <activity android:name=".packs.PacksActivity"/>
 
-        <activity android:name=".ui.LevelsActivity"/>
+        <activity android:name=".levels.LevelsActivity"/>
 
-        <activity android:name=".ui.GameActivity"/>
+        <activity android:name=".game.GameActivity"/>
 
     </application>
 

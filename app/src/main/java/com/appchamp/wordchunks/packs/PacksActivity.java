@@ -1,4 +1,4 @@
-package com.appchamp.wordchunks.ui;
+package com.appchamp.wordchunks.packs;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +10,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.appchamp.wordchunks.R;
+import com.appchamp.wordchunks.levels.LevelsActivity;
 import com.appchamp.wordchunks.models.Pack;
-import com.appchamp.wordchunks.ui.adapters.PackAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
@@ -21,9 +22,9 @@ import io.realm.RealmConfiguration;
 
 public class PacksActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    private ListView mListView;
+    private ListView listView;
 
-    private PackAdapter mAdapter;
+    private PacksAdapter adapter;
 
     private Realm realm;
 
@@ -32,23 +33,18 @@ public class PacksActivity extends AppCompatActivity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_packs);
 
-        if (mAdapter == null) {
+        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
+        realm = Realm.getInstance(realmConfiguration);
 
-            RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
-            realm = Realm.getInstance(realmConfiguration);
-            List<Pack> packs = realm.where(Pack.class).findAll();
+        adapter = new PacksAdapter(new ArrayList<>(0));
 
-            //This is the GridView adapter
-            mAdapter = new PackAdapter(this);
-            mAdapter.setData(packs);
+        List<Pack> packs = realm.where(Pack.class).findAll();
 
-            //This is the GridView which will display the list of cities
-            mListView = (ListView) findViewById(R.id.packs_list);
-            mListView.setAdapter(mAdapter);
-            mListView.setOnItemClickListener(PacksActivity.this);
-            mAdapter.notifyDataSetChanged();
-            mListView.invalidate();
-        }
+        adapter.replacePacks(packs);
+
+        listView = (ListView) findViewById(R.id.packs_list);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(PacksActivity.this);
     }
 
     @Override
@@ -59,7 +55,7 @@ public class PacksActivity extends AppCompatActivity implements AdapterView.OnIt
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Pack clickedPack = (Pack) mAdapter.getItem(position);
+        Pack clickedPack = (Pack) adapter.getItem(position);
         Intent intent = new Intent(this, LevelsActivity.class);
         intent.putExtra("PACK_ID", clickedPack.getId());
         startActivity(intent);

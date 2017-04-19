@@ -10,6 +10,7 @@
     <color name="icons">#212121</color>
     <color name="divider">#455767</color>
     <color name="divider2">#526271</color>
+    <color name="background_grid">#d1d2ff</color>
 
     <color name="white">#ffffff</color>
     <color name="white_15_percent">#26ffffff</color>

@@ -20,11 +20,13 @@
     http://randomrobskii.deviantart.com/art/Kitty-Cat-408720148
     -->
     <ImageView
+        android:id="@+id/kitty_img"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_weight="2"
         android:adjustViewBounds="true"
         android:contentDescription="@string/app_name"
+        android:onClick="onKittyClick"
         android:src="@drawable/cat" />
 
     <TextView
