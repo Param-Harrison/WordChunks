@@ -1,52 +1,48 @@
 package com.appchamp.wordchunks.game;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.appchamp.wordchunks.R;
-import com.appchamp.wordchunks.models.Level;
-import com.appchamp.wordchunks.models.Word;
+import com.appchamp.wordchunks.models.realm.Chunk;
+import com.appchamp.wordchunks.models.realm.Level;
+import com.appchamp.wordchunks.models.realm.Word;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static com.appchamp.wordchunks.util.Constants.CHUNKS_GRID_NUM;
+import static com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID;
+import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_NAME_ID;
+import static com.appchamp.wordchunks.util.Constants.WORDS_GRID_NUM;
 
 
 public class GameFragment extends Fragment implements GameContract.View {
 
-    private GameContract.Presenter mPresenter;
-
-    private WordsAdapter wordsAdapter;
-
-    private ChunksAdapter chunksAdapter;
-
-    private GridView wordsGridView;
-
-    private GridView chunksGridView;
-
     private Realm realm;
 
-    private long levelId;
+    private GameContract.Presenter presenter;
 
-    private TextView levelClueTitleTextView;
+    private WordsAdapter wordsAdapter;
+    private ChunksAdapter chunksAdapter;
 
-    private TextView inputFormTextView;
+    private RecyclerView rvWords;
+    private RecyclerView rvChunks;
+    private TextView tvLevelClueTitle;
+    private TextView tvInputChunks;
+    private ImageView imgClearIcon;
 
-    private ImageView clearIcon;
+    private List<Chunk> inputChunksList;
 
     public GameFragment() {
         // Requires empty public constructor
@@ -57,15 +53,8 @@ public class GameFragment extends Fragment implements GameContract.View {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        wordsAdapter = new WordsAdapter(new ArrayList<>(0));
-        chunksAdapter = new ChunksAdapter(new ArrayList<>(0));
-    }
-
-    @Override
-    public void setPresenter(GameContract.Presenter presenter) {
-        mPresenter = checkNotNull(presenter, "presenter cannot be null");
+    public void setPresenter(@NonNull GameContract.Presenter presenter) {
+        this.presenter = presenter;
     }
 
     @Nullable
@@ -74,24 +63,17 @@ public class GameFragment extends Fragment implements GameContract.View {
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_game, container, false);
 
-        levelId = getArguments().getLong("LEVEL_ID");
+        tvLevelClueTitle = (TextView) root.findViewById(R.id.tvLevelClueTitle);
+        rvWords = (RecyclerView) root.findViewById(R.id.rvWords);
+        rvChunks = (RecyclerView) root.findViewById(R.id.rvChunks);
+        tvInputChunks = (TextView) root.findViewById(R.id.tvInputChunks);
+        imgClearIcon = (ImageView) root.findViewById(R.id.imgClearIcon);
 
-        levelClueTitleTextView = root.findViewById(R.id.level_clue);
-
-        wordsGridView = root.findViewById(R.id.words_grid);
-        wordsGridView.setAdapter(wordsAdapter);
-
-        inputFormTextView = root.findViewById(R.id.inputFormTextView);
-        clearIcon = root.findViewById(R.id.clear_icon);
-
-        chunksGridView = root.findViewById(R.id.chunks_grid);
-        chunksGridView.setAdapter(chunksAdapter);
-
-        clearIcon.setOnClickListener(v -> {
-            Animation animFadeIn = AnimationUtils.loadAnimation(getContext(), R.anim.fade_in);
-            v.startAnimation(animFadeIn);
-        });
-
+//        imgClearIcon.setOnClickListener(v -> {
+//            AnimUtils.startAnimationFadeIn(getContext(), v);
+//            //inputChunksList = "";
+//            //tvInputChunks.setText(inputChunksList);
+//        });
         return root;
     }
 
@@ -99,48 +81,46 @@ public class GameFragment extends Fragment implements GameContract.View {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
-        realm = Realm.getInstance(realmConfiguration);
+        realm = Realm.getDefaultInstance();
 
-        if (levelId != -1) {
-            Level level = realm.where(Level.class).equalTo("id", levelId).findFirst();
+        String levelId = getArguments().getString(EXTRA_LEVEL_ID);
+        Level level = realm.where(Level.class).equalTo(REALM_FIELD_NAME_ID, levelId).findFirst();
 
-            levelClueTitleTextView.setText(level.getClue());
+        tvLevelClueTitle.setText(level.getClue());
 
-            List<Word> words = level.getWords();
+        List<Word> words = level.getWords();
+        wordsAdapter = new WordsAdapter(words);
+        rvWords.setAdapter(wordsAdapter);
+        rvWords.setLayoutManager(new GridLayoutManager(getActivity(), WORDS_GRID_NUM));
 
-            showWordsGrid(words);
+        List<Chunk> chunks = level.getChunks();
+        chunksAdapter = new ChunksAdapter(chunks);
+        rvChunks.setAdapter(chunksAdapter);
+        rvChunks.setLayoutManager(new GridLayoutManager(getActivity(), CHUNKS_GRID_NUM));
 
-            List<String> chunks = new ArrayList<>(0);
-            for (int i = 0; i < words.size(); i++) {
-                Collections.addAll(chunks, words.get(i).getChunks().split(","));
-            }
-
-            showChunksGrid(chunks);
-        }
+        chunksAdapter.setOnItemClickListener((itemView, position) -> {
+            realm.executeTransaction(bgRealm -> {
+                if (chunks.get(position).getState() == 0) {
+                    chunks.get(position).setState(1);
+                }
+//                else if (chunks.get(position).getState() == 1) {
+//                    chunks.get(position).setState(2);
+//                }
+                chunksAdapter.notifyDataSetChanged();
+            });
+        });
 
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.start();
+        presenter.start();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        realm.close();
+        realm.close(); // Remember to close Realm when done.
     }
-
-    @Override
-    public void showWordsGrid(List<Word> words) {
-        wordsAdapter.replaceWords(words);
-    }
-
-    @Override
-    public void showChunksGrid(List<String> chunks) {
-        chunksAdapter.replaceChunks(chunks);
-    }
-
 }

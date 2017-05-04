@@ -4,27 +4,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.appchamp.wordchunks.R;
 import com.appchamp.wordchunks.game.GameActivity;
-import com.appchamp.wordchunks.models.Level;
-import com.appchamp.wordchunks.models.Pack;
+import com.appchamp.wordchunks.models.realm.Level;
+import com.appchamp.wordchunks.models.realm.Pack;
+import com.appchamp.wordchunks.packs.PacksActivity;
+import com.appchamp.wordchunks.util.AnimUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+
+import static com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID;
+import static com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID;
+import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_NAME_ID;
 
 
-public class LevelsActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-
-    private ListView listView;
+public class LevelsActivity extends AppCompatActivity {
 
     private LevelsAdapter adapter;
 
@@ -35,26 +36,41 @@ public class LevelsActivity extends AppCompatActivity implements AdapterView.OnI
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_levels);
 
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
-        realm = Realm.getInstance(realmConfiguration);
+        RecyclerView rvLevels = (RecyclerView) findViewById(R.id.rvLevels);
 
-        Intent intent = getIntent();
-        long packId = intent.getLongExtra("PACK_ID", -1);
+        // Passing packs via ids
+        if (getIntent() != null) {
+            String packId = getIntent().getStringExtra(EXTRA_PACK_ID);
+            if (packId != null) {
 
-        if (packId != -1) {
+                realm = Realm.getDefaultInstance();
+                Pack pack = realm.where(Pack.class)
+                        .equalTo(REALM_FIELD_NAME_ID, packId)
+                        .findFirst();
 
-            adapter = new LevelsAdapter(new ArrayList<>(0));
+                List<Level> levels = pack.getLevels();
+                adapter = new LevelsAdapter(levels);
+                rvLevels.setAdapter(adapter);
+                rvLevels.setLayoutManager(new LinearLayoutManager(LevelsActivity.this));
 
-            Pack pack = realm.where(Pack.class).equalTo("id", packId).findFirst();
-
-            List<Level> levels = pack.getLevels();
-
-            adapter.replaceLevels(levels);
-
-            listView = (ListView) findViewById(R.id.levels_list);
-            listView.setAdapter(adapter);
-            listView.setOnItemClickListener(LevelsActivity.this);
+                adapter.setOnItemClickListener((view, position) -> {
+                    Level clickedLevel = adapter.getItem(position);
+                    startGameActivity(clickedLevel);
+                });
+            }
         }
+        OverScrollDecoratorHelper.setUpOverScroll(
+                rvLevels, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
+
+    }
+
+
+    private void startGameActivity(Level level) {
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra(EXTRA_LEVEL_ID, level.getId());
+        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
 
     @Override
@@ -63,17 +79,30 @@ public class LevelsActivity extends AppCompatActivity implements AdapterView.OnI
         realm.close(); // Remember to close Realm when done.
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Level clickedLevel = (Level) adapter.getItem(position);
-        Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra("LEVEL_ID", clickedLevel.getId());
-        startActivity(intent);
-    }
-
     public void onBackArrowClick(View v) {
         super.onBackPressed();
-        Animation animFadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-        v.startAnimation(animFadeIn);
+        AnimUtils.startAnimationFadeIn(LevelsActivity.this, v);
+        startPacksActivity();
+    }
+
+    private void startPacksActivity() {
+        Intent intent = new Intent(LevelsActivity.this, PacksActivity.class);
+        realm.executeTransaction(bgRealm -> {
+            Pack pack = bgRealm.where(Pack.class)
+                    .equalTo("state", 1)
+                    .findFirst();
+            String packId = pack.getId();
+            intent.putExtra(EXTRA_PACK_ID, packId);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
+            overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+        });
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startPacksActivity();
     }
 }

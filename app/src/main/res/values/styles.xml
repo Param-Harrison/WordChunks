@@ -19,7 +19,7 @@
         <item name="android:layout_width">250dp</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:layout_marginBottom">10dp</item>
-        <item name="android:fontFamily">@font/nunitoextrabold</item>
+        <item name="fontPath">fonts/nunitoextrabold.ttf</item>
         <item name="android:paddingEnd">20dp</item>
         <item name="android:paddingStart">15dp</item>
         <item name="android:textAllCaps">false</item>

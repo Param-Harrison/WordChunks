@@ -12,8 +12,12 @@
     <color name="divider2">#526271</color>
     <color name="background_grid">#d1d2ff</color>
 
+    <!-- Chunk -->
     <color name="white">#ffffff</color>
     <color name="white_15_percent">#26ffffff</color>
     <color name="white_30_percent">#4Dffffff</color>
+
+
+
 
 </resources>

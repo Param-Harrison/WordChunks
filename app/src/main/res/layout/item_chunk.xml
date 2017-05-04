@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rlChunk"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#595959"
+    android:background="#ffffff"
     android:gravity="center"
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/chunk"
-        android:fontFamily="@font/nunitobold"
+        android:id="@+id/tvChunk"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:textColor="#ffffff"
+        android:textColor="#353535"
         tools:text="RER" />
 
 </RelativeLayout>

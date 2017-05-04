@@ -17,10 +17,10 @@
             android:src="@drawable/ic_keyboard_arrow_left_white_48dp" />
 
         <TextView
-            android:id="@+id/level_clue"
+            android:id="@+id/tvLevelClueTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fontFamily="@font/nunitoextrabold"
+
             android:gravity="center"
             android:textColor="#ffffff"
             android:textSize="20sp"
@@ -28,25 +28,14 @@
 
     </RelativeLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#30000000"
-        android:fontFamily="@font/nunitoblackitalic"
-        android:text="Solutions"
-        android:textAlignment="center"
-        android:textColor="#b7362c"
-        android:textSize="16sp" />
-
-    <GridView
-        android:id="@+id/words_grid"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvWords"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:background="#ffffff"
-        android:numColumns="2"
         tools:layout_height="150dp"
-        tools:listitem="@layout/word_griditem" />
+        tools:listitem="@layout/item_word" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -55,33 +44,32 @@
         android:paddingEnd="10dp"
         android:paddingStart="10dp">
 
-
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:background="#ffffff"
-
             android:paddingStart="10dp">
 
             <TextView
-                android:id="@+id/inputFormTextView"
+                android:id="@+id/tvInputChunks"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:fontFamily="@font/nunitobold"
+
                 android:gravity="center_vertical"
+                android:maxLength="13"
                 android:textColor="#000000"
                 android:textSize="18sp"
                 tools:text="SOMEWORD" />
 
             <ImageView
-                android:id="@+id/clear_icon"
+                android:id="@+id/imgClearIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="center_vertical"
-                android:background="#b7362c"
+                android:background="#cccccc"
                 android:paddingEnd="7dp"
                 android:paddingStart="7dp"
                 android:src="@drawable/ic_cancel_white_24dp" />
@@ -97,17 +85,16 @@
 
     </LinearLayout>
 
-    <GridView
-        android:id="@+id/chunks_grid"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvChunks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:gravity="center"
         android:horizontalSpacing="5dp"
-        android:numColumns="4"
         android:verticalSpacing="5dp"
         tools:layout_height="150dp"
-        tools:listitem="@layout/chunk_griditem" />
+        tools:listitem="@layout/item_chunk" />
 
     <Button
         android:layout_width="wrap_content"

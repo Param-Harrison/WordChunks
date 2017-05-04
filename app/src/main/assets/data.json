@@ -1,121 +1,37 @@
-{
-  "id": 1,
-  "eng": {
-    "packs": [
+[
+  {
+    "title": "pack1",
+    "levels": [
       {
-        "id": 2,
-        "name": "kid",
-        "levels": [
-          {
-            "id": 3,
-            "clue": "body parts",
-            "words": [
-              {
-                "chunks": "FI,NG,ER",
-                "word": "FINGER"
-              },
-              {
-                "chunks": "BO,DY,AA",
-                "word": "BODYAA"
-              },
-              {
-                "chunks": "ST,OM,ACH",
-                "word": "STOMACH"
-              },
-              {
-                "chunks": "FE,ET,EE",
-                "word": "FEETEE"
-              },
-              {
-                "chunks": "WR,IST,KK",
-                "word": "WRISTKK"
-              },
-              {
-                "chunks": "HEA,RT,LL",
-                "word": "HEARTLL"
-              },
-              {
-                "chunks": "KN,EE",
-                "word": "KNEE"
-              }
-            ]
-          },
-          {
-            "id": 4,
-            "clue": "trees",
-            "words": [
-              {
-                "chunks": "BAO,BAB",
-                "word": "BAOBAB"
-              },
-              {
-                "chunks": "BO,DY",
-                "word": "BODY"
-              },
-              {
-                "chunks": "ST,OM,ACH",
-                "word": "STOMACH"
-              },
-              {
-                "chunks": "FE,ET",
-                "word": "FEET"
-              },
-              {
-                "chunks": "WR,IST",
-                "word": "WRIST"
-              },
-              {
-                "chunks": "HEA,RT",
-                "word": "HEART"
-              },
-              {
-                "chunks": "RE,DW,OOD",
-                "word": "REDWOOD"
-              }
-            ]
-          }
-        ]
+        "clue": "body parts",
+        "words": "FO,RE,HE,AD BR,EA,ST EY,EB,ROW ST,OM,ACH SH,OU,LD,ER FI,NG,ERS"
       },
       {
-        "id": 5,
-        "name": "child",
-        "levels": [
-          {
-            "id": 6,
-            "clue": "animals",
-            "words": [
-              {
-                "chunks": "RA,BB,IT",
-                "word": "RABBIT"
-              },
-              {
-                "chunks": "BO,DY",
-                "word": "BODY"
-              },
-              {
-                "chunks": "ST,OM,ACH",
-                "word": "STOMACH"
-              },
-              {
-                "chunks": "FE,ET",
-                "word": "FEET"
-              },
-              {
-                "chunks": "WR,IST",
-                "word": "WRIST"
-              },
-              {
-                "chunks": "HEA,RT",
-                "word": "HEART"
-              },
-              {
-                "chunks": "KN,EE",
-                "word": "KNEE"
-              }
-            ]
-          }
-        ]
+        "clue": "people",
+        "words": "FO,RE,HE,AD BR,EA,ST EY,EB,ROW ST,OM,ACH SH,OU,LD,ER FI,NG,ERS"
+      },
+      {
+        "clue": "people",
+        "words": "FO,RE,HE,AD BR,EA,ST EY,EB,ROW ST,OM,ACH SH,OU,LD,ER FI,NG,ERS"
+      }
+    ]
+  },
+  {
+    "title": "pack2",
+    "levels": [
+      {
+        "clue": "animals",
+        "words": "FO,RE,HE,AD BR,EA,ST EY,EB,ROW ST,OM,ACH SH,OU,LD,ER FI,NG,ERS"
+      }
+    ]
+  },
+  {
+    "title": "pack3",
+    "levels": [
+      {
+        "clue": "people",
+        "words": "FO,RE,HE,AD BR,EA,ST EY,EB,ROW ST,OM,ACH SH,OU,LD,ER FI,NG,ERS"
       }
     ]
   }
-}
+]

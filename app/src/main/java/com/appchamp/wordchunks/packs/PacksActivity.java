@@ -3,28 +3,24 @@ package com.appchamp.wordchunks.packs;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.ListView;
 
 import com.appchamp.wordchunks.R;
 import com.appchamp.wordchunks.levels.LevelsActivity;
-import com.appchamp.wordchunks.models.Pack;
+import com.appchamp.wordchunks.models.realm.Pack;
+import com.appchamp.wordchunks.util.AnimUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
+import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
+
+import static com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID;
 
 
-public class PacksActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-
-    private ListView listView;
-
-    private PacksAdapter adapter;
+public class PacksActivity extends AppCompatActivity {
 
     private Realm realm;
 
@@ -33,18 +29,46 @@ public class PacksActivity extends AppCompatActivity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_packs);
 
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
-        realm = Realm.getInstance(realmConfiguration);
+        RecyclerView rvPacks = (RecyclerView) findViewById(R.id.rvPacks);
 
-        adapter = new PacksAdapter(new ArrayList<>(0));
+        realm = Realm.getDefaultInstance();
 
+        // This is the RecyclerView adapter which will display the list of packs
         List<Pack> packs = realm.where(Pack.class).findAll();
 
-        adapter.replacePacks(packs);
+        PacksAdapter adapter = new PacksAdapter(packs);
 
-        listView = (ListView) findViewById(R.id.packs_list);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(PacksActivity.this);
+        rvPacks.setAdapter(adapter);
+        rvPacks.setLayoutManager(new LinearLayoutManager(this));
+
+        adapter.setOnItemClickListener((view, position) -> {
+            Pack clickedPack = adapter.getItem(position);
+            startLevelsActivity(clickedPack);
+        });
+
+        OverScrollDecoratorHelper.setUpOverScroll(
+                rvPacks, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
+    }
+
+    private void startLevelsActivity(Pack pack) {
+        Intent intent = new Intent(this, LevelsActivity.class);
+        intent.putExtra(EXTRA_PACK_ID, pack.getId());
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+    }
+
+    public void onBackArrowClick(View v) {
+        super.onBackPressed();
+        AnimUtils.startAnimationFadeIn(PacksActivity.this, v);
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
 
     @Override
@@ -53,17 +77,4 @@ public class PacksActivity extends AppCompatActivity implements AdapterView.OnIt
         realm.close(); // Remember to close Realm when done.
     }
 
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Pack clickedPack = (Pack) adapter.getItem(position);
-        Intent intent = new Intent(this, LevelsActivity.class);
-        intent.putExtra("PACK_ID", clickedPack.getId());
-        startActivity(intent);
-    }
-
-    public void onBackArrowClick(View v) {
-        super.onBackPressed();
-        Animation animFadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
-        v.startAnimation(animFadeIn);
-    }
 }

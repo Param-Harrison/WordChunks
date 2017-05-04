@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/pack_layout"
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:background="@drawable/btn_pack_shape"
@@ -8,12 +9,11 @@
     android:paddingStart="10dp">
 
     <TextView
-        android:id="@+id/level_number"
+        android:id="@+id/pack_number"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_centerVertical="true"
         android:background="@drawable/bg_pack_circle"
-        android:fontFamily="@font/nunitoregular"
         android:gravity="center"
         android:textColor="#ffffff"
         android:textSize="20sp"
@@ -27,22 +27,20 @@
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/pack_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nunitoextrabold"
             android:textColor="#59569e"
             android:textSize="20sp"
-            android:text="level 2"
-            tools:text="level 1" />
+            tools:text="pack name" />
 
         <TextView
-            android:id="@+id/level_clue"
+            android:id="@+id/number_of_levels"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nunitoregular"
             android:textColor="#59569e"
             android:textSize="16sp"
-            tools:text="animals" />
+            tools:text="5 levels" />
 
     </LinearLayout>
 

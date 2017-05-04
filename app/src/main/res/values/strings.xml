@@ -11,5 +11,6 @@
     <string name="title_select_level">select level</string>
     <string name="number_of_letters">%d letters</string>
     <string name="number_of_levels">%d levels</string>
+    <string name="level_num">level %d</string>
 
 </resources>

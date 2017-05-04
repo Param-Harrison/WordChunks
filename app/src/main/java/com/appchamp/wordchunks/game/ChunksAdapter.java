@@ -1,42 +1,89 @@
 package com.appchamp.wordchunks.game;
 
+import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.appchamp.wordchunks.R;
+import com.appchamp.wordchunks.models.realm.Chunk;
 
 import java.util.List;
 
-import static com.squareup.haha.guava.base.Joiner.checkNotNull;
 
+public class ChunksAdapter extends RecyclerView.Adapter<ChunksAdapter.ViewHolder> {
 
-public class ChunksAdapter extends BaseAdapter {
+    private List<Chunk> chunks;
+    private ChunksAdapter.OnItemClickListener listener;
 
-    private List<String> chunks;
-
-    public ChunksAdapter(List<String> chunks) {
+    ChunksAdapter(List<Chunk> chunks) {
         setChunks(chunks);
     }
 
-    public void replaceChunks(List<String> chunks) {
+    public void updateChunks(List<Chunk> chunks) {
         setChunks(chunks);
         notifyDataSetChanged();
     }
 
-    private void setChunks(List<String> chunks) {
-        this.chunks = checkNotNull(chunks);
+    private void setChunks(List<Chunk> chunks) {
+        if (chunks != null) {
+            this.chunks = chunks;
+        } else {
+            Log.e("ChunksAdapter", "chunks cannot be null");
+        }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View itemView, int position);
+    }
+
+    public void setOnItemClickListener(ChunksAdapter.OnItemClickListener listener) {
+        this.listener = listener;
     }
 
     @Override
-    public int getCount() {
+    public ChunksAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+
+        View levelView = inflater.inflate(R.layout.item_chunk, parent, false);
+
+        return new ChunksAdapter.ViewHolder(levelView);
+    }
+
+    @Override
+    public void onBindViewHolder(ChunksAdapter.ViewHolder holder, int i) {
+        final Chunk chunk = getItem(i);
+        final int chunkState = chunk.getState();
+
+        // normal state, not clicked yet
+        if (chunkState == 0) {
+            holder.rlChunk.setBackgroundColor(
+                    holder.itemView.getResources().getColor(R.color.white));
+        }
+        // clicked state
+        else if (chunkState == 1) {
+            holder.rlChunk.setBackgroundColor(
+                    holder.itemView.getResources().getColor(R.color.white_30_percent));
+        }
+        // invisible state
+//        else if (chunkState == 2) {
+//            holder.itemView.setVisibility(View.INVISIBLE);
+//        }
+
+        holder.tvChunk.setText(chunk.getChunk());
+    }
+
+    @Override
+    public int getItemCount() {
         return chunks.size();
     }
 
-    @Override
-    public String getItem(int i) {
+    private Chunk getItem(int i) {
         return chunks.get(i);
     }
 
@@ -45,19 +92,27 @@ public class ChunksAdapter extends BaseAdapter {
         return i;
     }
 
-    @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        View rowView = view;
-        if (rowView == null) {
-            LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-            rowView = inflater.inflate(R.layout.chunk_griditem, viewGroup, false);
+    class ViewHolder extends RecyclerView.ViewHolder {
+
+        RelativeLayout rlChunk;
+        TextView tvChunk;
+
+        ViewHolder(View itemView) {
+            super(itemView);
+
+            rlChunk = (RelativeLayout) itemView.findViewById(R.id.rlChunk);
+            tvChunk = (TextView) itemView.findViewById(R.id.tvChunk);
+
+            // Setup the click listener
+            itemView.setOnClickListener(v -> {
+                // Triggers click upwards to the adapter on click
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(itemView, position);
+                    }
+                }
+            });
         }
-
-        final String chunk = getItem(i);
-
-        TextView chunkTextView = rowView.findViewById(R.id.chunk);
-        chunkTextView.setText(chunk);
-
-        return rowView;
     }
 }

@@ -2,7 +2,6 @@ package com.appchamp.wordchunks.game;
 
 import android.support.annotation.NonNull;
 
-import static com.google.common.base.Preconditions.checkNotNull;
 
 
 /**
@@ -15,8 +14,8 @@ public class GamePresenter implements GameContract.Presenter {
 
 
     public GamePresenter(@NonNull GameContract.View gameView) {
-        this.gameView = checkNotNull(gameView, "gameView cannot be null!");
-
+        //this.gameView = checkNotNull(gameView, "gameView cannot be null!");
+        this.gameView = gameView;
         gameView.setPresenter(this);
     }
 
