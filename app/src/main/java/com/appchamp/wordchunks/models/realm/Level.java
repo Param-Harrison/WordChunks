@@ -13,7 +13,7 @@ public class Level extends RealmObject {
     private int state;  // 0 = locked, 1 = current, 2 = finished
     private RealmList<Word> words;
     private RealmList<Chunk> chunks;
-    private RealmList<Chunk> input;
+    private RealmList<ChunkInput> input;
 
     public String getId() {
         return id;
@@ -55,11 +55,11 @@ public class Level extends RealmObject {
         this.chunks = chunks;
     }
 
-    public RealmList<Chunk> getInput() {
+    public RealmList<ChunkInput> getInputChunks() {
         return input;
     }
 
-    public void setInput(RealmList<Chunk> input) {
+    public void setInput(RealmList<ChunkInput> input) {
         this.input = input;
     }
 }

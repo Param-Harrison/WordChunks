@@ -17,8 +17,6 @@ public class MainFragment extends Fragment {
 
     private SmallBang smallBang;
 
-    private ImageView kittyView;
-
     static MainFragment newInstance() {
         return new MainFragment();
     }
@@ -29,7 +27,7 @@ public class MainFragment extends Fragment {
 
         smallBang = SmallBang.attach2Window(getActivity());
 
-        kittyView = (ImageView) rootView.findViewById(R.id.kitty_img);
+        ImageView kittyView = (ImageView) rootView.findViewById(R.id.kitty_img);
         kittyView.setOnClickListener(v -> smallBang.bang(v));
         kittyView.callOnClick();
 

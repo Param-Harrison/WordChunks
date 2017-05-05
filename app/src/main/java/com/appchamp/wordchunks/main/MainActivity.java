@@ -40,6 +40,7 @@ import static com.appchamp.wordchunks.util.Constants.CHARSET_NAME;
 import static com.appchamp.wordchunks.util.Constants.CHUNKS_SEPARATOR;
 import static com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID;
 import static com.appchamp.wordchunks.util.Constants.JSON_FILE_NAME;
+import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_NAME_STATE;
 import static com.appchamp.wordchunks.util.Constants.WORDS_SEPARATOR;
 import static com.appchamp.wordchunks.util.RealmUtils.getUUID;
 
@@ -61,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
         startImportAsyncTask();
     }
-
 
     private void startImportAsyncTask() {
         // Delete realm db before creating new objects.
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(bgRealm -> {
             Level level = bgRealm.where(Level.class)
-                    .equalTo("state", 1)
+                    .equalTo(REALM_FIELD_NAME_STATE, 1)
                     .findFirst();
             String levelId = level.getId();
             intent.putExtra(EXTRA_LEVEL_ID, levelId);
@@ -365,6 +365,10 @@ public class MainActivity extends AppCompatActivity {
             pack.setState(1);
             Level level = realm.where(Level.class).findFirst();
             level.setState(1);
+            realm.where(Level.class)
+                    .equalTo(REALM_FIELD_NAME_STATE, 0)
+                    .findFirst()
+                    .setState(1);
         }
     }
 }

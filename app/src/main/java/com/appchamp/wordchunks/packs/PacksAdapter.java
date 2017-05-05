@@ -41,7 +41,7 @@ public class PacksAdapter extends RecyclerView.Adapter<PacksAdapter.ViewHolder> 
         void onItemClick(View itemView, int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    void setOnItemClickListener(OnItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -81,7 +81,6 @@ public class PacksAdapter extends RecyclerView.Adapter<PacksAdapter.ViewHolder> 
                 holder.itemView.getResources().getString(
                         R.string.number_of_levels, pack.getLevels().size()));
     }
-
 
     @Override
     public int getItemCount() {

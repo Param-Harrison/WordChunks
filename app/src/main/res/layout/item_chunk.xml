@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:background="#ffffff"
     android:gravity="center"
+    android:layout_margin="5dp"
     android:orientation="horizontal">
 
     <TextView
@@ -14,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:textColor="#353535"
+        android:textSize="20sp"
         tools:text="RER" />
 
 </RelativeLayout>

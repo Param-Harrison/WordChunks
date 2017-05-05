@@ -16,7 +16,6 @@ import java.util.List;
 public class WordsAdapter extends RecyclerView.Adapter<WordsAdapter.ViewHolder> {
 
     private List<Word> words;
-    private WordsAdapter.OnItemClickListener listener;
 
     WordsAdapter(List<Word> words) {
         setWords(words);
@@ -39,10 +38,6 @@ public class WordsAdapter extends RecyclerView.Adapter<WordsAdapter.ViewHolder> 
         void onItemClick(View itemView, int position);
     }
 
-    public void setOnItemClickListener(WordsAdapter.OnItemClickListener listener) {
-        this.listener = listener;
-    }
-
     @Override
     public WordsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -58,17 +53,15 @@ public class WordsAdapter extends RecyclerView.Adapter<WordsAdapter.ViewHolder> 
         final Word word = getItem(i);
         final int wordState = word.getState();
 
-//        if (wordState == 1) {
-//            holder.itemView.setEnabled(true);
-//            holder.levelLayout.setBackgroundColor(
-//                    holder.itemView.getResources().getColor(R.color.accent));
-//        }
+        if (wordState == 0) {
+            int wordLength = word.getWord().length();
+            holder.tvWordLength.setText(
+                    holder.itemView.getResources().getString(R.string.number_of_letters, wordLength));
 
+        } else if (wordState == 1) {
+            holder.tvWordNum.setText(word.getWord());
+        }
         holder.tvWordNum.setText(String.valueOf(i));
-
-        int wordLength = word.getWord().length();
-        holder.tvWordLength.setText(
-                holder.itemView.getResources().getString(R.string.number_of_letters, wordLength));
     }
 
     @Override
@@ -85,7 +78,6 @@ public class WordsAdapter extends RecyclerView.Adapter<WordsAdapter.ViewHolder> 
         return i;
     }
 
-
     class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvWordNum;
@@ -96,17 +88,6 @@ public class WordsAdapter extends RecyclerView.Adapter<WordsAdapter.ViewHolder> 
 
             tvWordNum = (TextView) itemView.findViewById(R.id.tvWordNum);
             tvWordLength = (TextView) itemView.findViewById(R.id.tvWordLength);
-
-            // Setup the click listener
-            itemView.setOnClickListener(v -> {
-                // Triggers click upwards to the adapter on click
-                if (listener != null) {
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        listener.onItemClick(itemView, position);
-                    }
-                }
-            });
         }
     }
 }

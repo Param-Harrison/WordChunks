@@ -35,11 +35,10 @@ public class PacksActivity extends AppCompatActivity {
 
         // This is the RecyclerView adapter which will display the list of packs
         List<Pack> packs = realm.where(Pack.class).findAll();
-
         PacksAdapter adapter = new PacksAdapter(packs);
-
         rvPacks.setAdapter(adapter);
-        rvPacks.setLayoutManager(new LinearLayoutManager(this));
+        rvPacks.setLayoutManager(new LinearLayoutManager(PacksActivity.this));
+        rvPacks.setHasFixedSize(true);
 
         adapter.setOnItemClickListener((view, position) -> {
             Pack clickedPack = adapter.getItem(position);
@@ -76,5 +75,4 @@ public class PacksActivity extends AppCompatActivity {
         super.onDestroy();
         realm.close(); // Remember to close Realm when done.
     }
-
 }

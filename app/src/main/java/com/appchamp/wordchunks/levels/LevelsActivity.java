@@ -23,6 +23,7 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 import static com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID;
 import static com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID;
 import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_NAME_ID;
+import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_NAME_STATE;
 
 
 public class LevelsActivity extends AppCompatActivity {
@@ -52,6 +53,7 @@ public class LevelsActivity extends AppCompatActivity {
                 adapter = new LevelsAdapter(levels);
                 rvLevels.setAdapter(adapter);
                 rvLevels.setLayoutManager(new LinearLayoutManager(LevelsActivity.this));
+                rvLevels.setHasFixedSize(true);
 
                 adapter.setOnItemClickListener((view, position) -> {
                     Level clickedLevel = adapter.getItem(position);
@@ -61,7 +63,6 @@ public class LevelsActivity extends AppCompatActivity {
         }
         OverScrollDecoratorHelper.setUpOverScroll(
                 rvLevels, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
-
     }
 
 
@@ -89,7 +90,7 @@ public class LevelsActivity extends AppCompatActivity {
         Intent intent = new Intent(LevelsActivity.this, PacksActivity.class);
         realm.executeTransaction(bgRealm -> {
             Pack pack = bgRealm.where(Pack.class)
-                    .equalTo("state", 1)
+                    .equalTo(REALM_FIELD_NAME_STATE, 1)
                     .findFirst();
             String packId = pack.getId();
             intent.putExtra(EXTRA_PACK_ID, packId);
