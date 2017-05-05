@@ -2,11 +2,15 @@ package com.appchamp.wordchunks.models.realm;
 
 
 import io.realm.RealmObject;
+import io.realm.annotations.Index;
 
 public class ChunkInput extends RealmObject {
 
+    @Index
     private String levelId;
+    @Index
     private String chunk;
+    @Index
     private int positionInGrid;
 
     public String getLevelId() {
@@ -32,4 +36,5 @@ public class ChunkInput extends RealmObject {
     public void setPositionInGrid(int positionInGrid) {
         this.positionInGrid = positionInGrid;
     }
+
 }

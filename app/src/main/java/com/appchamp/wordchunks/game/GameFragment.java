@@ -25,9 +25,9 @@ import io.realm.RealmResults;
 
 import static com.appchamp.wordchunks.util.Constants.CHUNKS_GRID_NUM;
 import static com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID;
-import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_NAME_ID;
-import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_NAME_LEVEL_ID;
-import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_NAME_POSITION_IN_GRID;
+import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_ID;
+import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_LEVEL_ID;
+import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_POSITION_IN_GRID;
 import static com.appchamp.wordchunks.util.Constants.WORDS_GRID_NUM;
 
 
@@ -84,7 +84,7 @@ public class GameFragment extends Fragment implements GameContract.View {
         realm = Realm.getDefaultInstance();
 
         levelId = getArguments().getString(EXTRA_LEVEL_ID);
-        Level level = realm.where(Level.class).equalTo(REALM_FIELD_NAME_ID, levelId).findFirst();
+        Level level = realm.where(Level.class).equalTo(REALM_FIELD_ID, levelId).findFirst();
 
         tvLevelClueTitle.setText(level.getClue());
         inputChunksList = level.getInputChunks();
@@ -117,8 +117,20 @@ public class GameFragment extends Fragment implements GameContract.View {
                 }));
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.start();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        realm.close(); // Remember to close Realm when done.
+    }
+
     private void updateInputChunksTextView() {
-        tvInputChunks.setText(convertChunksToString(inputChunksList));
+        tvInputChunks.setText(listChunksToString(inputChunksList));
     }
 
     private void addInInputChunksList(Realm realm, List<Chunk> chunks, int position) {
@@ -141,26 +153,26 @@ public class GameFragment extends Fragment implements GameContract.View {
 
     private void deleteInputChunkFromList(Realm realm, int position) {
         ChunkInput inputChunks = realm.where(ChunkInput.class)
-                .equalTo(REALM_FIELD_NAME_POSITION_IN_GRID, position)
-                .equalTo(REALM_FIELD_NAME_LEVEL_ID, levelId)
+                .equalTo(REALM_FIELD_POSITION_IN_GRID, position)
+                .equalTo(REALM_FIELD_LEVEL_ID, levelId)
                 .findFirst();
         inputChunks.deleteFromRealm();
     }
 
     /**
-     * Deletes in Realm all inputted chunks after clear icon was clicked.
+     * Deletes Realm inputted chunks after clear icon was clicked.
      */
     private void deleteAllInputChunksFromList() {
         realm.executeTransaction(bgRealm -> {
             Level level = bgRealm
                     .where(Level.class)
-                    .equalTo(REALM_FIELD_NAME_ID, levelId)
+                    .equalTo(REALM_FIELD_ID, levelId)
                     .findFirst();
 
             List<Chunk> chunks = level.getChunks();
             RealmResults<ChunkInput> inputChunks = bgRealm
                     .where(ChunkInput.class)
-                    .equalTo(REALM_FIELD_NAME_LEVEL_ID, levelId)
+                    .equalTo(REALM_FIELD_LEVEL_ID, levelId)
                     .findAll();
             for (ChunkInput chunkInput : inputChunks) {
                 int chunkPosition = chunkInput.getPositionInGrid();
@@ -171,7 +183,7 @@ public class GameFragment extends Fragment implements GameContract.View {
         });
     }
 
-    private String convertChunksToString(List<ChunkInput> inputChunks) {
+    private String listChunksToString(List<ChunkInput> inputChunks) {
         StringBuilder inputStr = new StringBuilder();
         for (ChunkInput chunk : inputChunks) {
             inputStr.append(chunk.getChunk());
@@ -179,15 +191,4 @@ public class GameFragment extends Fragment implements GameContract.View {
         return inputStr.toString();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        presenter.start();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        realm.close(); // Remember to close Realm when done.
-    }
 }

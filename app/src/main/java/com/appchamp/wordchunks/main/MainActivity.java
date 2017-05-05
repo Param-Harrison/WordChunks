@@ -40,7 +40,7 @@ import static com.appchamp.wordchunks.util.Constants.CHARSET_NAME;
 import static com.appchamp.wordchunks.util.Constants.CHUNKS_SEPARATOR;
 import static com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID;
 import static com.appchamp.wordchunks.util.Constants.JSON_FILE_NAME;
-import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_NAME_STATE;
+import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_STATE;
 import static com.appchamp.wordchunks.util.Constants.WORDS_SEPARATOR;
 import static com.appchamp.wordchunks.util.RealmUtils.getUUID;
 
@@ -117,8 +117,8 @@ public class MainActivity extends AppCompatActivity {
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(bgRealm -> {
             Level level = bgRealm.where(Level.class)
-                    .equalTo(REALM_FIELD_NAME_STATE, 1)
-                    .findFirst();
+                    .equalTo(REALM_FIELD_STATE, 1)
+                    .findAll().last();
             String levelId = level.getId();
             intent.putExtra(EXTRA_LEVEL_ID, levelId);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -227,8 +227,9 @@ public class MainActivity extends AppCompatActivity {
         /**
          * Returns a list of PackPojo objects deserialized using the Gson library from the json
          * string.
+         *
          * @param context used to access assets where json file is located.
-         * @return        the list of PackPojo objects.
+         * @return the list of PackPojo objects.
          */
         private List<PackPojo> getPacksListFromJson(Context context) {
             Type listType = new TypeToken<ArrayList<PackPojo>>() {
@@ -240,8 +241,9 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * Returns a new String when reading the json file from the assets folder is done.
+         *
          * @param context used to access assets where json file is located.
-         * @return        the json string.
+         * @return the json string.
          */
         private String loadJSONFromAsset(Context context) {
             String json;
@@ -262,6 +264,7 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * Creates the list of Realm Pack objects using the PackPojo objects.
+         *
          * @param realm        instance of Realm object executed in the background transaction.
          * @param packPojoList the list of PackPojo objects.
          */
@@ -278,6 +281,7 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * Creates the list of Realm Level objects using the LevelPojo objects.
+         *
          * @param realm         instance of Realm object executed in the background transaction.
          * @param pack          the pack object that will be used to create levels into it.
          * @param levelPojoList the list of LevelPojo objects.
@@ -302,9 +306,10 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * Returns the list of Realm Chunk objects created from the array of split chunks.
+         *
          * @param realm       instance of Realm object executed in the background transaction.
          * @param chunksSplit an array of split chunks.
-         * @return            the list of Realm Chunk objects.
+         * @return the list of Realm Chunk objects.
          */
         private RealmList<Chunk> createChunks(Realm realm, String[] chunksSplit) {
             RealmList<Chunk> chunks = new RealmList<>();
@@ -319,9 +324,10 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * Returns the list of Realm Word objects created from json string.
+         *
          * @param realm     instance of Realm object executed in the background transaction.
          * @param wordsJson a string of words to be split.
-         * @return          the list of Realm Word objects.
+         * @return the list of Realm Word objects.
          */
         private RealmList<Word> refactorIntoWords(Realm realm, String wordsJson) {
             String[] wordsSplit = wordsJson.split(WORDS_SEPARATOR);
@@ -346,9 +352,10 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * Returns the list of Realm Chunk objects split from string.
+         *
          * @param realm        instance of Realm object executed in the background transaction.
          * @param chunksString a string of chunks to be split.
-         * @return             the list of Realm Chunk objects.
+         * @return the list of Realm Chunk objects.
          */
         private RealmList<Chunk> refactorIntoChunks(Realm realm, String chunksString) {
             String[] chunksSplit = chunksString.split(ALL_CHUNKS_SEPARATOR);
@@ -358,6 +365,7 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * Initializes the game state in the beginning of the game.
+         *
          * @param realm instance of Realm object executed in the background transaction.
          */
         private void initializeGameState(Realm realm) {
@@ -366,7 +374,7 @@ public class MainActivity extends AppCompatActivity {
             Level level = realm.where(Level.class).findFirst();
             level.setState(1);
             realm.where(Level.class)
-                    .equalTo(REALM_FIELD_NAME_STATE, 0)
+                    .equalTo(REALM_FIELD_STATE, 0)
                     .findFirst()
                     .setState(1);
         }

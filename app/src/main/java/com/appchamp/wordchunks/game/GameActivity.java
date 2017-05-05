@@ -16,7 +16,7 @@ import io.realm.Realm;
 
 import static com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID;
 import static com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID;
-import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_NAME_STATE;
+import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_STATE;
 
 
 public class GameActivity extends AppCompatActivity {
@@ -64,7 +64,7 @@ public class GameActivity extends AppCompatActivity {
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(bgRealm -> {
             Pack pack = bgRealm.where(Pack.class)
-                    .equalTo(REALM_FIELD_NAME_STATE, 1)
+                    .equalTo(REALM_FIELD_STATE, 1)
                     .findFirst();
             String packId = pack.getId();
             intent.putExtra(EXTRA_PACK_ID, packId);

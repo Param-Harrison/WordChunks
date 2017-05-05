@@ -2,6 +2,7 @@ package com.appchamp.wordchunks.models.realm;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Index;
 import io.realm.annotations.PrimaryKey;
 
 
@@ -9,7 +10,9 @@ public class Level extends RealmObject {
 
     @PrimaryKey
     private String id;
+    @Index
     private String clue;
+    @Index
     private int state;  // 0 = locked, 1 = current, 2 = finished
     private RealmList<Word> words;
     private RealmList<Chunk> chunks;

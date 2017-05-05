@@ -1,12 +1,16 @@
 package com.appchamp.wordchunks.models.realm;
 
 import io.realm.RealmObject;
+import io.realm.annotations.Index;
 
 
 public class Chunk extends RealmObject {
 
+    @Index
     private String chunk;
+    @Index
     private int state;
+    @Index
     private int position;
 
     public String getChunk() {

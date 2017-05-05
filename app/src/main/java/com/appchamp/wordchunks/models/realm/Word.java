@@ -3,10 +3,13 @@ package com.appchamp.wordchunks.models.realm;
 
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.annotations.Index;
 
 public class Word extends RealmObject {
 
+    @Index
     private String word;
+    @Index
     private int state;  // 0 = not solved, 1 = solved
     private RealmList<Chunk> chunks;
 
