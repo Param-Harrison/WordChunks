@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.appchamp.wordchunks.R;
+import com.appchamp.wordchunks.data.DatabaseHelperRealm;
 import com.appchamp.wordchunks.levels.LevelsActivity;
-import com.appchamp.wordchunks.models.realm.Pack;
 import com.appchamp.wordchunks.util.ActivityUtils;
 import com.appchamp.wordchunks.util.AnimUtils;
 
@@ -16,18 +16,28 @@ import io.realm.Realm;
 
 import static com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID;
 import static com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID;
-import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_STATE;
+import static com.appchamp.wordchunks.util.Constants.PACK_STATE_CURRENT;
 
 
 public class GameActivity extends AppCompatActivity {
 
-    private GamePresenter gamePresenter;
+//    private GamePresenter gamePresenter;
+
+    private DatabaseHelperRealm db;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
+        db = new DatabaseHelperRealm();
+
+        // Create the presenter
+//        gamePresenter = new GamePresenter(initGameFragment());
+        initGameFragment();
+    }
+
+    private void initGameFragment() {
         GameFragment gameFragment =
                 (GameFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
 
@@ -47,11 +57,7 @@ public class GameActivity extends AppCompatActivity {
                 }
             }
         }
-        // Create the presenter
-        gamePresenter = new GamePresenter(gameFragment);
-
     }
-
 
     public void onBackArrowClick(View v) {
         super.onBackPressed();
@@ -59,14 +65,16 @@ public class GameActivity extends AppCompatActivity {
         startLevelsActivity();
     }
 
+    /**
+     * Back navigation. Navigates from GameActivity to LevelsActivity passing Pack id by the Intent.
+     */
     private void startLevelsActivity() {
         Intent intent = new Intent(GameActivity.this, LevelsActivity.class);
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(bgRealm -> {
-            Pack pack = bgRealm.where(Pack.class)
-                    .equalTo(REALM_FIELD_STATE, 1)
-                    .findFirst();
-            String packId = pack.getId();
+
+            String packId = db.findPackIdByState(bgRealm, PACK_STATE_CURRENT);
+
             intent.putExtra(EXTRA_PACK_ID, packId);
             startActivity(intent);
             overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);

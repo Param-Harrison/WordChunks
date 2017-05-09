@@ -5,13 +5,12 @@
     android:orientation="vertical">
 
     <ImageView
-        android:id="@+id/settings_imageview"
+        android:id="@+id/imgSettingsIcon"
         android:layout_width="28dp"
         android:layout_height="28dp"
         android:layout_gravity="start"
         android:layout_margin="12dp"
         android:contentDescription="@string/settings_hint"
-        android:onClick="onSettingsClick"
         android:src="@drawable/ic_settings_white_24dp" />
 
     <!--
@@ -19,7 +18,7 @@
     http://randomrobskii.deviantart.com/art/Kitty-Cat-408720148
     -->
     <ImageView
-        android:id="@+id/kitty_img"
+        android:id="@+id/imgKitty"
         android:layout_width="160dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -45,19 +44,16 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/play_btn"
-            style="@style/PlayButtonStyle"
-            android:onClick="onPlayClick" />
+            android:id="@+id/btnPlay"
+            style="@style/PlayButtonStyle" />
 
         <Button
-            android:id="@+id/daily_btn"
-            style="@style/DailyButtonStyle"
-            android:onClick="onDailyClick" />
+            android:id="@+id/btnDaily"
+            style="@style/DailyButtonStyle" />
 
         <Button
-            android:id="@+id/shop_btn"
-            style="@style/ShopButtonStyle"
-            android:onClick="onShopClick" />
+            android:id="@+id/btnShop"
+            style="@style/ShopButtonStyle" />
 
     </LinearLayout>
 

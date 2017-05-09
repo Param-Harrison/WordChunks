@@ -12,5 +12,6 @@
     <string name="number_of_letters">%d letters</string>
     <string name="number_of_levels">%d levels</string>
     <string name="level_num">level %d</string>
+    <string name="send_hint_text">Combine letter groups then hit Send</string>
 
 </resources>

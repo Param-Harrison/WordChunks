@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/settings_screen_bg"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -74,9 +75,11 @@
         </RelativeLayout>
 
         <Button
+            android:id="@+id/btnSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
+            android:backgroundTint="@color/accent"
             android:text="Send"
             android:textAllCaps="false" />
 
@@ -86,15 +89,17 @@
         android:id="@+id/rvChunks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
         tools:listitem="@layout/item_chunk" />
 
     <Button
+        android:id="@+id/btnShuffle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="hint"
+        android:backgroundTint="@color/primary"
+        android:text="Shuffle"
         android:textAllCaps="false" />
 
 </LinearLayout>

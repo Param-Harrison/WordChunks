@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.appchamp.wordchunks.R;
+import com.appchamp.wordchunks.data.DatabaseHelperRealm;
 import com.appchamp.wordchunks.levels.LevelsActivity;
 import com.appchamp.wordchunks.models.realm.Pack;
 import com.appchamp.wordchunks.util.AnimUtils;
@@ -24,6 +25,10 @@ public class PacksActivity extends AppCompatActivity {
 
     private Realm realm;
 
+    private DatabaseHelperRealm db;
+
+    private List<Pack> packs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,10 +36,13 @@ public class PacksActivity extends AppCompatActivity {
 
         RecyclerView rvPacks = (RecyclerView) findViewById(R.id.rvPacks);
 
+        db = new DatabaseHelperRealm();
+
         realm = Realm.getDefaultInstance();
 
         // This is the RecyclerView adapter which will display the list of packs
-        List<Pack> packs = realm.where(Pack.class).findAll();
+        packs = db.findAllPacks(realm);
+
         PacksAdapter adapter = new PacksAdapter(packs);
         rvPacks.setAdapter(adapter);
         rvPacks.setLayoutManager(new LinearLayoutManager(PacksActivity.this));
@@ -42,26 +50,11 @@ public class PacksActivity extends AppCompatActivity {
 
         adapter.setOnItemClickListener((view, position) -> {
             Pack clickedPack = adapter.getItem(position);
-            startLevelsActivity(clickedPack);
+            startLevelsActivity(clickedPack.getId());
         });
 
         OverScrollDecoratorHelper.setUpOverScroll(
                 rvPacks, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
-    }
-
-    private void startLevelsActivity(Pack pack) {
-        Intent intent = new Intent(this, LevelsActivity.class);
-        intent.putExtra(EXTRA_PACK_ID, pack.getId());
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
-        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-    }
-
-    public void onBackArrowClick(View v) {
-        super.onBackPressed();
-        AnimUtils.startAnimationFadeIn(PacksActivity.this, v);
-        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
 
     @Override
@@ -74,5 +67,24 @@ public class PacksActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         realm.close(); // Remember to close Realm when done.
+    }
+
+    public void onBackArrowClick(View v) {
+        super.onBackPressed();
+        AnimUtils.startAnimationFadeIn(PacksActivity.this, v);
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
+    }
+
+    /**
+     * Up navigation. Navigates from PacksActivity to LevelsActivity passing packId by the Intent.
+     * @param packId pack id to be passed by the Intent.
+     */
+    private void startLevelsActivity(String packId) {
+        Intent intent = new Intent(PacksActivity.this, LevelsActivity.class);
+        intent.putExtra(EXTRA_PACK_ID, packId);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
     }
 }

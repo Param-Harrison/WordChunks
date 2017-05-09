@@ -2,7 +2,6 @@ package com.appchamp.wordchunks.levels;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,13 @@ import android.widget.TextView;
 
 import com.appchamp.wordchunks.R;
 import com.appchamp.wordchunks.models.realm.Level;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
+
+import static com.appchamp.wordchunks.util.Constants.LEVEL_STATE_CURRENT;
+import static com.appchamp.wordchunks.util.Constants.LEVEL_STATE_LOCKED;
+import static com.appchamp.wordchunks.util.Constants.LEVEL_STATE_SOLVED;
 
 
 public class LevelsAdapter extends RecyclerView.Adapter<LevelsAdapter.ViewHolder> {
@@ -33,7 +37,7 @@ public class LevelsAdapter extends RecyclerView.Adapter<LevelsAdapter.ViewHolder
         if (lvls != null) {
             this.levels = lvls;
         } else {
-            Log.e("LevelsAdapter", "levels cannot be null");
+            Logger.d("levels cannot be null");
         }
     }
 
@@ -60,25 +64,25 @@ public class LevelsAdapter extends RecyclerView.Adapter<LevelsAdapter.ViewHolder
         final Level level = getItem(i);
         final int levelState = level.getState();
 
-        if (levelState == 1) {
-            holder.itemView.setEnabled(true);
-            holder.levelLayout.setBackgroundColor(
-                    holder.itemView.getResources().getColor(R.color.accent));
-        } else if (levelState == 0) {
+        if (levelState == LEVEL_STATE_LOCKED) {
             holder.itemView.setEnabled(false);
-            holder.levelLayout.setBackgroundColor(
+            holder.rlLevel.setBackgroundColor(
                     holder.itemView.getResources().getColor(R.color.primary_dark));
-        } else if (levelState == 2) {
+        } else  if (levelState == LEVEL_STATE_CURRENT) {
             holder.itemView.setEnabled(true);
-            holder.levelLayout.setBackgroundColor(
+            holder.rlLevel.setBackgroundColor(
+                    holder.itemView.getResources().getColor(R.color.accent));
+        } else if (levelState == LEVEL_STATE_SOLVED) {
+            holder.itemView.setEnabled(true);
+            holder.rlLevel.setBackgroundColor(
                     holder.itemView.getResources().getColor(R.color.secondary_text));
         }
 
         int levelNum = i + 1;
-        holder.levelNameTextView.setText(
+        holder.tvLevelName.setText(
                 holder.itemView.getResources().getString(R.string.level_num, levelNum));
-        holder.levelNumberTextView.setText(String.valueOf(levelNum));
-        holder.clueTextView.setText(level.getClue());
+        holder.tvLevelNumber.setText(String.valueOf(levelNum));
+        holder.tvLevelClueTitle.setText(level.getClue());
     }
 
     @Override
@@ -92,18 +96,18 @@ public class LevelsAdapter extends RecyclerView.Adapter<LevelsAdapter.ViewHolder
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        RelativeLayout levelLayout;
-        TextView levelNameTextView;
-        TextView levelNumberTextView;
-        TextView clueTextView;
+        RelativeLayout rlLevel;
+        TextView tvLevelName;
+        TextView tvLevelNumber;
+        TextView tvLevelClueTitle;
 
         ViewHolder(View itemView) {
             super(itemView);
 
-            levelLayout = (RelativeLayout) itemView.findViewById(R.id.level_layout);
-            levelNameTextView = (TextView) itemView.findViewById(R.id.level_name);
-            levelNumberTextView = (TextView) itemView.findViewById(R.id.level_number);
-            clueTextView = (TextView) itemView.findViewById(R.id.tvLevelClueTitle);
+            rlLevel = (RelativeLayout) itemView.findViewById(R.id.rlLevel);
+            tvLevelName = (TextView) itemView.findViewById(R.id.tvLevelName);
+            tvLevelNumber = (TextView) itemView.findViewById(R.id.tvLevelNumber);
+            tvLevelClueTitle = (TextView) itemView.findViewById(R.id.tvLevelClueTitle);
 
             // Setup the click listener
             itemView.setOnClickListener(v -> {

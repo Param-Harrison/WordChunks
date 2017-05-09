@@ -9,9 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.appchamp.wordchunks.R;
+import com.appchamp.wordchunks.data.DatabaseHelperRealm;
 import com.appchamp.wordchunks.game.GameActivity;
 import com.appchamp.wordchunks.models.realm.Level;
-import com.appchamp.wordchunks.models.realm.Pack;
 import com.appchamp.wordchunks.packs.PacksActivity;
 import com.appchamp.wordchunks.util.AnimUtils;
 
@@ -22,8 +22,6 @@ import me.everything.android.ui.overscroll.OverScrollDecoratorHelper;
 
 import static com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID;
 import static com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID;
-import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_ID;
-import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_STATE;
 
 
 public class LevelsActivity extends AppCompatActivity {
@@ -32,6 +30,10 @@ public class LevelsActivity extends AppCompatActivity {
 
     private Realm realm;
 
+    private DatabaseHelperRealm db;
+
+    private List<Level> levels;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,17 +41,16 @@ public class LevelsActivity extends AppCompatActivity {
 
         RecyclerView rvLevels = (RecyclerView) findViewById(R.id.rvLevels);
 
+        db = new DatabaseHelperRealm();
+
+        realm = Realm.getDefaultInstance();
+
         // Passing packs via ids
         if (getIntent() != null) {
             String packId = getIntent().getStringExtra(EXTRA_PACK_ID);
             if (packId != null) {
+                levels = db.findLevelsByPackId(realm, packId);
 
-                realm = Realm.getDefaultInstance();
-                Pack pack = realm.where(Pack.class)
-                        .equalTo(REALM_FIELD_ID, packId)
-                        .findFirst();
-
-                List<Level> levels = pack.getLevels();
                 adapter = new LevelsAdapter(levels);
                 rvLevels.setAdapter(adapter);
                 rvLevels.setLayoutManager(new LinearLayoutManager(LevelsActivity.this));
@@ -57,7 +58,7 @@ public class LevelsActivity extends AppCompatActivity {
 
                 adapter.setOnItemClickListener((view, position) -> {
                     Level clickedLevel = adapter.getItem(position);
-                    startGameActivity(clickedLevel);
+                    startGameActivity(clickedLevel.getId());
                 });
             }
         }
@@ -65,13 +66,10 @@ public class LevelsActivity extends AppCompatActivity {
                 rvLevels, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
     }
 
-
-    private void startGameActivity(Level level) {
-        Intent intent = new Intent(this, GameActivity.class);
-        intent.putExtra(EXTRA_LEVEL_ID, level.getId());
-        startActivity(intent);
-        finish();
-        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startPacksActivity();
     }
 
     @Override
@@ -86,24 +84,28 @@ public class LevelsActivity extends AppCompatActivity {
         startPacksActivity();
     }
 
+    /**
+     * Up navigation. Navigates from LevelsActivity to GameActivity passing Level id by the Intent.
+     * @param levelId level id to be passed by the Intent.
+     */
+    private void startGameActivity(String levelId) {
+        Intent intent = new Intent(LevelsActivity.this, GameActivity.class);
+        intent.putExtra(EXTRA_LEVEL_ID, levelId);
+        startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+    }
+
+    /**
+     * Back navigation. Navigates from LevelsActivity to PacksActivity.
+     */
     private void startPacksActivity() {
         Intent intent = new Intent(LevelsActivity.this, PacksActivity.class);
         realm.executeTransaction(bgRealm -> {
-            Pack pack = bgRealm.where(Pack.class)
-                    .equalTo(REALM_FIELD_STATE, 1)
-                    .findFirst();
-            String packId = pack.getId();
-            intent.putExtra(EXTRA_PACK_ID, packId);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);
             finish();
             overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
         });
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        startPacksActivity();
     }
 }

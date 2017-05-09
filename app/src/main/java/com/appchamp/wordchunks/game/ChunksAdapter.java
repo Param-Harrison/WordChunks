@@ -2,7 +2,6 @@ package com.appchamp.wordchunks.game;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,13 @@ import android.widget.TextView;
 
 import com.appchamp.wordchunks.R;
 import com.appchamp.wordchunks.models.realm.Chunk;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
+
+import static com.appchamp.wordchunks.util.Constants.CHUNK_STATE_GONE;
+import static com.appchamp.wordchunks.util.Constants.CHUNK_STATE_NORMAL;
+import static com.appchamp.wordchunks.util.Constants.NUMBER_OF_CHUNKS;
 
 
 public class ChunksAdapter extends RecyclerView.Adapter<ChunksAdapter.ViewHolder> {
@@ -33,7 +37,7 @@ public class ChunksAdapter extends RecyclerView.Adapter<ChunksAdapter.ViewHolder
         if (chunks != null) {
             this.chunks = chunks;
         } else {
-            Log.e("ChunksAdapter", "chunks cannot be null");
+            Logger.d("chunks cannot be null");
         }
     }
 
@@ -41,7 +45,7 @@ public class ChunksAdapter extends RecyclerView.Adapter<ChunksAdapter.ViewHolder
         void onItemClick(View itemView, int position);
     }
 
-    public void setOnItemClickListener(ChunksAdapter.OnItemClickListener listener) {
+    void setOnItemClickListener(ChunksAdapter.OnItemClickListener listener) {
         this.listener = listener;
     }
 
@@ -49,47 +53,41 @@ public class ChunksAdapter extends RecyclerView.Adapter<ChunksAdapter.ViewHolder
     public ChunksAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-
         View levelView = inflater.inflate(R.layout.item_chunk, parent, false);
-
         return new ChunksAdapter.ViewHolder(levelView);
     }
 
     @Override
     public void onBindViewHolder(ChunksAdapter.ViewHolder holder, int i) {
-        final Chunk chunk = getItem(i);
-        final int chunkState = chunk.getState();
+        int chunkPos = chunks.get(i).getPosition();
+        final Chunk chunk = chunks.get(chunkPos);
+        final long chunkState = chunk.getState();
 
-        // normal state, not clicked yet
-        if (chunkState == 0) {
+        // Normal chunk state
+        if (chunkState == CHUNK_STATE_NORMAL) {
             holder.rlChunk.setBackgroundColor(
                     holder.itemView.getResources().getColor(R.color.white));
         }
-        // clicked state
-        else if (chunkState == 1) {
+        // Clicked chunk state
+        else if (chunkState > CHUNK_STATE_NORMAL) {
             holder.rlChunk.setBackgroundColor(
                     holder.itemView.getResources().getColor(R.color.white_30_percent));
         }
-        // invisible state
-//        else if (chunkState == 2) {
-//            holder.itemView.setVisibility(View.INVISIBLE);
-//        }
-
+        // Gone chunk state
+        else if (chunkState == CHUNK_STATE_GONE) {
+            holder.rlChunk.setVisibility(View.INVISIBLE);
+        }
         holder.tvChunk.setText(chunk.getChunk());
     }
 
     @Override
     public int getItemCount() {
-        return chunks.size();
-    }
-
-    private Chunk getItem(int i) {
-        return chunks.get(i);
+        return NUMBER_OF_CHUNKS;
     }
 
     @Override
     public long getItemId(int i) {
-        return i;
+        return chunks.get(i).getPosition();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -107,7 +105,7 @@ public class ChunksAdapter extends RecyclerView.Adapter<ChunksAdapter.ViewHolder
             itemView.setOnClickListener(v -> {
                 // Triggers click upwards to the adapter on click
                 if (listener != null) {
-                    int position = getAdapterPosition();
+                    int position = chunks.get(getAdapterPosition()).getPosition();
                     if (position != RecyclerView.NO_POSITION) {
                         listener.onItemClick(itemView, position);
                     }

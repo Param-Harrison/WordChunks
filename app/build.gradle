@@ -68,4 +68,8 @@ dependencies {
 
     compile 'uk.co.chrisjenx:calligraphy:2.2.0'
 
+    compile 'com.orhanobut:logger:1.15'
+
+    compile 'io.realm:android-adapters:2.0.0'
+
 }

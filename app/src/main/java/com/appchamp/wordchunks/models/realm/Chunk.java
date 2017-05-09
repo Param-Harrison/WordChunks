@@ -7,11 +7,31 @@ import io.realm.annotations.Index;
 public class Chunk extends RealmObject {
 
     @Index
+    private String levelId;
+    @Index
+    private String wordId;
+    @Index
     private String chunk;
     @Index
-    private int state;
+    private long state;
     @Index
     private int position;
+
+    public String getLevelId() {
+        return levelId;
+    }
+
+    public void setLevelId(String levelId) {
+        this.levelId = levelId;
+    }
+
+    public String getWordId() {
+        return wordId;
+    }
+
+    public void setWordId(String wordId) {
+        this.wordId = wordId;
+    }
 
     public String getChunk() {
         return chunk;
@@ -21,11 +41,11 @@ public class Chunk extends RealmObject {
         this.chunk = chunk;
     }
 
-    public int getState() {
+    public long getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(long state) {
         this.state = state;
     }
 
@@ -36,5 +56,4 @@ public class Chunk extends RealmObject {
     public void setPosition(int position) {
         this.position = position;
     }
-
 }

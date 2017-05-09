@@ -2,7 +2,6 @@ package com.appchamp.wordchunks.game;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,8 +9,15 @@ import android.widget.TextView;
 
 import com.appchamp.wordchunks.R;
 import com.appchamp.wordchunks.models.realm.Word;
+import com.appchamp.wordchunks.util.RealmUtils;
+import com.orhanobut.logger.Logger;
 
 import java.util.List;
+
+import static com.appchamp.wordchunks.util.Constants.NUMBER_OF_WORDS;
+import static com.appchamp.wordchunks.util.Constants.WORD_STATE_NOT_SOLVED;
+import static com.appchamp.wordchunks.util.Constants.WORD_STATE_SOLVED;
+
 
 public class WordsAdapter extends RecyclerView.Adapter<WordsAdapter.ViewHolder> {
 
@@ -30,12 +36,8 @@ public class WordsAdapter extends RecyclerView.Adapter<WordsAdapter.ViewHolder> 
         if (words != null) {
             this.words = words;
         } else {
-            Log.e("WordsAdapter", "chunks cannot be null");
+            Logger.e("words cannot be null");
         }
-    }
-
-    public interface OnItemClickListener {
-        void onItemClick(View itemView, int position);
     }
 
     @Override
@@ -50,27 +52,25 @@ public class WordsAdapter extends RecyclerView.Adapter<WordsAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(WordsAdapter.ViewHolder holder, int i) {
-        final Word word = getItem(i);
+        final Word word = words.get(i);
         final int wordState = word.getState();
 
-        if (wordState == 0) {
+        if (wordState == WORD_STATE_NOT_SOLVED) {
             int wordLength = word.getWord().length();
-            holder.tvWordLength.setText(
+            holder.tvWord.setText(
                     holder.itemView.getResources().getString(R.string.number_of_letters, wordLength));
 
-        } else if (wordState == 1) {
-            holder.tvWordNum.setText(word.getWord());
+        } else if (wordState == WORD_STATE_SOLVED) {
+            holder.tvWord.setText(word.getWord());
+            holder.tvWord.setTextColor(holder.itemView.getResources().getColor(R.color.accent));
         }
-        holder.tvWordNum.setText(String.valueOf(i));
+        String wordNum = RealmUtils.getWordNum(i);
+        holder.tvWordNum.setText(wordNum);
     }
 
     @Override
     public int getItemCount() {
-        return words.size();
-    }
-
-    private Word getItem(int i) {
-        return words.get(i);
+        return NUMBER_OF_WORDS;
     }
 
     @Override
@@ -81,13 +81,13 @@ public class WordsAdapter extends RecyclerView.Adapter<WordsAdapter.ViewHolder> 
     class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvWordNum;
-        TextView tvWordLength;
+        TextView tvWord;
 
         ViewHolder(View itemView) {
             super(itemView);
 
             tvWordNum = (TextView) itemView.findViewById(R.id.tvWordNum);
-            tvWordLength = (TextView) itemView.findViewById(R.id.tvWordLength);
+            tvWord = (TextView) itemView.findViewById(R.id.tvWord);
         }
     }
 }

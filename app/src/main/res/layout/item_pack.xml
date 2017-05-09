@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/pack_layout"
+    android:id="@+id/rlPack"
     android:layout_width="match_parent"
     android:layout_height="60dp"
     android:background="@drawable/btn_pack_shape"
@@ -9,7 +9,7 @@
     android:paddingStart="10dp">
 
     <TextView
-        android:id="@+id/pack_number"
+        android:id="@+id/tvPackNumber"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_centerVertical="true"
@@ -27,7 +27,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/pack_name"
+            android:id="@+id/tvPackName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#59569e"
@@ -35,7 +35,7 @@
             tools:text="pack name" />
 
         <TextView
-            android:id="@+id/number_of_levels"
+            android:id="@+id/tvNumberOfLevels"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#59569e"
