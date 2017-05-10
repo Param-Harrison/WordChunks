@@ -16,6 +16,7 @@ import com.appchamp.wordchunks.models.realm.Pack;
 import com.appchamp.wordchunks.models.realm.Word;
 import com.appchamp.wordchunks.util.ActivityUtils;
 import com.appchamp.wordchunks.util.JsonUtils;
+import com.appchamp.wordchunks.util.RealmUtils;
 import com.orhanobut.logger.Logger;
 
 import java.lang.ref.WeakReference;
@@ -219,17 +220,22 @@ public class MainActivity extends AppCompatActivity {
             // After split "AB,CD EF,GH" becomes ["AB,CD", "EF,GH"]
             RealmList<Chunk> chunks = new RealmList<>();
 
-            int chunkPos = 0;
             for (int i = 0; i < wordsSplit.length; i++) {
                 String[] wordSplitIntoChunks = wordsSplit[i].split(CHUNKS_SEPARATOR);
                 for (String chunkStr : wordSplitIntoChunks) {
                     Chunk chunk = realm.createObject(Chunk.class);
                     chunk.setChunk(chunkStr);
-                    chunk.setPosition(chunkPos++);
                     chunk.setLevelId(levelId);
                     chunk.setWordId(wordsRealm.get(i).getId());
                     chunks.add(chunk);
                 }
+            }
+
+            int chunksSize = chunks.size();
+            int[] shuffledArray = RealmUtils.shuffleArray(chunksSize);
+            for (int i = 0; i < chunksSize / 2; i++) {
+                chunks.get(shuffledArray[i]).setPosition(shuffledArray[chunksSize - i - 1]);
+                chunks.get(shuffledArray[chunksSize - i - 1]).setPosition(shuffledArray[i]);
             }
             return chunks;
         }

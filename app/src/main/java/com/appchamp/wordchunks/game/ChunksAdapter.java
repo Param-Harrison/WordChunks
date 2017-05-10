@@ -16,7 +16,6 @@ import java.util.List;
 
 import static com.appchamp.wordchunks.util.Constants.CHUNK_STATE_GONE;
 import static com.appchamp.wordchunks.util.Constants.CHUNK_STATE_NORMAL;
-import static com.appchamp.wordchunks.util.Constants.NUMBER_OF_CHUNKS;
 
 
 public class ChunksAdapter extends RecyclerView.Adapter<ChunksAdapter.ViewHolder> {
@@ -82,7 +81,7 @@ public class ChunksAdapter extends RecyclerView.Adapter<ChunksAdapter.ViewHolder
 
     @Override
     public int getItemCount() {
-        return NUMBER_OF_CHUNKS;
+        return chunks.size();
     }
 
     @Override

@@ -28,78 +28,103 @@
 
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvWords"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        tools:layout_height="150dp"
-        tools:listitem="@layout/item_word" />
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:paddingEnd="10dp"
-        android:paddingStart="10dp">
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="0dp"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvWords"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            tools:layout_height="150dp"
+            tools:listitem="@layout/item_word" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@color/white"
-            android:paddingStart="10dp"
-            android:scrollbars="none">
+            android:orientation="horizontal"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp">
 
-            <TextView
-                android:id="@+id/tvInputChunks"
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:paddingStart="10dp"
+                android:scrollbars="none">
+
+                <TextView
+                    android:id="@+id/tvInputChunks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    tools:text="WORDCHUNKS" />
+
+                <ImageView
+                    android:id="@+id/imgClearIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_gravity="center_vertical"
+                    android:background="#cccccc"
+                    android:paddingEnd="7dp"
+                    android:paddingStart="7dp"
+                    android:src="@drawable/ic_cancel_white_24dp" />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btnSend"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                tools:text="WORDCHUNKS" />
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:backgroundTint="@color/accent"
+                android:text="Send"
+                android:textAllCaps="false" />
 
-            <ImageView
-                android:id="@+id/imgClearIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_gravity="center_vertical"
-                android:background="#cccccc"
-                android:paddingEnd="7dp"
-                android:paddingStart="7dp"
-                android:src="@drawable/ic_cancel_white_24dp" />
+        </LinearLayout>
 
-        </RelativeLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvChunks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            tools:layout_height="200dp"
+            tools:listitem="@layout/item_chunk" />
 
-        <Button
-            android:id="@+id/btnSend"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:backgroundTint="@color/accent"
-            android:text="Send"
-            android:textAllCaps="false" />
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
 
+            <Button
+                android:id="@+id/btnShuffle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/primary"
+                android:text="Shuffle"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btnHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/divider"
+                android:text="Hint"
+                android:textAllCaps="false" />
+        </LinearLayout>
     </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvChunks"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        tools:listitem="@layout/item_chunk" />
-
-    <Button
-        android:id="@+id/btnShuffle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:backgroundTint="@color/primary"
-        android:text="Shuffle"
-        android:textAllCaps="false" />
 
 </LinearLayout>

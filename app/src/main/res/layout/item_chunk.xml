@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:background="#ffffff"
     android:gravity="center"
-    android:layout_margin="5dp"
-    android:orientation="horizontal">
+    android:layout_margin="5dp">
 
     <TextView
         android:id="@+id/tvChunk"
@@ -15,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:textColor="#353535"
-        android:textSize="20sp"
+        android:textSize="@dimen/chunk_textsize"
         tools:text="RER" />
 
 </RelativeLayout>

@@ -16,13 +16,10 @@ public class Constants {
 
     public static final String REALM_FIELD_ID = "id";
     public static final String REALM_FIELD_LEVEL_ID = "levelId";
-    public static final String REALM_FIELD_POSITION_IN_GRID = "positionInGrid";
     public static final String REALM_FIELD_STATE = "state";
 
     public static final int WORDS_GRID_NUM = 2;
     public static final int CHUNKS_GRID_NUM = 4;
-    public static final int NUMBER_OF_CHUNKS = 20;
-    public static final int NUMBER_OF_WORDS = 6;
 
     // States of chunks
     public static final int CHUNK_STATE_NORMAL = 0;

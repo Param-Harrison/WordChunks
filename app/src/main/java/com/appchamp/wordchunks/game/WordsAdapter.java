@@ -9,12 +9,10 @@ import android.widget.TextView;
 
 import com.appchamp.wordchunks.R;
 import com.appchamp.wordchunks.models.realm.Word;
-import com.appchamp.wordchunks.util.RealmUtils;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
 
-import static com.appchamp.wordchunks.util.Constants.NUMBER_OF_WORDS;
 import static com.appchamp.wordchunks.util.Constants.WORD_STATE_NOT_SOLVED;
 import static com.appchamp.wordchunks.util.Constants.WORD_STATE_SOLVED;
 
@@ -64,13 +62,11 @@ public class WordsAdapter extends RecyclerView.Adapter<WordsAdapter.ViewHolder> 
             holder.tvWord.setText(word.getWord());
             holder.tvWord.setTextColor(holder.itemView.getResources().getColor(R.color.accent));
         }
-        String wordNum = RealmUtils.getWordNum(i);
-        holder.tvWordNum.setText(wordNum);
     }
 
     @Override
     public int getItemCount() {
-        return NUMBER_OF_WORDS;
+        return words.size();
     }
 
     @Override
@@ -80,13 +76,11 @@ public class WordsAdapter extends RecyclerView.Adapter<WordsAdapter.ViewHolder> 
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvWordNum;
         TextView tvWord;
 
         ViewHolder(View itemView) {
             super(itemView);
 
-            tvWordNum = (TextView) itemView.findViewById(R.id.tvWordNum);
             tvWord = (TextView) itemView.findViewById(R.id.tvWord);
         }
     }

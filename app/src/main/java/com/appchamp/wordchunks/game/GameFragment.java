@@ -29,16 +29,14 @@ import static com.appchamp.wordchunks.util.Constants.CHUNKS_GRID_NUM;
 import static com.appchamp.wordchunks.util.Constants.CHUNK_STATE_GONE;
 import static com.appchamp.wordchunks.util.Constants.CHUNK_STATE_NORMAL;
 import static com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID;
-import static com.appchamp.wordchunks.util.Constants.NUMBER_OF_CHUNKS;
 import static com.appchamp.wordchunks.util.Constants.WORDS_GRID_NUM;
 import static com.appchamp.wordchunks.util.Constants.WORD_STATE_SOLVED;
 
 
-public class GameFragment extends Fragment {//implements GameContract.View {
+public class GameFragment extends Fragment {
 
     private Realm realm;
     private DatabaseHelperRealm db;
-    //private GameContract.Presenter presenter;
 
     private RecyclerView rvWords;
     private RecyclerView rvChunks;
@@ -47,6 +45,7 @@ public class GameFragment extends Fragment {//implements GameContract.View {
     private ImageView imgClearIcon;
     private Button btnSend;
     private Button btnShuffle;
+    private Button btnHint;
 
     private WordsAdapter wordsAdapter;
     private ChunksAdapter chunksAdapter;
@@ -63,17 +62,12 @@ public class GameFragment extends Fragment {//implements GameContract.View {
         return new GameFragment();
     }
 
-//    @Override
-//    public void setPresenter(@NonNull GameContract.Presenter presenter) {
-//        this.presenter = presenter;
-//    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_game, container, false);
         // Setup initial views
+        View root = inflater.inflate(R.layout.fragment_game, container, false);
         tvLevelClueTitle = (TextView) root.findViewById(R.id.tvLevelClueTitle);
         rvWords = (RecyclerView) root.findViewById(R.id.rvWords);
         rvChunks = (RecyclerView) root.findViewById(R.id.rvChunks);
@@ -81,6 +75,7 @@ public class GameFragment extends Fragment {//implements GameContract.View {
         imgClearIcon = (ImageView) root.findViewById(R.id.imgClearIcon);
         btnSend = (Button) root.findViewById(R.id.btnSend);
         btnShuffle = (Button) root.findViewById(R.id.btnShuffle);
+        btnHint = (Button) root.findViewById(R.id.btnHint);
         return root;
     }
 
@@ -101,18 +96,13 @@ public class GameFragment extends Fragment {//implements GameContract.View {
         initChunksAdapter(chunks);
         updateInputChunksTextView();
 
-        // Clicks methods
+        // Sets click listeners
         imgClearIcon.setOnClickListener(this::onClearIconClick);
         btnSend.setOnClickListener(this::onSendClick);
         btnShuffle.setOnClickListener(this::onShuffleClick);
-        btnShuffle.callOnClick();
+        //btnShuffle.callOnClick();
+        btnHint.setOnClickListener(this::onHintClick);
     }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        presenter.start();
-//    }
 
     @Override
     public void onDestroy() {
@@ -154,14 +144,19 @@ public class GameFragment extends Fragment {//implements GameContract.View {
     }
 
     private void onShuffleClick(View v) {
-        int[] a = RealmUtils.shuffleArray();
+        int chunksSize = chunks.size();
+        int[] a = RealmUtils.shuffleArray(chunksSize);
         realm.executeTransaction(bgRealm -> {
-            for (int i = 0; i < NUMBER_OF_CHUNKS / 2; i++) {
-                chunks.get(a[i]).setPosition(a[NUMBER_OF_CHUNKS - i - 1]);
-                chunks.get(a[NUMBER_OF_CHUNKS - i - 1]).setPosition(a[i]);
+            for (int i = 0; i < chunksSize / 2; i++) {
+                chunks.get(a[i]).setPosition(a[chunksSize - i - 1]);
+                chunks.get(a[chunksSize - i - 1]).setPosition(a[i]);
             }
         });
         chunksAdapter.notifyDataSetChanged();
+    }
+
+    private void onHintClick(View v) {
+
     }
 
     private void clearChunksStates() {
@@ -203,6 +198,7 @@ public class GameFragment extends Fragment {//implements GameContract.View {
         List<Chunk> selectedChunks = db.findSelectedChunksByLevelIdSorted(realm, levelId);
         if (selectedChunks.size() != 0) {
             String solvedWordId = getSolvedWordId(words, selectedChunks);
+            // If the word was solved
             if (!solvedWordId.equals("")) {
                 realm.executeTransaction(bgRealm -> {
                     Word solvedWord = db.findWordById(bgRealm, solvedWordId);
@@ -210,6 +206,10 @@ public class GameFragment extends Fragment {//implements GameContract.View {
                     wordsAdapter.notifyItemChanged(solvedWord.getPosition());
                 });
                 removeSelectedChunks();
+
+                // Check for level finish
+
+
             } else {
                 clearChunksStates();
             }
@@ -233,7 +233,7 @@ public class GameFragment extends Fragment {//implements GameContract.View {
     /**
      * Goes through the list of words to be guessed, and matches the input chunks with word chunks.
      *
-     * @param words the list of words to be solved.
+     * @param words          the list of words to be solved.
      * @param selectedChunks the list of inputted chunks.
      * @return id of the solved word in the grid, and "" if none was solved.
      */
