@@ -1,4 +1,4 @@
-package com.appchamp.wordchunks.main;
+package com.appchamp.wordchunks.ui.main;
 
 
 import android.content.Intent;
@@ -8,16 +8,14 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.appchamp.wordchunks.R;
 import com.appchamp.wordchunks.data.DatabaseHelperRealm;
-import com.appchamp.wordchunks.game.GameActivity;
+import com.appchamp.wordchunks.ui.game.GameActivity;
 import com.appchamp.wordchunks.util.AnimUtils;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import io.realm.Realm;
-import xyz.hanks.library.SmallBang;
 
 import static com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID;
 import static com.appchamp.wordchunks.util.Constants.LEVEL_STATE_CURRENT;
@@ -25,7 +23,7 @@ import static com.appchamp.wordchunks.util.Constants.LEVEL_STATE_CURRENT;
 
 public class MainFragment extends Fragment {
 
-    private SmallBang smallBang;
+    //private SmallBang smallBang;
 
     private SlidingMenu menu;
 
@@ -42,11 +40,11 @@ public class MainFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        smallBang = SmallBang.attach2Window(getActivity());
+       // smallBang = SmallBang.attach2Window(getActivity());
 
-        ImageView kittyView = (ImageView) rootView.findViewById(R.id.imgKitty);
-        kittyView.setOnClickListener(v -> smallBang.bang(v));
-        kittyView.callOnClick();
+        //ImageView kittyView = (ImageView) rootView.findViewById(R.id.imgKitty);
+        //kittyView.setOnClickListener(v -> smallBang.bang(v));
+       // kittyView.callOnClick();
 
         initLeftMenu();
 

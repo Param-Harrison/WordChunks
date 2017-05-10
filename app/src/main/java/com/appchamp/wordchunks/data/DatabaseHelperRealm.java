@@ -14,6 +14,7 @@ import static com.appchamp.wordchunks.util.Constants.CHUNK_STATE_NORMAL;
 import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_ID;
 import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_LEVEL_ID;
 import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_STATE;
+import static com.appchamp.wordchunks.util.Constants.WORD_STATE_NOT_SOLVED;
 
 
 public class DatabaseHelperRealm {
@@ -93,5 +94,16 @@ public class DatabaseHelperRealm {
                 .where(Word.class)
                 .equalTo(REALM_FIELD_ID, wordId)
                 .findFirst();
+    }
+
+    public long countNotSolvedWords(Realm realm, String levelId) {
+        return realm
+                .where(Level.class)
+                .equalTo(REALM_FIELD_ID, levelId)
+                .findFirst()
+                .getWords()
+                .where()
+                .equalTo(REALM_FIELD_STATE, WORD_STATE_NOT_SOLVED)
+                .count();
     }
 }

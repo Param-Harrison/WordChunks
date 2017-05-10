@@ -1,4 +1,4 @@
-package com.appchamp.wordchunks.main;
+package com.appchamp.wordchunks.ui.main;
 
 import android.content.Context;
 import android.content.SharedPreferences;

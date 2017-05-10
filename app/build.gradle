@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 25
@@ -73,3 +72,5 @@ dependencies {
     compile 'io.realm:android-adapters:2.0.0'
 
 }
+
+apply plugin: 'realm-android'
