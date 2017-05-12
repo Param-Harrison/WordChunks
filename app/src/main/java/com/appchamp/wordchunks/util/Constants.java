@@ -15,6 +15,7 @@ public class Constants {
     public static final String EXTRA_LEVEL_ID = "EXTRA_LEVEL_ID";
 
     public static final String REALM_FIELD_ID = "id";
+    public static final String REALM_FIELD_PACK_ID = "packId";
     public static final String REALM_FIELD_LEVEL_ID = "levelId";
     public static final String REALM_FIELD_STATE = "state";
 

@@ -10,6 +10,7 @@ public class Level extends RealmObject {
 
     @PrimaryKey
     private String id;
+    private String packId;
     @Index
     private String clue;
     @Index
@@ -23,6 +24,14 @@ public class Level extends RealmObject {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getPackId() {
+        return packId;
+    }
+
+    public void setPackId(String packId) {
+        this.packId = packId;
     }
 
     public String getClue() {
@@ -56,4 +65,5 @@ public class Level extends RealmObject {
     public void setChunks(RealmList<Chunk> chunks) {
         this.chunks = chunks;
     }
+
 }

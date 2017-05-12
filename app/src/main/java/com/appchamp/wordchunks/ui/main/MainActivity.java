@@ -28,10 +28,8 @@ import io.realm.RealmList;
 
 import static com.appchamp.wordchunks.util.Constants.CHUNKS_SEPARATOR;
 import static com.appchamp.wordchunks.util.Constants.LEVEL_STATE_CURRENT;
-import static com.appchamp.wordchunks.util.Constants.LEVEL_STATE_LOCKED;
 import static com.appchamp.wordchunks.util.Constants.PACK_STATE_CURRENT;
 import static com.appchamp.wordchunks.util.Constants.PREFS_REALM_CREATE_OBJECTS;
-import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_STATE;
 import static com.appchamp.wordchunks.util.Constants.WORDS_SEPARATOR;
 import static com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFERENCES;
 import static com.appchamp.wordchunks.util.RealmUtils.getUUID;
@@ -175,6 +173,7 @@ public class MainActivity extends AppCompatActivity {
             for (LevelPojo lvl : levelPojoList) {
                 Level level = realm.createObject(Level.class, getUUID());
                 level.setClue(lvl.getClue());
+                level.setPackId(pack.getId());
                 String wordsJson = lvl.getWords();
 
                 RealmList<Word> wordsRealm = refactorIntoWords(realm, wordsJson);
@@ -250,10 +249,6 @@ public class MainActivity extends AppCompatActivity {
             pack.setState(PACK_STATE_CURRENT);
             Level level = realm.where(Level.class).findFirst();
             level.setState(LEVEL_STATE_CURRENT);
-            realm.where(Level.class)
-                    .equalTo(REALM_FIELD_STATE, LEVEL_STATE_LOCKED)
-                    .findFirst()
-                    .setState(LEVEL_STATE_CURRENT);
         }
     }
 }

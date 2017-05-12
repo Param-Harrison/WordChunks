@@ -11,8 +11,10 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 import static com.appchamp.wordchunks.util.Constants.CHUNK_STATE_NORMAL;
+import static com.appchamp.wordchunks.util.Constants.LEVEL_STATE_CURRENT;
 import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_ID;
 import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_LEVEL_ID;
+import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_PACK_ID;
 import static com.appchamp.wordchunks.util.Constants.REALM_FIELD_STATE;
 import static com.appchamp.wordchunks.util.Constants.WORD_STATE_NOT_SOLVED;
 
@@ -39,6 +41,13 @@ public class DatabaseHelperRealm {
                 .getId();
     }
 
+    public Pack findPackByState(Realm realm, int state) {
+        return realm
+                .where(Pack.class)
+                .equalTo(REALM_FIELD_STATE, state)
+                .findFirst();
+    }
+
     /**
      * Levels
      */
@@ -55,8 +64,16 @@ public class DatabaseHelperRealm {
                 .where(Level.class)
                 .equalTo(REALM_FIELD_STATE, state)
                 .findAll()
+                .last()
+                .getId();
+    }
+
+    public String findFirstLevelIdByState(Realm realm, int state) {
+        return realm
+                .where(Level.class)
+                .equalTo(REALM_FIELD_STATE, state)
+                .findAll()
                 .first()
-               // .last()
                 .getId();
     }
 
@@ -65,6 +82,24 @@ public class DatabaseHelperRealm {
                 .where(Level.class)
                 .equalTo(REALM_FIELD_ID, levelId)
                 .findFirst();
+    }
+
+    public void resetLevel(Realm realm, String levelId) {
+        Level level = findLevelById(realm, levelId);
+        for (Word word : level.getWords()) {
+            word.setState(WORD_STATE_NOT_SOLVED);
+        }
+        for (Chunk chunk : level.getChunks()) {
+            chunk.setState(CHUNK_STATE_NORMAL);
+        }
+    }
+
+    public long countNotSolvedLevels(Realm realm, String packId) {
+        return realm
+                .where(Level.class)
+                .equalTo(REALM_FIELD_PACK_ID, packId)
+                .equalTo(REALM_FIELD_STATE, LEVEL_STATE_CURRENT)
+                .count();
     }
 
     /**
@@ -106,4 +141,5 @@ public class DatabaseHelperRealm {
                 .equalTo(REALM_FIELD_STATE, WORD_STATE_NOT_SOLVED)
                 .count();
     }
+
 }
