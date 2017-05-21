@@ -52,6 +52,10 @@
             style="@style/DailyButtonStyle" />
 
         <Button
+            android:id="@+id/btnPacks"
+            style="@style/PacksButtonStyle" />
+
+        <Button
             android:id="@+id/btnShop"
             style="@style/ShopButtonStyle" />
 

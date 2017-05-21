@@ -7,7 +7,11 @@ import android.view.animation.AnimationUtils;
 import com.appchamp.wordchunks.R;
 
 
-public class SlideAnimationUtils {
+public final class SlideAnimationUtils {
+
+    private SlideAnimationUtils() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     /**
      * Animates a view so that it slides in from the left of it's container.

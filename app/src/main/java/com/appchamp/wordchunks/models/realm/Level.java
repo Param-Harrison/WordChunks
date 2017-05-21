@@ -10,9 +10,12 @@ public class Level extends RealmObject {
 
     @PrimaryKey
     private String id;
+    @Index
     private String packId;
     @Index
     private String clue;
+    @Index
+    private String fact;
     @Index
     private int state;  // 0 = locked, 1 = current, 2 = finished
     private RealmList<Word> words;
@@ -40,6 +43,14 @@ public class Level extends RealmObject {
 
     public void setClue(String clue) {
         this.clue = clue;
+    }
+
+    public String getFact() {
+        return fact;
+    }
+
+    public void setFact(String fact) {
+        this.fact = fact;
     }
 
     public int getState() {

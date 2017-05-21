@@ -1,12 +1,13 @@
 package com.appchamp.wordchunks.models.pojo;
 
 
-public class LevelPojo {
+public class LevelJson {
 
     private String clue;
+    private String fact;
     private String words;
 
-    public LevelPojo() {
+    public LevelJson() {
         // no-args constructor
     }
 
@@ -14,7 +15,12 @@ public class LevelPojo {
         return clue;
     }
 
+    public String getFact() {
+        return fact;
+    }
+
     public String getWords() {
         return words;
     }
+
 }

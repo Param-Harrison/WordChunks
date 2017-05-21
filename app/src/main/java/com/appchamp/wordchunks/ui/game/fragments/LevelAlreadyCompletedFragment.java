@@ -1,4 +1,4 @@
-package com.appchamp.wordchunks.ui.game;
+package com.appchamp.wordchunks.ui.game.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,31 +10,30 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.appchamp.wordchunks.R;
+import com.appchamp.wordchunks.ui.game.listeners.OnBackToLevelsListener;
 
 
-public class LevelSolvedFragment extends Fragment {
+public class LevelAlreadyCompletedFragment extends Fragment {
 
-    OnNextLevelListener callback;
+    private OnBackToLevelsListener callback;
 
-    public LevelSolvedFragment() {
+    public LevelAlreadyCompletedFragment() {
+        // Requires empty public constructor
     }
 
-    public static LevelSolvedFragment newInstance() {
-        return new LevelSolvedFragment();
-    }
-
-    public interface OnNextLevelListener {
-        void onNextLevelSelected();
+    public static LevelAlreadyCompletedFragment newInstance() {
+        return new LevelAlreadyCompletedFragment();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_level_solved, container, false);
-        Button btnNextLevel = (Button) root.findViewById(R.id.btnNextLevel);
-        btnNextLevel.setOnClickListener(
-                v -> callback.onNextLevelSelected());
+        View root = inflater.inflate(
+                R.layout.frag_level_already_solved, container, false);
+        Button btnBackToLevels = (Button) root.findViewById(R.id.btnBackToLevels);
+        btnBackToLevels.setOnClickListener(
+                v -> callback.onBackToLevelsSelected());
         return root;
     }
 
@@ -44,10 +43,10 @@ public class LevelSolvedFragment extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            callback = (OnNextLevelListener) context;
+            callback = (OnBackToLevelsListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement OnHeadlineSelectedListener");
+                    + " must implement OnBackToLevelsListener");
         }
     }
 

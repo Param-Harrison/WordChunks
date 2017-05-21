@@ -42,6 +42,14 @@
         <item name="android:textColor">#007448</item>
     </style>
 
+    <style name="PacksButtonStyle" parent="MainButtonStyle">
+        <item name="android:background">@drawable/btn_packs_shape</item>
+        <item name="android:drawableStart">@drawable/ic_shopping_cart_white_24dp</item>
+        <item name="android:drawableTint">@color/primary</item>
+        <item name="android:text">Packs</item>
+        <item name="android:textColor">@color/primary</item>
+    </style>
+
     <style name="ShopButtonStyle" parent="MainButtonStyle">
         <item name="android:background">@drawable/btn_shop_shape</item>
         <item name="android:drawableStart">@drawable/ic_shopping_cart_white_24dp</item>

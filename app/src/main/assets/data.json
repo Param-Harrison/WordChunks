@@ -4,33 +4,13 @@
     "levels": [
       {
         "clue": "body parts",
-        "words": "BRE,AST"
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
       },
       {
-        "clue": "people",
-        "words": "FO,RE"
-      },
-      {
-        "clue": "animals",
-        "words": "FING,ERS"
-      }
-    ]
-  },
-  {
-    "title": "pack2",
-    "levels": [
-      {
-        "clue": "animals",
-        "words": "FO,RE,HE,AD BR,EA,ST EY,EB,ROW ST,OM,ACH SH,OU,LD,ER FI,NG,ERS"
-      }
-    ]
-  },
-  {
-    "title": "pack3",
-    "levels": [
-      {
-        "clue": "people",
-        "words": "FO,RE,HE,AD BR,EA,ST EY,EB,ROW ST,OM,ACH SH,OU,LD,ER FI,NG,ERS"
+        "clue": "anumals",
+        "fact": "fact",
+        "words": "DO,G"
       }
     ]
   }

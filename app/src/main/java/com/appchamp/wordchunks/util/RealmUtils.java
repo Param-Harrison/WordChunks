@@ -4,7 +4,11 @@ import java.util.Random;
 import java.util.UUID;
 
 
-public class RealmUtils {
+public final class RealmUtils {
+
+    private RealmUtils() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     /**
      * Returns a randomly generated id used with Realm objects, it is basically for the navigation

@@ -1,7 +1,7 @@
 package com.appchamp.wordchunks.ui.main;
 
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,14 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.appchamp.wordchunks.R;
-import com.appchamp.wordchunks.data.DatabaseHelperRealm;
-import com.appchamp.wordchunks.ui.game.GameActivity;
+import com.appchamp.wordchunks.data.LevelsRealmHelper;
 import com.appchamp.wordchunks.util.AnimUtils;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import io.realm.Realm;
 
-import static com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID;
 import static com.appchamp.wordchunks.util.Constants.LEVEL_STATE_CURRENT;
 
 
@@ -27,8 +25,7 @@ public class MainFragment extends Fragment {
 
     private SlidingMenu menu;
 
-    private DatabaseHelperRealm db;
-
+    private OnPlayClickListener callback;
 
     static MainFragment newInstance() {
         return new MainFragment();
@@ -38,13 +35,13 @@ public class MainFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        View rootView = inflater.inflate(R.layout.frag_main, container, false);
 
-       // smallBang = SmallBang.attach2Window(getActivity());
+        // smallBang = SmallBang.attach2Window(getActivity());
 
         //ImageView kittyView = (ImageView) rootView.findViewById(R.id.imgKitty);
         //kittyView.setOnClickListener(v -> smallBang.bang(v));
-       // kittyView.callOnClick();
+        // kittyView.callOnClick();
 
         initLeftMenu();
 
@@ -53,30 +50,61 @@ public class MainFragment extends Fragment {
             menu.toggle();
         });
 
-        db = new DatabaseHelperRealm();
-        rootView.findViewById(R.id.btnPlay).setOnClickListener(v -> startGameActivity());
-
-        rootView.findViewById(R.id.btnDaily).setOnClickListener(v -> {
-            // todo daily puzzle
-        });
-
-        rootView.findViewById(R.id.btnShop).setOnClickListener(v -> {
-            // todo shop
-        });
+        rootView.findViewById(R.id.btnPlay).setOnClickListener(this::onPlayClick);
+        rootView.findViewById(R.id.btnDaily).setOnClickListener(this::onDailyClick);
+        rootView.findViewById(R.id.btnPacks).setOnClickListener(this::onPacksClick);
+        rootView.findViewById(R.id.btnShop).setOnClickListener(this::onShopClick);
         return rootView;
     }
 
-    private void startGameActivity() {
-        Intent intent = new Intent(getActivity(), GameActivity.class);
+    private void onPacksClick(View v) {
+        callback.showPacksActivity();
+    }
 
+    private void onShopClick(View v) {
+    }
+
+    private void onDailyClick(View v) {
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        // This makes sure that the container activity has implemented
+        // the callback interface. If not, it throws an exception
+        try {
+            callback = (OnPlayClickListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString()
+                    + " must implement OnPlayClickListener");
+        }
+    }
+
+    private void onPlayClick(View v) {
         Realm realm = Realm.getDefaultInstance();
-        // Finds _last_ current level id to pass by the Intent into GamesActivity.
-        String levelId = db.findLastLevelIdByState(realm, LEVEL_STATE_CURRENT);
+        String levelId = getLastCurrentLevelId(realm);
         realm.close();
-        intent.putExtra(EXTRA_LEVEL_ID, levelId);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        getActivity().overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+        if (levelId != null) {
+            callback.startGameActivity(levelId);
+        } else {
+            // If all levels and packs were solved, showing the fragment
+            callback.showGameFinishedToast();
+        }
+    }
+
+    private String getLastCurrentLevelId(Realm realm) {
+
+        long countLevelsByCurrentState =
+                LevelsRealmHelper.countLevelsByState(realm, LEVEL_STATE_CURRENT);
+
+        // If not all levels were solved
+        if (countLevelsByCurrentState != 0) {
+            // Getting the last "current" level id
+            return LevelsRealmHelper.findLastLevelByState(realm, LEVEL_STATE_CURRENT).getId();
+        } else {
+            // If all levels and packs were solved, showing the fragment
+            return null;
+        }
     }
 
     private void initLeftMenu() {
@@ -89,6 +117,6 @@ public class MainFragment extends Fragment {
         menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
         menu.setFadeDegree(0.35f);
         menu.attachToActivity(getActivity(), SlidingMenu.SLIDING_CONTENT);
-        menu.setMenu(R.layout.settings_menu);
+        menu.setMenu(R.layout.frag_menu);
     }
 }

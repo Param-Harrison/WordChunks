@@ -1,7 +1,11 @@
 package com.appchamp.wordchunks.util;
 
 
-public class Constants {
+public final class Constants {
+
+    private Constants() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     public static final String JSON_FILE_NAME = "data.json";
     public static final String CHARSET_NAME = "UTF-8";
@@ -24,13 +28,11 @@ public class Constants {
 
     // States of chunks
     public static final int CHUNK_STATE_NORMAL = 0;
-
     public static final int CHUNK_STATE_GONE = -1;
 
     // States of words
     public static final int WORD_STATE_NOT_SOLVED = 0;
     public static final int WORD_STATE_SOLVED = 1;
-    public static final int WORD_STATE_HINT = 2;
 
     // States of packs
     public static final int PACK_STATE_LOCKED = 0;

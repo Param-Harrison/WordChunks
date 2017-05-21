@@ -3,13 +3,13 @@ package com.appchamp.wordchunks.models.pojo;
 import java.util.List;
 
 
-public class PackPojo {
+public class PackJson {
 
     private String title;
 
-    private List<LevelPojo> levels;
+    private List<LevelJson> levels;
 
-    public PackPojo() {
+    public PackJson() {
         // no-args constructor
     }
 
@@ -17,7 +17,7 @@ public class PackPojo {
         return title;
     }
 
-    public List<LevelPojo> getLevels() {
+    public List<LevelJson> getLevels() {
         return levels;
     }
 }

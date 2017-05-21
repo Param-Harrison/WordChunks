@@ -8,8 +8,11 @@ import android.view.animation.AnimationUtils;
 
 import com.appchamp.wordchunks.R;
 
-public class AnimUtils {
+public final class AnimUtils {
 
+    private AnimUtils() {
+        throw new UnsupportedOperationException("u can't instantiate me...");
+    }
 
     public static void startAnimationFadeIn(Context context, View v) {
         Animation animFadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in);
