@@ -4,7 +4,6 @@
     android:id="@+id/contentGame"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/settings_screen_bg"
     android:orientation="vertical">
 
     <RelativeLayout

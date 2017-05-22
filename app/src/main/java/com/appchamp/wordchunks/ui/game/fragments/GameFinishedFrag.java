@@ -10,15 +10,15 @@ import android.view.ViewGroup;
 import com.appchamp.wordchunks.R;
 
 
-public class GameFinishedFragment extends Fragment {
+public class GameFinishedFrag extends Fragment {
 
-    public GameFinishedFragment() {
+    public GameFinishedFrag() {
         // Requires empty public constructor
     }
 
 
-    public static GameFinishedFragment newInstance() {
-        return new GameFinishedFragment();
+    public static GameFinishedFrag newInstance() {
+        return new GameFinishedFrag();
     }
 
     @Nullable

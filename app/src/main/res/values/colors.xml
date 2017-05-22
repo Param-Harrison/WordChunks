@@ -20,6 +20,26 @@
 
     <!-- Main colors -->
     <color name="background_main">#2d2d2d</color>
+    <color name="btn_background_main">#232323</color>
 
+    <color name="btn_txt_main">#dadada</color>
+    <color name="btn_txt_play_pressed">#2ba370</color>
+    <color name="btn_txt_daily_pressed">#dbad55</color>
+    <color name="btn_txt_packs_pressed">#da5c53</color>
+    <color name="btn_txt_store_pressed">#705ed4</color>
+
+    <color name="btn_rect_play">#7cdf95</color>
+    <color name="btn_rect_play_pressed">#c0ffd0</color>
+
+    <color name="btn_rect_daily">#ffeba3</color>
+    <color name="btn_rect_daily_pressed">#fff5d3</color>
+
+    <color name="btn_rect_packs">#f89d81</color>
+    <color name="btn_rect_packs_pressed">#f7b5a1</color>
+
+    <color name="btn_rect_store">#a494ff</color>
+    <color name="btn_rect_store_pressed">#bdb1ff</color>
+
+    <color name="btn_rect_stroke">#131313</color>
 
 </resources>

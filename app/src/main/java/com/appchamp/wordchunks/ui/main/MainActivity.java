@@ -22,10 +22,11 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID;
 import static com.appchamp.wordchunks.util.Constants.PREFS_REALM_CREATE_OBJECTS;
-import static com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFERENCES;
+import static com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFS;
 
 
 public class MainActivity extends AppCompatActivity implements OnPlayClickListener {
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements OnPlayClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_main);
 
-        SharedPreferences sp = getSharedPreferences(WORD_CHUNKS_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences(WORD_CHUNKS_PREFS, Context.MODE_PRIVATE);
         boolean isRealmFileExists = sp.getBoolean(PREFS_REALM_CREATE_OBJECTS, true);
         if (isRealmFileExists) {
             // update an existing realm objects here
@@ -45,6 +46,11 @@ public class MainActivity extends AppCompatActivity implements OnPlayClickListen
             // create realm objects for the first time
             startImport();
         }
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     private void startImport() {
@@ -82,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements OnPlayClickListen
         ActivityUtils.addFragment(
                 getSupportFragmentManager(),
                 MainFragment.newInstance(),
-                R.id.contentFrame);
+                R.id.flActMain);
     }
 
     @Override

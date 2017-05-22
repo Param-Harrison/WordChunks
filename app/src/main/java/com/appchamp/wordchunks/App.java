@@ -17,7 +17,7 @@ import io.realm.RealmConfiguration;
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 import static com.appchamp.wordchunks.util.Constants.PREFS_REALM_CREATE_OBJECTS;
-import static com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFERENCES;
+import static com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFS;
 
 
 public class App extends Application {
@@ -59,7 +59,7 @@ public class App extends Application {
 
     private void initCalligraphy() {
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/Roboto-RobotoRegular.ttf")
+                .setDefaultFontPath("fonts/nunitoregular.ttf")
                 .setFontAttrId(R.attr.fontPath)
                 .build()
         );
@@ -76,7 +76,7 @@ public class App extends Application {
     }
 
     private void isRealmExists(RealmConfiguration config) {
-        SharedPreferences sp = getSharedPreferences(WORD_CHUNKS_PREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences sp = getSharedPreferences(WORD_CHUNKS_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         // Better this approach, because the user could clear cache data, and DB will be gone!
         // If Realm DB file exists.

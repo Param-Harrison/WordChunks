@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.appchamp.wordchunks.R;
 import com.appchamp.wordchunks.data.LevelsRealmHelper;
-import com.appchamp.wordchunks.util.AnimUtils;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import io.realm.Realm;
@@ -45,26 +44,14 @@ public class MainFragment extends Fragment {
 
         initLeftMenu();
 
-        rootView.findViewById(R.id.imgSettingsIcon).setOnClickListener(v -> {
-            AnimUtils.startAnimationFadeIn(getActivity(), v);
-            menu.toggle();
-        });
+        rootView.findViewById(R.id.imgSettingsIcon).setOnClickListener((View v) -> menu.toggle());
+        rootView.findViewById(R.id.imgShareIcon).setOnClickListener(this::onShareClick);
 
         rootView.findViewById(R.id.btnPlay).setOnClickListener(this::onPlayClick);
         rootView.findViewById(R.id.btnDaily).setOnClickListener(this::onDailyClick);
         rootView.findViewById(R.id.btnPacks).setOnClickListener(this::onPacksClick);
-        rootView.findViewById(R.id.btnShop).setOnClickListener(this::onShopClick);
+        rootView.findViewById(R.id.btnStore).setOnClickListener(this::onStoreClick);
         return rootView;
-    }
-
-    private void onPacksClick(View v) {
-        callback.showPacksActivity();
-    }
-
-    private void onShopClick(View v) {
-    }
-
-    private void onDailyClick(View v) {
     }
 
     @Override
@@ -90,6 +77,19 @@ public class MainFragment extends Fragment {
             // If all levels and packs were solved, showing the fragment
             callback.showGameFinishedToast();
         }
+    }
+
+    private void onPacksClick(View v) {
+        callback.showPacksActivity();
+    }
+
+    private void onStoreClick(View v) {
+    }
+
+    private void onDailyClick(View v) {
+    }
+
+    private void onShareClick(View v) {
     }
 
     private String getLastCurrentLevelId(Realm realm) {

@@ -12,7 +12,7 @@ public final class Constants {
     public static final String WORDS_SEPARATOR = " ";
     public static final String CHUNKS_SEPARATOR = ",";
 
-    public static final String WORD_CHUNKS_PREFERENCES = "WORD_CHUNKS_PREFERENCES";
+    public static final String WORD_CHUNKS_PREFS = "WORD_CHUNKS_PREFS";
     public static final String PREFS_REALM_CREATE_OBJECTS = "PREFS_REALM_CREATE_OBJECTS";
 
     public static final String EXTRA_PACK_ID = "EXTRA_PACK_ID";

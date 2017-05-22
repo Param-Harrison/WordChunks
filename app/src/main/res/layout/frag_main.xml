@@ -1,64 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imgSettingsIcon"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_gravity="start"
-        android:layout_margin="12dp"
-        android:contentDescription="@string/settings_hint"
-        android:src="@drawable/ic_settings_white_24dp" />
-
-    <!--
-    Kitty image from:
-    http://randomrobskii.deviantart.com/art/Kitty-Cat-408720148
-    -->
-    <ImageView
-        android:id="@+id/imgKitty"
-        android:layout_width="160dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="2"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/cat" />
-
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:text="@string/app_name"
-        android:textAlignment="center"
-        android:textColor="#ffffff"
-        android:textSize="24sp" />
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imgSettingsIcon"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_alignParentStart="true"
+            android:layout_margin="12dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/settings_hint"
+            android:src="@drawable/ic_settings_white_24dp" />
+
+        <ImageView
+            android:id="@+id/imgShareIcon"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="12dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/share_hint"
+            android:src="@drawable/ic_share_white_24dp" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_weight="1"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/logo" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="center_horizontal"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:gravity="center_horizontal|bottom"
         android:orientation="vertical">
 
-        <Button
+        <com.appchamp.wordchunks.ui.main.CustomButton
             android:id="@+id/btnPlay"
-            style="@style/PlayButtonStyle" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:padding="3dp"
+            app:cb_bg="@drawable/btn_play_rect"
+            app:cb_color_title="@color/play_txt_color"
+            app:cb_icon="@drawable/ic_action_play"
+            app:cb_title="@string/play_btn_txt" />
 
-        <Button
+        <com.appchamp.wordchunks.ui.main.CustomButton
             android:id="@+id/btnDaily"
-            style="@style/DailyButtonStyle" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:padding="3dp"
+            app:cb_bg="@drawable/btn_daily_rect"
+            app:cb_color_title="@color/daily_txt_color"
+            app:cb_icon="@drawable/ic_action_puzzle"
+            app:cb_title="@string/daily_puzzle_btn_txt" />
 
-        <Button
+        <com.appchamp.wordchunks.ui.main.CustomButton
             android:id="@+id/btnPacks"
-            style="@style/PacksButtonStyle" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:padding="3dp"
+            app:cb_bg="@drawable/btn_packs_rect"
+            app:cb_color_title="@color/packs_txt_color"
+            app:cb_icon="@drawable/ic_action_packs"
+            app:cb_title="@string/all_packs_btn_txt" />
 
-        <Button
-            android:id="@+id/btnShop"
-            style="@style/ShopButtonStyle" />
+        <com.appchamp.wordchunks.ui.main.CustomButton
+            android:id="@+id/btnStore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:padding="3dp"
+            app:cb_bg="@drawable/btn_store_rect"
+            app:cb_color_title="@color/store_txt_color"
+            app:cb_icon="@drawable/ic_action_store"
+            app:cb_title="@string/store_btn_txt" />
 
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal">
+
+        <ImageView
+            android:id="@+id/imgCat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_cat_sleep" />
+
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:paddingBottom="40dp"
+            android:layout_toEndOf="@+id/imgCat"
+            android:src="@drawable/zzz" />
+
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/imgCat"
+            android:src="@drawable/zzz" />
+
+    </RelativeLayout>
+
 
 </LinearLayout>

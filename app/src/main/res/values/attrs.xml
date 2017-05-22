@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="CustomButton">
+        <attr name="cb_title" format="string" />
+        <attr name="cb_icon" format="reference" />
+        <attr name="cb_bg" format="reference" />
+        <attr name="cb_color_title" format="color" />
+
+    </declare-styleable>
+
+</resources>
