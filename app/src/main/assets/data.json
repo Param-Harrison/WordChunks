@@ -1,6 +1,23 @@
 [
   {
-    "title": "pack1",
+    "title": "AZURE",
+    "color": "#00bdbd",
+    "levels": [
+      {
+        "clue": "body parts",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      },
+      {
+        "clue": "anumals",
+        "fact": "fact",
+        "words": "DO,G"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
     "levels": [
       {
         "clue": "body parts",

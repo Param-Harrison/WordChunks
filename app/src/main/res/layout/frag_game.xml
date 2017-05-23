@@ -15,7 +15,7 @@
             android:layout_height="match_parent"
             android:contentDescription="@string/back_hint"
             android:onClick="onBackArrowClick"
-            android:src="@drawable/ic_keyboard_arrow_left_white_48dp" />
+            android:src="@drawable/ic_action_back" />
 
         <TextView
             android:id="@+id/tvLevelClueTitle"

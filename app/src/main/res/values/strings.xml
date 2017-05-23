@@ -10,15 +10,18 @@
     <string name="store_btn_txt">STORE</string>
 
     <string name="settings_hint">settings</string>
-
-
-    <string name="title_select_level_pack">select level pack</string>
     <string name="back_hint">back</string>
-    <string name="title_select_level">select level</string>
+
+    <string name="title_select_pack">SELECT PACK</string>
+
+    <string name="title_select_level">SELECT LEVEL</string>
     <string name="number_of_letters">%d letters</string>
-    <string name="number_of_levels">%d levels</string>
-    <string name="level_num">level %d</string>
+    <string name="number_of_levels_locked">%d LEVELS</string>
+    <string name="number_of_levels">%1$d / %2$d</string>
+    <string name="level_num">LEVEL %d</string>
     <string name="send_hint_text">Combine letter groups then hit Send button</string>
     <string name="share_hint">share</string>
+    <string name="sleeping_cat">sleeping cat</string>
+    <string name="list_number">%d.</string>
 
 </resources>

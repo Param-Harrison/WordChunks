@@ -13,6 +13,8 @@ public class Pack extends RealmObject {
     @Index
     private String title;
     @Index
+    private String color;
+    @Index
     private int state;  // 0 = locked, 1 = current, 2 = finished
     private RealmList<Level> levels;
 
@@ -30,6 +32,14 @@ public class Pack extends RealmObject {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public int getState() {

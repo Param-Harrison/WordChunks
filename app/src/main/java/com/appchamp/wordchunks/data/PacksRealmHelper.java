@@ -33,6 +33,7 @@ public final class PacksRealmHelper {
             Pack pack = realm.createObject(Pack.class, RealmUtils.getUUID());
             PackJson packPojo = packJsonList.get(i);
             pack.setTitle(packPojo.getTitle());
+            pack.setColor(packPojo.getColor());
             LevelsRealmHelper.createLevels(realm, pack, packPojo.getLevels());
             packs.add(pack);
         }

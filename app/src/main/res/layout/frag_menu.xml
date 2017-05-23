@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/game_screen_bg"
+    android:background="@drawable/settings_screen_bg"
     android:orientation="vertical"
     android:paddingTop="40dp">
 
@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom|center_horizontal"
-        android:text="v. 1.0.beta"
-        android:paddingBottom="10dp"/>
+        android:paddingBottom="10dp"
+        android:text="v. 1.0.beta" />
 
 </LinearLayout>

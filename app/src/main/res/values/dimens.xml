@@ -2,7 +2,32 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="toolbar_padding">16dp</dimen>
+    <dimen name="toolbar_height">66dp</dimen>
+    <dimen name="toolbar_title_txt_size">18sp</dimen>
+
+    <!-- Custom main button -->
+    <dimen name="cbtn_width">220dp</dimen>
+    <dimen name="cbtn_height">46dp</dimen>
+    <dimen name="cbtn_margin_bottom">7dp</dimen>
+    <dimen name="cbtn_corner_radius">10dp</dimen>
+    <dimen name="cbtn_elevation">2dp</dimen>
+    <dimen name="cbtn_title_padding_end">14dp</dimen>
+    <dimen name="cbtn_title_size">17sp</dimen>
+    <dimen name="cbtn_padding">3dp</dimen>
+
+    <!-- Main Screen -->
+    <dimen name="rl_padding_start">60dp</dimen>
+    <dimen name="cat_img_width">80dp</dimen>
+    <dimen name="zzz1_img_width">60dp</dimen>
+    <dimen name="zzz1_padding_bottom">70dp</dimen>
+    <dimen name="zzz2_img_width">40dp</dimen>
+    <dimen name="zzz2_padding_bottom">40dp</dimen>
+
+    <!-- Packs Screen -->
+    <dimen name="rv_padding_bottom">20dp</dimen>
+
 
     <!-- SP adjusts according the users setting, DP is static -->
     <dimen name="textsize_xlarge">28sp</dimen>

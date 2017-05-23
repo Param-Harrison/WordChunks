@@ -1,6 +1,5 @@
 package com.appchamp.wordchunks.ui.main;
 
-
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.TypedArray;
@@ -12,12 +11,8 @@ import android.widget.TextView;
 
 import com.appchamp.wordchunks.R;
 
-public class CustomButton extends RelativeLayout {
 
-    private String title;
-    private Drawable drawableIcon;
-    private Drawable drawableBg;
-    private ColorStateList colorTxt;
+public class CustomButton extends RelativeLayout {
 
     private TextView txtTitle;
     private ImageView imgIcon;
@@ -48,6 +43,10 @@ public class CustomButton extends RelativeLayout {
                 attrs,
                 R.styleable.CustomButton,
                 0, 0);
+        String title;
+        Drawable drawableIcon;
+        Drawable drawableBg;
+        ColorStateList colorTxt;
         try {
             title = a.getString(R.styleable.CustomButton_cb_title);
             drawableIcon = a.getDrawable(R.styleable.CustomButton_cb_icon);
