@@ -20,9 +20,10 @@
 
     <!-- Main screen colors -->
     <color name="background_main">#2d2d2d</color>
-    <color name="btn_background_main">#232323</color>
+    <color name="btn_background_main">#424242</color>
+    <color name="btn_background_locked">#232323</color>
 
-    <color name="btn_txt_main">#858585</color>
+    <color name="btn_txt_main">#ffffff</color>
     <color name="btn_txt_play_pressed">#2ba370</color>
     <color name="btn_txt_daily_pressed">#dbad55</color>
     <color name="btn_txt_packs_pressed">#da5c53</color>
@@ -43,8 +44,8 @@
     <color name="btn_rect_stroke">#131313</color>
 
     <!-- Packs screen -->
-    <color name="title_txt">#ffffff</color>
-    <color name="pack_number_txt">#7f7f7f</color>
+    <color name="title_txt">#e2e2e2</color>
+    <color name="item_number_txt">#7f7f7f</color>
     <color name="pack_rect_left_locked">#3d3d3d</color>
     <color name="pack_title_txt_locked">#3d3d3d</color>
     <color name="pack_num_of_levels_txt">#dddddd</color>

@@ -73,6 +73,7 @@ dependencies {
 
     compile 'io.realm:android-adapters:2.0.0'
 
+    // https://github.com/koral--/android-gif-drawable
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
 }
 

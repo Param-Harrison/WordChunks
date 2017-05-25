@@ -1,20 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rlWord"
+    android:id="@+id/cvWord"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/secondary_text"
-    android:gravity="center"
-    android:layout_margin="5dp">
+    android:layout_height="32dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginEnd="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="5dp"
+    android:background="@drawable/word_bg_rect">
+
+    <ImageView
+        android:id="@+id/imgRectBg"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="false"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/word_rect" />
 
     <TextView
         android:id="@+id/tvWord"
+        fontPath="fonts/nunitobold.ttf"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|end"
+        android:letterSpacing="0.1"
+        android:paddingEnd="12dp"
+        android:paddingStart="12dp"
+        android:textColor="#929292"
+        android:textSize="12sp"
+        tools:text="10 LETTERS" />
+
+
+    <ImageView
+        android:id="@+id/icon"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:textColor="#404040"
-        android:textSize="18sp"
-        tools:text="4 letters" />
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="false"
+        android:adjustViewBounds="true"
+        android:padding="7dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_solved"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvWordNum"
+        fontPath="fonts/nunitoextrabold.ttf"
+        android:layout_width="32dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="false"
+        android:gravity="center"
+        android:textColor="#292929"
+        android:textSize="15sp"
+        tools:text="1" />
 
 </RelativeLayout>

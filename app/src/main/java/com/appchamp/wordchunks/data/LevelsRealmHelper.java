@@ -108,11 +108,11 @@ public final class LevelsRealmHelper {
         }
     }
 
-    public static long countCurrentLevelsByPackId(Realm realm, String packId) {
+    public static long countLevelsByPackIdAndState(Realm realm, String packId, int state) {
         return realm
                 .where(Level.class)
                 .equalTo(REALM_FIELD_PACK_ID, packId)
-                .equalTo(REALM_FIELD_STATE, LEVEL_STATE_CURRENT)
+                .equalTo(REALM_FIELD_STATE, state)
                 .count();
     }
 

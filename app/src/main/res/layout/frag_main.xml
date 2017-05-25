@@ -8,8 +8,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
-        android:paddingStart="@dimen/toolbar_padding"
-        android:paddingEnd="@dimen/toolbar_padding">
+        android:paddingEnd="@dimen/toolbar_padding"
+        android:paddingStart="@dimen/toolbar_padding">
 
         <ImageView
             android:id="@+id/imgSettingsIcon"
@@ -92,8 +92,8 @@
             android:id="@+id/imgCat"
             android:layout_width="@dimen/cat_img_width"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_cat_sleep"
-            android:contentDescription="@string/sleeping_cat" />
+            android:contentDescription="@string/sleeping_cat"
+            android:src="@drawable/ic_cat_sleep" />
 
         <pl.droidsonroids.gif.GifImageView
             android:layout_width="@dimen/zzz1_img_width"

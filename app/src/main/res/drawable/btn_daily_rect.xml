@@ -4,7 +4,6 @@
     <item android:state_pressed="false">
         <shape android:shape="rectangle">
             <solid android:color="@color/btn_rect_daily" />
-            <stroke android:width="1dp" android:color="@color/btn_rect_stroke" />
             <corners android:radius="10dp" />
         </shape>
     </item>
@@ -12,7 +11,6 @@
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <solid android:color="@color/btn_rect_daily_pressed" />
-            <stroke android:width="1dp" android:color="@color/btn_rect_stroke" />
             <corners android:radius="10dp" />
         </shape>
     </item>

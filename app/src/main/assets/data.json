@@ -4,13 +4,13 @@
     "color": "#00bdbd",
     "levels": [
       {
-        "clue": "body parts",
+        "clue": "SPORTS",
         "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
-        "words": "BRE,AST FORE,HEAD"
+        "words": "SO,CC,ER SK,AT,ING KA,RA,TE CR,ICK,ET BA,DM,IN,TON BA,SE,BA,LL"
       },
       {
-        "clue": "anumals",
-        "fact": "fact",
+        "clue": "ANIMALS",
+        "fact": "some fact",
         "words": "DO,G"
       }
     ]
@@ -20,13 +20,29 @@
     "color": "#c66eff",
     "levels": [
       {
-        "clue": "body parts",
+        "clue": "BODY PARTS",
         "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
         "words": "BRE,AST FORE,HEAD"
       },
       {
-        "clue": "anumals",
-        "fact": "fact",
+        "clue": "FROGS",
+        "fact": "sommmm eefact",
+        "words": "DO,G"
+      }
+    ]
+  },
+  {
+    "title": "BLOSSOM",
+    "color": "#e49a3a",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      },
+      {
+        "clue": "FROGS",
+        "fact": "sommmm eefact",
         "words": "DO,G"
       }
     ]
