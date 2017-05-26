@@ -101,8 +101,12 @@ public class MainActivity extends AppCompatActivity implements OnPlayClickListen
     }
 
     @Override
-    public void showGameFinishedToast() {
-        Toast.makeText(this, "You have finished the game", Toast.LENGTH_SHORT).show();
+    public void showGameFinishedFragment() {
+        Toast.makeText(this, "Game finished", Toast.LENGTH_SHORT).show();
+//        ActivityUtils.replaceFragment(
+//                getSupportFragmentManager(),
+//                GameFinishedFrag.newInstance(),
+//                R.id.flActMain);
     }
 
     @Override

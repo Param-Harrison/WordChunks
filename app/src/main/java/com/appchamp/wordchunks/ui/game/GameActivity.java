@@ -2,8 +2,10 @@ package com.appchamp.wordchunks.ui.game;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -41,14 +43,16 @@ public class GameActivity extends AppCompatActivity implements OnLevelSolvedList
         OnNextLevelListener, OnBackToLevelsListener {
 
     private String levelId;
-    private String nextlevelId;
+    private Level nextLevel;
+    private Realm realm;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_game);
 
-        initGameFragment();
+        realm = Realm.getDefaultInstance();
+        showGameFragment();
     }
 
     @Override
@@ -62,24 +66,28 @@ public class GameActivity extends AppCompatActivity implements OnLevelSolvedList
         startLevelsActivity();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        realm.close(); // Remember to close Realm when done.
+    }
+
     public void onBackArrowClick(View v) {
         super.onBackPressed();
         AnimUtils.startAnimationFadeIn(GameActivity.this, v);
         startLevelsActivity();
     }
 
-    private void initGameFragment() {
+    private void showGameFragment() {
         // Getting level id via Intents
-        if (getIntent() != null) {
-            levelId = getIntent().getStringExtra(EXTRA_LEVEL_ID);
+        levelId = getIntent().getStringExtra(EXTRA_LEVEL_ID);
 
-            ActivityUtils.addFragment(
-                    getSupportFragmentManager(),
-                    GameFrag.newInstance(),
-                    R.id.flActMain,
-                    EXTRA_LEVEL_ID,
-                    levelId);
-        }
+        ActivityUtils.addFragment(
+                getSupportFragmentManager(),
+                GameFrag.newInstance(),
+                R.id.flActMain,
+                EXTRA_LEVEL_ID,
+                levelId);
     }
 
     /**
@@ -87,97 +95,89 @@ public class GameActivity extends AppCompatActivity implements OnLevelSolvedList
      */
     private void startLevelsActivity() {
         Intent intent = new Intent(GameActivity.this, LevelsActivity.class);
-        Realm realm = Realm.getDefaultInstance();
-        realm.executeTransaction(bgRealm -> {
-            String packId = LevelsRealmHelper.findLevelById(bgRealm, levelId).getPackId();
-            intent.putExtra(EXTRA_PACK_ID, packId);
-        });
-        realm.close();
+
+        // Passing levelId via Intent.
+        String packId = LevelsRealmHelper.findLevelById(realm, levelId).getPackId();
+        intent.putExtra(EXTRA_PACK_ID, packId);
+
         startActivity(intent);
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right);
     }
 
     /**
-     * This callback method called from the GameFrag when the level is solved.
+     * This callback method called from the GameFrag immediately when the level was solved.
      */
     @Override
     public void onLevelSolved() {
-        Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(bgRealm -> {
 
-            Level currentLevel = LevelsRealmHelper.findLevelById(bgRealm, levelId);
+            Level level = LevelsRealmHelper.findLevelById(bgRealm, levelId);
 
-            // Getting the state of the current level, if "current":
-            if (currentLevel.getState() == LEVEL_STATE_CURRENT) {
+            if (isLevelSolvedBefore(level)) {
+                // Level WAS solved before
+                showLevelSolvedBeforeFragment();
 
-                // Change current level state into "solved", if current level state is "current".
-                currentLevel.setState(LEVEL_STATE_SOLVED);
+            } else {
+                // Level was NOT solved before
+                // Change current level state to "solved", current level state is "current"
+                level.setState(LEVEL_STATE_SOLVED);
 
-                String currentLevelPackId = currentLevel.getPackId();
-
-
-                // Reset the data of this solved level via its id.
-                LevelsRealmHelper.resetLevelById(bgRealm, levelId);
-
+                // Unlocking the next level to play in.
 
                 // Getting the next level to play in.
+                nextLevel = LevelsRealmHelper.findFirstLevelByState(bgRealm, LEVEL_STATE_LOCKED);
+//                Logger.d("Next Level id  = " + nextLevel.getId());
 
-                Level nextLevel = LevelsRealmHelper.findFirstLevelByState(realm, LEVEL_STATE_LOCKED);
-
+                String nextLevelClue = "";
                 // If the next locked level exists
                 if (nextLevel != null) {
-
-                    // Change its state from "locked to "current".
+                    // Unlock next level
                     nextLevel.setState(LEVEL_STATE_CURRENT);
-
-                    // Set this "locked" level id as the "current" level id.
-                    nextlevelId = nextLevel.getId();
-
-                } else {
-                    // If there is no more locked levels, show the game finished fragment.
-                    // Current level stays current.
-                    //levelId = currentLevel.getId();
-
-                    showGameFinishedFragment();
+                    nextLevelClue = nextLevel.getClue();
                 }
-                isPackSolved(bgRealm, currentLevelPackId);
-                showLevelSolvedFragment();
-            } else {
-                // if current level has state "solved" then navigate back to levels activity
-                // todo show level already solved screen
+                int packColor = Color.parseColor(
+                        PacksRealmHelper.findFirstPackById(bgRealm, level.getPackId())
+                                .getColor());
 
-//                levelId = LevelsRealmHelper
-//                        .findLastLevelByState(bgRealm, LEVEL_STATE_CURRENT).getId();
-
-                showLevelAlreadyCompletedFragment();
+                showLevelSolvedFragment(
+                        packColor,
+                        nextLevelClue,
+                        level.getFact(),
+                        isPackSolved(bgRealm, level.getPackId()));
             }
         });
-        realm.close();
     }
 
-    private boolean isPackSolved(Realm realm, String packId) {
+    private boolean isLevelSolvedBefore(Level level) {
+        // Getting the state of the current level, if "current": return false, else true.
+        return level.getState() != LEVEL_STATE_CURRENT;
+    }
+
+    private long isPackSolved(Realm bgRealm, String packId) {
         // Count the number of current levels in pack, if 0 then we solved the whole pack
 
         if (LevelsRealmHelper
-                .countLevelsByPackIdAndState(realm, packId, LEVEL_STATE_CURRENT) == 0) {
+                .countLevelsByPackIdAndState(bgRealm, packId, LEVEL_STATE_CURRENT) == 0) {
 
-            Logger.d("GEEEEEEEEEEEEEEEEEEEEEEEEE");
+            Logger.d("PACK SOLVED");
 
-            PacksRealmHelper.findFirstPackById(realm, packId).setState(PACK_STATE_SOLVED);
+            PacksRealmHelper.findFirstPackById(bgRealm, packId).setState(PACK_STATE_SOLVED);
             // Find the next locked pack and set it as "current"
-            Pack nextLockedPack = PacksRealmHelper.findFirstPackByState(realm, PACK_STATE_LOCKED);
+            Pack nextLockedPack = PacksRealmHelper.findFirstPackByState(bgRealm, PACK_STATE_LOCKED);
             if (nextLockedPack != null) {
                 nextLockedPack.setState(PACK_STATE_CURRENT);
             }
-            return true;
+            return 0;
         } else {
-
-            Logger.d("GAAAAAAAAAAAAAAAAAAAAAAAAA");
-            return false;
+            long numberOfSolvedLevels = LevelsRealmHelper
+                    .countLevelsByPackIdAndState(bgRealm, packId, LEVEL_STATE_SOLVED);
+            long numberOfLevels = LevelsRealmHelper
+                    .countLevelsByPackId(bgRealm, packId);
+            return numberOfLevels - numberOfSolvedLevels;
         }
     }
 
-    private void showLevelAlreadyCompletedFragment() {
+    private void showLevelSolvedBeforeFragment() {
         // level already completed fragment
         ActivityUtils.replaceFragment(
                 getSupportFragmentManager(),
@@ -192,21 +192,33 @@ public class GameActivity extends AppCompatActivity implements OnLevelSolvedList
                 R.id.flActMain);
     }
 
-    private void showLevelSolvedFragment() {
+    private void showLevelSolvedFragment(int color, String clue, String fact, long left) {
+        Bundle args = new Bundle();
+        Fragment fragment = LevelSolvedFrag.newInstance();
+        args.putInt("color", color);
+        args.putString("clue", clue);
+        args.putString("fact", fact);
+        args.putLong("left", left);
+        fragment.setArguments(args);
         ActivityUtils.replaceFragment(
                 getSupportFragmentManager(),
-                LevelSolvedFrag.newInstance(),
+                fragment,
                 R.id.flActMain);
     }
 
     @Override
     public void onNextLevelSelected() {
-        ActivityUtils.replaceFragment(
-                getSupportFragmentManager(),
-                GameFrag.newInstance(),
-                R.id.flActMain,
-                EXTRA_LEVEL_ID,
-                nextlevelId);
+        if (nextLevel != null) {
+            levelId = nextLevel.getId();
+            ActivityUtils.replaceFragment(
+                    getSupportFragmentManager(),
+                    GameFrag.newInstance(),
+                    R.id.flActMain,
+                    EXTRA_LEVEL_ID,
+                    nextLevel.getId());
+        } else {
+            showGameFinishedFragment();
+        }
     }
 
     @Override

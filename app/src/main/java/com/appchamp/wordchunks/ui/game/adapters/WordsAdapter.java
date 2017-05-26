@@ -70,6 +70,8 @@ public class WordsAdapter extends RecyclerView.Adapter<WordsAdapter.ViewHolder> 
                 holder.tvWord.setText(
                         res.getString(R.string.number_of_letters, wordLength));
                 holder.tvWordNum.setText(getWordIndex(i));
+                drawable.setColor(
+                        res.getColor(R.color.word_rect_bg));
                 break;
             case WORD_STATE_SOLVED:
                 holder.tvWord.setText(word.getWord());

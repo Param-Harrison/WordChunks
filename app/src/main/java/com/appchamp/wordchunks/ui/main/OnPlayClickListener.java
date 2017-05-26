@@ -7,7 +7,7 @@ interface OnPlayClickListener {
 
     void startGameActivity(String levelId);
 
-    void showGameFinishedToast();
+    void showGameFinishedFragment();
 
     void showPacksActivity();
 }

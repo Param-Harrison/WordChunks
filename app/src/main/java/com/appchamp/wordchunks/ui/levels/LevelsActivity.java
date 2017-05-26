@@ -26,11 +26,13 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID;
 import static com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID;
+import static com.appchamp.wordchunks.util.Constants.LEVEL_STATE_SOLVED;
 
 
 public class LevelsActivity extends AppCompatActivity {
 
     private Realm realm;
+    private RecyclerView rvLevels;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,32 +41,34 @@ public class LevelsActivity extends AppCompatActivity {
 
         TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvTitle.setText(getString(R.string.title_select_level));
-        RecyclerView rvLevels = (RecyclerView) findViewById(R.id.recyclerView);
+        rvLevels = (RecyclerView) findViewById(R.id.recyclerView);
 
         realm = Realm.getDefaultInstance();
 
         // Passing packs via ids
-        if (getIntent() != null) {
-            String packId = getIntent().getStringExtra(EXTRA_PACK_ID);
-            if (packId != null) {
-                List<Level> levels = LevelsRealmHelper.findLevelsByPackId(realm, packId);
+        String packId = getIntent().getStringExtra(EXTRA_PACK_ID);
+        if (packId != null) {
+            List<Level> levels = LevelsRealmHelper.findLevelsByPackId(realm, packId);
 
-                final int packColor = Color.parseColor(PacksRealmHelper
-                        .findFirstPackById(realm, levels.get(0).getPackId()).getColor());
+            final int packColor = Color.parseColor(PacksRealmHelper
+                    .findFirstPackById(realm, levels.get(0).getPackId()).getColor());
 
-                LevelsAdapter adapter = new LevelsAdapter(levels, packColor);
-                rvLevels.setAdapter(adapter);
-                rvLevels.setLayoutManager(new LinearLayoutManager(LevelsActivity.this));
-                rvLevels.setHasFixedSize(true);
-
-                adapter.setOnItemClickListener((view, position) -> {
-                    Level clickedLevel = adapter.getItem(position);
-                    startGameActivity(clickedLevel.getId());
-                });
-            }
+            initLevelsAdapter(levels, packColor);
         }
         OverScrollDecoratorHelper.setUpOverScroll(
                 rvLevels, OverScrollDecoratorHelper.ORIENTATION_VERTICAL);
+    }
+
+    private void initLevelsAdapter(List<Level> levels, int packColor) {
+        LevelsAdapter adapter = new LevelsAdapter(levels, packColor);
+        rvLevels.setAdapter(adapter);
+        rvLevels.setLayoutManager(new LinearLayoutManager(LevelsActivity.this));
+        rvLevels.setHasFixedSize(true);
+
+        adapter.setOnItemClickListener((view, position) -> {
+            Level clickedLevel = adapter.getItem(position);
+            startGameActivity(clickedLevel.getId());
+        });
     }
 
     @Override
@@ -91,14 +95,30 @@ public class LevelsActivity extends AppCompatActivity {
 
     /**
      * Up navigation. Navigates from LevelsActivity to GameActivity passing Level id by the Intent.
+     *
      * @param levelId level id to be passed by the Intent.
      */
     private void startGameActivity(String levelId) {
         Intent intent = new Intent(LevelsActivity.this, GameActivity.class);
         intent.putExtra(EXTRA_LEVEL_ID, levelId);
+
+        // Reset level data if level was solved
+        isLevelSolvedBefore(levelId);
+
         startActivity(intent);
         finish();
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
+    }
+
+    private void isLevelSolvedBefore(String levelId) {
+        Level level = LevelsRealmHelper.findLevelById(realm, levelId);
+        if (level.getState() == LEVEL_STATE_SOLVED) {
+            realm.executeTransaction(bgRealm -> {
+
+                // Reset the data of this solved level via its id.
+                LevelsRealmHelper.resetLevelById(bgRealm, levelId);
+            });
+        }
     }
 
     /**

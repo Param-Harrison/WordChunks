@@ -28,5 +28,8 @@
     <string name="clear">clear</string>
     <string name="shuffle">shuffle</string>
     <string name="hint">hint</string>
+    <string name="level_finished">LEVEL FINISHED</string>
+    <string name="next_level">NEXT LEVEL</string>
+    <string name="fun_fact">FUN FACT...</string>
 
 </resources>

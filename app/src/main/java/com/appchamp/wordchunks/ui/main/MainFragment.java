@@ -75,7 +75,7 @@ public class MainFragment extends Fragment {
             callback.startGameActivity(levelId);
         } else {
             // If all levels and packs were solved, showing the fragment
-            callback.showGameFinishedToast();
+            callback.showGameFinishedFragment();
         }
     }
 

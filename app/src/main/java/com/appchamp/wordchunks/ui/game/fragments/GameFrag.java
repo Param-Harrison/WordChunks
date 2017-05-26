@@ -111,8 +111,9 @@ public class GameFrag extends Fragment {
 
         initLevelClueTitle(level.getClue());
 
-        int packColor = Color.parseColor(PacksRealmHelper
-                .findFirstPackById(realm, level.getPackId()).getColor());
+        int packColor = Color.parseColor(
+                PacksRealmHelper.findFirstPackById(realm, level.getPackId())
+                .getColor());
 
         llPackBg.setBackgroundColor(packColor);
 
@@ -201,6 +202,7 @@ public class GameFrag extends Fragment {
                 ChunksRealmHelper.findSelectedChunksByLevelIdSorted(realm, level.getId());
         if (selectedChunks.size() != 0) {
             if (isWordSolved(selectedChunks)) {
+                updateClearIconState(0);
                 // if word was solved then check for level solved
                 isLevelSolved();
             }
