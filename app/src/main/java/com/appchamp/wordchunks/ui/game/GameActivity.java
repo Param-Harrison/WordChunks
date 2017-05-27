@@ -16,7 +16,7 @@ import com.appchamp.wordchunks.models.realm.Level;
 import com.appchamp.wordchunks.models.realm.Pack;
 import com.appchamp.wordchunks.ui.game.fragments.GameFinishedFrag;
 import com.appchamp.wordchunks.ui.game.fragments.GameFrag;
-import com.appchamp.wordchunks.ui.game.fragments.LevelAlreadyCompletedFrag;
+import com.appchamp.wordchunks.ui.game.fragments.LevelSolvedBeforeFrag;
 import com.appchamp.wordchunks.ui.game.fragments.LevelSolvedFrag;
 import com.appchamp.wordchunks.ui.game.listeners.OnBackToLevelsListener;
 import com.appchamp.wordchunks.ui.game.listeners.OnLevelSolvedListener;
@@ -24,7 +24,6 @@ import com.appchamp.wordchunks.ui.game.listeners.OnNextLevelListener;
 import com.appchamp.wordchunks.ui.levels.LevelsActivity;
 import com.appchamp.wordchunks.util.ActivityUtils;
 import com.appchamp.wordchunks.util.AnimUtils;
-import com.orhanobut.logger.Logger;
 
 import io.realm.Realm;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -112,10 +111,13 @@ public class GameActivity extends AppCompatActivity implements OnLevelSolvedList
         realm.executeTransaction(bgRealm -> {
 
             Level level = LevelsRealmHelper.findLevelById(bgRealm, levelId);
+            int packColor = Color.parseColor(
+                    PacksRealmHelper.findFirstPackById(bgRealm, level.getPackId())
+                            .getColor());
 
             if (isLevelSolvedBefore(level)) {
                 // Level WAS solved before
-                showLevelSolvedBeforeFragment();
+                showLevelSolvedBeforeFragment(packColor, level.getFact());
 
             } else {
                 // Level was NOT solved before
@@ -135,9 +137,6 @@ public class GameActivity extends AppCompatActivity implements OnLevelSolvedList
                     nextLevel.setState(LEVEL_STATE_CURRENT);
                     nextLevelClue = nextLevel.getClue();
                 }
-                int packColor = Color.parseColor(
-                        PacksRealmHelper.findFirstPackById(bgRealm, level.getPackId())
-                                .getColor());
 
                 showLevelSolvedFragment(
                         packColor,
@@ -159,8 +158,6 @@ public class GameActivity extends AppCompatActivity implements OnLevelSolvedList
         if (LevelsRealmHelper
                 .countLevelsByPackIdAndState(bgRealm, packId, LEVEL_STATE_CURRENT) == 0) {
 
-            Logger.d("PACK SOLVED");
-
             PacksRealmHelper.findFirstPackById(bgRealm, packId).setState(PACK_STATE_SOLVED);
             // Find the next locked pack and set it as "current"
             Pack nextLockedPack = PacksRealmHelper.findFirstPackByState(bgRealm, PACK_STATE_LOCKED);
@@ -177,11 +174,15 @@ public class GameActivity extends AppCompatActivity implements OnLevelSolvedList
         }
     }
 
-    private void showLevelSolvedBeforeFragment() {
-        // level already completed fragment
+    private void showLevelSolvedBeforeFragment(int color, String fact) {
+        Bundle args = new Bundle();
+        Fragment fragment = LevelSolvedBeforeFrag.newInstance();
+        args.putInt("color", color);
+        args.putString("fact", fact);
+        fragment.setArguments(args);
         ActivityUtils.replaceFragment(
                 getSupportFragmentManager(),
-                LevelAlreadyCompletedFrag.newInstance(),
+                fragment,
                 R.id.flActMain);
     }
 

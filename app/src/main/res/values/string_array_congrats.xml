@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="congrats">
+        <item>A+ WORK!</item>
+        <item>AMAZING!</item>
+        <item>Astonishing!</item>
+        <item>AWESOME!</item>
+        <item>BEAUTIFUL!</item>
+        <item>BINGO!</item>
+        <item>BRAVO!</item>
+        <item>Breathtaking!</item>
+        <item>BRILLIANT!</item>
+        <item>CLEVER!</item>
+        <item>CONGRATS!</item>
+        <item>Congratulations!</item>
+        <item>COOL!</item>
+        <item>EXCELLENT!</item>
+        <item>EXCEPTIONAL!</item>
+        <item>Extraordinary!</item>
+        <item>FANTASTIC!</item>
+        <item>Good thinking!</item>
+        <item>Great answers!</item>
+        <item>GREAT JOB!</item>
+        <item>Hip, hip hurray!</item>
+        <item>HOT DOG!</item>
+        <item>HURRAY!</item>
+        <item>HOORAY!</item>
+        <item>INCREDIBLE!</item>
+        <item>LOOKING GOOD!</item>
+        <item>MAGNIFICENT!</item>
+        <item>MARVELOUS!</item>
+        <item>NEAT!</item>
+        <item>NEAT-O!</item>
+        <item>NICE JOB!</item>
+        <item>ON TARGET!</item>
+        <item>OUTSTANDING!</item>
+        <item>PERFECT!</item>
+        <item>PER-FECT-O!</item>
+        <item>PHENOMENAL!</item>
+        <item>REMARKABLE!</item>
+        <item>RIGHT ON!</item>
+        <item>SENSATIONAL!</item>
+        <item>SUPER!</item>
+        <item>Super duper!</item>
+        <item>SUPER STAR!</item>
+        <item>SUPER WORK!</item>
+        <item>SUPERB!</item>
+        <item>SWEEEEEEET!</item>
+        <item>TAKE A BOW!</item>
+        <item>TERRIFIC!</item>
+        <item>That\'s amazing!</item>
+        <item>THAT\'S correct!</item>
+        <item>TOP NOTCH!</item>
+        <item>TOUCHDOWN!</item>
+        <item>TREMENDOUS!</item>
+        <item>UNBELIEVABLE!</item>
+        <item>VERY GOOD!</item>
+        <item>Very impressive!</item>
+        <item>WAY TO GO!</item>
+        <item>WELL DONE!</item>
+        <item>WHAT A GENIUS!</item>
+        <item>What an imagination!</item>
+        <item>WONDERFUL!</item>
+        <item>WOW!</item>
+        <item>WOW-ZERS!</item>
+        <item>YEEEESSS!</item>
+        <item>You can do it!</item>
+        <item>You got it!</item>
+        <item>YOU ROCK!</item>
+        <item>YOU\'RE #1!</item>
+        <item>You\'re on fire!</item>
+        <item>You\'re precious!</item>
+        <item>So creative!</item>
+        <item>You\'re so smart!</item>
+        <item>You\'re special</item>
+        <item>You\'re the best!</item>
+    </string-array>
+</resources>
