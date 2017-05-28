@@ -36,5 +36,6 @@
     <string name="rate_us">RATE US</string>
     <string name="level_already_completed">LEVEL ALREADY COMPLETED</string>
     <string name="back_to_levels">BACK TO LEVELS</string>
+    <string name="how_to_play">HOW TO PLAY?</string>
 
 </resources>

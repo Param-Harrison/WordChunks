@@ -75,6 +75,9 @@ dependencies {
 
     // https://github.com/koral--/android-gif-drawable
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
+
+    // https://github.com/apl-devs/AppIntro
+    compile 'com.github.apl-devs:appintro:v4.2.0'
 }
 
 apply plugin: 'realm-android'

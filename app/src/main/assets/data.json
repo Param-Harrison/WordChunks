@@ -1,17 +1,17 @@
 [
   {
     "title": "AZURE",
-    "color": "#00bdbd",
+    "color": "#2d2d2d",
     "levels": [
-      {
-        "clue": "SPORTS",
-        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
-        "words": "BA,LL"
-      },
       {
         "clue": "ANIMALS",
         "fact": "some fact",
         "words": "DO,G"
+      },
+      {
+        "clue": "SHERLOCK HOLMES",
+        "fact": "Conan Doyle chose the name Sherlock in honour of Nottingham cricketers Sherwin and Shacklock. Originally it was Sherringford Holmes.",
+        "words": "MY,CR,OFT DE,TE,CTI,VE MRS.,HU,DS,ON DR.,WAT,SON ELE,MEN,TA,RY DOY,LE"
       }
     ]
   },

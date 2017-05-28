@@ -2,10 +2,12 @@ package com.appchamp.wordchunks.ui.game;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -19,6 +21,7 @@ import com.appchamp.wordchunks.ui.game.fragments.GameFrag;
 import com.appchamp.wordchunks.ui.game.fragments.LevelSolvedBeforeFrag;
 import com.appchamp.wordchunks.ui.game.fragments.LevelSolvedFrag;
 import com.appchamp.wordchunks.ui.game.listeners.OnBackToLevelsListener;
+import com.appchamp.wordchunks.ui.game.listeners.OnCloseBtnListener;
 import com.appchamp.wordchunks.ui.game.listeners.OnLevelSolvedListener;
 import com.appchamp.wordchunks.ui.game.listeners.OnNextLevelListener;
 import com.appchamp.wordchunks.ui.levels.LevelsActivity;
@@ -36,10 +39,12 @@ import static com.appchamp.wordchunks.util.Constants.LEVEL_STATE_SOLVED;
 import static com.appchamp.wordchunks.util.Constants.PACK_STATE_CURRENT;
 import static com.appchamp.wordchunks.util.Constants.PACK_STATE_LOCKED;
 import static com.appchamp.wordchunks.util.Constants.PACK_STATE_SOLVED;
+import static com.appchamp.wordchunks.util.Constants.PREFS_HOW_TO_PLAY;
+import static com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFS;
 
 
 public class GameActivity extends AppCompatActivity implements OnLevelSolvedListener,
-        OnNextLevelListener, OnBackToLevelsListener {
+        OnNextLevelListener, OnBackToLevelsListener, OnCloseBtnListener {
 
     private String levelId;
     private Level nextLevel;
@@ -49,9 +54,26 @@ public class GameActivity extends AppCompatActivity implements OnLevelSolvedList
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_game);
-
         realm = Realm.getDefaultInstance();
-        showGameFragment();
+
+        SharedPreferences sp = getSharedPreferences(WORD_CHUNKS_PREFS, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+
+        if (sp.getBoolean(PREFS_HOW_TO_PLAY, true)) {
+            // show how to play
+            showHowToPlayFrag();
+            editor.putBoolean(PREFS_HOW_TO_PLAY, false);
+            editor.apply();
+        } else {
+            addGameFragment();
+        }
+    }
+
+    private void showHowToPlayFrag() {
+        ActivityUtils.addFragment(
+                getSupportFragmentManager(),
+                HowToPlayFrag.newInstance(),
+                R.id.flActMain);
     }
 
     @Override
@@ -77,7 +99,7 @@ public class GameActivity extends AppCompatActivity implements OnLevelSolvedList
         startLevelsActivity();
     }
 
-    private void showGameFragment() {
+    private void addGameFragment() {
         // Getting level id via Intents
         levelId = getIntent().getStringExtra(EXTRA_LEVEL_ID);
 
@@ -226,5 +248,18 @@ public class GameActivity extends AppCompatActivity implements OnLevelSolvedList
     public void onBackToLevelsSelected() {
         super.onBackPressed();
         startLevelsActivity();
+    }
+
+    @Override
+    public void startGameFromHowToPlay() {
+        // Getting level id via Intents
+        levelId = getIntent().getStringExtra(EXTRA_LEVEL_ID);
+        Fragment fragment = GameFrag.newInstance();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Bundle args = new Bundle();
+        args.putString(EXTRA_LEVEL_ID, levelId);
+        fragment.setArguments(args);
+        transaction.replace(R.id.flActMain, fragment);
+        transaction.commit();
     }
 }
