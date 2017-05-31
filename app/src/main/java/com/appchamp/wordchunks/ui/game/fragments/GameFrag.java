@@ -186,7 +186,7 @@ public class GameFrag extends Fragment {
 
     private void clearChunksStates() {
         realm.executeTransaction(bgRealm -> {
-            RealmResults<Chunk> chunks = ChunksRealmHelper.findSelectedChunksByLevelId(realm, level.getId());
+            RealmResults<Chunk> chunks = ChunksRealmHelper.INSTANCE.findSelectedChunksByLevelId(realm, level.getId());
             for (Chunk chunk : chunks) {
                 chunk.setState(CHUNK_STATE_NORMAL);
                 chunksAdapter.notifyItemChanged(chunk.getPosition());
@@ -199,7 +199,7 @@ public class GameFrag extends Fragment {
         realm.executeTransaction(bgRealm -> updateChunkStateOnClick(clickedChunk));
         chunksAdapter.notifyItemChanged(chunks.get(i).getPosition());
         List<Chunk> selectedChunks =
-                ChunksRealmHelper.findSelectedChunksByLevelIdSorted(realm, level.getId());
+                ChunksRealmHelper.INSTANCE.findSelectedChunksByLevelIdSorted(realm, level.getId());
         if (selectedChunks.size() != 0) {
             if (isWordSolved(selectedChunks)) {
                 updateClearIconState(0);
@@ -225,7 +225,7 @@ public class GameFrag extends Fragment {
 
     private void updateInputChunksTextView() {
         List<Chunk> chunks =
-                ChunksRealmHelper.findSelectedChunksByLevelIdSorted(realm, level.getId());
+                ChunksRealmHelper.INSTANCE.findSelectedChunksByLevelIdSorted(realm, level.getId());
         tvInputChunks.setText(listChunksToString(chunks));
         updateClearIconState(chunks.size());
     }
@@ -262,7 +262,7 @@ public class GameFrag extends Fragment {
 
     private void removeSelectedChunks() {
         realm.executeTransaction(bgRealm -> {
-            List<Chunk> selectedChunks = ChunksRealmHelper.findSelectedChunksByLevelId(bgRealm, level.getId());
+            List<Chunk> selectedChunks = ChunksRealmHelper.INSTANCE.findSelectedChunksByLevelId(bgRealm, level.getId());
             for (Chunk chunk : selectedChunks) {
                 chunk.setState(CHUNK_STATE_GONE);
                 chunksAdapter.notifyItemChanged(chunk.getPosition());

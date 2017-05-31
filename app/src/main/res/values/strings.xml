@@ -9,7 +9,7 @@
     <string name="all_packs_btn_txt">ALL PACKS</string>
     <string name="store_btn_txt">STORE</string>
 
-    <string name="settings_hint">settings</string>
+    <string name="settings_hint">SETTINGS</string>
     <string name="back_hint">back</string>
 
     <string name="title_select_pack">SELECT PACK</string>
@@ -22,7 +22,7 @@
     <string name="send_hint_text">Combine letter groups then hit Send button</string>
     <string name="share_hint">share</string>
     <string name="sleeping_cat">sleeping cat</string>
-    <string name="list_number">%d.</string>
+    <string name="list_number">%1$d. %2$s</string>
     <string name="level_title">LEVEL %d</string>
     <string name="solutions">SOLUTIONS</string>
     <string name="clear">clear</string>
@@ -30,12 +30,17 @@
     <string name="hint">hint</string>
     <string name="level_finished">LEVEL FINISHED</string>
     <string name="next_level">NEXT LEVEL</string>
-    <string name="fun_fact">FUN FACT...</string>
+    <string name="fun_fact">FUN FACT…</string>
     <string name="we_will_add_new_packs_soon">WE WILL ADD NEW PACKS SOON</string>
     <string name="it_means_so_much_for_us">IT MEANS SO MUCH FOR US</string>
     <string name="rate_us">RATE US</string>
     <string name="level_already_completed">LEVEL ALREADY COMPLETED</string>
     <string name="back_to_levels">BACK TO LEVELS</string>
     <string name="how_to_play">HOW TO PLAY?</string>
+    <string name="tutorial3">3. Turn to TOOLS when stuck.</string>
+    <string name="tutorial2">2. Click letter group AGAIN to UNDO the selected letters.</string>
+    <string name="tutorial0">Answers register AUTOMATICALLY when correct.</string>
+    <string name="tutorial1">1. All given solutions has one THEME in common.</string>
+    <string name="tutorial">tutorial</string>
 
 </resources>

@@ -52,7 +52,7 @@ public final class LevelsRealmHelper {
             RealmList<Word> wordsRealm = WordsRealmHelper.createWords(realm, wordsSplit);
             level.setWords(wordsRealm);
 
-            RealmList<Chunk> chunksList = ChunksRealmHelper.createChunks(
+            RealmList<Chunk> chunksList = ChunksRealmHelper.INSTANCE.createChunks(
                     realm, wordsSplit, level.getId(), wordsRealm);
             level.setChunks(chunksList);
 

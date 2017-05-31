@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.facebook.stetho.Stetho;
-import com.orhanobut.logger.LogLevel;
+import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 import com.squareup.leakcanary.LeakCanary;
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider;
@@ -94,6 +94,6 @@ public class App extends Application {
     }
 
     private void initLogger() {
-        Logger.init().logLevel(LogLevel.FULL); // Use LogLevel.NONE for the release versions.
+        Logger.addLogAdapter(new AndroidLogAdapter()); // Use LogLevel.NONE for the release versions.
     }
 }

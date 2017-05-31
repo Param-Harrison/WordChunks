@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/cbtn_width"
     android:layout_height="@dimen/cbtn_height"
     android:layout_marginBottom="@dimen/cbtn_margin_bottom"
+    android:background="@drawable/main_bg_rect"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardBackgroundColor="@color/btn_background_main"
-    app:cardCornerRadius="@dimen/cbtn_corner_radius"
-    app:cardElevation="@dimen/cbtn_elevation">
+    android:paddingBottom="4dp">
 
     <ImageView
         android:id="@+id/imgRectBg"
@@ -26,7 +24,8 @@
         android:gravity="end|center_vertical"
         android:paddingEnd="@dimen/cbtn_title_padding_end"
         android:textSize="@dimen/cbtn_title_size"
-        tools:text="@string/play_btn_txt" />
+        tools:ignore="MissingPrefix"
+        tools:text="@string/store_btn_txt" />
 
     <ImageView
         android:id="@+id/icon"
@@ -34,6 +33,6 @@
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:scaleType="centerInside"
-        tools:src="@drawable/ic_action_store" />
+        tools:src="@drawable/ic_store" />
 
-</android.support.v7.widget.CardView>
+</RelativeLayout>

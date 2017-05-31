@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height"
+        android:paddingEnd="@dimen/toolbar_padding"
+        android:paddingStart="@dimen/toolbar_padding">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/tutorial"
+            android:src="@drawable/ic_info" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            fontPath="fonts/nunitoextrabold.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/how_to_play"
+            android:textColor="@color/title_txt"
+            android:textSize="@dimen/toolbar_title_txt_size"
+            tools:ignore="MissingPrefix" />
+
+        <ImageView
+            android:id="@+id/imgClose"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/back_hint"
+            android:src="@drawable/ic_close" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:text="@string/tutorial1"
+        android:textAlignment="center"
+        android:textColor="#e2e2e2"
+        android:textSize="16sp" />
+
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:src="@drawable/tutorial1" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:text="@string/tutorial0"
+        android:textAlignment="center"
+        android:textColor="#e2e2e2"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:text="@string/tutorial2"
+        android:textAlignment="center"
+        android:textColor="#e2e2e2"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="20dp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:text="@string/tutorial3"
+        android:textAlignment="center"
+        android:textColor="#e2e2e2"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:contentDescription="@null"
+        android:src="@drawable/tutorial2" />
+
+</LinearLayout>

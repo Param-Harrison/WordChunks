@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -21,10 +20,10 @@ import com.appchamp.wordchunks.ui.game.fragments.GameFrag;
 import com.appchamp.wordchunks.ui.game.fragments.LevelSolvedBeforeFrag;
 import com.appchamp.wordchunks.ui.game.fragments.LevelSolvedFrag;
 import com.appchamp.wordchunks.ui.game.listeners.OnBackToLevelsListener;
-import com.appchamp.wordchunks.ui.game.listeners.OnCloseBtnListener;
 import com.appchamp.wordchunks.ui.game.listeners.OnLevelSolvedListener;
 import com.appchamp.wordchunks.ui.game.listeners.OnNextLevelListener;
 import com.appchamp.wordchunks.ui.levels.LevelsActivity;
+import com.appchamp.wordchunks.ui.tutorial.TutorialActivity;
 import com.appchamp.wordchunks.util.ActivityUtils;
 import com.appchamp.wordchunks.util.AnimUtils;
 
@@ -44,7 +43,7 @@ import static com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFS;
 
 
 public class GameActivity extends AppCompatActivity implements OnLevelSolvedListener,
-        OnNextLevelListener, OnBackToLevelsListener, OnCloseBtnListener {
+        OnNextLevelListener, OnBackToLevelsListener {
 
     private String levelId;
     private Level nextLevel;
@@ -61,20 +60,13 @@ public class GameActivity extends AppCompatActivity implements OnLevelSolvedList
 
         if (sp.getBoolean(PREFS_HOW_TO_PLAY, true)) {
             // show how to play
-            showHowToPlayFrag();
+            showTutorial();
             editor.putBoolean(PREFS_HOW_TO_PLAY, false);
             editor.apply();
-        } else {
-            addGameFragment();
         }
+        addGameFragment();
     }
 
-    private void showHowToPlayFrag() {
-        ActivityUtils.addFragment(
-                getSupportFragmentManager(),
-                HowToPlayFrag.newInstance(),
-                R.id.flActMain);
-    }
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -97,6 +89,11 @@ public class GameActivity extends AppCompatActivity implements OnLevelSolvedList
         super.onBackPressed();
         AnimUtils.startAnimationFadeIn(GameActivity.this, v);
         startLevelsActivity();
+    }
+
+    private void showTutorial() {
+        Intent intent = new Intent(this, TutorialActivity.class);
+        startActivity(intent);
     }
 
     private void addGameFragment() {
@@ -238,7 +235,7 @@ public class GameActivity extends AppCompatActivity implements OnLevelSolvedList
                     GameFrag.newInstance(),
                     R.id.flActMain,
                     EXTRA_LEVEL_ID,
-                    nextLevel.getId());
+                    levelId);
         } else {
             showGameFinishedFragment();
         }
@@ -248,18 +245,5 @@ public class GameActivity extends AppCompatActivity implements OnLevelSolvedList
     public void onBackToLevelsSelected() {
         super.onBackPressed();
         startLevelsActivity();
-    }
-
-    @Override
-    public void startGameFromHowToPlay() {
-        // Getting level id via Intents
-        levelId = getIntent().getStringExtra(EXTRA_LEVEL_ID);
-        Fragment fragment = GameFrag.newInstance();
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        Bundle args = new Bundle();
-        args.putString(EXTRA_LEVEL_ID, levelId);
-        fragment.setArguments(args);
-        transaction.replace(R.id.flActMain, fragment);
-        transaction.commit();
     }
 }

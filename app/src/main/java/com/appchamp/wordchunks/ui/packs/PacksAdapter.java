@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 import com.appchamp.wordchunks.R;
 import com.appchamp.wordchunks.data.LevelsRealmHelper;
 import com.appchamp.wordchunks.models.realm.Pack;
-import com.appchamp.wordchunks.ui.OnPackLevelClickListener;
-import com.appchamp.wordchunks.ui.PackLevelViewHolder;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -66,8 +64,10 @@ public class PacksAdapter extends RecyclerView.Adapter<PackLevelViewHolder> {
         final int packColor = Color.parseColor(pack.getColor());
         final int packLevelsSize = pack.getLevels().size();
         Resources res = holder.itemView.getResources();
-
         GradientDrawable drawable = (GradientDrawable) holder.imgRectBg.getDrawable();
+
+        holder.rlItem.setBackground(
+                res.getDrawable(R.drawable.main_bg_rect));
 
         if (packState == PACK_STATE_LOCKED) {
             holder.itemView.setEnabled(false);
@@ -75,17 +75,21 @@ public class PacksAdapter extends RecyclerView.Adapter<PackLevelViewHolder> {
                     res.getColor(R.color.pack_rect_left_locked));
             holder.imgIcon.setImageDrawable(
                     res.getDrawable(R.drawable.ic_locked));
-            holder.cvItem.setCardBackgroundColor(
-                    res.getColor(R.color.btn_background_locked));
+            holder.rlItem.getBackground().setAlpha(100);
             holder.tvItemSubtitle.setText(
                     res.getString(R.string.number_of_levels_locked, packLevelsSize));
+
+            holder.tvItemTitle.setTextColor(
+                    res.getColor(R.color.pack_title_txt_locked));
+            holder.tvItemSubtitle.setTextColor(
+                    res.getColor(R.color.pack_title_txt_locked));
 
         } else {
             holder.itemView.setEnabled(true);
             drawable.setColor(packColor);
+
             holder.tvItemTitle.setTextColor(packColor);
-            holder.cvItem.setCardBackgroundColor(
-                    res.getColor(R.color.btn_background_main));
+
             holder.tvItemSubtitle.setTextColor(
                     res.getColor(R.color.pack_num_of_levels_txt));
             final Realm realm = Realm.getDefaultInstance();
@@ -102,9 +106,9 @@ public class PacksAdapter extends RecyclerView.Adapter<PackLevelViewHolder> {
                         res.getDrawable(R.drawable.ic_current));
             }
         }
-        holder.tvItemTitle.setText(pack.getTitle());
-        holder.tvItemNum.setText(
-                res.getString(R.string.list_number, i + 1));
+
+        holder.tvItemTitle.setText(
+                res.getString(R.string.list_number, (i + 1), pack.getTitle()));
     }
 
     @Override

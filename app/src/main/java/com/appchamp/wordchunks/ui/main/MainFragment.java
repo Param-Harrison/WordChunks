@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.appchamp.wordchunks.R;
 import com.appchamp.wordchunks.data.LevelsRealmHelper;
-import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 
 import io.realm.Realm;
 
@@ -22,9 +21,7 @@ public class MainFragment extends Fragment {
 
     //private SmallBang smallBang;
 
-    private SlidingMenu menu;
-
-    private OnPlayClickListener callback;
+    private OnMainFragmentClickListener callback;
 
     static MainFragment newInstance() {
         return new MainFragment();
@@ -42,9 +39,8 @@ public class MainFragment extends Fragment {
         //kittyView.setOnClickListener(v -> smallBang.bang(v));
         // kittyView.callOnClick();
 
-        initLeftMenu();
-
-        rootView.findViewById(R.id.imgSettingsIcon).setOnClickListener((View v) -> menu.toggle());
+        rootView.findViewById(R.id.imgSettingsIcon).setOnClickListener(
+                (View v) -> callback.showSlidingMenu());
         rootView.findViewById(R.id.imgShareIcon).setOnClickListener(this::onShareClick);
 
         rootView.findViewById(R.id.btnPlay).setOnClickListener(this::onPlayClick);
@@ -60,10 +56,10 @@ public class MainFragment extends Fragment {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            callback = (OnPlayClickListener) context;
+            callback = (OnMainFragmentClickListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement OnPlayClickListener");
+                    + " must implement OnMainFragmentClickListener");
         }
     }
 
@@ -107,16 +103,4 @@ public class MainFragment extends Fragment {
         }
     }
 
-    private void initLeftMenu() {
-        // Configure the SlidingMenu
-        menu = new SlidingMenu(getActivity());
-        menu.setMode(SlidingMenu.LEFT);
-        menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_FULLSCREEN);
-        menu.setShadowWidthRes(R.dimen.shadow_width);
-        menu.setShadowDrawable(R.drawable.shadow);
-        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-        menu.setFadeDegree(0.35f);
-        menu.attachToActivity(getActivity(), SlidingMenu.SLIDING_CONTENT);
-        menu.setMenu(R.layout.frag_menu);
-    }
 }

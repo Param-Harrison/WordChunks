@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 
 import com.appchamp.wordchunks.R;
 import com.appchamp.wordchunks.models.realm.Level;
-import com.appchamp.wordchunks.ui.OnPackLevelClickListener;
-import com.appchamp.wordchunks.ui.PackLevelViewHolder;
+import com.appchamp.wordchunks.ui.packs.OnPackLevelClickListener;
+import com.appchamp.wordchunks.ui.packs.PackLevelViewHolder;
 import com.orhanobut.logger.Logger;
 
 import java.util.List;
@@ -59,12 +59,12 @@ public class LevelsAdapter extends RecyclerView.Adapter<PackLevelViewHolder> {
     @Override
     public void onBindViewHolder(PackLevelViewHolder holder, int i) {
         final Level level = getItem(i);
-        final int levelNum = i + 1;
-
         final int levelState = level.getState();
         Resources res = holder.itemView.getResources();
-
         GradientDrawable drawable = (GradientDrawable) holder.imgRectBg.getDrawable();
+
+        holder.rlItem.setBackground(
+                res.getDrawable(R.drawable.main_bg_rect));
 
         if (levelState == LEVEL_STATE_LOCKED) {
             holder.itemView.setEnabled(false);
@@ -72,14 +72,17 @@ public class LevelsAdapter extends RecyclerView.Adapter<PackLevelViewHolder> {
                     res.getColor(R.color.pack_rect_left_locked));
             holder.imgIcon.setImageDrawable(
                     res.getDrawable(R.drawable.ic_locked));
-            holder.cvItem.setCardBackgroundColor(
-                    res.getColor(R.color.btn_background_locked));
+            holder.rlItem.getBackground().setAlpha(100);
+
+            holder.tvItemTitle.setTextColor(
+                    res.getColor(R.color.pack_title_txt_locked));
+            holder.tvItemSubtitle.setTextColor(
+                    res.getColor(R.color.pack_title_txt_locked));
 
         } else {
             holder.itemView.setEnabled(true);
             drawable.setColor(packColor);
-            holder.cvItem.setCardBackgroundColor(
-                    res.getColor(R.color.btn_background_main));
+
             holder.tvItemTitle.setTextColor(packColor);
             holder.tvItemSubtitle.setTextColor(
                     res.getColor(R.color.pack_num_of_levels_txt));
@@ -92,10 +95,8 @@ public class LevelsAdapter extends RecyclerView.Adapter<PackLevelViewHolder> {
             }
         }
         holder.tvItemTitle.setText(
-                res.getString(R.string.level_title, levelNum));
+                res.getString(R.string.level_title, i + 1));
         holder.tvItemSubtitle.setText(level.getClue());
-        holder.tvItemNum.setText(
-                res.getString(R.string.list_number, levelNum));
     }
 
     @Override

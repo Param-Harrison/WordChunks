@@ -92,6 +92,7 @@ public class LevelSolvedFrag extends Fragment {
         } else {
             tvLevelsLeft.setText(left + " LEVELS LEFT IN PACK");
         }
+
     }
 
     private void setExcellent() {

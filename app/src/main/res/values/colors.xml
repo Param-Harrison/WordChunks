@@ -19,35 +19,31 @@
     <!-- DELETE ALL ABOVE -->
 
     <!-- Main screen colors -->
-    <color name="background_main">#2d2d2d</color>
-    <color name="btn_background_main">#424242</color>
-    <color name="btn_background_locked">#232323</color>
+    <color name="background_main">#383838</color>
 
-    <color name="btn_txt_main">#ffffff</color>
-    <color name="btn_txt_play_pressed">#2ba370</color>
-    <color name="btn_txt_daily_pressed">#dbad55</color>
-    <color name="btn_txt_packs_pressed">#da5c53</color>
-    <color name="btn_txt_store_pressed">#705ed4</color>
+    <color name="btn_txt_main">#eeeeee</color>
+    <color name="btn_txt_play_pressed">#59569e</color>
+    <color name="btn_txt_daily_pressed">#f25192</color>
+    <color name="btn_txt_packs_pressed">#f77c88</color>
+    <color name="btn_txt_store_pressed">#fcc397</color>
 
-    <color name="btn_rect_play">#7cdf95</color>
-    <color name="btn_rect_play_pressed">#c0ffd0</color>
+    <color name="btn_rect_play">#59569e</color>
+    <color name="btn_rect_play_pressed">#726eca</color>
 
-    <color name="btn_rect_daily">#ffeba3</color>
-    <color name="btn_rect_daily_pressed">#fff5d3</color>
+    <color name="btn_rect_daily">#f25192</color>
+    <color name="btn_rect_daily_pressed">#ff82b4</color>
 
-    <color name="btn_rect_packs">#f89d81</color>
-    <color name="btn_rect_packs_pressed">#f7b5a1</color>
+    <color name="btn_rect_packs">#f77c88</color>
+    <color name="btn_rect_packs_pressed">#ff9da6</color>
 
-    <color name="btn_rect_store">#a494ff</color>
-    <color name="btn_rect_store_pressed">#bdb1ff</color>
-
-    <color name="btn_rect_stroke">#131313</color>
+    <color name="btn_rect_store">#fcc397</color>
+    <color name="btn_rect_store_pressed">#ffdabd</color>
 
     <!-- Packs screen -->
     <color name="title_txt">#e2e2e2</color>
     <color name="item_number_txt">#7f7f7f</color>
-    <color name="pack_rect_left_locked">#3d3d3d</color>
-    <color name="pack_title_txt_locked">#3d3d3d</color>
+    <color name="pack_rect_left_locked">#20000000</color>
+    <color name="pack_title_txt_locked">#20000000</color>
     <color name="pack_num_of_levels_txt">#dddddd</color>
 
     <!-- Words -->

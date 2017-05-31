@@ -1,0 +1,19 @@
+package com.appchamp.wordchunks.models.realm
+
+import io.realm.RealmObject
+import io.realm.annotations.Index
+
+
+open class Chunk : RealmObject() {
+
+    @Index
+    var levelId: String? = null
+    @Index
+    var wordId: String? = null
+    @Index
+    var chunk: String? = null
+    @Index
+    var state: Long = 0
+    @Index
+    var position: Int = 0
+}

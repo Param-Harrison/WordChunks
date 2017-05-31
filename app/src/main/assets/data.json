@@ -1,17 +1,1139 @@
 [
   {
     "title": "AZURE",
-    "color": "#2d2d2d",
+    "color": "#00bdbd",
     "levels": [
       {
         "clue": "ANIMALS",
-        "fact": "some fact",
+        "fact": "Conan Doyle chose the name Sherlock in honour of Nottingham cricketers Sherwin and Shacklock. Originally it was Sherringford Holmes.",
         "words": "DO,G"
       },
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
       {
         "clue": "SHERLOCK HOLMES",
         "fact": "Conan Doyle chose the name Sherlock in honour of Nottingham cricketers Sherwin and Shacklock. Originally it was Sherringford Holmes.",
         "words": "MY,CR,OFT DE,TE,CTI,VE MRS.,HU,DS,ON DR.,WAT,SON ELE,MEN,TA,RY DOY,LE"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "OOOOOOOOOO",
+    "color": "#cccccc",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
+        "clue": "BODY PARTS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "BRE,AST FORE,HEAD"
       }
     ]
   },

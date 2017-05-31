@@ -28,7 +28,7 @@
         android:letterSpacing="0.1"
         android:paddingEnd="12dp"
         android:paddingStart="12dp"
-        android:textColor="#929292"
+        android:textColor="#ffffff"
         android:textSize="12sp"
         tools:text="10 LETTERS" />
 
@@ -51,7 +51,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentEnd="false"
         android:gravity="center"
-        android:textColor="#292929"
+        android:textColor="#37474f"
         android:textSize="15sp"
         tools:text="1" />
 

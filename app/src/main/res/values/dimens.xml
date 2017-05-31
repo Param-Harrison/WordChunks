@@ -9,8 +9,8 @@
 
     <!-- Custom main button -->
     <dimen name="cbtn_width">220dp</dimen>
-    <dimen name="cbtn_height">46dp</dimen>
-    <dimen name="cbtn_margin_bottom">7dp</dimen>
+    <dimen name="cbtn_height">50dp</dimen>
+    <dimen name="cbtn_margin_bottom">6dp</dimen>
     <dimen name="cbtn_corner_radius">10dp</dimen>
     <dimen name="cbtn_elevation">2dp</dimen>
     <dimen name="cbtn_title_padding_end">14dp</dimen>

@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.appchamp.wordchunks.R;
@@ -31,10 +32,12 @@ public class PacksActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_packs_levels);
-
+        LinearLayout llPacksLevels = (LinearLayout) findViewById(R.id.llPacksLevels);
+        llPacksLevels.setBackgroundResource(R.drawable.gradient_packs);
         TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvTitle.setText(getString(R.string.title_select_pack));
         RecyclerView rvPacks = (RecyclerView) findViewById(R.id.recyclerView);
+
 
         realm = Realm.getDefaultInstance();
 
