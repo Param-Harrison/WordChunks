@@ -1,154 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:ignore="MissingPrefix">
+    android:background="@drawable/gradient_level_solved"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/level_finish_screen_bg"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/toolbar_height">
-
-            <TextView
-                fontPath="fonts/nunitoextrabold.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/level_finished"
-                android:textColor="@color/title_txt"
-                android:textSize="@dimen/toolbar_title_txt_size" />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="50dp"
-                android:src="@drawable/ic_fav" />
-
-        </RelativeLayout>
+        android:layout_height="@dimen/toolbar_height">
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/trophy" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/top"
+            android:contentDescription="@null" />
 
-    </LinearLayout>
+        <TextView
+            fontPath="fonts/nunitoextrabold.ttf"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/level_finished"
+            android:textColor="@color/title_txt"
+            android:textSize="@dimen/toolbar_title_txt_size"
+            tools:ignore="MissingPrefix" />
 
-    <LinearLayout
-        android:id="@+id/llPackBg"
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="20dp"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_medal" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@drawable/trophy" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:background="#00bdbd">
+        android:layout_marginTop="-35dp">
 
-        <View
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="7dp"
-            android:background="#70000000" />
+            android:layout_height="80dp"
+            android:contentDescription="@null"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:src="@drawable/ribbon" />
 
-
-        <RelativeLayout
+        <TextView
+            android:id="@+id/tvExcellent"
+            fontPath="fonts/nunitoblack.ttf"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:paddingBottom="5dp"
+            android:textColor="#37474f"
+            android:textSize="20sp"
+            tools:ignore="MissingPrefix"
+            tools:text="EXCELLENT!" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:contentDescription="@null"
-                android:paddingEnd="20dp"
-                android:paddingStart="20dp"
-                android:src="@drawable/ribbon" />
+    </RelativeLayout>
 
-            <TextView
-                android:id="@+id/tvExcellent"
-                fontPath="fonts/nunitoblack.ttf"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:gravity="center"
-                android:paddingBottom="5dp"
-                android:textColor="#263238"
-                android:textSize="20sp"
-                tools:text="EXCELLENT!" />
-
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="7dp"
-            android:background="#70000000" />
-
-    </LinearLayout>
-
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#2d2d2d"
-        android:orientation="vertical"
-        android:paddingTop="20dp">
+        android:background="@color/background_main">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="300dp"
+        <ImageView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="3dp"
-            app:cardBackgroundColor="#363636"
-            app:cardCornerRadius="8dp">
+            android:background="@drawable/top"
+            android:contentDescription="@null" />
 
-            <TextView
-                android:id="@+id/tvFunFactTitle"
-                fontPath="fonts/nunitoblack.ttf"
-                android:layout_width="match_parent"
+        <LinearLayout
+            android:id="@+id/llFunFact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginEnd="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/fun_fact_bg_rect"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:letterSpacing="0.2"
-                android:paddingBottom="10dp"
-                android:paddingStart="20dp"
-                android:paddingTop="10dp"
-                android:text="@string/fun_fact"
-                android:textSize="12sp"
-                tools:textColor="#00bdbd" />
+                android:layout_gravity="center_horizontal">
+
+                <ImageView
+
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignStart="@id/tvFunFactTitle"
+                    android:contentDescription="@null"
+                    android:src="@drawable/clip" />
+
+                <TextView
+                    android:id="@+id/tvFunFactTitle"
+                    fontPath="fonts/nunitoblack.ttf"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:drawablePadding="10dp"
+                    android:letterSpacing="0.2"
+                    android:paddingBottom="10dp"
+                    android:paddingEnd="40dp"
+                    android:paddingStart="40dp"
+                    android:paddingTop="15dp"
+                    android:text="@string/fun_fact"
+                    android:textAlignment="center"
+                    android:textColor="#dedede"
+                    android:textSize="12sp"
+                    tools:ignore="MissingPrefix" />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/tvFunFact"
                 fontPath="fonts/nunitosemibold.ttf"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:paddingBottom="20dp"
                 android:paddingEnd="20dp"
                 android:paddingStart="20dp"
-                android:paddingTop="30dp"
-                android:textColor="#e3e4e4"
-                android:textSize="14sp"
+                android:textColor="#c7c7c7"
+                android:textSize="12sp"
+                tools:ignore="MissingPrefix"
                 tools:text="The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet." />
 
-        </android.support.v7.widget.CardView>
+        </LinearLayout>
 
-
-        <android.support.v7.widget.CardView
-            android:id="@+id/cvRateUs"
+        <RelativeLayout
+            android:id="@+id/rlNextLevel"
             android:layout_width="220dp"
-            android:layout_height="45dp"
-            android:layout_gravity="center"
-            android:layout_margin="30dp"
+            android:layout_height="54dp"
+            android:layout_below="@+id/llFunFact"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/main_bg_rect"
             android:foreground="?android:attr/selectableItemBackground"
-            app:cardBackgroundColor="#363636"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="6dp">
+            android:paddingBottom="4dp">
 
             <ImageView
+                android:id="@+id/imgRectBg"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
+                android:contentDescription="@null"
                 android:scaleType="fitXY"
                 android:src="@drawable/next_level_left_rect" />
 
@@ -159,24 +166,28 @@
                 android:layout_gravity="center_vertical"
                 android:gravity="end"
                 android:orientation="vertical"
+                android:paddingBottom="4dp"
                 android:paddingEnd="17dp">
 
                 <TextView
+                    android:id="@+id/tvNextLevelTitle"
                     fontPath="fonts/nunitoextrabold.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/next_level"
                     android:textColor="#f1c40f"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:ignore="MissingPrefix" />
 
                 <TextView
-                    android:id="@+id/tvSubtitle"
+                    android:id="@+id/tvNextLevelClue"
                     fontPath="fonts/nunitosemibold.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="-5dp"
+                    android:layout_marginTop="-4dp"
                     android:textColor="#b5b5b5"
-                    android:textSize="11sp"
+                    android:textSize="10sp"
+                    tools:ignore="MissingPrefix"
                     tools:text="ANIMALS" />
 
             </LinearLayout>
@@ -187,38 +198,33 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/next_level"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_next" />
+                android:src="@drawable/ic_fish" />
 
-        </android.support.v7.widget.CardView>
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="-40dp"
-        android:background="#232323"
-        android:gravity="center">
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tvLevelsLeft"
             fontPath="fonts/nunitobold.ttf"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:drawableLeft="@drawable/ic_info"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:padding="10dp"
             android:textColor="#aaaaaa"
             android:textSize="12sp"
+            tools:ignore="MissingPrefix"
             tools:text="5 LEVELS LEFT IN PACK" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="15dp"
-            android:layout_toStartOf="@id/tvLevelsLeft"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/top"
             android:contentDescription="@null"
-            android:src="@drawable/ic_info" />
+            android:rotation="180" />
 
     </RelativeLayout>
 

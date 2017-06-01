@@ -30,7 +30,7 @@
     <string name="hint">hint</string>
     <string name="level_finished">LEVEL FINISHED</string>
     <string name="next_level">NEXT LEVEL</string>
-    <string name="fun_fact">FUN FACT…</string>
+    <string name="fun_fact">FUN FACT</string>
     <string name="we_will_add_new_packs_soon">WE WILL ADD NEW PACKS SOON</string>
     <string name="it_means_so_much_for_us">IT MEANS SO MUCH FOR US</string>
     <string name="rate_us">RATE US</string>
@@ -42,5 +42,6 @@
     <string name="tutorial0">Answers register AUTOMATICALLY when correct.</string>
     <string name="tutorial1">1. All given solutions has one THEME in common.</string>
     <string name="tutorial">tutorial</string>
+    <string name="all_packs_finished">ALL PACKS FINISHED</string>
 
 </resources>

@@ -13,7 +13,7 @@ open class Chunk : RealmObject() {
     @Index
     var chunk: String? = null
     @Index
-    var state: Long = 0
+    var state: Long = 0  // must be Long as the currentTimeMillis
     @Index
     var position: Int = 0
 }

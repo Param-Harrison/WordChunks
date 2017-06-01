@@ -27,7 +27,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import static com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID;
 import static com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID;
-import static com.appchamp.wordchunks.util.Constants.LEVEL_STATE_SOLVED;
 
 
 public class LevelsActivity extends AppCompatActivity {
@@ -51,9 +50,9 @@ public class LevelsActivity extends AppCompatActivity {
         // Passing packs via ids
         String packId = getIntent().getStringExtra(EXTRA_PACK_ID);
         if (packId != null) {
-            List<Level> levels = LevelsRealmHelper.findLevelsByPackId(realm, packId);
+            List<Level> levels = LevelsRealmHelper.INSTANCE.findLevelsByPackId(realm, packId);
 
-            final int packColor = Color.parseColor(PacksRealmHelper
+            final int packColor = Color.parseColor(PacksRealmHelper.INSTANCE
                     .findFirstPackById(realm, levels.get(0).getPackId()).getColor());
 
             initLevelsAdapter(levels, packColor);
@@ -104,24 +103,9 @@ public class LevelsActivity extends AppCompatActivity {
     private void startGameActivity(String levelId) {
         Intent intent = new Intent(LevelsActivity.this, GameActivity.class);
         intent.putExtra(EXTRA_LEVEL_ID, levelId);
-
-        // Reset level data if level was solved
-        isLevelSolvedBefore(levelId);
-
         startActivity(intent);
         finish();
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left);
-    }
-
-    private void isLevelSolvedBefore(String levelId) {
-        Level level = LevelsRealmHelper.findLevelById(realm, levelId);
-        if (level.getState() == LEVEL_STATE_SOLVED) {
-            realm.executeTransaction(bgRealm -> {
-
-                // Reset the data of this solved level via its id.
-                LevelsRealmHelper.resetLevelById(bgRealm, levelId);
-            });
-        }
     }
 
     /**

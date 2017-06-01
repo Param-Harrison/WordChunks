@@ -1,31 +1,24 @@
 package com.appchamp.wordchunks.ui.game.fragments;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.appchamp.wordchunks.R;
 import com.appchamp.wordchunks.ui.game.listeners.OnBackToLevelsListener;
-
-import java.util.Random;
 
 
 public class LevelSolvedBeforeFrag extends Fragment {
 
     private OnBackToLevelsListener callback;
 
-    private LinearLayout llPackBg;
-    private TextView tvExcellent;
     private TextView tvFunFact;
-    private TextView tvFunFactTitle;
 
     public LevelSolvedBeforeFrag() {
         // Requires empty public constructor
@@ -41,38 +34,20 @@ public class LevelSolvedBeforeFrag extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(
                 R.layout.frag_level_solved_before, container, false);
-        CardView btnBackToLevels = (CardView) root.findViewById(R.id.cvBackToLevels);
-        llPackBg = (LinearLayout) root.findViewById(R.id.llPackBg);
-        tvExcellent = (TextView) root.findViewById(R.id.tvExcellent);
+        RelativeLayout rlBackToLevels = (RelativeLayout) root.findViewById(R.id.rlBackToLevels);
+
         tvFunFact = (TextView) root.findViewById(R.id.tvFunFact);
-        tvFunFactTitle = (TextView) root.findViewById(R.id.tvFunFactTitle);
 
-        btnBackToLevels.setOnClickListener(v -> callback.onBackToLevelsSelected());
+        rlBackToLevels.setOnClickListener(v -> callback.onBackToLevelsSelected());
 
-        setPackColor();
         setFunFact();
-        setExcellent();
 
         return root;
-    }
-
-    private void setPackColor() {
-        int color = getArguments().getInt("color");
-        llPackBg.setBackgroundColor(color);
-        tvFunFactTitle.setTextColor(color);
-
     }
 
     private void setFunFact() {
         String fact = getArguments().getString("fact");
         tvFunFact.setText(fact);
-    }
-
-    private void setExcellent() {
-        Resources res = getActivity().getResources();
-        String[] congrats = res.getStringArray(R.array.congrats);
-        int i = new Random().nextInt(congrats.length - 1);
-        tvExcellent.setText(congrats[i]);
     }
 
     @Override

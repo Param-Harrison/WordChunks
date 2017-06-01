@@ -71,8 +71,8 @@ public class ChunksAdapter extends RecyclerView.Adapter<ChunksAdapter.ViewHolder
         }
         // Clicked chunk state
         else if (chunkState > CHUNK_STATE_NORMAL) {
-            drawable.setAlpha(150);
-            holder.tvChunk.setAlpha((float) 0.4);
+            drawable.setAlpha(80);
+            holder.tvChunk.setAlpha((float) 0.2);
         }
         // Gone chunk state
         else if (chunkState == CHUNK_STATE_GONE) {

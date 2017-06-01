@@ -42,7 +42,7 @@ public class PacksActivity extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
 
         // This is the RecyclerView adapter which will display the list of packs
-        List<Pack> packs = PacksRealmHelper.findAllPacks(realm);
+        List<Pack> packs = PacksRealmHelper.INSTANCE.findAllPacks(realm);
 
         PacksAdapter adapter = new PacksAdapter(packs);
         rvPacks.setAdapter(adapter);

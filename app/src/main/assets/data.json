@@ -4,6 +4,37 @@
     "color": "#00bdbd",
     "levels": [
       {
+        "clue": "SHERLOCK HOLMES",
+        "fact": "Conan Doyle chose the name Sherlock in honour of Nottingham cricketers Sherwin and Shacklock. Originally it was Sherringford Holmes.",
+        "words": "MY,CR,OFT DE,TE,CTI,VE MRS.,HU,DS,ON DR.,WAT,SON ELE,MEN,TA,RY DOY,LE"
+      },
+      {
+        "clue": "BODY PARTS",
+        "fact": "some fact",
+        "words": "BR,EA,STT"
+      },
+      {
+        "clue": "ANIMALS",
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "HU,MS,TER"
+      },
+      {
+        "clue": "BODY PARTS",
+        "fact": "some fact",
+        "words": "BRE,AST FORE,HEAD"
+      },
+      {
+        "clue": "BODY PARTS",
+        "fact": "some fact",
+        "words": "BRE,AST FORE,HEAD"
+      }
+    ]
+  },
+  {
+    "title": "AMETHYST",
+    "color": "#c66eff",
+    "levels": [
+      {
         "clue": "ANIMALS",
         "fact": "Conan Doyle chose the name Sherlock in honour of Nottingham cricketers Sherwin and Shacklock. Originally it was Sherringford Holmes.",
         "words": "DO,G"
@@ -16,18 +47,7 @@
     ]
   },
   {
-    "title": "AMETHYST",
-    "color": "#c66eff",
-    "levels": [
-      {
-        "clue": "SHERLOCK HOLMES",
-        "fact": "Conan Doyle chose the name Sherlock in honour of Nottingham cricketers Sherwin and Shacklock. Originally it was Sherringford Holmes.",
-        "words": "MY,CR,OFT DE,TE,CTI,VE MRS.,HU,DS,ON DR.,WAT,SON ELE,MEN,TA,RY DOY,LE"
-      }
-    ]
-  },
-  {
-    "title": "AMETHYST",
+    "title": "SOMETHING",
     "color": "#c66eff",
     "levels": [
       {

@@ -2,14 +2,15 @@ package com.appchamp.wordchunks.ui.game.fragments;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.appchamp.wordchunks.R;
@@ -22,10 +23,11 @@ public class LevelSolvedFrag extends Fragment {
 
     private OnNextLevelListener callback;
 
-    private LinearLayout llPackBg;
+    private RelativeLayout rlNextLevel;
+    private ImageView imgRectBg;
     private TextView tvExcellent;
     private TextView tvFunFact;
-    private TextView tvFunFactTitle;
+    private TextView tvNextLevelTitle;
     private TextView tvNextLevelClue;
     private TextView tvLevelsLeft;
 
@@ -43,15 +45,15 @@ public class LevelSolvedFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.frag_level_solved, container, false);
-        CardView cvNextLevel = (CardView) root.findViewById(R.id.cvRateUs);
-        llPackBg = (LinearLayout) root.findViewById(R.id.llPackBg);
+        rlNextLevel = (RelativeLayout) root.findViewById(R.id.rlNextLevel);
+        imgRectBg = (ImageView) root.findViewById(R.id.imgRectBg);
         tvExcellent = (TextView) root.findViewById(R.id.tvExcellent);
         tvFunFact = (TextView) root.findViewById(R.id.tvFunFact);
-        tvFunFactTitle = (TextView) root.findViewById(R.id.tvFunFactTitle);
-        tvNextLevelClue = (TextView) root.findViewById(R.id.tvSubtitle);
+        tvNextLevelTitle = (TextView) root.findViewById(R.id.tvNextLevelTitle);
+        tvNextLevelClue = (TextView) root.findViewById(R.id.tvNextLevelClue);
         tvLevelsLeft = (TextView) root.findViewById(R.id.tvLevelsLeft);
 
-        cvNextLevel.setOnClickListener(v -> callback.onNextLevelSelected());
+        rlNextLevel.setOnClickListener(v -> callback.onNextLevelSelected());
 
         setPackColor();
         setClue();
@@ -64,15 +66,15 @@ public class LevelSolvedFrag extends Fragment {
 
     private void setPackColor() {
         int color = getArguments().getInt("color");
-        llPackBg.setBackgroundColor(color);
-        tvFunFactTitle.setTextColor(color);
-
+        GradientDrawable drawable = (GradientDrawable) imgRectBg.getDrawable();
+        drawable.setColor(color);
+        tvNextLevelTitle.setTextColor(color);
     }
 
     private void setClue() {
         String clue = getArguments().getString("clue");
         if (clue == "") {
-            tvNextLevelClue.setText("GO GET YOUR PRIZE!");
+            tvNextLevelClue.setText("CONGRATULATIONS!");
         } else {
             tvNextLevelClue.setText(clue);
         }
@@ -86,13 +88,12 @@ public class LevelSolvedFrag extends Fragment {
     private void setLevelsLeft() {
         long left = getArguments().getLong("left");
         if (left == 0) {
-            tvLevelsLeft.setText("YOU'VE FINISHED THE PACK!");
+            tvLevelsLeft.setText("YOU'VE FINISHED THE WHOLE PACK!");
         } else if (left == 1) {
-            tvLevelsLeft.setText("JUST ONE LEVEL LEFT IN PACK");
+            tvLevelsLeft.setText("ONLY ONE LEVEL LEFT IN PACK");
         } else {
             tvLevelsLeft.setText(left + " LEVELS LEFT IN PACK");
         }
-
     }
 
     private void setExcellent() {

@@ -93,7 +93,7 @@ public class PacksAdapter extends RecyclerView.Adapter<PackLevelViewHolder> {
             holder.tvItemSubtitle.setTextColor(
                     res.getColor(R.color.pack_num_of_levels_txt));
             final Realm realm = Realm.getDefaultInstance();
-            long solvedLevelsSize = LevelsRealmHelper
+            long solvedLevelsSize = LevelsRealmHelper.INSTANCE
                     .countLevelsByPackIdAndState(realm, pack.getId(), LEVEL_STATE_SOLVED);
             realm.close();
             holder.tvItemSubtitle.setText(

@@ -91,12 +91,12 @@ public class MainFragment extends Fragment {
     private String getLastCurrentLevelId(Realm realm) {
 
         long countLevelsByCurrentState =
-                LevelsRealmHelper.countLevelsByState(realm, LEVEL_STATE_CURRENT);
+                LevelsRealmHelper.INSTANCE.countLevelsByState(realm, LEVEL_STATE_CURRENT);
 
         // If not all levels were solved
         if (countLevelsByCurrentState != 0) {
             // Getting the last "current" level id
-            return LevelsRealmHelper.findLastLevelByState(realm, LEVEL_STATE_CURRENT).getId();
+            return LevelsRealmHelper.INSTANCE.findLastLevelByState(realm, LEVEL_STATE_CURRENT).getId();
         } else {
             // If all levels and packs were solved, showing the fragment
             return null;
