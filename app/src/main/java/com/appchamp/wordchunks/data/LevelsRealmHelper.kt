@@ -3,7 +3,12 @@ package com.appchamp.wordchunks.data
 import com.appchamp.wordchunks.models.pojo.LevelJson
 import com.appchamp.wordchunks.models.realm.Level
 import com.appchamp.wordchunks.models.realm.Pack
-import com.appchamp.wordchunks.util.Constants.*
+import com.appchamp.wordchunks.util.Constants.CHUNK_STATE_NORMAL
+import com.appchamp.wordchunks.util.Constants.REALM_FIELD_ID
+import com.appchamp.wordchunks.util.Constants.REALM_FIELD_PACK_ID
+import com.appchamp.wordchunks.util.Constants.REALM_FIELD_STATE
+import com.appchamp.wordchunks.util.Constants.WORDS_SEPARATOR
+import com.appchamp.wordchunks.util.Constants.WORD_STATE_NOT_SOLVED
 import io.realm.Realm
 import io.realm.RealmList
 import java.util.*
@@ -27,6 +32,7 @@ object LevelsRealmHelper {
             level.clue = clue
             level.fact = fact
             level.packId = pack.id
+            level.color = pack.color
 
             val wordsSplit = wordsJson.split(WORDS_SEPARATOR)
             // After split "AB,CD EF,GH" becomes ["AB,CD", "EF,GH"]
@@ -43,11 +49,11 @@ object LevelsRealmHelper {
         }
     }
 
-    fun findLevelsByPackId(realm: Realm, packId: String): RealmList<Level>? = realm
-            .where(Pack::class.java)
-            .equalTo(REALM_FIELD_ID, packId)
-            .findFirst()
-            .levels
+//    fun findLevelsByPackId(realm: Realm, packId: String): RealmList<Level>? = realm
+//            .where(Pack::class.java)
+//            .equalTo(REALM_FIELD_ID, packId)
+//            .findFirst()
+//            .levels
 
     fun findFirstLevelByState(realm: Realm, state: Int): Level = realm
             .where(Level::class.java)

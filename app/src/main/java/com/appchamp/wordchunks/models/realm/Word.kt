@@ -4,11 +4,12 @@ package com.appchamp.wordchunks.models.realm
 import io.realm.RealmObject
 import io.realm.annotations.Index
 import io.realm.annotations.PrimaryKey
+import java.util.*
 
 open class Word : RealmObject() {
 
     @PrimaryKey
-    var id: String? = null
+    var id: String? = UUID.randomUUID().toString()
     @Index
     var word: String? = null
     @Index

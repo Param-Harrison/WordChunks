@@ -2,7 +2,11 @@ package com.appchamp.wordchunks.data
 
 import com.appchamp.wordchunks.models.realm.Level
 import com.appchamp.wordchunks.models.realm.Word
-import com.appchamp.wordchunks.util.Constants.*
+import com.appchamp.wordchunks.util.Constants.CHUNKS_SEPARATOR
+import com.appchamp.wordchunks.util.Constants.REALM_FIELD_ID
+import com.appchamp.wordchunks.util.Constants.REALM_FIELD_STATE
+import com.appchamp.wordchunks.util.Constants.WORD_STATE_NOT_SOLVED
+
 import io.realm.Realm
 import io.realm.RealmList
 import java.util.*

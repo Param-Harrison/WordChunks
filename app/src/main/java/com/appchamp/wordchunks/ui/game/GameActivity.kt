@@ -1,9 +1,9 @@
 package com.appchamp.wordchunks.ui.game
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.appchamp.wordchunks.R
@@ -17,14 +17,19 @@ import com.appchamp.wordchunks.ui.game.fragments.LevelSolvedFrag
 import com.appchamp.wordchunks.ui.game.listeners.OnBackToLevelsListener
 import com.appchamp.wordchunks.ui.game.listeners.OnLevelSolvedListener
 import com.appchamp.wordchunks.ui.game.listeners.OnNextLevelListener
-import com.appchamp.wordchunks.ui.levels.LevelsActivity
+import com.appchamp.wordchunks.ui.packslevels.LevelsActivity
 import com.appchamp.wordchunks.ui.tutorial.TutorialActivity
 import com.appchamp.wordchunks.util.ActivityUtils
-import com.appchamp.wordchunks.util.AnimUtils
-import com.appchamp.wordchunks.util.Constants.*
+import com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID
+import com.appchamp.wordchunks.util.Constants.LEVEL_ID_KEY
+import com.appchamp.wordchunks.util.Constants.PREFS_HOW_TO_PLAY
+import com.appchamp.wordchunks.util.Constants.STATE_CURRENT
+import com.appchamp.wordchunks.util.Constants.STATE_LOCKED
+import com.appchamp.wordchunks.util.Constants.STATE_SOLVED
+import com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFS
 import io.realm.Realm
+import org.jetbrains.anko.intentFor
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
-import kotlin.properties.Delegates
 
 
 class GameActivity : AppCompatActivity(), OnLevelSolvedListener, OnNextLevelListener,
@@ -32,12 +37,12 @@ class GameActivity : AppCompatActivity(), OnLevelSolvedListener, OnNextLevelList
 
     private var levelId: String? = null
     private var nextLevel: Level? = null
-    private var realm: Realm by Delegates.notNull()
+    private val handler = Handler()
+    val realm: Realm = Realm.getDefaultInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_game)
-        realm = Realm.getDefaultInstance()
 
         val sp = getSharedPreferences(WORD_CHUNKS_PREFS, Context.MODE_PRIVATE)
         val editor = sp.edit()
@@ -51,14 +56,13 @@ class GameActivity : AppCompatActivity(), OnLevelSolvedListener, OnNextLevelList
         addGameFragment()
     }
 
-
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        startLevelsActivity()
+        backToLevelsActivity()
     }
 
     override fun onDestroy() {
@@ -67,39 +71,30 @@ class GameActivity : AppCompatActivity(), OnLevelSolvedListener, OnNextLevelList
     }
 
     fun onBackArrowClick(v: View) {
-        super.onBackPressed()
-        AnimUtils.startAnimationFadeIn(this@GameActivity, v)
-        startLevelsActivity()
+        onBackPressed()
     }
 
     private fun showTutorial() {
-        val intent = Intent(this, TutorialActivity::class.java)
-        startActivity(intent)
+        startActivity(intentFor<TutorialActivity>())
     }
 
     private fun addGameFragment() {
         // Getting level id via Intents
-        levelId = intent.getStringExtra(EXTRA_LEVEL_ID)
+        levelId = intent.getStringExtra(LEVEL_ID_KEY)
 
         ActivityUtils.addFragment(
                 supportFragmentManager,
-                GameFrag.newInstance(),
-                R.id.flActMain,
-                EXTRA_LEVEL_ID,
-                levelId!!)
+                GameFrag.newInstance(levelId),
+                R.id.flActMain)
     }
 
     /**
      * Back navigation. Navigates from GameActivity to LevelsActivity passing Pack id in the Intent.
      */
-    private fun startLevelsActivity() {
-        val intent = Intent(this, LevelsActivity::class.java)
-
-        // Passing levelId via Intent.
+    private fun backToLevelsActivity() {
         val packId = LevelsRealmHelper.findLevelById(realm, levelId!!).packId
-        intent.putExtra(EXTRA_PACK_ID, packId)
-
-        startActivity(intent)
+        // Passing levelId via Intent.
+        startActivity(intentFor<LevelsActivity>(EXTRA_PACK_ID to packId))
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
     }
 
@@ -107,13 +102,14 @@ class GameActivity : AppCompatActivity(), OnLevelSolvedListener, OnNextLevelList
      * This callback method called from the GameFrag immediately when the level was solved.
      */
     override fun onLevelSolved() {
+        // Delay showing the fragment for more smoothness
+//        handler.postDelayed({
         realm.executeTransaction { bgRealm ->
 
             val level = LevelsRealmHelper.findLevelById(bgRealm, levelId!!)
 
             // Reset all data of the solved level through its id.
             LevelsRealmHelper.resetLevelById(bgRealm, levelId!!)
-
 
             if (isLevelSolvedBefore(level)) {
                 // Level WAS solved before
@@ -122,56 +118,57 @@ class GameActivity : AppCompatActivity(), OnLevelSolvedListener, OnNextLevelList
             } else {
                 // Level was NOT solved before
                 // Change current level state to "solved", current level state is "current"
-                level.state = LEVEL_STATE_SOLVED
+                level.state = STATE_SOLVED
 
                 // Unlocking the next level to play in.
 
                 // Getting the next level to play in.
-                nextLevel = LevelsRealmHelper.findFirstLevelByState(bgRealm, LEVEL_STATE_LOCKED)
-                //                Logger.d("Next Level id  = " + nextLevel.getId());
-
+                nextLevel = LevelsRealmHelper.findFirstLevelByState(bgRealm, STATE_LOCKED)
 
                 var nextLevelClue = ""
                 var nextPackColor = Color.parseColor("#f6aa4c")
                 // If the next locked level exists
                 if (nextLevel != null) {
                     // Unlock next level
-                    nextLevel!!.state = LEVEL_STATE_CURRENT
+                    nextLevel!!.state = STATE_CURRENT
                     nextLevelClue = nextLevel!!.clue!!
                     nextPackColor = Color.parseColor(
                             PacksRealmHelper.findFirstPackById(bgRealm, nextLevel!!.packId!!).color)
                 }
 
+
                 showLevelSolvedFragment(
                         nextPackColor,
                         nextLevelClue,
-                        level.fact,
+                        level.fact!!,
                         isPackSolved(bgRealm, level.packId))
+
             }
         }
+//        }, 200)
     }
 
     private fun isLevelSolvedBefore(level: Level): Boolean {
         // Getting the state of the current level, if "current": return false, else true.
-        return level.state != LEVEL_STATE_CURRENT
+        return level.state != STATE_CURRENT
     }
 
     private fun isPackSolved(bgRealm: Realm, packId: String?): Long {
         // Count the number of current levels in pack, if 0 then we solved the whole pack
 
         if (LevelsRealmHelper
-                .countLevelsByPackIdAndState(bgRealm, packId, LEVEL_STATE_CURRENT).toInt() == 0) {
+                .countLevelsByPackIdAndState(bgRealm, packId, STATE_CURRENT).toInt() == 0) {
 
-            PacksRealmHelper.findFirstPackById(bgRealm, packId).state = PACK_STATE_SOLVED
+            PacksRealmHelper.findFirstPackById(bgRealm, packId).state = STATE_SOLVED
             // Find the next locked pack and set it as "current"
-            val nextLockedPack = PacksRealmHelper.findFirstPackByState(bgRealm, PACK_STATE_LOCKED)
+            val nextLockedPack = PacksRealmHelper.findFirstPackByState(bgRealm, STATE_LOCKED)
             if (nextLockedPack != null) {
-                nextLockedPack.state = PACK_STATE_CURRENT
+                nextLockedPack.state = STATE_CURRENT
             }
             return 0
         } else {
             val numberOfSolvedLevels = LevelsRealmHelper
-                    .countLevelsByPackIdAndState(bgRealm, packId, LEVEL_STATE_SOLVED)
+                    .countLevelsByPackIdAndState(bgRealm, packId, STATE_SOLVED)
             val numberOfLevels = LevelsRealmHelper
                     .countLevelsByPackId(bgRealm, packId)
             return numberOfLevels - numberOfSolvedLevels
@@ -196,17 +193,10 @@ class GameActivity : AppCompatActivity(), OnLevelSolvedListener, OnNextLevelList
                 R.id.flActMain)
     }
 
-    private fun showLevelSolvedFragment(color: Int, clue: String, fact: String?, left: Long) {
-        val args = Bundle()
-        val fragment = LevelSolvedFrag.newInstance()
-        args.putInt("color", color)
-        args.putString("clue", clue)
-        args.putString("fact", fact)
-        args.putLong("left", left)
-        fragment.arguments = args
+    private fun showLevelSolvedFragment(color: Int, clue: String, fact: String, left: Long) {
         ActivityUtils.replaceFragment(
                 supportFragmentManager,
-                fragment,
+                LevelSolvedFrag.newInstance(color, clue, fact, left),
                 R.id.flActMain)
     }
 
@@ -215,17 +205,14 @@ class GameActivity : AppCompatActivity(), OnLevelSolvedListener, OnNextLevelList
             levelId = nextLevel!!.id
             ActivityUtils.replaceFragment(
                     supportFragmentManager,
-                    GameFrag.newInstance(),
-                    R.id.flActMain,
-                    EXTRA_LEVEL_ID,
-                    levelId!!)
+                    GameFrag.newInstance(levelId),
+                    R.id.flActMain)
         } else {
             showGameFinishedFragment()
         }
     }
 
     override fun onBackToLevelsSelected() {
-        super.onBackPressed()
-        startLevelsActivity()
+        onBackPressed()
     }
 }

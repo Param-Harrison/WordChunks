@@ -32,10 +32,6 @@ object PacksRealmHelper {
         }
     }
 
-    fun findAllPacks(realm: Realm): List<Pack> = realm
-            .where(Pack::class.java)
-            .findAll()
-
     fun findFirstPackByState(realm: Realm, state: Int): Pack = realm
             .where(Pack::class.java)
             .equalTo(REALM_FIELD_STATE, state)

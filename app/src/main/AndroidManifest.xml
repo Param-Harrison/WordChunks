@@ -22,9 +22,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.packs.PacksActivity" />
+        <activity android:name=".ui.packslevels.PacksActivity" />
 
-        <activity android:name=".ui.levels.LevelsActivity" />
+        <activity android:name=".ui.packslevels.LevelsActivity" />
 
         <activity android:name=".ui.game.GameActivity" />
 

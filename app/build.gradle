@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     compileSdkVersion 25
@@ -66,12 +67,10 @@ dependencies {
     // https://github.com/chrisjenx/Calligraphy
     compile 'uk.co.chrisjenx:calligraphy:2.3.0'
 
-    compile 'com.orhanobut:logger:2.1.0'
-
     // https://github.com/koral--/android-gif-drawable
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile 'org.jetbrains.kotlin:kotlin-stdlib-jre7:1.1.2-4'
     compile 'org.jetbrains.anko:anko-sdk15:0.10.1'
 }
 

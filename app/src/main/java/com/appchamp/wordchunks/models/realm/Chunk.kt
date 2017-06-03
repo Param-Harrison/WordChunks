@@ -16,4 +16,7 @@ open class Chunk : RealmObject() {
     var state: Long = 0  // must be Long as the currentTimeMillis
     @Index
     var position: Int = 0
+
 }
+
+fun List<Chunk>.chunksToString(): String = map { it.chunk }.joinToString(separator = "")

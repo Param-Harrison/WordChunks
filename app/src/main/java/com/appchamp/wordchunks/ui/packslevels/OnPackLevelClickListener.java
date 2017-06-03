@@ -1,4 +1,4 @@
-package com.appchamp.wordchunks.ui.packs;
+package com.appchamp.wordchunks.ui.packslevels;
 
 import android.view.View;
 

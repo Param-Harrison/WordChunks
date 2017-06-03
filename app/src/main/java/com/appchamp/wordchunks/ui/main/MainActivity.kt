@@ -2,32 +2,30 @@ package com.appchamp.wordchunks.ui.main
 
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.Button
-import android.widget.Toast
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.data.GameRealmHelper
 import com.appchamp.wordchunks.data.PacksRealmHelper
 import com.appchamp.wordchunks.models.pojo.PackJson
 import com.appchamp.wordchunks.models.pojo.packsFromJSONFile
 import com.appchamp.wordchunks.ui.game.GameActivity
-import com.appchamp.wordchunks.ui.packs.PacksActivity
+import com.appchamp.wordchunks.ui.packslevels.PacksActivity
 import com.appchamp.wordchunks.ui.tutorial.TutorialActivity
 import com.appchamp.wordchunks.util.ActivityUtils
-import com.appchamp.wordchunks.util.Constants.*
+import com.appchamp.wordchunks.util.Constants.JSON_FILE_NAME
+import com.appchamp.wordchunks.util.Constants.LEVEL_ID_KEY
+import com.appchamp.wordchunks.util.Constants.PREFS_REALM_CREATE_OBJECTS
+import com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFS
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu
-import com.orhanobut.logger.Logger
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import org.jetbrains.anko.act
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
+import kotlinx.android.synthetic.main.frag_sliding_menu.*
+import org.jetbrains.anko.*
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 
-class MainActivity : AppCompatActivity(), OnMainFragmentClickListener {
+class MainActivity : AppCompatActivity(), AnkoLogger, OnMainFragmentClickListener {
 
     private var menu: SlidingMenu? = null
 
@@ -47,13 +45,41 @@ class MainActivity : AppCompatActivity(), OnMainFragmentClickListener {
         }
         initLeftMenu()
 
-        val btnHowToPlay = findViewById(R.id.btnHowToPlay) as Button
         btnHowToPlay.setOnClickListener { showTutorial() }
     }
 
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
+    }
+
+    override fun startGameActivity(levelId: String?) {
+        startActivity(intentFor<GameActivity>(LEVEL_ID_KEY to levelId).clearTop())
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
+    }
+
+    override fun showGameFinishedFragment() {
+        TODO()
+    }
+
+    override fun showPacksActivity() {
+        startActivity(intentFor<PacksActivity>().clearTop())
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
+    }
+
+    override fun onBackPressed() {
+        if (menu!!.isMenuShowing) {
+            menu!!.toggle()  // close the sliding menu
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+    override fun showSlidingMenu() {
+        menu!!.toggle()
+    }
+
     private fun showTutorial() {
-        val intent = Intent(this, TutorialActivity::class.java)
-        startActivity(intent)
+        startActivity<TutorialActivity>()
     }
 
     private fun initLeftMenu() {
@@ -69,10 +95,6 @@ class MainActivity : AppCompatActivity(), OnMainFragmentClickListener {
         menu!!.setMenu(R.layout.frag_sliding_menu)
     }
 
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
-
     private fun startImport() {
         // Delete realm db before creating new objects.
         Realm.deleteRealm(RealmConfiguration.Builder().build())
@@ -80,8 +102,11 @@ class MainActivity : AppCompatActivity(), OnMainFragmentClickListener {
         // More complex operations can be executed on another thread, for example using
         // Anko's doAsync extension method.
         doAsync {
+            info("Starting import")
             processData(packsFromJSONFile(act, JSON_FILE_NAME))
-            uiThread {
+
+            activityUiThread {
+                // done
                 showMainFragment()
             }
         }
@@ -89,18 +114,13 @@ class MainActivity : AppCompatActivity(), OnMainFragmentClickListener {
 
     private fun processData(packs: List<PackJson>) {
         if (packs.isEmpty()) return
-
         // Open the default realm. All threads must use its own reference to the realm.
         // Those can not be transferred across threads.
-        val realm = Realm.getDefaultInstance()
-        realm.use { realm ->
+        Realm.getDefaultInstance().use { realm ->
             // Add packs in one transaction
             realm.executeTransaction {
-                Logger.d("Starting import")
-
                 // Create "packs" <- "levels" <- "words" <- "chunks" realm objects.
                 PacksRealmHelper.createPacks(realm, packs)
-
                 // Initialize game state for the first time in the beginning.
                 GameRealmHelper.initFirstGameState(realm)
             }
@@ -112,40 +132,5 @@ class MainActivity : AppCompatActivity(), OnMainFragmentClickListener {
                 supportFragmentManager,
                 MainFragment.newInstance(),
                 R.id.flActMain)
-    }
-
-    override fun startGameActivity(levelId: String) {
-        val intent = Intent(this, GameActivity::class.java)
-        intent.putExtra(EXTRA_LEVEL_ID, levelId)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        startActivity(intent)
-        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
-    }
-
-    override fun showGameFinishedFragment() {
-        Toast.makeText(this, "Game finished", Toast.LENGTH_SHORT).show()
-        //        ActivityUtils.replaceFragment(
-        //                getSupportFragmentManager(),
-        //                GameFinishedFrag.newInstance(),
-        //                R.id.flActMain)
-    }
-
-    override fun showPacksActivity() {
-        val intent = Intent(this, PacksActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        startActivity(intent)
-        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
-    }
-
-    override fun onBackPressed() {
-        if (menu!!.isMenuShowing) {
-            menu!!.toggle()  // close the sliding menu
-        } else {
-            super.onBackPressed()
-        }
-    }
-
-    override fun showSlidingMenu() {
-        menu!!.toggle()
     }
 }

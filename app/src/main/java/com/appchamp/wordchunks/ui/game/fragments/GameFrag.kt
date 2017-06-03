@@ -4,12 +4,10 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.animation.AnimationUtils
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.data.ChunksRealmHelper
 import com.appchamp.wordchunks.data.LevelsRealmHelper
@@ -18,36 +16,44 @@ import com.appchamp.wordchunks.data.WordsRealmHelper
 import com.appchamp.wordchunks.models.realm.Chunk
 import com.appchamp.wordchunks.models.realm.Level
 import com.appchamp.wordchunks.models.realm.Word
+import com.appchamp.wordchunks.models.realm.chunksToString
 import com.appchamp.wordchunks.ui.game.CustomGridLayoutManager
 import com.appchamp.wordchunks.ui.game.adapters.ChunksAdapter
 import com.appchamp.wordchunks.ui.game.adapters.WordsAdapter
 import com.appchamp.wordchunks.ui.game.listeners.OnLevelSolvedListener
-import com.appchamp.wordchunks.util.AnimUtils
-import com.appchamp.wordchunks.util.Constants.*
+import com.appchamp.wordchunks.util.Constants.CHUNKS_GRID_NUM
+import com.appchamp.wordchunks.util.Constants.CHUNK_STATE_GONE
+import com.appchamp.wordchunks.util.Constants.CHUNK_STATE_NORMAL
+import com.appchamp.wordchunks.util.Constants.LEVEL_ID_KEY
+import com.appchamp.wordchunks.util.Constants.WORDS_GRID_NUM
+import com.appchamp.wordchunks.util.Constants.WORD_STATE_SOLVED
 import com.appchamp.wordchunks.util.shuffleIntArray
 import io.realm.Realm
 import io.realm.RealmList
-import kotlin.properties.Delegates
+import kotlinx.android.synthetic.main.frag_game.*
 
 
 class GameFrag : Fragment() {
 
-    private var realm: Realm by Delegates.notNull()
+    val realm: Realm = Realm.getDefaultInstance()
     private var callback: OnLevelSolvedListener? = null
     private var level: Level? = null
-
-    // Views
-    private var rvWords: RecyclerView? = null
-    private var rvChunks: RecyclerView? = null
-    private var tvLevelClueTitle: TextView by Delegates.notNull()
-    private var tvInputChunks: TextView by Delegates.notNull()
-    private var imgClearIcon: ImageView by Delegates.notNull()
-    private var btnShuffle: ImageView by Delegates.notNull()
-    private var btnHint: ImageView by Delegates.notNull()
 
     // Adapters
     private var wordsAdapter: WordsAdapter? = null
     private var chunksAdapter: ChunksAdapter? = null
+
+    companion object {
+        fun newInstance(levelId: String?): GameFrag {
+            val args = Bundle()
+            args.putString(LEVEL_ID_KEY, levelId)
+            val gameFrag: GameFrag = newInstance()
+            gameFrag.arguments = args
+            return gameFrag
+        }
+
+        fun newInstance(): GameFrag = GameFrag()
+    }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -62,43 +68,35 @@ class GameFrag : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        // Setup initial views
-        val root = inflater!!.inflate(R.layout.frag_game, container, false)
-        tvLevelClueTitle = root.findViewById(R.id.tvLevelClueTitle) as TextView
-        rvWords = root.findViewById(R.id.rvWords) as RecyclerView
-        rvChunks = root.findViewById(R.id.rvChunks) as RecyclerView
-        tvInputChunks = root.findViewById(R.id.tvInputChunks) as TextView
-        imgClearIcon = root.findViewById(R.id.imgClearIcon) as ImageView
-        btnShuffle = root.findViewById(R.id.btnShuffle) as ImageView
-        btnHint = root.findViewById(R.id.btnHint) as ImageView
-        return root
+        return inflater!!.inflate(R.layout.frag_game, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        realm = Realm.getDefaultInstance()
+        if (arguments != null && arguments.containsKey(LEVEL_ID_KEY)) {
 
-        val levelId = arguments.getString(EXTRA_LEVEL_ID)
+            val levelId = arguments.getString(LEVEL_ID_KEY)
 
-        level = LevelsRealmHelper.findLevelById(realm, levelId!!)
+            level = LevelsRealmHelper.findLevelById(realm, levelId!!)
 
-        initLevelClueTitle(level!!.clue)
+            initLevelClueTitle(level!!.clue)
 
-        val packColor = Color.parseColor(
-                PacksRealmHelper.findFirstPackById(realm, level!!.packId!!)
-                        .color)
+            val packColor = Color.parseColor(
+                    PacksRealmHelper.findFirstPackById(realm, level!!.packId!!)
+                            .color)
 
-        initWordsAdapter(level!!.words, packColor)
-        initChunksAdapter(level!!.chunks)
+            initWordsAdapter(level!!.words, packColor)
+            initChunksAdapter(level!!.chunks)
 
-        updateInputChunksTextView()
+            updateInputChunksTextView()
 
-        // Sets click listeners
-        imgClearIcon.setOnClickListener(this::onClearIconClick)
-        //btnSend.setOnClickListener(this::isWordSolved);
-        btnShuffle.setOnClickListener(this::onShuffleClick)
-        btnHint.setOnClickListener(this::onHintClick)
+            // Sets click listeners
+            imgClearIcon.setOnClickListener(this::onClearIconClick)
+            //btnSend.setOnClickListener(this::isWordSolved);
+            imgShuffle.setOnClickListener(this::onShuffleClick)
+            imgHint.setOnClickListener(this::onHintClick)
+        }
     }
 
     override fun onDestroy() {
@@ -130,18 +128,20 @@ class GameFrag : Fragment() {
      * Clicks methods.
      */
     private fun onClearIconClick(v: View) {
-        AnimUtils.startAnimationFadeIn(context, v)
+        val animFadeIn = AnimationUtils.loadAnimation(context, R.anim.fade_in)
+        v.startAnimation(animFadeIn)
         clearChunksStates()
         updateInputChunksTextView()
     }
 
     private fun onShuffleClick(v: View) {
         val chunksSize = level!!.chunks!!.size
-        val a = IntArray(chunksSize, { i -> (i) }).shuffleIntArray()
+        val shuffledArray = IntArray(chunksSize, { it }).shuffleIntArray()
+        val size = if (chunksSize % 2 == 0) chunksSize / 2 - 1 else chunksSize / 2
         realm.executeTransaction {
-            for (i in 0..chunksSize / 2 - 1) {
-                level!!.chunks!![a[i]].position = a[chunksSize - i - 1]
-                level!!.chunks!![a[chunksSize - i - 1]].position = a[i]
+            for (i in 0..size) {
+                level!!.chunks!![shuffledArray[i]].position = shuffledArray[chunksSize - i - 1]
+                level!!.chunks!![shuffledArray[chunksSize - i - 1]].position = shuffledArray[i]
             }
         }
         chunksAdapter!!.notifyDataSetChanged()
@@ -182,25 +182,21 @@ class GameFrag : Fragment() {
      * @param chunk the clicked chunk.
      */
     private fun updateChunkStateOnClick(chunk: Chunk?) {
-        if (chunk?.state == CHUNK_STATE_NORMAL.toLong()) {
-            chunk.state = System.currentTimeMillis()
-        } else {
-            chunk?.state = CHUNK_STATE_NORMAL.toLong()
+        when (chunk?.state) {
+            CHUNK_STATE_NORMAL.toLong() -> chunk.state = System.currentTimeMillis()
+            else -> chunk?.state = CHUNK_STATE_NORMAL.toLong()
         }
     }
 
     private fun updateInputChunksTextView() {
         val chunks = ChunksRealmHelper.findSelectedChunksByLevelIdSorted(realm, level!!.id!!)
-        tvInputChunks.text = listChunksToString(chunks)
+        tvInputChunks.text = chunks.chunksToString()
         updateClearIconState(chunks.size)
     }
 
-    private fun updateClearIconState(size: Int) {
-        if (size != 0) {
-            imgClearIcon.visibility = View.VISIBLE
-        } else {
-            imgClearIcon.visibility = View.INVISIBLE
-        }
+    private fun updateClearIconState(size: Int) = when {
+        size != 0 -> imgClearIcon.visibility = View.VISIBLE
+        else -> imgClearIcon.visibility = View.INVISIBLE
     }
 
     private fun isWordSolved(selectedChunks: List<Chunk>): Boolean {
@@ -248,28 +244,10 @@ class GameFrag : Fragment() {
             val equals = selectedChunks
                     .map { it.wordId }
                     .none { it != wordId }
-            if (equals && word.word == listChunksToString(selectedChunks)) {
+            if (equals && word.word == selectedChunks.chunksToString()) {
                 return word.id
             }
         }
         return ""
-    }
-
-    /**
-     * Converts all the List of inputted chunks into the String.
-     *
-     * @param chunks the list of inputted chunks.
-     * @return the string of inputted chunks.
-     */
-    private fun listChunksToString(chunks: List<Chunk>): String {
-        val inputStr = StringBuilder()
-        for (chunk in chunks) {
-            inputStr.append(chunk.chunk)
-        }
-        return inputStr.toString()
-    }
-
-    companion object {
-        fun newInstance(): GameFrag = GameFrag()
     }
 }

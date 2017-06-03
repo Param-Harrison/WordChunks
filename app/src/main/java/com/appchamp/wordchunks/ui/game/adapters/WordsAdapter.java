@@ -15,12 +15,8 @@ import android.widget.TextView;
 
 import com.appchamp.wordchunks.R;
 import com.appchamp.wordchunks.models.realm.Word;
-import com.orhanobut.logger.Logger;
 
 import java.util.List;
-
-import static com.appchamp.wordchunks.util.Constants.WORD_STATE_NOT_SOLVED;
-import static com.appchamp.wordchunks.util.Constants.WORD_STATE_SOLVED;
 
 
 public class WordsAdapter extends RecyclerView.Adapter<WordsAdapter.ViewHolder> {
@@ -39,11 +35,7 @@ public class WordsAdapter extends RecyclerView.Adapter<WordsAdapter.ViewHolder> 
     }
 
     private void setWords(List<Word> words) {
-        if (words != null) {
-            this.words = words;
-        } else {
-            Logger.e("words cannot be null");
-        }
+        this.words = words;
     }
 
     @Override
@@ -65,7 +57,7 @@ public class WordsAdapter extends RecyclerView.Adapter<WordsAdapter.ViewHolder> 
         GradientDrawable drawable = (GradientDrawable) holder.imgRectBg.getDrawable();
 
         switch (wordState) {
-            case WORD_STATE_NOT_SOLVED:
+            case 0:
                 int wordLength = word.getWord().length();
                 holder.tvWord.setText(
                         res.getString(R.string.number_of_letters, wordLength));
@@ -73,7 +65,7 @@ public class WordsAdapter extends RecyclerView.Adapter<WordsAdapter.ViewHolder> 
                 drawable.setColor(
                         res.getColor(R.color.word_rect_bg));
                 break;
-            case WORD_STATE_SOLVED:
+            case 1:
                 holder.tvWord.setText(word.getWord());
                 holder.tvWord.setTextColor(packColor);
                 holder.imgIcon.setVisibility(View.VISIBLE);

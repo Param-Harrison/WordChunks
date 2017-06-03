@@ -2,7 +2,10 @@ package com.appchamp.wordchunks.data
 
 import com.appchamp.wordchunks.models.realm.Chunk
 import com.appchamp.wordchunks.models.realm.Word
-import com.appchamp.wordchunks.util.Constants.*
+import com.appchamp.wordchunks.util.Constants.CHUNKS_SEPARATOR
+import com.appchamp.wordchunks.util.Constants.CHUNK_STATE_NORMAL
+import com.appchamp.wordchunks.util.Constants.REALM_FIELD_LEVEL_ID
+import com.appchamp.wordchunks.util.Constants.REALM_FIELD_STATE
 import com.appchamp.wordchunks.util.shuffleIntArray
 import io.realm.Realm
 import io.realm.RealmList
@@ -31,10 +34,9 @@ object ChunksRealmHelper {
             }
         }
         val chunksSize = chunks.size
-        val shuffledArray = IntArray(chunksSize, { i -> (i) }).shuffleIntArray()
-        val size = if (chunksSize % 2 == 0) chunksSize / 2 else chunksSize / 2 + 1
-
-        for (i in 0..size - 1) {
+        val shuffledArray = IntArray(chunksSize, { it }).shuffleIntArray()
+        val size = if (chunksSize % 2 == 0) chunksSize / 2 - 1 else chunksSize / 2
+        for (i in 0..size) {
             chunks[shuffledArray[i]].position = shuffledArray[chunksSize - i - 1]
             chunks[shuffledArray[chunksSize - i - 1]].position = shuffledArray[i]
         }

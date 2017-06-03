@@ -11,12 +11,8 @@ import android.widget.TextView;
 
 import com.appchamp.wordchunks.R;
 import com.appchamp.wordchunks.models.realm.Chunk;
-import com.orhanobut.logger.Logger;
 
 import java.util.List;
-
-import static com.appchamp.wordchunks.util.Constants.CHUNK_STATE_GONE;
-import static com.appchamp.wordchunks.util.Constants.CHUNK_STATE_NORMAL;
 
 
 public class ChunksAdapter extends RecyclerView.Adapter<ChunksAdapter.ViewHolder> {
@@ -34,11 +30,7 @@ public class ChunksAdapter extends RecyclerView.Adapter<ChunksAdapter.ViewHolder
     }
 
     private void setChunks(List<Chunk> chunks) {
-        if (chunks != null) {
-            this.chunks = chunks;
-        } else {
-            Logger.d("chunks cannot be null");
-        }
+        this.chunks = chunks;
     }
 
     public interface OnItemClickListener {
@@ -65,17 +57,17 @@ public class ChunksAdapter extends RecyclerView.Adapter<ChunksAdapter.ViewHolder
         Drawable drawable = holder.rlChunk.getBackground();
 
         // Normal chunk state
-        if (chunkState == CHUNK_STATE_NORMAL) {
+        if (chunkState == 0) {
             drawable.setAlpha(255);
             holder.tvChunk.setAlpha(1);
         }
         // Clicked chunk state
-        else if (chunkState > CHUNK_STATE_NORMAL) {
+        else if (chunkState > 0) {
             drawable.setAlpha(80);
             holder.tvChunk.setAlpha((float) 0.2);
         }
         // Gone chunk state
-        else if (chunkState == CHUNK_STATE_GONE) {
+        else if (chunkState == -1) {
             holder.rlChunk.setVisibility(View.INVISIBLE);
         }
         holder.tvChunk.setText(chunk.getChunk());

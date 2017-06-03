@@ -15,6 +15,8 @@ open class Level : RealmObject() {
     @Index
     var clue: String? = null
     @Index
+    var color: String? = null
+    @Index
     var fact: String? = null
     @Index
     var state: Int = 0  // 0 = locked, 1 = current, 2 = finished

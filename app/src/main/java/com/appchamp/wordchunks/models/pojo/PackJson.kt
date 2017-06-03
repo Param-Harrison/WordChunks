@@ -18,9 +18,7 @@ data class PackJson(
  * @param context the Context used to access asset folder.
  * @param filename the name of the asset to open.
  */
-fun packsFromJSONFile(context: Context, filename: String): List<PackJson> {
-    val gson = Gson()
-    return gson.fromJson<List<PackJson>>(
-            context.readAsset(filename),
-            object : TypeToken<List<PackJson>>() {}.type)
-}
+fun packsFromJSONFile(context: Context, filename: String): List<PackJson> =
+        Gson().fromJson<List<PackJson>>(
+                context.readAsset(filename),
+                object : TypeToken<List<PackJson>>() {}.type)

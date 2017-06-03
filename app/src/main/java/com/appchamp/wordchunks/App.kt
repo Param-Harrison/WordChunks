@@ -2,22 +2,15 @@ package com.appchamp.wordchunks
 
 import android.app.Application
 import android.content.Context
-import android.content.SharedPreferences
-
+import com.appchamp.wordchunks.util.Constants.PREFS_REALM_CREATE_OBJECTS
+import com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFS
 import com.facebook.stetho.Stetho
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.Logger
 import com.squareup.leakcanary.LeakCanary
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider
-
-import java.io.File
-
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
-
-import com.appchamp.wordchunks.util.Constants.PREFS_REALM_CREATE_OBJECTS
-import com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFS
+import java.io.File
 
 
 class App : Application() {
@@ -34,8 +27,6 @@ class App : Application() {
         val config = initRealm()
 
         isRealmExists(config)
-
-        initLogger()
     }
 
     private fun initLeakCanary() {
@@ -90,9 +81,5 @@ class App : Application() {
             editor.putBoolean(PREFS_REALM_CREATE_OBJECTS, false)
         }
         editor.apply()
-    }
-
-    private fun initLogger() {
-        Logger.addLogAdapter(AndroidLogAdapter()) // Use LogLevel.NONE for the release versions.
     }
 }

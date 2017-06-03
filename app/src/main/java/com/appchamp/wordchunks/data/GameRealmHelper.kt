@@ -2,8 +2,7 @@ package com.appchamp.wordchunks.data
 
 import com.appchamp.wordchunks.models.realm.Level
 import com.appchamp.wordchunks.models.realm.Pack
-import com.appchamp.wordchunks.util.Constants.LEVEL_STATE_CURRENT
-import com.appchamp.wordchunks.util.Constants.PACK_STATE_CURRENT
+import com.appchamp.wordchunks.util.Constants.STATE_CURRENT
 import io.realm.Realm
 
 
@@ -14,9 +13,9 @@ object GameRealmHelper {
      */
     fun initFirstGameState(realm: Realm) {
         val pack = realm.where(Pack::class.java).findFirst()
-        pack.state = PACK_STATE_CURRENT
+        pack.state = STATE_CURRENT
         val level = realm.where(Level::class.java).findFirst()
-        level.state = LEVEL_STATE_CURRENT
+        level.state = STATE_CURRENT
     }
 
 }
