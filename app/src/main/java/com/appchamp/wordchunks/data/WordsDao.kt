@@ -9,7 +9,7 @@ import io.realm.RealmList
 /**
  * Words
  */
-object WordsRealmHelper {
+object WordsDao {
 
     /**
      * Returns the list of Realm Word objects created from json string.

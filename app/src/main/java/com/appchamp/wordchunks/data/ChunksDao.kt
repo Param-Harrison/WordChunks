@@ -10,21 +10,18 @@ import io.realm.RealmList
 /**
  * Chunks
  */
-object ChunksRealmHelper {
+object ChunksDao {
 
     /**
      * Returns the list of Realm Chunk objects created from the array of split chunks.
      */
-    internal fun createChunks(realm: Realm, wordsSplit: List<String>,
-                              levelId: String): RealmList<Chunk> {
+    internal fun createChunks(realm: Realm, wordsSplit: List<String>): RealmList<Chunk> {
         val chunks = RealmList<Chunk>()
         for (i in wordsSplit.indices) {
             val splitChunks = wordsSplit[i].split(CHUNKS_SEPARATOR)
             for (chunkStr in splitChunks) {
                 val chunk = realm.createObject(Chunk::class.java)
                 chunk.chunk = chunkStr
-                chunk.levelId = levelId
-                //chunk.wordId = wordsRealm[i].id
                 chunks.add(chunk)
             }
         }

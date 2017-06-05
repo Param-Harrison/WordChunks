@@ -33,7 +33,6 @@ import org.jetbrains.anko.AnkoLogger
 class GameFrag : Fragment(), AnkoLogger {
 
     private lateinit var realm: Realm
-    private lateinit var chunks: List<Chunk>
     private lateinit var onLevelSolvedListener: OnLevelSolvedListener
     private lateinit var level: Level
 
@@ -93,12 +92,10 @@ class GameFrag : Fragment(), AnkoLogger {
                     .equalTo(REALM_FIELD_ID, levelId)
                     .findFirst()
 
-            chunks = level.chunks
-
             tvLevelClueTitle.text = level.clue
 
             initWordsAdapter(level.words, Color.parseColor(level.color))
-            initChunksAdapter(chunks)
+            initChunksAdapter(level.chunks)
         }
     }
 
@@ -130,7 +127,7 @@ class GameFrag : Fragment(), AnkoLogger {
      */
     private fun onClearIconClick() {
         realm.executeTransaction {
-            chunks.filter { it.state > CHUNK_STATE_NORMAL }.map {
+            level.chunks.filter { it.state > CHUNK_STATE_NORMAL }.map {
                 it.state = CHUNK_STATE_NORMAL
                 chunksAdapter.notifyItemChanged(it.position)
             }
@@ -177,7 +174,7 @@ class GameFrag : Fragment(), AnkoLogger {
 
     private fun updateClearIcon() {
         return when {
-            chunks.filter { it.state > CHUNK_STATE_NORMAL }.isEmpty() -> imgClear?.visibility = View.GONE
+            level.chunks.filter { it.state > CHUNK_STATE_NORMAL }.isEmpty() -> imgClear?.visibility = View.GONE
             else -> imgClear?.visibility = View.VISIBLE
         }
     }
@@ -204,14 +201,14 @@ class GameFrag : Fragment(), AnkoLogger {
         }
     }
 
-    private fun getSelectedChunks(): String = chunks
+    private fun getSelectedChunks(): String = level.chunks
             .filter { it.state > CHUNK_STATE_NORMAL }
             .sortedBy { it.state }
             .chunksToString()
 
     private fun removeChunks() {
         realm.executeTransaction {
-            chunks.filter { it.state > CHUNK_STATE_NORMAL }.map {
+            level.chunks.filter { it.state > CHUNK_STATE_NORMAL }.map {
                 it.state = CHUNK_STATE_GONE
                 chunksAdapter.notifyItemChanged(it.position)
             }

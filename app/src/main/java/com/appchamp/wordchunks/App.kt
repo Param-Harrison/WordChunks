@@ -4,9 +4,6 @@ import android.app.Application
 import android.content.Context
 import com.appchamp.wordchunks.util.Constants.PREFS_REALM_CREATE_OBJECTS
 import com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFS
-import com.facebook.stetho.Stetho
-import com.squareup.leakcanary.LeakCanary
-import com.uphyca.stetho_realm.RealmInspectorModulesProvider
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
@@ -18,9 +15,9 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        initLeakCanary()
+//        initLeakCanary()
 
-        initStetho()
+//        initStetho()
 
         initCalligraphy()
 
@@ -29,23 +26,23 @@ class App : Application() {
         isRealmExists(config)
     }
 
-    private fun initLeakCanary() {
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return
-        }
-        LeakCanary.install(this)
-    }
+//    private fun initLeakCanary() {
+//        if (LeakCanary.isInAnalyzerProcess(this)) {
+//            // This process is dedicated to LeakCanary for heap analysis.
+//            // You should not init your app in this process.
+//            return
+//        }
+//        LeakCanary.install(this)
+//    }
 
-    private fun initStetho() {
-        Stetho.initialize(
-                Stetho.newInitializerBuilder(this)
-                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                        .enableWebKitInspector(
-                                RealmInspectorModulesProvider.builder(this).build())
-                        .build())
-    }
+//    private fun initStetho() {
+//        Stetho.initialize(
+//                Stetho.newInitializerBuilder(this)
+//                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+//                        .enableWebKitInspector(
+//                                RealmInspectorModulesProvider.builder(this).build())
+//                        .build())
+//    }
 
     private fun initCalligraphy() {
         CalligraphyConfig.initDefault(CalligraphyConfig.Builder()

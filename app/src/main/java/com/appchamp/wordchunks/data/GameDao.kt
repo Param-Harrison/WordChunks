@@ -6,7 +6,7 @@ import com.appchamp.wordchunks.util.Constants.STATE_CURRENT
 import io.realm.Realm
 
 
-object GameRealmHelper {
+object GameDao {
 
     /**
      * Initializes the game state in the beginning of the game.

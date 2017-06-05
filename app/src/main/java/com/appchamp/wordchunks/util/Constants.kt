@@ -19,8 +19,6 @@ object Constants {
     const val CLUE_ID_KEY = "CLUE_ID_KEY"
 
     const val REALM_FIELD_ID = "id"
-    const val REALM_FIELD_PACK_ID = "packId"
-    const val REALM_FIELD_LEVEL_ID = "levelId"
     const val REALM_FIELD_STATE = "state"
 
     const val WORDS_GRID_NUM = 2

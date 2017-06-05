@@ -2,8 +2,6 @@ package com.appchamp.wordchunks.data
 
 import com.appchamp.wordchunks.models.pojo.PackJson
 import com.appchamp.wordchunks.models.realm.Pack
-import com.appchamp.wordchunks.util.Constants.REALM_FIELD_ID
-import com.appchamp.wordchunks.util.Constants.REALM_FIELD_STATE
 import io.realm.Realm
 import io.realm.RealmList
 import java.util.*
@@ -12,7 +10,7 @@ import java.util.*
 /**
  * Packs
  */
-object PacksRealmHelper {
+object PacksDao {
 
     /**
      * Creates the list of Realm Pack objects using the PackJson list.
@@ -27,18 +25,8 @@ object PacksRealmHelper {
             val packPojo = packJsonList[i]
             pack.title = packPojo.title
             pack.color = packPojo.color
-            LevelsRealmHelper.createLevels(realm, pack, packPojo.levels)
+            LevelsDao.createLevels(realm, pack, packPojo.levels)
             packs.add(pack)
         }
     }
-
-    fun findFirstPackByState(realm: Realm, state: Int): Pack = realm
-            .where(Pack::class.java)
-            .equalTo(REALM_FIELD_STATE, state)
-            .findFirst()
-
-    fun findFirstPackById(realm: Realm, id: String?): Pack = realm
-            .where(Pack::class.java)
-            .equalTo(REALM_FIELD_ID, id)
-            .findFirst()
 }

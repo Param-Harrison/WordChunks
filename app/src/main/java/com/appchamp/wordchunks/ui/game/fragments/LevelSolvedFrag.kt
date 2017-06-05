@@ -23,12 +23,12 @@ class LevelSolvedFrag : Fragment() {
 
     companion object {
 
-        fun newInstance(color: Int, clue: String, fact: String, left: Long): LevelSolvedFrag {
+        fun newInstance(color: Int, clue: String, fact: String, left: Int): LevelSolvedFrag {
             val args = Bundle()
             args.putInt(COLOR_ID_KEY, color)
             args.putString(CLUE_ID_KEY, clue)
             args.putString(FACT_ID_KEY, fact)
-            args.putLong(LEFT_ID_KEY, left)
+            args.putInt(LEFT_ID_KEY, left)
             val levelSolvedFrag: LevelSolvedFrag = newInstance()
             levelSolvedFrag.arguments = args
             return levelSolvedFrag
@@ -81,16 +81,12 @@ class LevelSolvedFrag : Fragment() {
     }
 
     private fun setLevelsLeft() {
-        val left = arguments.getLong(LEFT_ID_KEY)
-        if (left.toInt() == 0) {
-            tvLevelsLeft.text = "YOU'VE FINISHED THE WHOLE PACK!"
-        } else if (left.toInt() == 1) {
-            tvLevelsLeft.text = "ONLY ONE LEVEL LEFT IN PACK"
-        } else if (left.toInt() == -1) {
-            tvLevelsLeft.text = "YOU'VE FINISHED ALL PACKS AND LEVELS"
-        }
-        else {
-            tvLevelsLeft.text = left.toString() + " LEVELS LEFT IN PACK"
+        val left = arguments.getInt(LEFT_ID_KEY)
+        when (left) {
+            0 -> tvLevelsLeft.text = "YOU'VE FINISHED THE WHOLE PACK!"
+            1 -> tvLevelsLeft.text = "ONLY ONE LEVEL LEFT IN PACK"
+            -1 -> tvLevelsLeft.text = "YOU'VE FINISHED ALL PACKS AND LEVELS"
+            else -> tvLevelsLeft.text = left.toString() + " LEVELS LEFT IN PACK"
         }
     }
 

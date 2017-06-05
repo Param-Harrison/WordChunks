@@ -40,6 +40,7 @@ class PacksActivity : AppCompatActivity() {
         val packs = Pack().queryAll()
         val adapter = PacksLevelsAdapter(packs) { startLevelsActivity(it.id) }
         rvList.adapter = adapter
+        rvList.setHasFixedSize(true)
     }
 
     override fun attachBaseContext(newBase: Context) {

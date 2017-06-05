@@ -4,9 +4,9 @@
     "color": "#00bdbd",
     "levels": [
       {
-        "clue": "CLUE",
-        "fact": "some fact",
-        "words": "AA,AA,AA AA,AA"
+        "clue": "SPORTS",
+        "fact": "some fact sport",
+        "words": "SO,CC,ER"
       }
     ]
   }

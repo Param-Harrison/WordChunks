@@ -4,11 +4,9 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.view.View
 import com.appchamp.wordchunks.R
-import com.appchamp.wordchunks.data.LevelsRealmHelper
-import com.appchamp.wordchunks.data.PacksRealmHelper
 import com.appchamp.wordchunks.models.realm.Level
+import com.appchamp.wordchunks.models.realm.Pack
 import com.appchamp.wordchunks.ui.game.fragments.GameFinishedFrag
 import com.appchamp.wordchunks.ui.game.fragments.GameFrag
 import com.appchamp.wordchunks.ui.game.fragments.LevelSolvedBeforeFrag
@@ -31,6 +29,7 @@ import com.appchamp.wordchunks.util.Constants.STATE_SOLVED
 import com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFS
 import com.appchamp.wordchunks.util.queryFirst
 import io.realm.Realm
+import kotlinx.android.synthetic.main.act_game.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivity
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
@@ -64,13 +63,15 @@ class GameActivity : AppCompatActivity(), OnLevelSolvedListener, OnNextLevelList
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
 
+    override fun onStart() {
+        super.onStart()
+
+        imgBackArrow.setOnClickListener { onBackPressed() }
+    }
+
     override fun onBackPressed() {
         super.onBackPressed()
         backToLevelsActivity()
-    }
-
-    fun onBackArrowClick(v: View) {
-        onBackPressed()
     }
 
     private fun showTutorial() {
@@ -118,55 +119,63 @@ class GameActivity : AppCompatActivity(), OnLevelSolvedListener, OnNextLevelList
 
                 it.executeTransaction { level.state = Constants.STATE_SOLVED }
 
-                // isNextLevelExists()
+                // Is next level exists?
                 nextLevel = it.where(Level::class.java)
                         .equalTo(REALM_FIELD_STATE, STATE_LOCKED)
                         .findFirst()
-
+                // if so
                 if (nextLevel != null) {
-                    it.executeTransaction { nextLevel!!.state = STATE_CURRENT }
 
                     showLevelSolvedFragment(
                             Color.parseColor(nextLevel!!.color),
                             nextLevel!!.clue,
                             level.fact,
-                            2)
+                            countLeftLevels(level.packId))
+
+                    it.executeTransaction { nextLevel!!.state = STATE_CURRENT }
+
                 } else {
                     showLevelSolvedFragment(
                             Color.parseColor("#cccccc"),
-                            "Congrats!",
+                            "Congratulations!",
                             level.fact,
                             -1)
                 }
+                isPackSolved(it, level.packId)
             }
         }
     }
 
-    private fun isLevelSolvedBefore(level: Level?): Boolean {
-        // Getting the state of the current level, if "current": return false, else true.
-        return level?.state != STATE_CURRENT
+    private fun countLeftLevels(packId: String): Int = Pack()
+            .queryFirst { it.equalTo(REALM_FIELD_ID, packId) }
+            ?.levels
+            ?.count { it.state == STATE_LOCKED }!!
+
+
+    private fun isPackSolved(realm: Realm, packId: String) {
+        // If we solved the whole pack
+        val pack = realm.where(Pack::class.java)
+                .equalTo(REALM_FIELD_ID, packId)
+                .findFirst()
+        if (!pack?.levels?.any { it.state == STATE_CURRENT }!!) {
+            // Change its state to "solved"
+            realm.executeTransaction { pack.state = STATE_SOLVED }
+
+            // Find next locked pack to play in
+            val nextPack = realm.where(Pack::class.java)
+                    .equalTo(REALM_FIELD_STATE, STATE_LOCKED)
+                    .findFirst()
+            if (nextPack != null) {
+                realm.executeTransaction { nextPack.state = STATE_CURRENT }
+            }
+        }
     }
 
-    private fun isPackSolved(bgRealm: Realm, packId: String?): Long {
-        // Count the number of current levels in pack, if 0 then we solved the whole pack
-
-        if (LevelsRealmHelper
-                .countLevelsByPackIdAndState(bgRealm, packId, STATE_CURRENT).toInt() == 0) {
-
-            PacksRealmHelper.findFirstPackById(bgRealm, packId).state = STATE_SOLVED
-            // Find the next locked pack and set it as "current"
-            val nextLockedPack = PacksRealmHelper.findFirstPackByState(bgRealm, STATE_LOCKED)
-            if (nextLockedPack != null) {
-                nextLockedPack.state = STATE_CURRENT
-            }
-            return 0
-        } else {
-            val numberOfSolvedLevels = LevelsRealmHelper
-                    .countLevelsByPackIdAndState(bgRealm, packId, STATE_SOLVED)
-            val numberOfLevels = LevelsRealmHelper
-                    .countLevelsByPackId(bgRealm, packId)
-            return numberOfLevels - numberOfSolvedLevels
-        }
+    private fun showLevelSolvedFragment(color: Int, clue: String, fact: String, left: Int) {
+        ActivityUtils.replaceFragment(
+                supportFragmentManager,
+                LevelSolvedFrag.newInstance(color, clue, fact, left),
+                R.id.flActMain)
     }
 
     private fun showLevelSolvedBeforeFragment(fact: String?) {
@@ -180,13 +189,6 @@ class GameActivity : AppCompatActivity(), OnLevelSolvedListener, OnNextLevelList
         ActivityUtils.replaceFragment(
                 supportFragmentManager,
                 GameFinishedFrag.newInstance(),
-                R.id.flActMain)
-    }
-
-    private fun showLevelSolvedFragment(color: Int, clue: String, fact: String, left: Long) {
-        ActivityUtils.replaceFragment(
-                supportFragmentManager,
-                LevelSolvedFrag.newInstance(color, clue, fact, left),
                 R.id.flActMain)
     }
 

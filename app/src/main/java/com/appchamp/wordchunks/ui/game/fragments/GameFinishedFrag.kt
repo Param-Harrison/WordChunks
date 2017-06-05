@@ -5,8 +5,9 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
 import com.appchamp.wordchunks.R
+import kotlinx.android.synthetic.main.frag_game_finished.*
+import org.jetbrains.anko.browse
 
 
 class GameFinishedFrag : Fragment() {
@@ -17,15 +18,14 @@ class GameFinishedFrag : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        val root = inflater?.inflate(R.layout.frag_game_finished, container, false)
-        //        CardView cvRateUs = (CardView) root.findViewById(R.id.rlNextLevel);
-        //        cvRateUs.setOnClickListener(v ->
-        //                getContext().startActivity(
-        //                        new Intent(
-        //                                Intent.ACTION_VIEW,
-        //                                Uri.parse("market://details?id=" + getActivity().getPackageName())))
-        //        );
-        return root
+        return inflater?.inflate(R.layout.frag_game_finished, container, false)
     }
 
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        rlRateUs.setOnClickListener {
+            context.browse("market://details?id=${activity.packageName}")
+        }
+    }
 }

@@ -2,11 +2,13 @@ package com.appchamp.wordchunks.ui.main
 
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.appchamp.wordchunks.BuildConfig
 import com.appchamp.wordchunks.R
-import com.appchamp.wordchunks.data.GameRealmHelper
-import com.appchamp.wordchunks.data.PacksRealmHelper
+import com.appchamp.wordchunks.data.GameDao
+import com.appchamp.wordchunks.data.PacksDao
 import com.appchamp.wordchunks.models.pojo.PackJson
 import com.appchamp.wordchunks.models.pojo.packsFromJSONFile
 import com.appchamp.wordchunks.ui.game.GameActivity
@@ -48,8 +50,28 @@ class MainActivity : AppCompatActivity(), AnkoLogger, OnMainFragmentClickListene
             startImport()
         }
         initLeftMenu()
+    }
+
+    override fun onStart() {
+        super.onStart()
 
         btnHowToPlay.setOnClickListener { showTutorial() }
+        btnRateUs.setOnClickListener { browse("market://details?id=$packageName") }
+        btnFeedback.setOnClickListener {
+            email(
+                    "jkozhukhovskaya@gmail.com",
+                    "Feedback for WordChunks",
+                    """
+                        -----------------
+                        ID: ${BuildConfig.APPLICATION_ID}
+                        App version: ${BuildConfig.VERSION_CODE}
+                        Device: ${Build.MODEL}
+                        System version: ${Build.VERSION.RELEASE}
+                        -----------------
+
+                        """
+            )
+        }
     }
 
     override fun attachBaseContext(newBase: Context) {
@@ -85,7 +107,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger, OnMainFragmentClickListene
     private fun showTutorial() = startActivity<TutorialActivity>()
 
     private fun initLeftMenu() {
-
         menu = SlidingMenu(this)
         // Configure the SlidingMenu
         menu.mode = SlidingMenu.LEFT
@@ -108,7 +129,6 @@ class MainActivity : AppCompatActivity(), AnkoLogger, OnMainFragmentClickListene
         // More complex operations can be executed on another thread, for example using
         // Anko's doAsync extension method.
         doAsync {
-            info("Starting import")
             processData(packsFromJSONFile(act, JSON_FILE_NAME))
 
             activityUiThread {
@@ -122,13 +142,13 @@ class MainActivity : AppCompatActivity(), AnkoLogger, OnMainFragmentClickListene
         if (packs.isEmpty()) return
         // Open the default realm. All threads must use its own reference to the realm.
         // Those can not be transferred across threads.
-        Realm.getDefaultInstance().use { realm ->
+        Realm.getDefaultInstance().use {
             // Add packs in one transaction
-            realm.executeTransaction {
+            it.executeTransaction {
                 // Create "packs" <- "levels" <- "words" <- "chunks" realm objects.
-                PacksRealmHelper.createPacks(realm, packs)
+                PacksDao.createPacks(it, packs)
                 // Initialize game state for the first time in the beginning.
-                GameRealmHelper.initFirstGameState(realm)
+                GameDao.initFirstGameState(it)
             }
         }
     }

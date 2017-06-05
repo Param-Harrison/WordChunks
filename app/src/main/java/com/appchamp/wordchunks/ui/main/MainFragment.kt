@@ -14,6 +14,7 @@ import com.appchamp.wordchunks.util.queryLast
 import kotlinx.android.synthetic.main.frag_main.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
+import org.jetbrains.anko.share
 
 
 class MainFragment : Fragment(), AnkoLogger {
@@ -55,16 +56,16 @@ class MainFragment : Fragment(), AnkoLogger {
 
     private fun onSettingsClick() = onMainFragmentClickListener.showSlidingMenu()
 
-    private fun onShareClick() {}
+    private fun onShareClick() {
+        context.share("I'm playing in WordChunks!", "Check this out!")
+    }
 
     private fun onPlayClick() {
         val levelId: String? = getLastCurrentLevelId()
         info { levelId }
         if (levelId != null) {
-            info { "level id not null" }
             onMainFragmentClickListener.startGameActivity(levelId)
         } else {
-            info { "level id = null" }
             // If all levels and packs were solved, showing the fragment
             onMainFragmentClickListener.showGameFinishedFragment()
         }

@@ -49,11 +49,11 @@ class WordsAdapter(private val words: List<Word>, private val packColor: Int) :
                     drawable.setColor(packColor)
                 }
             }
-            // If right column
             when (position) {
+            // If right column
                 1, 3, 5 -> setItemLayout(RelativeLayout.ALIGN_PARENT_END, Gravity.START)
-                else -> // if left column
-                    setItemLayout(RelativeLayout.ALIGN_PARENT_START, Gravity.END)
+            // If left column
+                else -> setItemLayout(RelativeLayout.ALIGN_PARENT_START, Gravity.END)
             }
         }
 

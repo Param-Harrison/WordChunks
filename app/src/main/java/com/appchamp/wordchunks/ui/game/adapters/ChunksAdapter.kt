@@ -17,15 +17,13 @@ class ChunksAdapter(private val chunks: List<Chunk>, private val chunkClick: (Ch
         return ViewHolder(view, chunkClick)
     }
 
-    override fun getItemId(position: Int): Long {
-        return chunks[position].position.toLong()
-    }
+    override fun getItemId(position: Int) = chunks[position].position.toLong()
 
     override fun onBindViewHolder(holder: ChunksAdapter.ViewHolder, i: Int) {
         holder.bind(chunks[chunks[i].position])
     }
 
-    override fun getItemCount(): Int = chunks.size
+    override fun getItemCount() = chunks.size
 
     class ViewHolder(view: View, val chunkClick: (Chunk) -> Unit) : RecyclerView.ViewHolder(view) {
 

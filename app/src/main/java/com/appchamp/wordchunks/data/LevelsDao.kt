@@ -3,8 +3,6 @@ package com.appchamp.wordchunks.data
 import com.appchamp.wordchunks.models.pojo.LevelJson
 import com.appchamp.wordchunks.models.realm.Level
 import com.appchamp.wordchunks.models.realm.Pack
-import com.appchamp.wordchunks.util.Constants.REALM_FIELD_PACK_ID
-import com.appchamp.wordchunks.util.Constants.REALM_FIELD_STATE
 import com.appchamp.wordchunks.util.Constants.WORDS_SEPARATOR
 import io.realm.Realm
 import io.realm.RealmList
@@ -13,7 +11,7 @@ import java.util.*
 /**
  * Levels
  */
-object LevelsRealmHelper {
+object LevelsDao {
 
     /**
      * Creates the list of Realm Level objects using the LevelJson objects.
@@ -34,26 +32,12 @@ object LevelsRealmHelper {
             val wordsSplit = wordsJson.split(WORDS_SEPARATOR)
             // After split "AB,CD EF,GH" becomes ["AB,CD", "EF,GH"]
 
-            val wordsRealm = WordsRealmHelper.createWords(realm, wordsSplit)
-            level.words = wordsRealm
+            level.words = WordsDao.createWords(realm, wordsSplit)
 
-            val chunksList = ChunksRealmHelper.createChunks(
-                    realm, wordsSplit, level.id)
-            level.chunks = chunksList
+            level.chunks = ChunksDao.createChunks(realm, wordsSplit)
 
             levels.add(level)
             pack.levels = levels
         }
     }
-
-    fun countLevelsByPackIdAndState(realm: Realm, packId: String?, state: Int): Long = realm
-            .where(Level::class.java)
-            .equalTo(REALM_FIELD_PACK_ID, packId)
-            .equalTo(REALM_FIELD_STATE, state)
-            .count()
-
-    fun countLevelsByPackId(realm: Realm, packId: String?): Long = realm
-            .where(Level::class.java)
-            .equalTo(REALM_FIELD_PACK_ID, packId)
-            .count()
 }

@@ -98,12 +98,12 @@ class PacksLevelsAdapter<T>(private val items: List<T>, private val itemClick: (
             when (item) {
                 is Pack -> {
                     if (getItemState(item) == STATE_LOCKED) {
-                        return res.getString(R.string.number_of_levels_locked, item.levels!!.size)
+                        return res.getString(R.string.number_of_levels_locked, item.levels.size)
                     } else {
                         val numberOfSolvedLevels =
-                                item.levels?.filter { it.state == STATE_SOLVED }?.size
+                                item.levels.filter { it.state == STATE_SOLVED }.size
                         return res.getString(R.string.number_of_levels,
-                                numberOfSolvedLevels, item.levels?.size)
+                                numberOfSolvedLevels, item.levels.size)
                     }
                 }
                 is Level -> return item.clue
@@ -120,46 +120,3 @@ class PacksLevelsAdapter<T>(private val items: List<T>, private val itemClick: (
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

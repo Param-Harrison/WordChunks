@@ -16,17 +16,6 @@ fun <T : RealmObject> T.queryAll(): List<T> {
 }
 
 /**
- * Query to the database with RealmQuery instance as argument
- */
-fun <T : RealmObject> T.queryAll(query: (RealmQuery<T>) -> Unit): List<T> {
-
-    Realm.getDefaultInstance().use {
-        val result = it.forEntity(this).withQuery(query).findAll()
-        return it.copyFromRealm(result)
-    }
-}
-
-/**
  * Query to the database with RealmQuery instance as argument. Return first result, or null.
  */
 fun <T : RealmObject> T.queryFirst(query: (RealmQuery<T>) -> Unit): T? {

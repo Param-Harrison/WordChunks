@@ -41,9 +41,9 @@ class CustomButton : RelativeLayout {
             a?.recycle()
         }
         // Setting the attributes to view.
-        txtTitle!!.text = title
-        icon!!.setImageDrawable(drawableIcon)
-        imgRectBg!!.setImageDrawable(drawableBg)
-        txtTitle!!.setTextColor(colorTxt)
+        txtTitle.text = title
+        icon.setImageDrawable(drawableIcon)
+        imgRectBg.setImageDrawable(drawableBg)
+        txtTitle.setTextColor(colorTxt)
     }
 }

@@ -20,14 +20,13 @@
     <!-- Main Screen -->
     <dimen name="rl_padding_start">60dp</dimen>
     <dimen name="cat_img_width">80dp</dimen>
-    <dimen name="zzz1_img_width">60dp</dimen>
-    <dimen name="zzz1_padding_bottom">70dp</dimen>
-    <dimen name="zzz2_img_width">40dp</dimen>
-    <dimen name="zzz2_padding_bottom">40dp</dimen>
+    <dimen name="zzz1_img_width">70dp</dimen>
+    <dimen name="zzz1_padding_bottom">60dp</dimen>
+    <dimen name="zzz2_img_width">50dp</dimen>
+    <dimen name="zzz2_padding_bottom">30dp</dimen>
 
     <!-- Packs Screen -->
     <dimen name="rv_padding_bottom">20dp</dimen>
-
 
     <!-- SP adjusts according the users setting, DP is static -->
     <dimen name="textsize_xlarge">28sp</dimen>
