@@ -19,3 +19,5 @@ fun IntArray.shuffleIntArray(): IntArray {
     }
     return this
 }
+
+val <T> Array<T>.isEmpty: Boolean get() = size == 0

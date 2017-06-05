@@ -7,86 +7,75 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
-import com.appchamp.wordchunks.data.LevelsRealmHelper
+import com.appchamp.wordchunks.models.realm.Level
+import com.appchamp.wordchunks.util.Constants.REALM_FIELD_STATE
 import com.appchamp.wordchunks.util.Constants.STATE_CURRENT
-import io.realm.Realm
+import com.appchamp.wordchunks.util.queryLast
 import kotlinx.android.synthetic.main.frag_main.*
+import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.info
 
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), AnkoLogger {
 
-    private var callback: OnMainFragmentClickListener? = null
+    private lateinit var onMainFragmentClickListener: OnMainFragmentClickListener
 
     companion object {
-        internal fun newInstance(): MainFragment = MainFragment()
+        internal fun newInstance() = MainFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? =
-            inflater!!.inflate(R.layout.frag_main, container, false)
+                              savedInstanceState: Bundle?): View? {
+        return inflater?.inflate(R.layout.frag_main, container, false)
+    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        imgSettingsIcon.setOnClickListener { onSettingsClick(it) }
-        imgShareIcon.setOnClickListener { onShareClick(it) }
-        btnPlay.setOnClickListener { onPlayClick(it) }
-        btnDaily.setOnClickListener { onDailyClick(it) }
-        btnPacks.setOnClickListener { onPacksClick(it) }
-        btnStore.setOnClickListener { onStoreClick(it) }
+        imgSettingsIcon.setOnClickListener { onSettingsClick() }
+        imgShareIcon.setOnClickListener { onShareClick() }
+        btnPlay.setOnClickListener { onPlayClick() }
+        btnDaily.setOnClickListener { onDailyClick() }
+        btnPacks.setOnClickListener { onPacksClick() }
+        btnStore.setOnClickListener { onStoreClick() }
     }
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
+        // the onMainFragmentClickListener interface. If not, it throws an exception
         try {
-            callback = context as OnMainFragmentClickListener?
+            onMainFragmentClickListener = context as OnMainFragmentClickListener
         } catch (e: ClassCastException) {
-            throw ClassCastException(context!!.toString()
+            throw ClassCastException(context.toString()
                     + " must implement OnMainFragmentClickListener")
         }
+
     }
 
-    private fun onSettingsClick(v: View?) {
-        callback!!.showSlidingMenu()
-    }
+    private fun onSettingsClick() = onMainFragmentClickListener.showSlidingMenu()
 
-    private fun onShareClick(v: View) {}
+    private fun onShareClick() {}
 
-    private fun onPlayClick(v: View) {
-        var lastLevelId: String? = null
-        Realm.getDefaultInstance().let { lastLevelId = getLastCurrentLevelId(it) }
-
-        lastLevelId.let { callback!!.startGameActivity(lastLevelId) }
-//        if (lastLevelId != null) {
-//
-//        } else {
-//            // If all levels and packs were solved, showing the fragment
-//            callback!!.showGameFinishedFragment()
-//        }
-    }
-
-    private fun onPacksClick(v: View) {
-        callback!!.showPacksActivity()
-    }
-
-    private fun onStoreClick(v: View) {}
-
-    private fun onDailyClick(v: View) {}
-
-    private fun getLastCurrentLevelId(realm: Realm): String? {
-
-        val countLevelsByCurrentState = LevelsRealmHelper.countLevelsByState(realm, STATE_CURRENT)
-
-        // If not all levels were solved
-        if (countLevelsByCurrentState.toInt() != 0) {
-            // Getting the last "current" level id
-            return LevelsRealmHelper.findLastLevelByState(realm, STATE_CURRENT).id
+    private fun onPlayClick() {
+        val levelId: String? = getLastCurrentLevelId()
+        info { levelId }
+        if (levelId != null) {
+            info { "level id not null" }
+            onMainFragmentClickListener.startGameActivity(levelId)
         } else {
+            info { "level id = null" }
             // If all levels and packs were solved, showing the fragment
-            return null
+            onMainFragmentClickListener.showGameFinishedFragment()
         }
     }
 
+    private fun onPacksClick() = onMainFragmentClickListener.showPacksActivity()
+
+    private fun onStoreClick() {}
+
+    private fun onDailyClick() {}
+
+    private fun getLastCurrentLevelId(): String? =
+            Level().queryLast { it.equalTo(REALM_FIELD_STATE, STATE_CURRENT) }?.id
 }

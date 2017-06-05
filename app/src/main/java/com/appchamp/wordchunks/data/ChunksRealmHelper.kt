@@ -1,15 +1,10 @@
 package com.appchamp.wordchunks.data
 
 import com.appchamp.wordchunks.models.realm.Chunk
-import com.appchamp.wordchunks.models.realm.Word
 import com.appchamp.wordchunks.util.Constants.CHUNKS_SEPARATOR
-import com.appchamp.wordchunks.util.Constants.CHUNK_STATE_NORMAL
-import com.appchamp.wordchunks.util.Constants.REALM_FIELD_LEVEL_ID
-import com.appchamp.wordchunks.util.Constants.REALM_FIELD_STATE
 import com.appchamp.wordchunks.util.shuffleIntArray
 import io.realm.Realm
 import io.realm.RealmList
-import io.realm.RealmResults
 
 
 /**
@@ -21,7 +16,7 @@ object ChunksRealmHelper {
      * Returns the list of Realm Chunk objects created from the array of split chunks.
      */
     internal fun createChunks(realm: Realm, wordsSplit: List<String>,
-                              levelId: String, wordsRealm: RealmList<Word>): RealmList<Chunk> {
+                              levelId: String): RealmList<Chunk> {
         val chunks = RealmList<Chunk>()
         for (i in wordsSplit.indices) {
             val splitChunks = wordsSplit[i].split(CHUNKS_SEPARATOR)
@@ -29,7 +24,7 @@ object ChunksRealmHelper {
                 val chunk = realm.createObject(Chunk::class.java)
                 chunk.chunk = chunkStr
                 chunk.levelId = levelId
-                chunk.wordId = wordsRealm[i].id
+                //chunk.wordId = wordsRealm[i].id
                 chunks.add(chunk)
             }
         }
@@ -42,16 +37,4 @@ object ChunksRealmHelper {
         }
         return chunks
     }
-
-    fun findSelectedChunksByLevelIdSorted(realm: Realm, levelId: String): List<Chunk> = realm
-            .where(Chunk::class.java)
-            .equalTo(REALM_FIELD_LEVEL_ID, levelId)
-            .greaterThan(REALM_FIELD_STATE, CHUNK_STATE_NORMAL)
-            .findAllSorted(REALM_FIELD_STATE)
-
-    fun findSelectedChunksByLevelId(realm: Realm, levelId: String): RealmResults<Chunk> = realm
-            .where(Chunk::class.java)
-            .equalTo(REALM_FIELD_LEVEL_ID, levelId)
-            .greaterThan(REALM_FIELD_STATE, CHUNK_STATE_NORMAL)
-            .findAll()
 }

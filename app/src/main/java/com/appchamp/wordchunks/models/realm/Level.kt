@@ -4,23 +4,29 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Index
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.Required
 
 
 open class Level : RealmObject() {
 
     @PrimaryKey
-    var id: String? = null
+    @Required
+    var id: String = ""
     @Index
-    var packId: String? = null
+    @Required
+    var packId: String = ""
     @Index
-    var clue: String? = null
+    @Required
+    var clue: String = ""
     @Index
-    var color: String? = null
+    @Required
+    var color: String = ""
     @Index
-    var fact: String? = null
+    @Required
+    var fact: String = ""
     @Index
     var state: Int = 0  // 0 = locked, 1 = current, 2 = finished
-    var words: RealmList<Word>? = null
-    var chunks: RealmList<Chunk>? = null
+    var words: RealmList<Word> = RealmList()
+    var chunks: RealmList<Chunk> = RealmList()
 
 }

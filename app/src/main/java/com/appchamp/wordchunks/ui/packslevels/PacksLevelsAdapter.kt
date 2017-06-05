@@ -17,7 +17,7 @@ import com.appchamp.wordchunks.util.Constants.STATE_SOLVED
 import kotlinx.android.synthetic.main.item_pack_level.view.*
 
 
-class PacksLevelsAdapter<T>(val items: List<T>, val itemClick: (T) -> Unit) :
+class PacksLevelsAdapter<T>(private val items: List<T>, private val itemClick: (T) -> Unit) :
         RecyclerView.Adapter<PacksLevelsAdapter.ViewHolder<T>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<T> {

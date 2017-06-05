@@ -19,7 +19,7 @@ import java.util.*
 
 class LevelSolvedFrag : Fragment() {
 
-    private var callback: OnNextLevelListener? = null
+    private lateinit var onNextLevelListener: OnNextLevelListener
 
     companion object {
 
@@ -34,17 +34,17 @@ class LevelSolvedFrag : Fragment() {
             return levelSolvedFrag
         }
 
-        fun newInstance(): LevelSolvedFrag = LevelSolvedFrag()
+        fun newInstance() = LevelSolvedFrag()
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.frag_level_solved, container, false)
+        return inflater?.inflate(R.layout.frag_level_solved, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        rlNextLevel.setOnClickListener { callback!!.onNextLevelSelected() }
+        rlNextLevel.setOnClickListener { onNextLevelListener.onNextLevelSelected() }
 
         setPackColor()
         setClue()
@@ -56,13 +56,13 @@ class LevelSolvedFrag : Fragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
+        // the onNextLevelListener interface. If not, it throws an exception
         try {
-            callback = context as OnNextLevelListener?
+            onNextLevelListener = context as OnNextLevelListener
         } catch (e: ClassCastException) {
-            throw ClassCastException(context!!.toString() + " must implement OnNextLevelListener")
+            throw ClassCastException(context?.toString()
+                    + " must implement OnNextLevelListener")
         }
-
     }
 
     private fun setPackColor() {
@@ -73,17 +73,11 @@ class LevelSolvedFrag : Fragment() {
     }
 
     private fun setClue() {
-        val clue = arguments.getString(CLUE_ID_KEY)
-        if (clue === "") {
-            tvNextLevelClue.text = "CONGRATULATIONS!"
-        } else {
-            tvNextLevelClue.text = clue
-        }
+        tvNextLevelClue.text = arguments.getString(CLUE_ID_KEY)
     }
 
     private fun setFunFact() {
-        val fact = arguments.getString(FACT_ID_KEY)
-        tvFunFact.text = fact
+        tvFunFact.text = arguments.getString(FACT_ID_KEY)
     }
 
     private fun setLevelsLeft() {
@@ -92,7 +86,10 @@ class LevelSolvedFrag : Fragment() {
             tvLevelsLeft.text = "YOU'VE FINISHED THE WHOLE PACK!"
         } else if (left.toInt() == 1) {
             tvLevelsLeft.text = "ONLY ONE LEVEL LEFT IN PACK"
-        } else {
+        } else if (left.toInt() == -1) {
+            tvLevelsLeft.text = "YOU'VE FINISHED ALL PACKS AND LEVELS"
+        }
+        else {
             tvLevelsLeft.text = left.toString() + " LEVELS LEFT IN PACK"
         }
     }

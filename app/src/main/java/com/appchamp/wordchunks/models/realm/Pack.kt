@@ -4,18 +4,22 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.Index
 import io.realm.annotations.PrimaryKey
+import io.realm.annotations.Required
 
 
 open class Pack : RealmObject() {
 
     @PrimaryKey
-    var id: String? = null// = UUID.randomUUID().toString();
+    @Required
+    var id: String = ""
     @Index
-    var title: String? = null
+    @Required
+    var title: String = ""
     @Index
-    var color: String? = null
+    @Required
+    var color: String = ""
     @Index
     var state: Int = 0  // 0 = locked, 1 = current, 2 = finished
-    var levels: RealmList<Level>? = null
+    var levels: RealmList<Level> = RealmList()
 
 }

@@ -10,6 +10,7 @@ import com.appchamp.wordchunks.data.PacksRealmHelper
 import com.appchamp.wordchunks.models.pojo.PackJson
 import com.appchamp.wordchunks.models.pojo.packsFromJSONFile
 import com.appchamp.wordchunks.ui.game.GameActivity
+import com.appchamp.wordchunks.ui.game.fragments.GameFinishedFrag
 import com.appchamp.wordchunks.ui.packslevels.PacksActivity
 import com.appchamp.wordchunks.ui.tutorial.TutorialActivity
 import com.appchamp.wordchunks.util.ActivityUtils
@@ -27,10 +28,13 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 class MainActivity : AppCompatActivity(), AnkoLogger, OnMainFragmentClickListener {
 
-    private var menu: SlidingMenu? = null
+    private lateinit var menu: SlidingMenu
+
+    private var isGameFinished = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.act_main)
 
         val sp = getSharedPreferences(WORD_CHUNKS_PREFS, Context.MODE_PRIVATE)
@@ -38,7 +42,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger, OnMainFragmentClickListene
         if (isRealmFileExists) {
             // update an existing realm objects here
             // updateRealmDb();
-            showMainFragment()
+            addMainFragment()
         } else {
             // create realm objects for the first time
             startImport()
@@ -58,7 +62,11 @@ class MainActivity : AppCompatActivity(), AnkoLogger, OnMainFragmentClickListene
     }
 
     override fun showGameFinishedFragment() {
-        TODO()
+        isGameFinished = true
+        ActivityUtils.replaceFragment(
+                supportFragmentManager,
+                GameFinishedFrag.newInstance(),
+                R.id.flActMain)
     }
 
     override fun showPacksActivity() {
@@ -67,33 +75,31 @@ class MainActivity : AppCompatActivity(), AnkoLogger, OnMainFragmentClickListene
     }
 
     override fun onBackPressed() {
-        if (menu!!.isMenuShowing) {
-            menu!!.toggle()  // close the sliding menu
-        } else {
-            super.onBackPressed()
+        when {
+            isGameFinished -> replaceMainFragment()
+            menu.isMenuShowing -> menu.toggle()  // Collapse the sliding menu
+            else -> super.onBackPressed()
         }
     }
 
-    override fun showSlidingMenu() {
-        menu!!.toggle()
-    }
-
-    private fun showTutorial() {
-        startActivity<TutorialActivity>()
-    }
+    private fun showTutorial() = startActivity<TutorialActivity>()
 
     private fun initLeftMenu() {
-        // Configure the SlidingMenu
+
         menu = SlidingMenu(this)
-        menu!!.mode = SlidingMenu.LEFT
-        menu!!.touchModeAbove = SlidingMenu.TOUCHMODE_FULLSCREEN
-        menu!!.setShadowWidthRes(R.dimen.shadow_width)
-        menu!!.setShadowDrawable(R.drawable.shadow)
-        menu!!.setBehindOffsetRes(R.dimen.slidingmenu_offset)
-        menu!!.setFadeDegree(0.35f)
-        menu!!.attachToActivity(this, SlidingMenu.SLIDING_CONTENT)
-        menu!!.setMenu(R.layout.frag_sliding_menu)
+        // Configure the SlidingMenu
+        menu.mode = SlidingMenu.LEFT
+        menu.touchModeAbove = SlidingMenu.TOUCHMODE_FULLSCREEN
+        menu.setShadowWidthRes(R.dimen.shadow_width)
+        menu.setShadowDrawable(R.drawable.shadow)
+        menu.setBehindOffsetRes(R.dimen.slidingmenu_offset)
+        menu.setFadeDegree(0.35f)
+        menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT)
+        menu.setMenu(R.layout.frag_sliding_menu)
+
     }
+
+    override fun showSlidingMenu() = menu.toggle()
 
     private fun startImport() {
         // Delete realm db before creating new objects.
@@ -107,7 +113,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger, OnMainFragmentClickListene
 
             activityUiThread {
                 // done
-                showMainFragment()
+                addMainFragment()
             }
         }
     }
@@ -127,8 +133,15 @@ class MainActivity : AppCompatActivity(), AnkoLogger, OnMainFragmentClickListene
         }
     }
 
-    private fun showMainFragment() {
+    private fun addMainFragment() {
         ActivityUtils.addFragment(
+                supportFragmentManager,
+                MainFragment.newInstance(),
+                R.id.flActMain)
+    }
+
+    private fun replaceMainFragment() {
+        ActivityUtils.replaceFragment(
                 supportFragmentManager,
                 MainFragment.newInstance(),
                 R.id.flActMain)

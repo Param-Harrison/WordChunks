@@ -2,21 +2,22 @@ package com.appchamp.wordchunks.models.realm
 
 import io.realm.RealmObject
 import io.realm.annotations.Index
+import io.realm.annotations.Required
 
 
-open class Chunk : RealmObject() {
+open class Chunk (
 
     @Index
-    var levelId: String? = null
+    @Required
+    var levelId: String = "",
     @Index
-    var wordId: String? = null
+    @Required
+    var chunk: String = "",
     @Index
-    var chunk: String? = null
-    @Index
-    var state: Long = 0  // must be Long as the currentTimeMillis
+    var state: Long = 0,  // should be Long as the currentTimeMillis
     @Index
     var position: Int = 0
 
-}
+): RealmObject()
 
 fun List<Chunk>.chunksToString(): String = map { it.chunk }.joinToString(separator = "")

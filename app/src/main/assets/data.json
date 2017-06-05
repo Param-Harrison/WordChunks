@@ -4,40 +4,9 @@
     "color": "#00bdbd",
     "levels": [
       {
-        "clue": "BODY",
+        "clue": "CLUE",
         "fact": "some fact",
-        "words": "BO,DY PA,RT,SS"
-      },
-      {
-        "clue": "BODY PARTS",
-        "fact": "some fact",
-        "words": "BR,EA,ST"
-      },
-      {
-        "clue": "BODY PARTS",
-        "fact": "some fact",
-        "words": "BRE,AST FORE,HEAD"
-      },
-      {
-        "clue": "BODY PARTS",
-        "fact": "some fact",
-        "words": "BRE,AST FORE,HEAD"
-      }
-    ]
-  },
-  {
-    "title": "ROSE",
-    "color": "#cccccc",
-    "levels": [
-      {
-        "clue": "BDSD",
-        "fact": "some fact",
-        "words": "BO,DY PA,RT,SS"
-      },
-      {
-        "clue": "BFFFFFFF",
-        "fact": "some fact",
-        "words": "BR,EA,ST"
+        "words": "AA,AA,AA AA,AA"
       }
     ]
   }

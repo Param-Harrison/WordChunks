@@ -4,10 +4,9 @@
     android:id="@+id/rlChunk"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    android:layout_marginStart="4dp"
-    android:layout_marginEnd="4dp"
     android:layout_marginBottom="6dp"
-    android:foreground="?android:attr/selectableItemBackground"
+    android:layout_marginEnd="4dp"
+    android:layout_marginStart="4dp"
     android:background="@drawable/chunk_rect"
     android:gravity="center"
     android:paddingBottom="4dp">
@@ -19,6 +18,7 @@
         android:layout_height="wrap_content"
         android:textColor="#222a34"
         android:textSize="21sp"
+        tools:ignore="MissingPrefix"
         tools:text="ABCD" />
 
 </RelativeLayout>
