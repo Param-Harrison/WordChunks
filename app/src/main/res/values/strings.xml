@@ -43,5 +43,7 @@
     <string name="tutorial1">1. All given solutions has one THEME in common.</string>
     <string name="tutorial">tutorial</string>
     <string name="all_packs_finished">ALL PACKS FINISHED</string>
+    <string name="show_a_hint_for">SHOW A HINT FOR</string>
+    <string name="entire_solution">ENTIRE SOLUTION</string>
 
 </resources>

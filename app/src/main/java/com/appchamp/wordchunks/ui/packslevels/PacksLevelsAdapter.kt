@@ -3,13 +3,13 @@ package com.appchamp.wordchunks.ui.packslevels
 import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
-import android.support.v4.content.ContextCompat
-import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
+import com.appchamp.wordchunks.extensions.color
+import com.appchamp.wordchunks.extensions.drawable
 import com.appchamp.wordchunks.models.realm.Level
 import com.appchamp.wordchunks.models.realm.Pack
 import com.appchamp.wordchunks.util.Constants.STATE_LOCKED
@@ -21,8 +21,7 @@ class PacksLevelsAdapter<T>(private val items: List<T>, private val itemClick: (
         RecyclerView.Adapter<PacksLevelsAdapter.ViewHolder<T>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<T> {
-        val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_pack_level, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_pack_level, parent, false)
         return ViewHolder(view, itemClick)
     }
 
@@ -39,36 +38,28 @@ class PacksLevelsAdapter<T>(private val items: List<T>, private val itemClick: (
             val itemState = getItemState(item)
             val itemColor = getItemColor(item)
             val drawable = imgRectBg.drawable as GradientDrawable
-            rlItem.background = ResourcesCompat
-                    .getDrawable(resources, R.drawable.main_bg_rect, null)
+            rlItem.background = context.drawable(R.drawable.main_bg_rect)
 
             when (itemState) {
                 STATE_LOCKED -> {
                     itemView.isEnabled = false
-                    drawable.setColor(ContextCompat
-                            .getColor(context, R.color.pack_rect_left_locked))
-                    icon.setImageDrawable(ResourcesCompat
-                            .getDrawable(resources, R.drawable.ic_locked, null))
+                    drawable.setColor(context.color(R.color.pack_rect_left_locked))
+                    icon.setImageDrawable(context.drawable(R.drawable.ic_locked))
                     rlItem.background.alpha = 100
 
-                    tvItemTitle.setTextColor(ContextCompat.
-                            getColor(context, R.color.pack_title_txt_locked))
-                    tvItemSubtitle.setTextColor(ContextCompat
-                            .getColor(context, R.color.pack_title_txt_locked))
+                    tvItemTitle.setTextColor(context.color(R.color.pack_title_txt_locked))
+                    tvItemSubtitle.setTextColor(context.color(R.color.pack_title_txt_locked))
 
                 }
                 else -> {
                     itemView.isEnabled = true
                     drawable.setColor(itemColor)
                     tvItemTitle.setTextColor(itemColor)
-                    tvItemSubtitle.setTextColor(
-                            ContextCompat.getColor(context, R.color.pack_num_of_levels_txt))
+                    tvItemSubtitle.setTextColor(context.color(R.color.pack_num_of_levels_txt))
 
                     when (itemState) {
-                        STATE_SOLVED -> icon.setImageDrawable(ResourcesCompat
-                                .getDrawable(resources, R.drawable.ic_solved, null))
-                        else -> icon.setImageDrawable(ResourcesCompat
-                                .getDrawable(resources, R.drawable.ic_current, null))
+                        STATE_SOLVED -> icon.setImageDrawable(context.drawable(R.drawable.ic_solved))
+                        else -> icon.setImageDrawable(context.drawable(R.drawable.ic_current))
                     }
                 }
             }
@@ -100,8 +91,7 @@ class PacksLevelsAdapter<T>(private val items: List<T>, private val itemClick: (
                     if (getItemState(item) == STATE_LOCKED) {
                         return res.getString(R.string.number_of_levels_locked, item.levels.size)
                     } else {
-                        val numberOfSolvedLevels =
-                                item.levels.filter { it.state == STATE_SOLVED }.size
+                        val numberOfSolvedLevels = item.levels.count { it.state == STATE_SOLVED }
                         return res.getString(R.string.number_of_levels,
                                 numberOfSolvedLevels, item.levels.size)
                     }

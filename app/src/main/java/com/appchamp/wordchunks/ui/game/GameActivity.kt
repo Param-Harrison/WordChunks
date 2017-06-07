@@ -5,14 +5,12 @@ import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.appchamp.wordchunks.R
+import com.appchamp.wordchunks.extensions.color
+import com.appchamp.wordchunks.extensions.queryFirst
 import com.appchamp.wordchunks.models.realm.Level
 import com.appchamp.wordchunks.models.realm.Pack
-import com.appchamp.wordchunks.ui.game.fragments.GameFinishedFrag
-import com.appchamp.wordchunks.ui.game.fragments.GameFrag
-import com.appchamp.wordchunks.ui.game.fragments.LevelSolvedBeforeFrag
-import com.appchamp.wordchunks.ui.game.fragments.LevelSolvedFrag
-import com.appchamp.wordchunks.ui.game.listeners.OnBackToLevelsListener
-import com.appchamp.wordchunks.ui.game.listeners.OnLevelSolvedListener
+import com.appchamp.wordchunks.ui.game.fragments.*
+import com.appchamp.wordchunks.ui.game.listeners.OnGameFragClickListener
 import com.appchamp.wordchunks.ui.game.listeners.OnNextLevelListener
 import com.appchamp.wordchunks.ui.packslevels.LevelsActivity
 import com.appchamp.wordchunks.ui.tutorial.TutorialActivity
@@ -27,16 +25,13 @@ import com.appchamp.wordchunks.util.Constants.STATE_CURRENT
 import com.appchamp.wordchunks.util.Constants.STATE_LOCKED
 import com.appchamp.wordchunks.util.Constants.STATE_SOLVED
 import com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFS
-import com.appchamp.wordchunks.util.queryFirst
 import io.realm.Realm
-import kotlinx.android.synthetic.main.act_game.*
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivity
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 
-class GameActivity : AppCompatActivity(), OnLevelSolvedListener, OnNextLevelListener,
-        OnBackToLevelsListener {
+class GameActivity : AppCompatActivity(), OnGameFragClickListener, OnNextLevelListener {
 
     private lateinit var levelId: String
     private var nextLevel: Level? = null
@@ -66,7 +61,7 @@ class GameActivity : AppCompatActivity(), OnLevelSolvedListener, OnNextLevelList
     override fun onStart() {
         super.onStart()
 
-        imgBackArrow.setOnClickListener { onBackPressed() }
+        //imgBackArrow.setOnClickListener { onBackPressed() }
     }
 
     override fun onBackPressed() {
@@ -136,7 +131,7 @@ class GameActivity : AppCompatActivity(), OnLevelSolvedListener, OnNextLevelList
 
                 } else {
                     showLevelSolvedFragment(
-                            Color.parseColor("#cccccc"),
+                            color(R.color.btn_rect_game_finish),
                             "Congratulations!",
                             level.fact,
                             -1)
@@ -144,6 +139,13 @@ class GameActivity : AppCompatActivity(), OnLevelSolvedListener, OnNextLevelList
                 isPackSolved(it, level.packId)
             }
         }
+    }
+
+    override fun onHintClick() {
+        ActivityUtils.replaceFragment(
+                supportFragmentManager,
+                HintFirstFrag.newInstance(),
+                R.id.flActMain)
     }
 
     private fun countLeftLevels(packId: String): Int = Pack()
@@ -201,5 +203,5 @@ class GameActivity : AppCompatActivity(), OnLevelSolvedListener, OnNextLevelList
         }
     }
 
-    override fun onBackToLevelsSelected() = onBackPressed()
+    override fun onBackToLevelsClick() = onBackPressed()
 }

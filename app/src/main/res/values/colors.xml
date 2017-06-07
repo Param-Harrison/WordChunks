@@ -28,6 +28,8 @@
     <color name="btn_rect_store">#fcc397</color>
     <color name="btn_rect_store_pressed">#ffdabd</color>
 
+    <color name="btn_rect_game_finish">#FFAB40</color>
+
     <!-- Packs screen -->
     <color name="title_txt">#e2e2e2</color>
     <color name="item_number_txt">#7f7f7f</color>

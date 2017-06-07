@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.appchamp.wordchunks.R
+import com.appchamp.wordchunks.extensions.queryAll
 import com.appchamp.wordchunks.models.realm.Pack
 import com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID
-import com.appchamp.wordchunks.util.queryAll
 import kotlinx.android.synthetic.main.act_packs_levels.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import org.jetbrains.anko.clearTop
@@ -22,13 +22,15 @@ class PacksActivity : AppCompatActivity() {
         setContentView(R.layout.act_packs_levels)
 
         llPacksLevels.setBackgroundResource(R.drawable.gradient_packs)
+
         tvTitle.text = getString(R.string.title_select_pack)
         imgBackArrow.setOnClickListener { onBackPressed() }
+
         rvList.layoutManager = LinearLayoutManager(this)
         rvList.setHasFixedSize(true)
 
-        OverScrollDecoratorHelper
-                .setUpOverScroll(rvList, OverScrollDecoratorHelper.ORIENTATION_VERTICAL)
+        OverScrollDecoratorHelper.setUpOverScroll(
+                rvList, OverScrollDecoratorHelper.ORIENTATION_VERTICAL)
     }
 
     override fun onResume() {
@@ -40,7 +42,6 @@ class PacksActivity : AppCompatActivity() {
         val packs = Pack().queryAll()
         val adapter = PacksLevelsAdapter(packs) { startLevelsActivity(it.id) }
         rvList.adapter = adapter
-        rvList.setHasFixedSize(true)
     }
 
     override fun attachBaseContext(newBase: Context) {

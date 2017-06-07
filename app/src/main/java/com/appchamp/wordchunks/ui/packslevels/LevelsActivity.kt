@@ -5,13 +5,13 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.appchamp.wordchunks.R
+import com.appchamp.wordchunks.extensions.queryFirst
 import com.appchamp.wordchunks.models.realm.Level
 import com.appchamp.wordchunks.models.realm.Pack
 import com.appchamp.wordchunks.ui.game.GameActivity
 import com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID
 import com.appchamp.wordchunks.util.Constants.LEVEL_ID_KEY
 import com.appchamp.wordchunks.util.Constants.REALM_FIELD_ID
-import com.appchamp.wordchunks.util.queryFirst
 import kotlinx.android.synthetic.main.act_packs_levels.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
 import org.jetbrains.anko.clearTop

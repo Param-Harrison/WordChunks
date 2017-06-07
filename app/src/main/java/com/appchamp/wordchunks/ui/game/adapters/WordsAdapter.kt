@@ -1,7 +1,6 @@
 package com.appchamp.wordchunks.ui.game.adapters
 
 import android.graphics.drawable.GradientDrawable
-import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.util.TypedValue
 import android.view.Gravity
@@ -10,6 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import com.appchamp.wordchunks.R
+import com.appchamp.wordchunks.extensions.color
+import com.appchamp.wordchunks.extensions.gone
+import com.appchamp.wordchunks.extensions.visible
 import com.appchamp.wordchunks.models.realm.Word
 import com.appchamp.wordchunks.util.Constants
 import kotlinx.android.synthetic.main.item_word.view.*
@@ -39,13 +41,13 @@ class WordsAdapter(private val words: List<Word>, private val packColor: Int) :
                     val wordLength = word.word.length
                     tvWord.text = resources.getString(R.string.number_of_letters, wordLength)
                     tvWordNum.text = word.getProperIndex()
-                    drawable.setColor(ContextCompat.getColor(context, R.color.word_rect_bg))
+                    drawable.setColor(context.color(R.color.word_rect_bg))
                 }
                 else -> {
                     tvWord.text = word.word
                     tvWord.setTextColor(packColor)
-                    icon.visibility = View.VISIBLE
-                    tvWordNum.visibility = View.GONE
+                    icon.visible()
+                    tvWordNum.gone()
                     drawable.setColor(packColor)
                 }
             }
@@ -72,8 +74,7 @@ class WordsAdapter(private val words: List<Word>, private val packColor: Int) :
                     TypedValue.applyDimension(
                             TypedValue.COMPLEX_UNIT_DIP,
                             32f,
-                            itemView.resources.displayMetrics)
-                            .toInt(),
+                            itemView.resources.displayMetrics).toInt(),
                     RelativeLayout.LayoutParams.MATCH_PARENT)
 
             params.addRule(alignParent, RelativeLayout.TRUE)

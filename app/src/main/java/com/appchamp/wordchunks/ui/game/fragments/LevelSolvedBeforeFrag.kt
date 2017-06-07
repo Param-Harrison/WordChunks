@@ -7,14 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
-import com.appchamp.wordchunks.ui.game.listeners.OnBackToLevelsListener
+import com.appchamp.wordchunks.ui.game.listeners.OnGameFragClickListener
 import com.appchamp.wordchunks.util.Constants
 import kotlinx.android.synthetic.main.frag_level_solved_before.*
 
 
 class LevelSolvedBeforeFrag : Fragment() {
 
-    private var callback: OnBackToLevelsListener? = null
+    private var callback: OnGameFragClickListener? = null
 
     companion object {
         fun newInstance(fact: String?): LevelSolvedBeforeFrag {
@@ -35,7 +35,7 @@ class LevelSolvedBeforeFrag : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        rlBackToLevels.setOnClickListener { callback!!.onBackToLevelsSelected() }
+        rlBackToLevels.setOnClickListener { callback!!.onBackToLevelsClick() }
         setFunFact()
     }
 
@@ -51,10 +51,10 @@ class LevelSolvedBeforeFrag : Fragment() {
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception
         try {
-            callback = context as OnBackToLevelsListener?
+            callback = context as OnGameFragClickListener?
         } catch (e: ClassCastException) {
             throw ClassCastException(context!!.toString()
-                    + " must implement OnBackToLevelsListener")
+                    + " must implement OnGameFragClickListener")
         }
     }
 }

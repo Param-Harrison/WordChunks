@@ -7,7 +7,12 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AccelerateDecelerateInterpolator
 import com.appchamp.wordchunks.R
+import com.appchamp.wordchunks.extensions.drawable
+import com.appchamp.wordchunks.extensions.invisible
+import com.appchamp.wordchunks.extensions.shuffleIntArray
+import com.appchamp.wordchunks.extensions.visible
 import com.appchamp.wordchunks.models.realm.Chunk
 import com.appchamp.wordchunks.models.realm.Level
 import com.appchamp.wordchunks.models.realm.Word
@@ -15,7 +20,7 @@ import com.appchamp.wordchunks.models.realm.chunksToString
 import com.appchamp.wordchunks.ui.game.CustomGridLayoutManager
 import com.appchamp.wordchunks.ui.game.adapters.ChunksAdapter
 import com.appchamp.wordchunks.ui.game.adapters.WordsAdapter
-import com.appchamp.wordchunks.ui.game.listeners.OnLevelSolvedListener
+import com.appchamp.wordchunks.ui.game.listeners.OnGameFragClickListener
 import com.appchamp.wordchunks.util.Constants
 import com.appchamp.wordchunks.util.Constants.CHUNKS_GRID_NUM
 import com.appchamp.wordchunks.util.Constants.CHUNK_STATE_GONE
@@ -24,7 +29,6 @@ import com.appchamp.wordchunks.util.Constants.LEVEL_ID_KEY
 import com.appchamp.wordchunks.util.Constants.REALM_FIELD_ID
 import com.appchamp.wordchunks.util.Constants.WORDS_GRID_NUM
 import com.appchamp.wordchunks.util.Constants.WORD_STATE_NOT_SOLVED
-import com.appchamp.wordchunks.util.shuffleIntArray
 import io.realm.Realm
 import kotlinx.android.synthetic.main.frag_game.*
 import org.jetbrains.anko.AnkoLogger
@@ -32,8 +36,9 @@ import org.jetbrains.anko.AnkoLogger
 
 class GameFrag : Fragment(), AnkoLogger {
 
+    private lateinit var onGameFragClickListener: OnGameFragClickListener
+
     private lateinit var realm: Realm
-    private lateinit var onLevelSolvedListener: OnLevelSolvedListener
     private lateinit var level: Level
 
     // Adapters
@@ -55,13 +60,13 @@ class GameFrag : Fragment(), AnkoLogger {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
 
-        // This makes sure that the container activity has implemented
-        // the onLevelSolvedListener interface. If not, it throws an exception
+        // This makes sure that the container activity has implemented the OnGameFragClickListener
+        // interface. If not, it throws an exception
         try {
-            onLevelSolvedListener = context as OnLevelSolvedListener
+            onGameFragClickListener = context as OnGameFragClickListener
         } catch (e: ClassCastException) {
             throw ClassCastException(context.toString()
-                    + " must implement OnLevelSolvedListener")
+                    + " must implement OnGameFragClickListener")
         }
     }
 
@@ -77,6 +82,7 @@ class GameFrag : Fragment(), AnkoLogger {
         imgClear.setOnClickListener { onClearIconClick() }
         imgShuffle.setOnClickListener { onShuffleClick() }
         imgHint.setOnClickListener { onHintClick() }
+        imgBackArrow.setOnClickListener { onGameFragClickListener.onBackToLevelsClick() }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -96,6 +102,10 @@ class GameFrag : Fragment(), AnkoLogger {
 
             initWordsAdapter(level.words, Color.parseColor(level.color))
             initChunksAdapter(level.chunks)
+            updateChunksView()
+            updateClearIcon()
+            updateChunksCount()
+            updateChunksCountView()
         }
     }
 
@@ -111,6 +121,14 @@ class GameFrag : Fragment(), AnkoLogger {
         rvWords.adapter = wordsAdapter
         rvWords.layoutManager = CustomGridLayoutManager(activity, WORDS_GRID_NUM)
         rvWords.setHasFixedSize(true)
+        rvWords.translationY = 0.5F
+        rvWords.alpha = 0f
+        rvWords.animate()
+                .translationY(0F)
+                .setDuration(1000)
+                .alpha(1f)
+                .setInterpolator(AccelerateDecelerateInterpolator())
+                .start()
     }
 
     private fun initChunksAdapter(chunks: List<Chunk>) {
@@ -134,6 +152,8 @@ class GameFrag : Fragment(), AnkoLogger {
         }
         updateChunksView()
         updateClearIcon()
+        updateChunksCount()
+        updateChunksCountView()
     }
 
     private fun onShuffleClick() {
@@ -149,7 +169,9 @@ class GameFrag : Fragment(), AnkoLogger {
         chunksAdapter.notifyDataSetChanged()
     }
 
-    private fun onHintClick() {}
+    private fun onHintClick() {
+        onGameFragClickListener.onHintClick()
+    }
 
     private fun onChunkClick(chunk: Chunk) {
         realm.executeTransaction {
@@ -161,22 +183,40 @@ class GameFrag : Fragment(), AnkoLogger {
         chunksAdapter.notifyItemChanged(chunk.position)
         if (isWordSolved()) {
             if (isLevelSolved()) {
-                onLevelSolvedListener.onLevelSolved()
+                onGameFragClickListener.onLevelSolved()
             }
         }
         updateChunksView()
         updateClearIcon()
+        updateChunksCount()
+        updateChunksCountView()
+    }
+
+    private fun updateChunksCount() {
+        val imgResourceName = "ic_" + getSelectedChunks().length
+        var imgResourceId = resources.getIdentifier(imgResourceName, "drawable",
+                context.packageName)
+        if (imgResourceId == 0) {
+            imgResourceId = resources.getIdentifier("ic_0", "drawable",
+                    context.packageName)
+        }
+        imgChunksCount.setImageDrawable(context.drawable(imgResourceId))
     }
 
     private fun updateChunksView() {
-        tvInputChunks?.text = getSelectedChunks()
+        tvInputChunks.text = getSelectedChunks()
     }
 
     private fun updateClearIcon() {
         return when {
-            level.chunks.filter { it.state > CHUNK_STATE_NORMAL }.isEmpty() -> imgClear?.visibility = View.GONE
-            else -> imgClear?.visibility = View.VISIBLE
+            level.chunks.any { it.state > CHUNK_STATE_NORMAL } -> imgClear.visible()
+            else -> imgClear.invisible()
         }
+    }
+
+    private fun updateChunksCountView() = when {
+        getSelectedChunks().isNotEmpty() -> imgChunksCount.visible()
+        else -> imgChunksCount.invisible()
     }
 
     private fun isWordSolved(): Boolean {

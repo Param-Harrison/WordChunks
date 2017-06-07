@@ -7,10 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
+import com.appchamp.wordchunks.extensions.queryLast
 import com.appchamp.wordchunks.models.realm.Level
 import com.appchamp.wordchunks.util.Constants.REALM_FIELD_STATE
 import com.appchamp.wordchunks.util.Constants.STATE_CURRENT
-import com.appchamp.wordchunks.util.queryLast
 import kotlinx.android.synthetic.main.frag_main.*
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -51,13 +51,14 @@ class MainFragment : Fragment(), AnkoLogger {
             throw ClassCastException(context.toString()
                     + " must implement OnMainFragmentClickListener")
         }
-
     }
 
     private fun onSettingsClick() = onMainFragmentClickListener.showSlidingMenu()
 
     private fun onShareClick() {
-        context.share("I'm playing in WordChunks!", "Check this out!")
+        context.share(
+                "WordChunks is AWESOME and I think you'll love it. Get it! -- [link]",
+                "My current puzzle")
     }
 
     private fun onPlayClick() {

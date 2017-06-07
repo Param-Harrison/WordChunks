@@ -22,7 +22,7 @@
 
     <TextView
         android:id="@+id/tvWord"
-        fontPath="fonts/nunitobold.ttf"
+        fontPath="fonts/nunitobolditalic.ttf"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_vertical|end"
