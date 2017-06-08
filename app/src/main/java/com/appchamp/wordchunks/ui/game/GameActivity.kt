@@ -9,13 +9,18 @@ import com.appchamp.wordchunks.extensions.color
 import com.appchamp.wordchunks.extensions.queryFirst
 import com.appchamp.wordchunks.models.realm.Level
 import com.appchamp.wordchunks.models.realm.Pack
-import com.appchamp.wordchunks.ui.game.fragments.*
+import com.appchamp.wordchunks.ui.game.fragments.GameFinishedFrag
+import com.appchamp.wordchunks.ui.game.fragments.GameFrag
+import com.appchamp.wordchunks.ui.game.fragments.LevelSolvedBeforeFrag
+import com.appchamp.wordchunks.ui.game.fragments.LevelSolvedFrag
+import com.appchamp.wordchunks.ui.game.hint.HintActivity
 import com.appchamp.wordchunks.ui.game.listeners.OnGameFragClickListener
 import com.appchamp.wordchunks.ui.game.listeners.OnNextLevelListener
 import com.appchamp.wordchunks.ui.packslevels.LevelsActivity
 import com.appchamp.wordchunks.ui.tutorial.TutorialActivity
 import com.appchamp.wordchunks.util.ActivityUtils
 import com.appchamp.wordchunks.util.Constants
+import com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID
 import com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID
 import com.appchamp.wordchunks.util.Constants.LEVEL_ID_KEY
 import com.appchamp.wordchunks.util.Constants.PREFS_HOW_TO_PLAY
@@ -50,18 +55,13 @@ class GameActivity : AppCompatActivity(), OnGameFragClickListener, OnNextLevelLi
             editor.apply()
         }
         // Getting level id through Intents
-        levelId = intent.getStringExtra(LEVEL_ID_KEY)
+        levelId = requireNotNull(intent.getStringExtra(LEVEL_ID_KEY),
+                { "Activity parameter 'LEVEL_ID_KEY' is missing" })
         addGameFragment()
     }
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        //imgBackArrow.setOnClickListener { onBackPressed() }
     }
 
     override fun onBackPressed() {
@@ -92,7 +92,7 @@ class GameActivity : AppCompatActivity(), OnGameFragClickListener, OnNextLevelLi
      */
     private fun backToLevelsActivity() {
         val packId = Level().queryFirst { it.equalTo(REALM_FIELD_ID, levelId) }?.packId
-        // Passing level's id through the Intent.
+        // Passing pack's id through the Intent.
         startActivity(intentFor<LevelsActivity>(EXTRA_PACK_ID to packId))
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
     }
@@ -132,7 +132,7 @@ class GameActivity : AppCompatActivity(), OnGameFragClickListener, OnNextLevelLi
                 } else {
                     showLevelSolvedFragment(
                             color(R.color.btn_rect_game_finish),
-                            "Congratulations!",
+                            resources.getString(R.string.congratulations),
                             level.fact,
                             -1)
                 }
@@ -142,17 +142,14 @@ class GameActivity : AppCompatActivity(), OnGameFragClickListener, OnNextLevelLi
     }
 
     override fun onHintClick() {
-        ActivityUtils.replaceFragment(
-                supportFragmentManager,
-                HintFirstFrag.newInstance(),
-                R.id.flActMain)
+        // Passing level's id through the Intent.
+        startActivity(intentFor<HintActivity>(EXTRA_LEVEL_ID to levelId))
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
 
     private fun countLeftLevels(packId: String): Int = Pack()
-            .queryFirst { it.equalTo(REALM_FIELD_ID, packId) }
-            ?.levels
+            .queryFirst { it.equalTo(REALM_FIELD_ID, packId) }?.levels
             ?.count { it.state == STATE_LOCKED }!!
-
 
     private fun isPackSolved(realm: Realm, packId: String) {
         // If we solved the whole pack

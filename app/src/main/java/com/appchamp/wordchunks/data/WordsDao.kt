@@ -4,6 +4,7 @@ import com.appchamp.wordchunks.models.realm.Word
 import com.appchamp.wordchunks.util.Constants.CHUNKS_SEPARATOR
 import io.realm.Realm
 import io.realm.RealmList
+import java.util.*
 
 
 /**
@@ -21,7 +22,7 @@ object WordsDao {
     fun createWords(realm: Realm, wordsSplit: List<String>): RealmList<Word> {
         val words = RealmList<Word>()
         for ((wordPos, w) in wordsSplit.withIndex()) {
-            val word = realm.createObject(Word::class.java)
+            val word = realm.createObject(Word::class.java, UUID.randomUUID().toString())
             val replaced = w.replace(CHUNKS_SEPARATOR, "")
             // After replaced "AB,CD" becomes "ABCD"
             word.word = replaced

@@ -1,11 +1,15 @@
 package com.appchamp.wordchunks.models.realm
 
 import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 import io.realm.annotations.Required
 
 
 open class Word : RealmObject() {
 
+    @PrimaryKey
+    @Required
+    var id: String = ""
     @Required
     var word: String = ""
     var state: Int = 0  // 0 = not solved, 1 = solved

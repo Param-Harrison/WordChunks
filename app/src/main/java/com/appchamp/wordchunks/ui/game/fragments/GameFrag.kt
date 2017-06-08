@@ -105,7 +105,6 @@ class GameFrag : Fragment(), AnkoLogger {
             updateChunksView()
             updateClearIcon()
             updateChunksCount()
-            updateChunksCountView()
         }
     }
 
@@ -153,7 +152,6 @@ class GameFrag : Fragment(), AnkoLogger {
         updateChunksView()
         updateClearIcon()
         updateChunksCount()
-        updateChunksCountView()
     }
 
     private fun onShuffleClick() {
@@ -189,7 +187,6 @@ class GameFrag : Fragment(), AnkoLogger {
         updateChunksView()
         updateClearIcon()
         updateChunksCount()
-        updateChunksCountView()
     }
 
     private fun updateChunksCount() {
@@ -201,6 +198,7 @@ class GameFrag : Fragment(), AnkoLogger {
                     context.packageName)
         }
         imgChunksCount.setImageDrawable(context.drawable(imgResourceId))
+        updateChunksCountView()
     }
 
     private fun updateChunksView() {

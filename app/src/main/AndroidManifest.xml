@@ -1,7 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.appchamp.wordchunks"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0">
 
     <application
         android:name=".App"
@@ -11,25 +12,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/WordChunksAppTheme.FullScreen">
-
         <activity
             android:name=".ui.main.MainActivity"
             android:configChanges="keyboard|screenSize|orientation"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".ui.packslevels.PacksActivity" />
-
         <activity android:name=".ui.packslevels.LevelsActivity" />
-
         <activity android:name=".ui.game.GameActivity" />
-
         <activity android:name=".ui.tutorial.TutorialActivity" />
-
+        <activity android:name=".ui.game.hint.HintActivity"></activity>
     </application>
 
 </manifest>

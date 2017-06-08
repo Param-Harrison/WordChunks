@@ -28,12 +28,24 @@
             tools:ignore="MissingPrefix" />
 
         <ImageView
+            android:id="@+id/imgBackArrow"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="16dp"
             android:contentDescription="@null"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
             android:src="@drawable/ic_action_back" />
+
+        <ImageView
+            android:id="@+id/imgClose"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@null"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
+            android:src="@drawable/ic_close" />
 
     </RelativeLayout>
 
@@ -57,7 +69,7 @@
             android:src="@drawable/word_rect" />
 
         <TextView
-            android:id="@+id/tvWord"
+            android:id="@+id/tvWordLetters"
             fontPath="fonts/nunitobold.ttf"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -71,7 +83,7 @@
             tools:text="10 LETTERS" />
 
         <TextView
-            android:id="@+id/tvWordNum"
+            android:id="@+id/tvWordNumber"
             fontPath="fonts/nunitoextrabold.ttf"
             android:layout_width="32dp"
             android:layout_height="match_parent"
@@ -84,10 +96,10 @@
 
     </RelativeLayout>
 
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:contentDescription="@null"
         android:src="@drawable/cat_hint" />
 
     <RelativeLayout
@@ -146,99 +158,22 @@
                 android:textColor="#eeeeee"
                 android:textSize="18sp"
                 tools:ignore="MissingPrefix" />
-            <RelativeLayout
-                android:id="@+id/rlFirstLetter"
-                android:layout_width="220dp"
-                android:layout_height="50dp"
-                android:background="@drawable/main_bg_rect"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:paddingBottom="4dp">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@null"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/btn_store_rect" />
+            <com.appchamp.wordchunks.ui.main.CustomButton
+                android:id="@+id/btnFirstLetter"
+                style="@style/CustomButtonStyle"
+                app:cb_bg="@drawable/btn_store_rect"
+                app:cb_color_title="@color/store_txt_color"
+                app:cb_icon="@drawable/ic_solved"
+                app:cb_title="@string/first_letter" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="end"
-                    android:orientation="vertical"
-                    android:paddingBottom="4dp"
-                    android:paddingEnd="17dp">
-
-                    <TextView
-                        fontPath="fonts/nunitoextrabold.ttf"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="FIRST LETTER"
-                        android:textColor="#eeeeee"
-                        android:textSize="18sp"
-                        tools:ignore="MissingPrefix" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@string/next_level"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_first_letter" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="220dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/main_bg_rect"
-                android:foreground="?android:attr/selectableItemBackground"
-                android:paddingBottom="4dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@null"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/btn_packs_rect" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center_vertical"
-                    android:gravity="end"
-                    android:orientation="vertical"
-                    android:paddingBottom="4dp"
-                    android:paddingEnd="17dp">
-
-                    <TextView
-                        fontPath="fonts/nunitoextrabold.ttf"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="FIRST CHUNK"
-                        android:textColor="#eeeeee"
-                        android:textSize="18sp"
-                        tools:ignore="MissingPrefix" />
-
-                </LinearLayout>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@string/next_level"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_first_chunk" />
-
-            </RelativeLayout>
+            <com.appchamp.wordchunks.ui.main.CustomButton
+                android:id="@+id/btnFirstChunk"
+                style="@style/CustomButtonStyle"
+                app:cb_bg="@drawable/btn_packs_rect"
+                app:cb_color_title="@color/packs_txt_color"
+                app:cb_icon="@drawable/ic_solved"
+                app:cb_title="@string/first_chunk" />
 
             <com.appchamp.wordchunks.ui.main.CustomButton
                 android:id="@+id/btnEntireSolution"

@@ -1,6 +1,7 @@
 package com.appchamp.wordchunks.ui.game.adapters
 
 import android.graphics.drawable.GradientDrawable
+import android.support.annotation.ColorInt
 import android.support.v7.widget.RecyclerView
 import android.util.TypedValue
 import android.view.Gravity
@@ -17,7 +18,7 @@ import com.appchamp.wordchunks.util.Constants
 import kotlinx.android.synthetic.main.item_word.view.*
 
 
-class WordsAdapter(private val words: List<Word>, private val packColor: Int) :
+class WordsAdapter(private val words: List<Word>, @ColorInt private val packColor: Int) :
         RecyclerView.Adapter<WordsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,7 +34,7 @@ class WordsAdapter(private val words: List<Word>, private val packColor: Int) :
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(word: Word, position: Int, packColor: Int) = with(itemView) {
+        fun bind(word: Word, position: Int, @ColorInt packColor: Int) = with(itemView) {
             val wordState = word.state
             val drawable = imgRectBg.drawable as GradientDrawable
             when (wordState) {

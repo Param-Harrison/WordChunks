@@ -9,7 +9,8 @@ open class Chunk (
     @Required
     var chunk: String = "",
     var state: Long = 0,  // should be Long as the currentTimeMillis
-    var position: Int = 0
+    var position: Int = 0,
+    var wordId: String = ""
 
 ): RealmObject()
 

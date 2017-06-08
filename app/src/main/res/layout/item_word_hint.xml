@@ -11,7 +11,8 @@
     android:layout_marginEnd="8dp"
     android:layout_marginStart="8dp"
     android:layout_marginTop="5dp"
-    android:background="@drawable/word_bg_rect">
+    android:background="@drawable/word_bg_rect"
+    android:foreground="?android:attr/selectableItemBackground">
 
     <ImageView
         android:id="@+id/imgRectBg"

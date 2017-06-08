@@ -45,5 +45,9 @@
     <string name="all_packs_finished">ALL PACKS FINISHED</string>
     <string name="show_a_hint_for">SHOW A HINT FOR</string>
     <string name="entire_solution">ENTIRE SOLUTION</string>
+    <string name="congratulations">CONGRATULATIONS!</string>
+    <string name="first_letter">FIRST LETTER</string>
+    <string name="first_chunk">FIRST CHUNK</string>
+    <string name="first_and_dots">%s...</string>
 
 </resources>

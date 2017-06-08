@@ -38,8 +38,10 @@ class LevelsActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         // Getting selected pack through its id to load levels
-        val packId = intent.getStringExtra(EXTRA_PACK_ID)
-        packId?.let {
+        val packId = requireNotNull(intent.getStringExtra(EXTRA_PACK_ID),
+                { "Activity parameter 'EXTRA_PACK_ID' is missing" })
+
+        packId.let {
             val levels = Pack().queryFirst { it.equalTo(REALM_FIELD_ID, packId) }?.levels
             levels?.let(this::initLevelsAdapter)
         }

@@ -27,36 +27,20 @@
             tools:ignore="MissingPrefix" />
 
         <ImageView
+            android:id="@+id/imgBackArrow"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="16dp"
             android:contentDescription="@null"
+            android:paddingEnd="20dp"
+            android:paddingStart="20dp"
             android:src="@drawable/ic_action_back" />
 
     </RelativeLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:contentDescription="@null"
-        android:src="@drawable/cat_hint" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <TextView
-            fontPath="fonts/nunitobold.ttf"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/rvWordsHints"
-            android:paddingBottom="10dp"
-            android:text="SELECT ONE:"
-            android:textAlignment="center"
-            android:textColor="@color/title_txt"
-            android:textSize="@dimen/toolbar_title_txt_size"
-            tools:ignore="MissingPrefix" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvWordsHints"
@@ -64,10 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="30dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            tools:layout_height="200dp"
+            tools:layout_height="300dp"
             tools:listitem="@layout/item_word_hint" />
 
         <ImageView

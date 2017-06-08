@@ -34,7 +34,7 @@ object LevelsDao {
 
             level.words = WordsDao.createWords(realm, wordsSplit)
 
-            level.chunks = ChunksDao.createChunks(realm, wordsSplit)
+            level.chunks = ChunksDao.createChunks(realm, wordsSplit, level.words)
 
             levels.add(level)
             pack.levels = levels
