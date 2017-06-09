@@ -148,7 +148,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/next_level"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_action_back" />
+                android:src="@drawable/ic_back" />
 
         </RelativeLayout>
 

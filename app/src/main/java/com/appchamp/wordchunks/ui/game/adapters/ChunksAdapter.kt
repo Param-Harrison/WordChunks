@@ -8,7 +8,7 @@ import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.extensions.invisible
-import com.appchamp.wordchunks.models.realm.Chunk
+import com.appchamp.wordchunks.realmdb.models.realm.Chunk
 import com.appchamp.wordchunks.util.Constants
 import kotlinx.android.synthetic.main.item_chunk.view.*
 import java.util.*

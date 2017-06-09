@@ -24,6 +24,11 @@ class App : Application() {
 
         initCalligraphy()
 
+        // The Realm lifecycle can be managed in the ViewModel and closed when the ViewModel is
+        // no longer being used.
+        // LiveData class works well with Realm’s observable live data, providing a layer
+        // of abstraction so that the Activity isn’t exposed to RealmResults and RealmObjects.
+
         val config = initRealm()
 
         isRealmExists(config)

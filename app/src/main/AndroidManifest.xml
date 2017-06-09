@@ -22,11 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.packslevels.PacksActivity" />
-        <activity android:name=".ui.packslevels.LevelsActivity" />
+        <activity android:name=".ui.packs.PacksActivity" />
+        <activity android:name=".ui.levels.LevelsActivity" />
         <activity android:name=".ui.game.GameActivity" />
         <activity android:name=".ui.tutorial.TutorialActivity" />
-        <activity android:name=".ui.game.hint.HintActivity"></activity>
+        <activity android:name=".ui.game.hint.HintActivity" />
+        <activity android:name=".ui.levelsolved.LevelSolvedActivity"></activity>
     </application>
 
 </manifest>

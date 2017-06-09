@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.extensions.queryFirst
-import com.appchamp.wordchunks.models.realm.Chunk
-import com.appchamp.wordchunks.models.realm.Word
+import com.appchamp.wordchunks.realmdb.models.realm.Chunk
+import com.appchamp.wordchunks.realmdb.models.realm.Word
 import com.appchamp.wordchunks.ui.game.listeners.OnHintSecondFragClickListener
 import com.appchamp.wordchunks.util.Constants.REALM_FIELD_ID
 import com.appchamp.wordchunks.util.Constants.REALM_FIELD_WORD_ID

@@ -1,8 +1,8 @@
 package com.appchamp.wordchunks.data
 
-import com.appchamp.wordchunks.models.pojo.LevelJson
-import com.appchamp.wordchunks.models.realm.Level
-import com.appchamp.wordchunks.models.realm.Pack
+import com.appchamp.wordchunks.realmdb.models.pojo.LevelJson
+import com.appchamp.wordchunks.realmdb.models.realm.Level
+import com.appchamp.wordchunks.realmdb.models.realm.Pack
 import com.appchamp.wordchunks.util.Constants.WORDS_SEPARATOR
 import io.realm.Realm
 import io.realm.RealmList

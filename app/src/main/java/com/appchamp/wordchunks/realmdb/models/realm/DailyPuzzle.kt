@@ -1,4 +1,4 @@
-package com.appchamp.wordchunks.models.realm
+package com.appchamp.wordchunks.realmdb.models.realm
 
 
 import io.realm.RealmList

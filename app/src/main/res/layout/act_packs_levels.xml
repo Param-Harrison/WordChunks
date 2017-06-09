@@ -5,11 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:background="@drawable/gradient_packs">
+
+    <include layout="@layout/titlebar" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height">
+        android:layout_height="match_parent">
 
         <ImageView
             android:layout_width="match_parent"
@@ -17,35 +20,23 @@
             android:background="@drawable/top"
             android:contentDescription="@null" />
 
-        <ImageView
-            android:id="@+id/imgBackArrow"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/back_hint"
-            android:paddingStart="@dimen/toolbar_padding"
-            android:src="@drawable/ic_action_back" />
-
-        <TextView
-            android:id="@+id/tvTitle"
-            fontPath="fonts/nunitoextrabold.ttf"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:textColor="@color/title_txt"
-            android:textSize="@dimen/toolbar_title_txt_size"
-            tools:ignore="MissingPrefix"
-            tools:text="@string/title_select_pack" />
+            android:clipToPadding="false"
+            android:paddingBottom="40dp"
+            android:paddingTop="20dp"
+            tools:listitem="@layout/item_pack_level" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/top"
+            android:contentDescription="@null"
+            android:rotation="180" />
 
     </RelativeLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="30dp"
-        android:clipToPadding="false"
-        android:paddingBottom="@dimen/rv_padding_bottom"
-        tools:listitem="@layout/item_pack_level" />
 
 </LinearLayout>

@@ -1,4 +1,4 @@
-package com.appchamp.wordchunks.ui.packslevels
+package com.appchamp.wordchunks.ui.packs
 
 import android.content.res.Resources
 import android.graphics.Color
@@ -10,14 +10,15 @@ import android.view.ViewGroup
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.extensions.color
 import com.appchamp.wordchunks.extensions.drawable
-import com.appchamp.wordchunks.models.realm.Level
-import com.appchamp.wordchunks.models.realm.Pack
+import com.appchamp.wordchunks.realmdb.models.realm.Level
+import com.appchamp.wordchunks.realmdb.models.realm.Pack
 import com.appchamp.wordchunks.util.Constants.STATE_LOCKED
 import com.appchamp.wordchunks.util.Constants.STATE_SOLVED
 import kotlinx.android.synthetic.main.item_pack_level.view.*
 
 
-class PacksLevelsAdapter<T>(private val items: List<T>, private val itemClick: (T) -> Unit) :
+class PacksLevelsAdapter<T>(private var items: List<T> = listOf(),
+                            private val itemClick: (T) -> Unit) :
         RecyclerView.Adapter<PacksLevelsAdapter.ViewHolder<T>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder<T> {
@@ -31,8 +32,12 @@ class PacksLevelsAdapter<T>(private val items: List<T>, private val itemClick: (
 
     override fun getItemCount() = items.size
 
-    class ViewHolder<in T>(view: View, val itemClick: (T) -> Unit)
-        : RecyclerView.ViewHolder(view) {
+    fun updateItems(items: List<T>) {
+        this.items = items
+        notifyDataSetChanged()
+    }
+
+    class ViewHolder<in T>(view: View, val itemClick: (T) -> Unit) : RecyclerView.ViewHolder(view) {
 
         fun bind(item: T, position: Int) = with(itemView) {
             val itemState = getItemState(item)

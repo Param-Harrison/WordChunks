@@ -34,7 +34,7 @@
             android:contentDescription="@null"
             android:paddingEnd="20dp"
             android:paddingStart="20dp"
-            android:src="@drawable/ic_action_back" />
+            android:src="@drawable/ic_back" />
 
     </RelativeLayout>
 

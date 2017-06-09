@@ -1,7 +1,7 @@
 package com.appchamp.wordchunks.data
 
-import com.appchamp.wordchunks.models.realm.Level
-import com.appchamp.wordchunks.models.realm.Pack
+import com.appchamp.wordchunks.realmdb.models.realm.Level
+import com.appchamp.wordchunks.realmdb.models.realm.Pack
 import com.appchamp.wordchunks.util.Constants.STATE_CURRENT
 import io.realm.Realm
 

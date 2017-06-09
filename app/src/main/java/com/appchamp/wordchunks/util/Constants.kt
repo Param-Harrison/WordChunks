@@ -23,6 +23,7 @@ object Constants {
     const val REALM_FIELD_ID = "id"
     const val REALM_FIELD_STATE = "state"
     const val REALM_FIELD_WORD_ID = "wordId"
+    const val REALM_FIELD_PACK_ID = "packId"
 
     const val WORDS_GRID_NUM = 2
     const val CHUNKS_GRID_NUM = 4

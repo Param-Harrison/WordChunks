@@ -7,22 +7,21 @@ import android.support.v7.app.AppCompatActivity
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.extensions.color
 import com.appchamp.wordchunks.extensions.queryFirst
-import com.appchamp.wordchunks.models.realm.Level
-import com.appchamp.wordchunks.models.realm.Pack
+import com.appchamp.wordchunks.realmdb.models.realm.Level
+import com.appchamp.wordchunks.realmdb.models.realm.Pack
 import com.appchamp.wordchunks.ui.game.fragments.GameFinishedFrag
 import com.appchamp.wordchunks.ui.game.fragments.GameFrag
 import com.appchamp.wordchunks.ui.game.fragments.LevelSolvedBeforeFrag
-import com.appchamp.wordchunks.ui.game.fragments.LevelSolvedFrag
 import com.appchamp.wordchunks.ui.game.hint.HintActivity
 import com.appchamp.wordchunks.ui.game.listeners.OnGameFragClickListener
-import com.appchamp.wordchunks.ui.game.listeners.OnNextLevelListener
-import com.appchamp.wordchunks.ui.packslevels.LevelsActivity
+import com.appchamp.wordchunks.ui.levels.LevelsActivity
+import com.appchamp.wordchunks.ui.levelsolved.LevelSolvedFrag
+import com.appchamp.wordchunks.ui.levelsolved.OnNextLevelListener
 import com.appchamp.wordchunks.ui.tutorial.TutorialActivity
 import com.appchamp.wordchunks.util.ActivityUtils
 import com.appchamp.wordchunks.util.Constants
 import com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID
 import com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID
-import com.appchamp.wordchunks.util.Constants.LEVEL_ID_KEY
 import com.appchamp.wordchunks.util.Constants.PREFS_HOW_TO_PLAY
 import com.appchamp.wordchunks.util.Constants.REALM_FIELD_ID
 import com.appchamp.wordchunks.util.Constants.REALM_FIELD_STATE
@@ -55,8 +54,8 @@ class GameActivity : AppCompatActivity(), OnGameFragClickListener, OnNextLevelLi
             editor.apply()
         }
         // Getting level id through Intents
-        levelId = requireNotNull(intent.getStringExtra(LEVEL_ID_KEY),
-                { "Activity parameter 'LEVEL_ID_KEY' is missing" })
+        levelId = requireNotNull(intent.getStringExtra(EXTRA_LEVEL_ID),
+                { "Activity parameter 'EXTRA_LEVEL_ID' is missing" })
         addGameFragment()
     }
 

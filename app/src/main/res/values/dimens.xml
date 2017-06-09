@@ -26,7 +26,7 @@
     <dimen name="zzz2_padding_bottom">30dp</dimen>
 
     <!-- Packs Screen -->
-    <dimen name="rv_padding_bottom">20dp</dimen>
+    <dimen name="rv_padding_bottom">30dp</dimen>
 
     <!-- SP adjusts according the users setting, DP is static -->
     <dimen name="textsize_xlarge">28sp</dimen>

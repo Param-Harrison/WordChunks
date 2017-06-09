@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.extensions.queryLast
-import com.appchamp.wordchunks.models.realm.Level
+import com.appchamp.wordchunks.realmdb.models.realm.Level
 import com.appchamp.wordchunks.util.Constants.REALM_FIELD_STATE
 import com.appchamp.wordchunks.util.Constants.STATE_CURRENT
 import kotlinx.android.synthetic.main.frag_main.*

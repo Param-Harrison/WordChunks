@@ -13,10 +13,10 @@ import com.appchamp.wordchunks.extensions.drawable
 import com.appchamp.wordchunks.extensions.invisible
 import com.appchamp.wordchunks.extensions.shuffleIntArray
 import com.appchamp.wordchunks.extensions.visible
-import com.appchamp.wordchunks.models.realm.Chunk
-import com.appchamp.wordchunks.models.realm.Level
-import com.appchamp.wordchunks.models.realm.Word
-import com.appchamp.wordchunks.models.realm.chunksToString
+import com.appchamp.wordchunks.realmdb.models.realm.Chunk
+import com.appchamp.wordchunks.realmdb.models.realm.Level
+import com.appchamp.wordchunks.realmdb.models.realm.Word
+import com.appchamp.wordchunks.realmdb.models.realm.chunksToString
 import com.appchamp.wordchunks.ui.game.CustomGridLayoutManager
 import com.appchamp.wordchunks.ui.game.adapters.ChunksAdapter
 import com.appchamp.wordchunks.ui.game.adapters.WordsAdapter

@@ -1,4 +1,4 @@
-package com.appchamp.wordchunks.ui.game.fragments
+package com.appchamp.wordchunks.ui.levelsolved
 
 import android.content.Context
 import android.graphics.drawable.GradientDrawable
@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
-import com.appchamp.wordchunks.ui.game.listeners.OnNextLevelListener
 import com.appchamp.wordchunks.util.Constants.CLUE_ID_KEY
 import com.appchamp.wordchunks.util.Constants.COLOR_ID_KEY
 import com.appchamp.wordchunks.util.Constants.FACT_ID_KEY

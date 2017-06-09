@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.extensions.queryFirst
-import com.appchamp.wordchunks.models.realm.Level
-import com.appchamp.wordchunks.models.realm.Word
+import com.appchamp.wordchunks.realmdb.models.realm.Level
+import com.appchamp.wordchunks.realmdb.models.realm.Word
 import com.appchamp.wordchunks.ui.game.CustomGridLayoutManager
 import com.appchamp.wordchunks.ui.game.adapters.WordsHintAdapter
 import com.appchamp.wordchunks.ui.game.listeners.OnHintFirstFragClickListener

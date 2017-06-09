@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/back_hint"
-            android:src="@drawable/ic_action_back" />
+            android:src="@drawable/ic_back" />
 
         <TextView
             android:id="@+id/tvLevelClueTitle"

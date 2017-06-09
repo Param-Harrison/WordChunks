@@ -9,11 +9,11 @@ import com.appchamp.wordchunks.BuildConfig
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.data.GameDao
 import com.appchamp.wordchunks.data.PacksDao
-import com.appchamp.wordchunks.models.pojo.PackJson
-import com.appchamp.wordchunks.models.pojo.packsFromJSONFile
+import com.appchamp.wordchunks.realmdb.models.pojo.PackJson
+import com.appchamp.wordchunks.realmdb.models.pojo.packsFromJSONFile
 import com.appchamp.wordchunks.ui.game.GameActivity
 import com.appchamp.wordchunks.ui.game.fragments.GameFinishedFrag
-import com.appchamp.wordchunks.ui.packslevels.PacksActivity
+import com.appchamp.wordchunks.ui.packs.PacksActivity
 import com.appchamp.wordchunks.ui.tutorial.TutorialActivity
 import com.appchamp.wordchunks.util.ActivityUtils
 import com.appchamp.wordchunks.util.Constants.JSON_FILE_NAME

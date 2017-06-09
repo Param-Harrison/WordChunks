@@ -1,7 +1,7 @@
 package com.appchamp.wordchunks.data
 
-import com.appchamp.wordchunks.models.pojo.PackJson
-import com.appchamp.wordchunks.models.realm.Pack
+import com.appchamp.wordchunks.realmdb.models.pojo.PackJson
+import com.appchamp.wordchunks.realmdb.models.realm.Pack
 import io.realm.Realm
 import io.realm.RealmList
 import java.util.*

@@ -1,8 +1,8 @@
 package com.appchamp.wordchunks.data
 
 import com.appchamp.wordchunks.extensions.shuffleIntArray
-import com.appchamp.wordchunks.models.realm.Chunk
-import com.appchamp.wordchunks.models.realm.Word
+import com.appchamp.wordchunks.realmdb.models.realm.Chunk
+import com.appchamp.wordchunks.realmdb.models.realm.Word
 import com.appchamp.wordchunks.util.Constants.CHUNKS_SEPARATOR
 import io.realm.Realm
 import io.realm.RealmList

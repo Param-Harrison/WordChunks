@@ -1,4 +1,4 @@
-package com.appchamp.wordchunks.models.pojo
+package com.appchamp.wordchunks.realmdb.models.pojo
 
 
 data class LevelJson(
