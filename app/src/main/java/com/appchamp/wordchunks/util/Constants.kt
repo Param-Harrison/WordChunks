@@ -3,7 +3,7 @@ package com.appchamp.wordchunks.util
 
 object Constants {
 
-    const val JSON_FILE_NAME = "data.json"
+    const val FILE_NAME_DATA_JSON = "data.json"
     const val WORDS_SEPARATOR = " "
     const val CHUNKS_SEPARATOR = ","
 

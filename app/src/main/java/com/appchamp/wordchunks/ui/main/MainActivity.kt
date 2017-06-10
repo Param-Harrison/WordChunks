@@ -16,7 +16,7 @@ import com.appchamp.wordchunks.ui.game.fragments.GameFinishedFrag
 import com.appchamp.wordchunks.ui.packs.PacksActivity
 import com.appchamp.wordchunks.ui.tutorial.TutorialActivity
 import com.appchamp.wordchunks.util.ActivityUtils
-import com.appchamp.wordchunks.util.Constants.JSON_FILE_NAME
+import com.appchamp.wordchunks.util.Constants.FILE_NAME_DATA_JSON
 import com.appchamp.wordchunks.util.Constants.LEVEL_ID_KEY
 import com.appchamp.wordchunks.util.Constants.PREFS_REALM_CREATE_OBJECTS
 import com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFS
@@ -129,10 +129,10 @@ class MainActivity : AppCompatActivity(), AnkoLogger, OnMainFragmentClickListene
         // More complex operations can be executed on another thread, for example using
         // Anko's doAsync extension method.
         doAsync {
-            processData(packsFromJSONFile(act, JSON_FILE_NAME))
+            processData(packsFromJSONFile(act, FILE_NAME_DATA_JSON))
 
             activityUiThread {
-                // done
+                // when done
                 addMainFragment()
             }
         }

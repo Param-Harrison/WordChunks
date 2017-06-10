@@ -47,7 +47,7 @@
         android:gravity="center_horizontal|bottom"
         android:orientation="vertical">
 
-        <com.appchamp.wordchunks.ui.main.CustomButton
+        <com.appchamp.wordchunks.ui.customviews.CustomButton
             android:id="@+id/btnPlay"
             style="@style/CustomButtonStyle"
             app:cb_bg="@drawable/btn_play_rect"
@@ -55,7 +55,7 @@
             app:cb_icon="@drawable/ic_play"
             app:cb_title="@string/play_btn_txt" />
 
-        <com.appchamp.wordchunks.ui.main.CustomButton
+        <com.appchamp.wordchunks.ui.customviews.CustomButton
             android:id="@+id/btnDaily"
             style="@style/CustomButtonStyle"
             app:cb_bg="@drawable/btn_daily_rect"
@@ -63,7 +63,7 @@
             app:cb_icon="@drawable/ic_puzzle"
             app:cb_title="@string/daily_puzzle_btn_txt" />
 
-        <com.appchamp.wordchunks.ui.main.CustomButton
+        <com.appchamp.wordchunks.ui.customviews.CustomButton
             android:id="@+id/btnPacks"
             style="@style/CustomButtonStyle"
             app:cb_bg="@drawable/btn_packs_rect"
@@ -71,7 +71,7 @@
             app:cb_icon="@drawable/ic_packs"
             app:cb_title="@string/all_packs_btn_txt" />
 
-        <com.appchamp.wordchunks.ui.main.CustomButton
+        <com.appchamp.wordchunks.ui.customviews.CustomButton
             android:id="@+id/btnStore"
             style="@style/CustomButtonStyle"
             app:cb_bg="@drawable/btn_store_rect"

@@ -159,7 +159,7 @@
                 android:textSize="18sp"
                 tools:ignore="MissingPrefix" />
 
-            <com.appchamp.wordchunks.ui.main.CustomButton
+            <com.appchamp.wordchunks.ui.customviews.CustomButton
                 android:id="@+id/btnFirstLetter"
                 style="@style/CustomButtonStyle"
                 app:cb_bg="@drawable/btn_store_rect"
@@ -167,7 +167,7 @@
                 app:cb_icon="@drawable/ic_solved"
                 app:cb_title="@string/first_letter" />
 
-            <com.appchamp.wordchunks.ui.main.CustomButton
+            <com.appchamp.wordchunks.ui.customviews.CustomButton
                 android:id="@+id/btnFirstChunk"
                 style="@style/CustomButtonStyle"
                 app:cb_bg="@drawable/btn_packs_rect"
@@ -175,7 +175,7 @@
                 app:cb_icon="@drawable/ic_solved"
                 app:cb_title="@string/first_chunk" />
 
-            <com.appchamp.wordchunks.ui.main.CustomButton
+            <com.appchamp.wordchunks.ui.customviews.CustomButton
                 android:id="@+id/btnEntireSolution"
                 style="@style/CustomButtonStyle"
                 app:cb_bg="@drawable/btn_daily_rect"

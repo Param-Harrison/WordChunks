@@ -6,9 +6,11 @@ import android.support.v7.widget.LinearLayoutManager
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.realmdb.models.realm.Level
 import com.appchamp.wordchunks.ui.BaseLifecycleActivity
+import com.appchamp.wordchunks.ui.game.GameActivity
 import com.appchamp.wordchunks.ui.packs.PacksActivity
-import com.appchamp.wordchunks.util.Constants.STATE_CURRENT
-import com.appchamp.wordchunks.util.Constants.STATE_SOLVED
+import com.appchamp.wordchunks.ui.packs.PacksLevelsAdapter
+import com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID
+import com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.act_packs_levels.*
 import kotlinx.android.synthetic.main.titlebar.*
@@ -19,60 +21,51 @@ import org.jetbrains.anko.intentFor
 
 class LevelsActivity : BaseLifecycleActivity<LevelsViewModel>() {
 
-    // Android will instantiate my ViewModel for me, and the best part is
-    // the viewModel will survive configurationChanges!
     override val viewModelClass = LevelsViewModel::class.java
-
-    private val adapter by lazy {
-        viewModel.getAdapter()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        setUi()
-
-        viewModel.extractPackId(intent)
-
-        subscribe()
-    }
-
-    private fun setUi() {
         setContentView(R.layout.act_packs_levels)
         llPacksLevels.setBackgroundResource(R.drawable.gradient_levels)
         tvTitle.text = getString(R.string.title_select_level)
         rvList.layoutManager = LinearLayoutManager(this)
         rvList.setHasFixedSize(true)
-        rvList.adapter = adapter
+
+        // Sets smooth scroll effect.
         OverScrollDecoratorHelper.setUpOverScroll(
                 rvList, OverScrollDecoratorHelper.ORIENTATION_VERTICAL)
+
         imgBackArrow.setOnClickListener { onBackPressed() }
+
+        subscribeToModel()
     }
 
-    private fun subscribe() {
-        // Observe updates to our LiveData packs.
+    private fun subscribeToModel() {
+        val packId = intent.getStringExtra(EXTRA_PACK_ID)
+        // Observe updates to the LiveData levels.
+        viewModel
+                .getLevels(packId)
+                .observe(this, Observer<RealmResults<Level>> {
+                    // update UI
+                    val adapter = PacksLevelsAdapter<Level> {
+                        // Navigates up to GameActivity passing levelId in the Intent.
+                        startGameActivity(it.id)
+                    }
+                    it?.let {
+                        adapter.updateItems(it)
+                    }
+                    rvList.adapter = adapter
+                })
 
-        viewModel.getLevels().observe(this, Observer<RealmResults<Level>> {
-            it?.let {
-                adapter.updateItems(it)
-                // Scrolling RecyclerView to the last "current", or "solved" level item in the list.
-                // indexOfLast returns last index, or -1 if the collection does not contain matched item.
-                // Probably, I should have separated it as an independent observer, but..
-                it.indexOfLast { it.state == STATE_CURRENT || it.state == STATE_SOLVED }.let {
-                    it1 ->
-                    rvList.smoothScrollToPosition(it1)
-                }
-            }
-        })
+        // Scrolling RecyclerView to the last "current", or "solved" level item.
+        // indexOfLast gets last index, or -1 if the list does not contain that item.
+        rvList.smoothScrollToPosition(viewModel.getLastLevelPos())
+    }
 
-        viewModel.getSelectedLevelId().observe(this, Observer<String> {
-            it?.let {
-                // Navigates to GameActivity passing levelId in the Intent.
-                startActivity(LevelsViewModel.createIntent(this, it))
-                overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
-                finish()
-            }
-        })
+    private fun startGameActivity(levelId: String) {
+        startActivity(intentFor<GameActivity>(EXTRA_LEVEL_ID to levelId).clearTop())
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
+        finish()
     }
 
     /**

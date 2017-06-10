@@ -1,4 +1,4 @@
-package com.appchamp.wordchunks.ui.main
+package com.appchamp.wordchunks.ui.customviews
 
 import android.content.Context
 import android.content.res.ColorStateList
