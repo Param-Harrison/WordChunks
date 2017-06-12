@@ -7,13 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
-import com.appchamp.wordchunks.extensions.queryLast
-import com.appchamp.wordchunks.realmdb.models.realm.Level
-import com.appchamp.wordchunks.util.Constants.REALM_FIELD_STATE
-import com.appchamp.wordchunks.util.Constants.STATE_CURRENT
 import kotlinx.android.synthetic.main.frag_main.*
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 import org.jetbrains.anko.share
 
 
@@ -62,22 +57,22 @@ class MainFragment : Fragment(), AnkoLogger {
     }
 
     private fun onPlayClick() {
-        val levelId: String? = getLastCurrentLevelId()
-        info { levelId }
-        if (levelId != null) {
-            onMainFragmentClickListener.startGameActivity(levelId)
-        } else {
-            // If all levels and packs were solved, showing the fragment
-            onMainFragmentClickListener.showGameFinishedFragment()
-        }
+        //val levelId: String? = getLastCurrentLevelId()
+        //info { levelId }
+//        if (levelId != null) {
+//            onMainFragmentClickListener.startGameActivity(levelId)
+//        } else {
+//            // If all levels and packs were solved, showing the fragment
+//            onMainFragmentClickListener.showGameFinishedFragment()
+//        }
     }
 
-    private fun onPacksClick() = onMainFragmentClickListener.showPacksActivity()
+    private fun onPacksClick() = onMainFragmentClickListener.startPacksActivity()
 
     private fun onStoreClick() {}
 
     private fun onDailyClick() {}
 
-    private fun getLastCurrentLevelId(): String? =
-            Level().queryLast { it.equalTo(REALM_FIELD_STATE, STATE_CURRENT) }?.id
+//    private fun getLastCurrentLevelId(): String? =
+//            Level().queryLast { it.equalTo(REALM_FIELD_STATE, STATE_CURRENT) }?.id
 }

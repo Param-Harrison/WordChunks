@@ -3,7 +3,7 @@ package com.appchamp.wordchunks.ui.packs
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import com.appchamp.wordchunks.realmdb.models.realm.Pack
-import com.appchamp.wordchunks.realmdb.utils.LiveRealmData
+import com.appchamp.wordchunks.realmdb.utils.LiveRealmResults
 import com.appchamp.wordchunks.realmdb.utils.packModel
 import com.appchamp.wordchunks.util.Constants.STATE_CURRENT
 import com.appchamp.wordchunks.util.Constants.STATE_SOLVED
@@ -14,11 +14,14 @@ class PacksViewModel(application: Application?) : AndroidViewModel(application) 
 
     private val db: Realm = Realm.getDefaultInstance()
 
-    private lateinit var packs: LiveRealmData<Pack>
+    private var packs: LiveRealmResults<Pack>
 
-    fun getPacks(): LiveRealmData<Pack> {
+    init {
         // Load packs from realm db
         packs = db.packModel().findAllPacks()
+    }
+
+    fun getPacks(): LiveRealmResults<Pack> {
         return packs
     }
 

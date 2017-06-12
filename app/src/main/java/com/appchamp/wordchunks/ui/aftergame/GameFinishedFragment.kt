@@ -1,4 +1,4 @@
-package com.appchamp.wordchunks.ui.game.fragments
+package com.appchamp.wordchunks.ui.aftergame
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -10,10 +10,10 @@ import kotlinx.android.synthetic.main.frag_game_finished.*
 import org.jetbrains.anko.browse
 
 
-class GameFinishedFrag : Fragment() {
+class GameFinishedFragment : Fragment() {
 
     companion object {
-        fun newInstance() = GameFinishedFrag()
+        fun newInstance() = GameFinishedFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,

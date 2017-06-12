@@ -8,7 +8,7 @@ object Constants {
     const val CHUNKS_SEPARATOR = ","
 
     const val WORD_CHUNKS_PREFS = "WORD_CHUNKS_PREFS"
-    const val PREFS_REALM_CREATE_OBJECTS = "PREFS_REALM_CREATE_OBJECTS"
+    const val PREFS_IS_DB_EXISTS = "PREFS_IS_DB_EXISTS"
     const val PREFS_HOW_TO_PLAY = "PREFS_HOW_TO_PLAY"
 
     const val EXTRA_PACK_ID = "EXTRA_PACK_ID"
@@ -23,14 +23,11 @@ object Constants {
     const val REALM_FIELD_ID = "id"
     const val REALM_FIELD_STATE = "state"
     const val REALM_FIELD_WORD_ID = "wordId"
+    const val REALM_FIELD_LEVEL_ID = "levelId"
     const val REALM_FIELD_PACK_ID = "packId"
 
     const val WORDS_GRID_NUM = 2
     const val CHUNKS_GRID_NUM = 4
-
-    // States of chunks
-    const val CHUNK_STATE_NORMAL = 0L
-    const val CHUNK_STATE_GONE = -1L
 
     // States of words
     const val WORD_STATE_NOT_SOLVED = 0

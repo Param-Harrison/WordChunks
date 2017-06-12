@@ -1,7 +1,6 @@
 package com.appchamp.wordchunks.ui.game.adapters
 
 import android.graphics.drawable.GradientDrawable
-import android.support.annotation.ColorInt
 import android.support.v7.widget.RecyclerView
 import android.util.TypedValue
 import android.view.Gravity
@@ -17,8 +16,8 @@ import com.appchamp.wordchunks.realmdb.models.realm.Word
 import com.appchamp.wordchunks.util.Constants
 import kotlinx.android.synthetic.main.item_word.view.*
 
-
-class WordsAdapter(private val words: List<Word>, @ColorInt private val packColor: Int) :
+// todo packColor
+class WordsAdapter(private var words: List<Word> = listOf()) : //, @ColorInt private val packColor: Int) :
         RecyclerView.Adapter<WordsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,14 +26,19 @@ class WordsAdapter(private val words: List<Word>, @ColorInt private val packColo
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(words[position], position, packColor)
+        holder.bind(words[position], position)//, packColor)
     }
 
     override fun getItemCount() = words.size
 
+    fun updateItems(words: List<Word>) {
+        this.words = words
+        notifyDataSetChanged()
+    }
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(word: Word, position: Int, @ColorInt packColor: Int) = with(itemView) {
+        fun bind(word: Word, position: Int/*, @ColorInt packColor: Int*/) = with(itemView) {
             val wordState = word.state
             val drawable = imgRectBg.drawable as GradientDrawable
             when (wordState) {
@@ -46,10 +50,10 @@ class WordsAdapter(private val words: List<Word>, @ColorInt private val packColo
                 }
                 else -> {
                     tvWord.text = word.word
-                    tvWord.setTextColor(packColor)
+                    //tvWord.setTextColor(packColor)
                     icon.visible()
                     tvWordNum.gone()
-                    drawable.setColor(packColor)
+                    //drawable.setColor(packColor)
                 }
             }
             when (position) {

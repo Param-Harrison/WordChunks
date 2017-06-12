@@ -9,7 +9,7 @@ internal interface OnMainFragmentClickListener {
 
     fun showGameFinishedFragment()
 
-    fun showPacksActivity()
+    fun startPacksActivity()
 
     fun showSlidingMenu()
 }

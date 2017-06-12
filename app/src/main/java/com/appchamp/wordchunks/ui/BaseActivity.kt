@@ -9,24 +9,28 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
+/**
+ * Any custom fragment or activity can be turned into a LifecycleOwner by implementing
+ * the built-in LifecycleRegistryOwner interface (instead of extending LifecycleFragment or
+ * LifecycleActivity).
+ */
+abstract class BaseActivity<T : AndroidViewModel> : AppCompatActivity(), LifecycleRegistryOwner {
 
-abstract class BaseLifecycleActivity<T : AndroidViewModel> : AppCompatActivity(),
-        LifecycleRegistryOwner {
-
-    abstract val viewModelClass: Class<T>
+    protected abstract val viewModelClass: Class<T>
 
     protected lateinit var viewModel: T
 
-    private val lifecycleRegistry = LifecycleRegistry(this)
-
-    override fun getLifecycle(): LifecycleRegistry = lifecycleRegistry
+    private val lifecycleRegistry: LifecycleRegistry by lazy { LifecycleRegistry(this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(viewModelClass)
     }
 
-    // Custom Fonts
+    override fun getLifecycle(): LifecycleRegistry = lifecycleRegistry
+
+    // Sets custom fonts.
+    // (This is a temporary solution until Android O release).
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }

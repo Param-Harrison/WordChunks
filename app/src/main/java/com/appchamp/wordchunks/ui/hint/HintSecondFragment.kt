@@ -1,4 +1,4 @@
-package com.appchamp.wordchunks.ui.game.hint
+package com.appchamp.wordchunks.ui.hint
 
 import android.content.Context
 import android.os.Bundle
@@ -7,31 +7,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
-import com.appchamp.wordchunks.extensions.queryFirst
-import com.appchamp.wordchunks.realmdb.models.realm.Chunk
-import com.appchamp.wordchunks.realmdb.models.realm.Word
-import com.appchamp.wordchunks.ui.game.listeners.OnHintSecondFragClickListener
-import com.appchamp.wordchunks.util.Constants.REALM_FIELD_ID
-import com.appchamp.wordchunks.util.Constants.REALM_FIELD_WORD_ID
 import com.appchamp.wordchunks.util.Constants.WORD_ID_KEY
 import kotlinx.android.synthetic.main.frag_hint_second.*
 import org.jetbrains.anko.AnkoLogger
 
 
-class HintSecondFrag : Fragment(), AnkoLogger {
+class HintSecondFragment : Fragment(), AnkoLogger {
 
     private lateinit var onHintSecondFragClickListener: OnHintSecondFragClickListener
 
     companion object {
-        fun newInstance(wordId: String): HintSecondFrag {
+        fun newInstance(wordId: String): HintSecondFragment {
             val args = Bundle()
             args.putString(WORD_ID_KEY, wordId)
-            val hintSecondFrag: HintSecondFrag = newInstance()
+            val hintSecondFrag: HintSecondFragment = newInstance()
             hintSecondFrag.arguments = args
             return hintSecondFrag
         }
 
-        fun newInstance() = HintSecondFrag()
+        fun newInstance() = HintSecondFragment()
     }
 
     override fun onAttach(context: Context?) {
@@ -68,21 +62,21 @@ class HintSecondFrag : Fragment(), AnkoLogger {
 
             val wordId = arguments.getString(WORD_ID_KEY)
 
-            val word = Word().queryFirst { it.equalTo(REALM_FIELD_ID, wordId) }
+            //val word = Word().queryFirst { it.equalTo(REALM_FIELD_ID, wordId) }
 
-            word?.let {
-                tvWordNumber.text = (word.position + 1).toString()
-                tvWordLetters.text = getString(R.string.number_of_letters, word.word.length)
-
-                btnFirstLetter.setOnClickListener {
-                    tvHint.text = getString(R.string.first_and_dots, word.word.take(1))
-                }
-                btnFirstChunk.setOnClickListener {
-                    val firstChunk = Chunk().queryFirst { it.equalTo(REALM_FIELD_WORD_ID, wordId) }
-                    tvHint.text = getString(R.string.first_and_dots, firstChunk?.chunk)
-                }
-                btnEntireSolution.setOnClickListener { tvHint.text = word.word }
-            }
+//            word?.let {
+//                tvWordNumber.text = (word.position + 1).toString()
+//                tvWordLetters.text = getString(R.string.number_of_letters, word.word.length)
+//
+//                btnFirstLetter.setOnClickListener {
+//                    tvHint.text = getString(R.string.first_and_dots, word.word.take(1))
+//                }
+//                btnFirstChunk.setOnClickListener {
+//                    //val firstChunk = Chunk().queryFirst { it.equalTo(REALM_FIELD_WORD_ID, wordId) }
+//                    //tvHint.text = getString(R.string.first_and_dots, firstChunk?.chunk)
+//                }
+//                btnEntireSolution.setOnClickListener { tvHint.text = word.word }
+//            }
         }
     }
 }

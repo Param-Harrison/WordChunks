@@ -5,7 +5,7 @@ interface OnGameFragClickListener {
 
     fun onLevelSolved()
 
-    fun onHintClick()
+    //fun startHintActivity()
 
-    fun onBackToLevelsClick()
+   // fun onBackToLevelsClick()
 }

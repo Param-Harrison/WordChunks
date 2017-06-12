@@ -1,4 +1,4 @@
-package com.appchamp.wordchunks.ui.game.listeners
+package com.appchamp.wordchunks.ui.hint
 
 
 interface OnHintSecondFragClickListener {

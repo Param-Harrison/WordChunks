@@ -3,7 +3,7 @@ package com.appchamp.wordchunks.ui.levels
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import com.appchamp.wordchunks.realmdb.models.realm.Level
-import com.appchamp.wordchunks.realmdb.utils.LiveRealmData
+import com.appchamp.wordchunks.realmdb.utils.LiveRealmResults
 import com.appchamp.wordchunks.realmdb.utils.levelModel
 import com.appchamp.wordchunks.util.Constants.STATE_CURRENT
 import com.appchamp.wordchunks.util.Constants.STATE_SOLVED
@@ -14,9 +14,9 @@ class LevelsViewModel(application: Application?) : AndroidViewModel(application)
 
     private val db: Realm = Realm.getDefaultInstance()
 
-    private lateinit var levels: LiveRealmData<Level>
+    private lateinit var levels: LiveRealmResults<Level>
 
-    fun getLevels(packId: String): LiveRealmData<Level> {
+    fun getLevels(packId: String): LiveRealmResults<Level> {
         // Load levels from realm db
         levels = db.levelModel().findLevelsByPackId(packId)
         return levels

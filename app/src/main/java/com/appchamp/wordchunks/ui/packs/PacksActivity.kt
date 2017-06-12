@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.realmdb.models.realm.Pack
-import com.appchamp.wordchunks.ui.BaseLifecycleActivity
+import com.appchamp.wordchunks.ui.BaseActivity
 import com.appchamp.wordchunks.ui.levels.LevelsActivity
 import com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID
 import io.realm.RealmResults
@@ -16,7 +16,7 @@ import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
 
 
-class PacksActivity : BaseLifecycleActivity<PacksViewModel>() {
+class PacksActivity : BaseActivity<PacksViewModel>() {
 
     override val viewModelClass = PacksViewModel::class.java
 
@@ -48,6 +48,7 @@ class PacksActivity : BaseLifecycleActivity<PacksViewModel>() {
                         startLevelsActivity(it.id)
                     }
                     it?.let { adapter.updateItems(it) }
+                    rvList.adapter = adapter
                 })
 
         // Scrolling RecyclerView to the last "current", or "solved" level item.

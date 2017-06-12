@@ -11,14 +11,14 @@ import com.appchamp.wordchunks.data.GameDao
 import com.appchamp.wordchunks.data.PacksDao
 import com.appchamp.wordchunks.realmdb.models.pojo.PackJson
 import com.appchamp.wordchunks.realmdb.models.pojo.packsFromJSONFile
+import com.appchamp.wordchunks.ui.aftergame.GameFinishedFragment
 import com.appchamp.wordchunks.ui.game.GameActivity
-import com.appchamp.wordchunks.ui.game.fragments.GameFinishedFrag
 import com.appchamp.wordchunks.ui.packs.PacksActivity
 import com.appchamp.wordchunks.ui.tutorial.TutorialActivity
 import com.appchamp.wordchunks.util.ActivityUtils
+import com.appchamp.wordchunks.util.Constants
 import com.appchamp.wordchunks.util.Constants.FILE_NAME_DATA_JSON
-import com.appchamp.wordchunks.util.Constants.LEVEL_ID_KEY
-import com.appchamp.wordchunks.util.Constants.PREFS_REALM_CREATE_OBJECTS
+import com.appchamp.wordchunks.util.Constants.PREFS_IS_DB_EXISTS
 import com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFS
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu
 import io.realm.Realm
@@ -32,24 +32,50 @@ class MainActivity : AppCompatActivity(), AnkoLogger, OnMainFragmentClickListene
 
     private lateinit var menu: SlidingMenu
 
-    private var isGameFinished = false
+    //private var isGameFinished = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.act_main)
 
         val sp = getSharedPreferences(WORD_CHUNKS_PREFS, Context.MODE_PRIVATE)
-        val isRealmFileExists = sp.getBoolean(PREFS_REALM_CREATE_OBJECTS, true)
-        if (isRealmFileExists) {
+        val isRealmExists = sp.getBoolean(PREFS_IS_DB_EXISTS, false)
+        info { "isRealmExists=" + isRealmExists }
+        if (isRealmExists) { // always false for debugging
             // update an existing realm objects here
             // updateRealmDb();
-            addMainFragment()
+            if (savedInstanceState == null) {
+                addMainFragment()
+            }
         } else {
-            // create realm objects for the first time
-            startImport()
+
+
+            // Delete realm db before creating new objects.
+            Realm.deleteRealm(RealmConfiguration.Builder().build())
+
+            // More complex operations can be executed on another thread, for example using
+            // Anko's doAsync extension method.
+            doAsync {
+                // Creates realm objects from json file if this is first launch
+                processData(packsFromJSONFile(act, FILE_NAME_DATA_JSON))
+
+                activityUiThread {
+                    // when done
+                    // Add main fragment if this is first creation
+                    if (savedInstanceState == null) {
+                        addMainFragment()
+                    }
+                }
+            }
         }
         initLeftMenu()
+    }
+
+    private fun addMainFragment() {
+        ActivityUtils.addFragment(
+                supportFragmentManager,
+                MainFragment.newInstance(),
+                R.id.fragment_container)
     }
 
     override fun onStart() {
@@ -59,7 +85,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger, OnMainFragmentClickListene
         btnRateUs.setOnClickListener { browse("market://details?id=$packageName") }
         btnFeedback.setOnClickListener {
             email(
-                    "jkozhukhovskaya@gmail.com",
+                    "jkozhukhovskaya@gmail.com",  // todo
                     "Feedback for WordChunks",
                     """
                         -----------------
@@ -79,26 +105,26 @@ class MainActivity : AppCompatActivity(), AnkoLogger, OnMainFragmentClickListene
     }
 
     override fun startGameActivity(levelId: String?) {
-        startActivity(intentFor<GameActivity>(LEVEL_ID_KEY to levelId).clearTop())
+        startActivity(intentFor<GameActivity>(Constants.EXTRA_LEVEL_ID to levelId).clearTop())
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
 
     override fun showGameFinishedFragment() {
-        isGameFinished = true
+        //  isGameFinished = true
         ActivityUtils.replaceFragment(
                 supportFragmentManager,
-                GameFinishedFrag.newInstance(),
-                R.id.flActMain)
+                GameFinishedFragment.newInstance(),
+                R.id.fragment_container)
     }
 
-    override fun showPacksActivity() {
+    override fun startPacksActivity() {
         startActivity(intentFor<PacksActivity>().clearTop())
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
 
     override fun onBackPressed() {
         when {
-            isGameFinished -> replaceMainFragment()
+        // isGameFinished -> replaceMainFragment()
             menu.isMenuShowing -> menu.toggle()  // Collapse the sliding menu
             else -> super.onBackPressed()
         }
@@ -117,26 +143,9 @@ class MainActivity : AppCompatActivity(), AnkoLogger, OnMainFragmentClickListene
         menu.setFadeDegree(0.35f)
         menu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT)
         menu.setMenu(R.layout.frag_sliding_menu)
-
     }
 
     override fun showSlidingMenu() = menu.toggle()
-
-    private fun startImport() {
-        // Delete realm db before creating new objects.
-        Realm.deleteRealm(RealmConfiguration.Builder().build())
-
-        // More complex operations can be executed on another thread, for example using
-        // Anko's doAsync extension method.
-        doAsync {
-            processData(packsFromJSONFile(act, FILE_NAME_DATA_JSON))
-
-            activityUiThread {
-                // when done
-                addMainFragment()
-            }
-        }
-    }
 
     private fun processData(packs: List<PackJson>) {
         if (packs.isEmpty()) return
@@ -145,6 +154,7 @@ class MainActivity : AppCompatActivity(), AnkoLogger, OnMainFragmentClickListene
         Realm.getDefaultInstance().use {
             // Add packs in one transaction
             it.executeTransaction {
+                info { "CREATING PACKS" }
                 // Create "packs" <- "levels" <- "words" <- "chunks" realm objects.
                 PacksDao.createPacks(it, packs)
                 // Initialize game state for the first time in the beginning.
@@ -153,17 +163,10 @@ class MainActivity : AppCompatActivity(), AnkoLogger, OnMainFragmentClickListene
         }
     }
 
-    private fun addMainFragment() {
-        ActivityUtils.addFragment(
-                supportFragmentManager,
-                MainFragment.newInstance(),
-                R.id.flActMain)
-    }
-
     private fun replaceMainFragment() {
         ActivityUtils.replaceFragment(
                 supportFragmentManager,
                 MainFragment.newInstance(),
-                R.id.flActMain)
+                R.id.fragment_container)
     }
 }

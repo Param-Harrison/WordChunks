@@ -1,4 +1,4 @@
-package com.appchamp.wordchunks.ui.levelsolved
+package com.appchamp.wordchunks.ui.aftergame
 
 
 interface OnNextLevelListener {

@@ -2,7 +2,7 @@ package com.appchamp.wordchunks
 
 import android.app.Application
 import android.content.Context
-import com.appchamp.wordchunks.util.Constants.PREFS_REALM_CREATE_OBJECTS
+import com.appchamp.wordchunks.util.Constants.PREFS_IS_DB_EXISTS
 import com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFS
 import com.facebook.stetho.Stetho
 import com.squareup.leakcanary.LeakCanary
@@ -77,13 +77,13 @@ class App : Application() {
         // If Realm DB file exists.
         if (File(config.path).exists()) {
             // Putting in shared prefs true value
-            editor.putBoolean(PREFS_REALM_CREATE_OBJECTS, false)
+            editor.putBoolean(PREFS_IS_DB_EXISTS, false)  // false for debugging
         } else {
             // doesn't exists if:
             // 1. user cleared data
             // 2. user just installed the app
             // put in shared prefs false value
-            editor.putBoolean(PREFS_REALM_CREATE_OBJECTS, false)
+            editor.putBoolean(PREFS_IS_DB_EXISTS, false)
         }
         editor.apply()
     }

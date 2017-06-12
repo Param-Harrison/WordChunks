@@ -1,4 +1,4 @@
-package com.appchamp.wordchunks.ui.game.hint
+package com.appchamp.wordchunks.ui.hint
 
 import android.content.Context
 import android.graphics.Color
@@ -8,34 +8,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
-import com.appchamp.wordchunks.extensions.queryFirst
-import com.appchamp.wordchunks.realmdb.models.realm.Level
 import com.appchamp.wordchunks.realmdb.models.realm.Word
 import com.appchamp.wordchunks.ui.game.CustomGridLayoutManager
 import com.appchamp.wordchunks.ui.game.adapters.WordsHintAdapter
-import com.appchamp.wordchunks.ui.game.listeners.OnHintFirstFragClickListener
 import com.appchamp.wordchunks.util.Constants
 import io.realm.RealmList
 import kotlinx.android.synthetic.main.frag_hint_first.*
 import org.jetbrains.anko.AnkoLogger
 
 
-class HintFirstFrag: Fragment(), AnkoLogger {
+class HintFirstFragment : Fragment(), AnkoLogger {
 
     private lateinit var onHintFirstFragClickListener: OnHintFirstFragClickListener
 
     private lateinit var wordsHintAdapter: WordsHintAdapter
 
     companion object {
-        fun newInstance(levelId: String?): HintFirstFrag {
+        fun newInstance(levelId: String?): HintFirstFragment {
             val args = Bundle()
             args.putString(Constants.LEVEL_ID_KEY, levelId)
-            val hintFirstFrag: HintFirstFrag = newInstance()
+            val hintFirstFrag: HintFirstFragment = newInstance()
             hintFirstFrag.arguments = args
             return hintFirstFrag
         }
 
-        fun newInstance() = HintFirstFrag()
+        fun newInstance() = HintFirstFragment()
     }
 
     override fun onAttach(context: Context?) {
@@ -69,9 +66,9 @@ class HintFirstFrag: Fragment(), AnkoLogger {
 
             val levelId = arguments.getString(Constants.LEVEL_ID_KEY)
 
-            val level = Level().queryFirst { it.equalTo(Constants.REALM_FIELD_ID, levelId) }
+            //val level = Level().queryFirst { it.equalTo(Constants.REALM_FIELD_ID, levelId) }
 
-            initWordsHintAdapter(level?.words, level?.color)
+            //initWordsHintAdapter(level?.words, level?.color)
         }
     }
 

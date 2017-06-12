@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.realmdb.models.realm.Level
-import com.appchamp.wordchunks.ui.BaseLifecycleActivity
+import com.appchamp.wordchunks.ui.BaseActivity
 import com.appchamp.wordchunks.ui.game.GameActivity
 import com.appchamp.wordchunks.ui.packs.PacksActivity
 import com.appchamp.wordchunks.ui.packs.PacksLevelsAdapter
@@ -19,7 +19,7 @@ import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
 
 
-class LevelsActivity : BaseLifecycleActivity<LevelsViewModel>() {
+class LevelsActivity : BaseActivity<LevelsViewModel>() {
 
     override val viewModelClass = LevelsViewModel::class.java
 
@@ -37,11 +37,13 @@ class LevelsActivity : BaseLifecycleActivity<LevelsViewModel>() {
 
         imgBackArrow.setOnClickListener { onBackPressed() }
 
-        subscribeToModel()
+        subscribeUi()
     }
 
-    private fun subscribeToModel() {
-        val packId = intent.getStringExtra(EXTRA_PACK_ID)
+    private fun subscribeUi() {
+        // Getting pack id by the Intent.
+        val packId = requireNotNull(intent.getStringExtra(EXTRA_PACK_ID),
+                { "Activity parameter 'EXTRA_PACK_ID' is missing" })
         // Observe updates to the LiveData levels.
         viewModel
                 .getLevels(packId)
@@ -51,9 +53,7 @@ class LevelsActivity : BaseLifecycleActivity<LevelsViewModel>() {
                         // Navigates up to GameActivity passing levelId in the Intent.
                         startGameActivity(it.id)
                     }
-                    it?.let {
-                        adapter.updateItems(it)
-                    }
+                    it?.let { adapter.updateItems(it) }
                     rvList.adapter = adapter
                 })
 

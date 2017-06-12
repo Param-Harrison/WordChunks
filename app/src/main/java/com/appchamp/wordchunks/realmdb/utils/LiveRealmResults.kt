@@ -10,16 +10,20 @@ import io.realm.RealmResults
 /**
  * Class connecting the Realm lifecycle to that of LiveData objects.
  */
-class LiveRealmData<T : RealmModel>(private val results: RealmResults<T>) :
+class LiveRealmResults<T : RealmModel>(private val results: RealmResults<T>) :
         LiveData<RealmResults<T>>() {
 
-    private val listener = RealmChangeListener<RealmResults<T>> { results -> value = results }
+    private val listener = RealmChangeListener<RealmResults<T>> {
+        results -> value = results
+    }
 
     override fun onActive() {
+        super.onActive()
         results.addChangeListener(listener)
     }
 
     override fun onInactive() {
+        super.onInactive()
         results.removeChangeListener(listener)
     }
 }

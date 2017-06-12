@@ -32,9 +32,9 @@ object LevelsDao {
             val wordsSplit = wordsJson.split(WORDS_SEPARATOR)
             // After split "AB,CD EF,GH" becomes ["AB,CD", "EF,GH"]
 
-            level.words = WordsDao.createWords(realm, wordsSplit)
+            level.words = WordsDao.createWords(realm, wordsSplit, level.id)
 
-            level.chunks = ChunksDao.createChunks(realm, wordsSplit, level.words)
+            level.chunks = ChunksDao.createChunks(realm, wordsSplit, level.words, level.id)
 
             levels.add(level)
             pack.levels = levels

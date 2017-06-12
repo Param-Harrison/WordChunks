@@ -1,6 +1,5 @@
-package com.appchamp.wordchunks.ui.levelsolved
+package com.appchamp.wordchunks.ui.aftergame
 
-import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -8,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
+import com.appchamp.wordchunks.realmdb.models.realm.Level
 import com.appchamp.wordchunks.util.Constants.CLUE_ID_KEY
 import com.appchamp.wordchunks.util.Constants.COLOR_ID_KEY
 import com.appchamp.wordchunks.util.Constants.FACT_ID_KEY
@@ -16,24 +16,26 @@ import kotlinx.android.synthetic.main.frag_level_solved.*
 import java.util.*
 
 
-class LevelSolvedFrag : Fragment() {
+class LevelSolvedFragment : Fragment() {
 
-    private lateinit var onNextLevelListener: OnNextLevelListener
+//    private lateinit var onNextLevelListener: OnNextLevelListener
+
+    private var nextLevel: Level? = null
 
     companion object {
 
-        fun newInstance(color: Int, clue: String, fact: String, left: Int): LevelSolvedFrag {
-            val args = Bundle()
-            args.putInt(COLOR_ID_KEY, color)
-            args.putString(CLUE_ID_KEY, clue)
-            args.putString(FACT_ID_KEY, fact)
-            args.putInt(LEFT_ID_KEY, left)
-            val levelSolvedFrag: LevelSolvedFrag = newInstance()
-            levelSolvedFrag.arguments = args
-            return levelSolvedFrag
-        }
+//        fun newInstance(color: Int, clue: String, fact: String, left: Int): LevelSolvedFragment {
+//            val args = Bundle()
+//            args.putInt(COLOR_ID_KEY, color)
+//            args.putString(CLUE_ID_KEY, clue)
+//            args.putString(FACT_ID_KEY, fact)
+//            args.putInt(LEFT_ID_KEY, left)
+//            val levelSolvedFrag: LevelSolvedFragment = newInstance()
+//            levelSolvedFrag.arguments = args
+//            return levelSolvedFrag
+//        }
 
-        fun newInstance() = LevelSolvedFrag()
+        fun newInstance() = LevelSolvedFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -43,25 +45,13 @@ class LevelSolvedFrag : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        rlNextLevel.setOnClickListener { onNextLevelListener.onNextLevelSelected() }
+//        rlNextLevel.setOnClickListener { onNextLevelListener.onNextLevelSelected() }
 
-        setPackColor()
-        setClue()
-        setFunFact()
-        setLevelsLeft()
-        setExcellent()
-    }
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        // This makes sure that the container activity has implemented
-        // the onNextLevelListener interface. If not, it throws an exception
-        try {
-            onNextLevelListener = context as OnNextLevelListener
-        } catch (e: ClassCastException) {
-            throw ClassCastException(context?.toString()
-                    + " must implement OnNextLevelListener")
-        }
+//        setPackColor()
+//        setClue()
+//        setFunFact()
+//        setLevelsLeft()
+//        setExcellent()
     }
 
     private fun setPackColor() {

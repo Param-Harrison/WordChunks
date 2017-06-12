@@ -1,10 +1,8 @@
-package com.appchamp.wordchunks.ui.game.hint
+package com.appchamp.wordchunks.ui.hint
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.appchamp.wordchunks.R
-import com.appchamp.wordchunks.ui.game.listeners.OnHintFirstFragClickListener
-import com.appchamp.wordchunks.ui.game.listeners.OnHintSecondFragClickListener
 import com.appchamp.wordchunks.util.ActivityUtils
 import com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID
 
@@ -28,14 +26,14 @@ class HintActivity : AppCompatActivity(), OnHintFirstFragClickListener,
     private fun addHintFirstFragment(levelId: String) {
         ActivityUtils.addFragment(
                 supportFragmentManager,
-                HintFirstFrag.newInstance(levelId),
+                HintFirstFragment.newInstance(levelId),
                 R.id.flActHint)
     }
 
     private fun replaceHintFirstFragment(levelId: String) {
         ActivityUtils.replaceFragment(
                 supportFragmentManager,
-                HintFirstFrag.newInstance(levelId),
+                HintFirstFragment.newInstance(levelId),
                 R.id.flActHint)
     }
 
@@ -51,7 +49,7 @@ class HintActivity : AppCompatActivity(), OnHintFirstFragClickListener,
         isHintSecondFragShowing = true
         ActivityUtils.replaceFragment(
                 supportFragmentManager,
-                HintSecondFrag.newInstance(wordId),
+                HintSecondFragment.newInstance(wordId),
                 R.id.flActHint)
     }
 
