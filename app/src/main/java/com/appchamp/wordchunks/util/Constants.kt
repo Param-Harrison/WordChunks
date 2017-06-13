@@ -32,9 +32,4 @@ object Constants {
     // States of words
     const val WORD_STATE_NOT_SOLVED = 0
     const val WORD_STATE_SOLVED = 1
-
-    // States of packs and levels
-    const val STATE_LOCKED = 0
-    const val STATE_CURRENT = 1
-    const val STATE_SOLVED = 2
 }

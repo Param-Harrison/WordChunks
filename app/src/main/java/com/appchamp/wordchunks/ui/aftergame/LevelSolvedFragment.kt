@@ -1,57 +1,53 @@
 package com.appchamp.wordchunks.ui.aftergame
 
+import android.arch.lifecycle.LifecycleFragment
+import android.arch.lifecycle.ViewModelProviders
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import android.support.annotation.Nullable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
-import com.appchamp.wordchunks.realmdb.models.realm.Level
 import com.appchamp.wordchunks.util.Constants.CLUE_ID_KEY
 import com.appchamp.wordchunks.util.Constants.COLOR_ID_KEY
 import com.appchamp.wordchunks.util.Constants.FACT_ID_KEY
 import com.appchamp.wordchunks.util.Constants.LEFT_ID_KEY
 import kotlinx.android.synthetic.main.frag_level_solved.*
+import org.jetbrains.anko.AnkoLogger
 import java.util.*
 
 
-class LevelSolvedFragment : Fragment() {
+class LevelSolvedFragment : LifecycleFragment(), AnkoLogger {
 
-//    private lateinit var onNextLevelListener: OnNextLevelListener
-
-    private var nextLevel: Level? = null
-
-    companion object {
-
-//        fun newInstance(color: Int, clue: String, fact: String, left: Int): LevelSolvedFragment {
-//            val args = Bundle()
-//            args.putInt(COLOR_ID_KEY, color)
-//            args.putString(CLUE_ID_KEY, clue)
-//            args.putString(FACT_ID_KEY, fact)
-//            args.putInt(LEFT_ID_KEY, left)
-//            val levelSolvedFrag: LevelSolvedFragment = newInstance()
-//            levelSolvedFrag.arguments = args
-//            return levelSolvedFrag
-//        }
-
-        fun newInstance() = LevelSolvedFragment()
+    private val viewModel by lazy {
+        ViewModelProviders.of(activity).get(AfterGameViewModel::class.java)
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    @Nullable
+    override fun onCreateView(inflater: LayoutInflater?, @Nullable container: ViewGroup?,
+                              @Nullable savedInstanceState: Bundle?): View? {
         return inflater?.inflate(R.layout.frag_level_solved, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-//        rlNextLevel.setOnClickListener { onNextLevelListener.onNextLevelSelected() }
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-//        setPackColor()
-//        setClue()
-//        setFunFact()
-//        setLevelsLeft()
-//        setExcellent()
+        rlNextLevel.setOnClickListener {  }
+    }
+
+    override fun onActivityCreated(@Nullable savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        subscribeUi(viewModel)
+    }
+
+    private fun subscribeUi(viewModel: AfterGameViewModel) {
+//        viewModel.getLevel().observe(this, android.arch.lifecycle.Observer {
+//            it?.let {
+//
+//            }
+//        })
     }
 
     private fun setPackColor() {

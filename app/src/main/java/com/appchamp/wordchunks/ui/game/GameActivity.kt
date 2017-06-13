@@ -79,13 +79,17 @@ class GameActivity : LifecycleActivity() {
         viewModel.getLiveWords().observe(this, Observer<RealmResults<Word>> {
             it?.let {
                 if (viewModel.isLevelSolved()) {
-                    startActivity(intentFor<AfterGameActivity>(
-                            EXTRA_LEVEL_ID to levelId).clearTop())
-                    overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
-                    finish()
+                    startAfterGameActivity()
                 }
             }
         })
+    }
+
+    fun startAfterGameActivity() {
+        startActivity(intentFor<AfterGameActivity>(
+                EXTRA_LEVEL_ID to levelId).clearTop())
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
+        finish()  // to go back on the levels screen from after game activity
     }
 
     override fun onStart() {
@@ -119,13 +123,4 @@ class GameActivity : LifecycleActivity() {
         startActivity(intentFor<HintActivity>(EXTRA_LEVEL_ID to levelId))
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
-
-    /**
-     * Callback method called from the GameFragment whenever the level is solved.
-     */
-    //    override fun onLevelSolved() {
-//        startActivity(intentFor<AfterGameActivity>(EXTRA_LEVEL_ID to levelId))
-//        finish()
-//        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
-//    }
 }

@@ -12,8 +12,7 @@ import com.appchamp.wordchunks.extensions.color
 import com.appchamp.wordchunks.extensions.drawable
 import com.appchamp.wordchunks.realmdb.models.realm.Level
 import com.appchamp.wordchunks.realmdb.models.realm.Pack
-import com.appchamp.wordchunks.util.Constants.STATE_LOCKED
-import com.appchamp.wordchunks.util.Constants.STATE_SOLVED
+import com.appchamp.wordchunks.realmdb.models.realm.PackState
 import kotlinx.android.synthetic.main.item_pack_level.view.*
 
 
@@ -46,7 +45,7 @@ class PacksLevelsAdapter<T>(private var items: List<T> = listOf(),
             rlItem.background = context.drawable(R.drawable.main_bg_rect)
 
             when (itemState) {
-                STATE_LOCKED -> {
+                PackState.LOCKED.value -> {
                     itemView.isEnabled = false
                     drawable.setColor(context.color(R.color.pack_rect_left_locked))
                     icon.setImageDrawable(context.drawable(R.drawable.ic_locked))
@@ -62,9 +61,10 @@ class PacksLevelsAdapter<T>(private var items: List<T> = listOf(),
                     tvItemTitle.setTextColor(itemColor)
                     tvItemSubtitle.setTextColor(context.color(R.color.pack_num_of_levels_txt))
 
-                    when (itemState) {
-                        STATE_SOLVED -> icon.setImageDrawable(context.drawable(R.drawable.ic_solved))
-                        else -> icon.setImageDrawable(context.drawable(R.drawable.ic_current))
+                    if (itemState == PackState.FINISHED.value) {
+                        icon.setImageDrawable(context.drawable(R.drawable.ic_solved))
+                    } else  {
+                        icon.setImageDrawable(context.drawable(R.drawable.ic_current))
                     }
                 }
             }
@@ -93,12 +93,12 @@ class PacksLevelsAdapter<T>(private var items: List<T> = listOf(),
         private fun getItemSubtitle(item: T, res: Resources): String? {
             when (item) {
                 is Pack -> {
-                    if (getItemState(item) == STATE_LOCKED) {
+                    if (getItemState(item) == PackState.LOCKED.value) {
                         return res.getString(R.string.number_of_levels_locked, item.levels.size)
                     } else {
-                        val numberOfSolvedLevels = item.levels.count { it.state == STATE_SOLVED }
+                        val solvedLevelsCount = item.levels.count { it.state == PackState.FINISHED.value }
                         return res.getString(R.string.number_of_levels,
-                                numberOfSolvedLevels, item.levels.size)
+                                solvedLevelsCount, item.levels.size)
                     }
                 }
                 is Level -> return item.clue

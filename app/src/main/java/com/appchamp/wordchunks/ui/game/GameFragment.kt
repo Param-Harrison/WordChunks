@@ -35,7 +35,6 @@ class GameFragment : LifecycleFragment(), AnkoLogger {
     @Nullable
     override fun onCreateView(inflater: LayoutInflater?, @Nullable container: ViewGroup?,
                               @Nullable savedInstanceState: Bundle?): View? {
-        // Inflate this data binding layout
         return inflater?.inflate(R.layout.frag_game, container, false)
     }
 
@@ -58,6 +57,7 @@ class GameFragment : LifecycleFragment(), AnkoLogger {
 
     override fun onActivityCreated(@Nullable savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         subscribeUi(viewModel)
     }
 
@@ -118,10 +118,12 @@ class GameFragment : LifecycleFragment(), AnkoLogger {
             imgId = resources.getIdentifier("ic_0", "drawable", context.packageName)
         }
         imgChunksCount.setImageDrawable(context.drawable(imgId))
-        when {
-            length != 0 -> imgChunksCount.visible()
-            else -> imgChunksCount.invisible()
-        }
+        updateChunksCountView(length != 0)
+    }
+
+    private fun updateChunksCountView(isVisible: Boolean) = when {
+        isVisible -> imgChunksCount.visible()
+        else -> imgChunksCount.invisible()
     }
 
     private fun updateClearIcon(isVisible: Boolean) = when {

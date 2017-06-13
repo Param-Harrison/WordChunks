@@ -4,11 +4,11 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import com.appchamp.wordchunks.realmdb.models.realm.Level
-import com.appchamp.wordchunks.realmdb.utils.LiveRealmObject
-import com.appchamp.wordchunks.realmdb.utils.levelModel
+import com.appchamp.wordchunks.realmdb.models.realm.*
+import com.appchamp.wordchunks.realmdb.utils.*
 import io.realm.Realm
 import org.jetbrains.anko.AnkoLogger
+
 
 
 class AfterGameViewModel(application: Application, levelId: String) : AndroidViewModel(application),
@@ -25,13 +25,56 @@ class AfterGameViewModel(application: Application, levelId: String) : AndroidVie
 
     fun getLevel(): LiveRealmObject<Level> = level
 
-    fun getLevelState(): Int {
-        level.value?.state
-        return -1
+    fun getLevelState(): Int? {
+        return level.value?.state
     }
 
-    fun resetLevel() {
+    /**
+     * Finds next locked level to play.
+     */
+    fun unlockNextLevel() {
+        val nextLevel = db.levelModel().findLevelByState(LevelState.LOCKED.value)
+        // If next level exists
+        nextLevel?.let {
+            // Set next level state as in progress
 
+            db.levelModel().setLevelState(it, LevelState.IN_PROGRESS.value)
+        }
+    }
+
+    /**
+     * Resets all level data.
+     */
+    fun resetLevel() {
+        level.value?.let {
+            it.words.forEach { db.wordModel().setWordState(it, WordState.NOT_SOLVED.value) }
+            it.chunks.forEach { db.chunkModel().setChunkState(it, ChunkState.NORMAL.value) }
+        }
+    }
+
+    /**
+     * Returns true, if was solved the whole pack.
+     */
+    fun isPackSolved(): Boolean {
+        val pack = level.value?.packId?.let { db.packModel().findPackById(it) }
+
+        if (pack?.state == PackState.IN_PROGRESS.value) {
+            if (pack.levels.count { it.state == PackState.IN_PROGRESS.value } == 0) {
+                // Changes pack state as "solved"
+                db.packModel().setPackState(pack, PackState.FINISHED.value)
+                return true
+            }
+        }
+        return false
+    }
+
+    /**
+     * Finds next locked pack to play.
+     */
+    fun unlockNextPack() {
+        val nextPack = db.packModel().findPackByState(PackState.LOCKED.value)
+        // Changes pack state as "in progress"
+        nextPack?.let { db.packModel().setPackState(it, PackState.IN_PROGRESS.value) }
     }
 
     /**
@@ -41,6 +84,17 @@ class AfterGameViewModel(application: Application, levelId: String) : AndroidVie
      * prevent a leak of this ViewModel... Like RealmResults and the instance of Realm!
      */
     override fun onCleared() {
+        if (getLevelState() == LevelState.IN_PROGRESS.value) {
+            level.value?.let {
+                db.levelModel().setLevelState(it, LevelState.FINISHED.value)
+            }
+            unlockNextLevel()
+            if (isPackSolved()) {
+                unlockNextPack()
+            }
+        }
+        // No matter in what state level was solved, always reset it
+        resetLevel()
         db.close()
         super.onCleared()
     }

@@ -108,11 +108,7 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
      * Returns true if the level is solved, and false otherwise.
      */
     fun isLevelSolved(): Boolean {
-        if (words.value?.filter { it.state == WordState.NOT_SOLVED.value }?.isEmpty()!!) {
-            //resetLevel()
-            return true
-        }
-        return false
+        return words.value?.filter { it.state == WordState.NOT_SOLVED.value }?.isEmpty() ?: false
     }
 
     /**
@@ -143,15 +139,12 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
             }
 
             for (i in 0..size - 1) {
-                getChunks()?.get(shuffledArray[i])?.let { chunk ->
-                    db.chunkModel().setChunkPosition(
-                            chunk,
-                            position = shuffledArray[numberOfChunks - i - 1])
-                }
-                getChunks()?.get(shuffledArray[numberOfChunks - i - 1])?.let { chunk ->
-                    db.chunkModel().setChunkPosition(
-                            chunk,
-                            position = shuffledArray[i])
+                val pos1 = shuffledArray[i]
+                val pos2 = shuffledArray[numberOfChunks - i - 1]
+                getChunks()?.let {
+                    // Swapping chunk positions
+                    it[pos1]?.let { chunk -> db.chunkModel().setChunkPosition(chunk, pos2) }
+                    it[pos2]?.let { chunk -> db.chunkModel().setChunkPosition(chunk, pos1) }
                 }
             }
         }

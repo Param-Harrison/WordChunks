@@ -6,6 +6,7 @@ import com.appchamp.wordchunks.realmdb.utils.LiveRealmResults
 import com.appchamp.wordchunks.realmdb.utils.asLiveData
 import com.appchamp.wordchunks.util.Constants.REALM_FIELD_ID
 import com.appchamp.wordchunks.util.Constants.REALM_FIELD_PACK_ID
+import com.appchamp.wordchunks.util.Constants.REALM_FIELD_STATE
 import io.realm.Realm
 
 
@@ -26,4 +27,21 @@ class LevelDao(private val realm: Realm) {
             .equalTo(REALM_FIELD_ID, levelId)
             .findFirst()
             .asLiveData()
+
+    // Can be null
+    fun findLevelByState(state: Int): Level? = realm
+            .where(Level::class.java)
+            .equalTo(REALM_FIELD_STATE, state)
+            .findFirst()
+//            .asLiveData()
+
+    /**
+     * Custom set methods.
+     */
+
+    fun setLevelState(level: Level, state: Int) {
+        realm.executeTransaction {
+            level.state = state
+        }
+    }
 }
