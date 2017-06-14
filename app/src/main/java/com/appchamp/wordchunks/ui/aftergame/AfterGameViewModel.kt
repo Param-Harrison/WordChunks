@@ -8,7 +8,7 @@ import com.appchamp.wordchunks.realmdb.models.realm.*
 import com.appchamp.wordchunks.realmdb.utils.*
 import io.realm.Realm
 import org.jetbrains.anko.AnkoLogger
-
+import org.jetbrains.anko.info
 
 
 class AfterGameViewModel(application: Application, levelId: String) : AndroidViewModel(application),
@@ -37,9 +37,15 @@ class AfterGameViewModel(application: Application, levelId: String) : AndroidVie
         // If next level exists
         nextLevel?.let {
             // Set next level state as in progress
-
             db.levelModel().setLevelState(it, LevelState.IN_PROGRESS.value)
+
         }
+    }
+
+    fun getNextLevelId(): String? {
+        val nextLevelId = db.levelModel().findLevelByState(LevelState.LOCKED.value)?.id
+        info { "NEXT LEVEL ID=" + nextLevelId }
+        return nextLevelId
     }
 
     /**

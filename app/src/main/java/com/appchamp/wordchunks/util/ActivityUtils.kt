@@ -21,7 +21,6 @@ object ActivityUtils {
 
     fun replaceFragment(fragmentManager: FragmentManager, fragment: Fragment, @IdRes frameId: Int) {
         val transaction = fragmentManager.beginTransaction()
-        //transaction.setCustomAnimations(R.anim.slide_from_right, R.anim.slide_to_left)
         transaction.replace(frameId, fragment)
         transaction.commit()
     }

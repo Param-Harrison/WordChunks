@@ -46,9 +46,8 @@ class AfterGameActivity : LifecycleActivity(), AnkoLogger {
         }
 //        when (viewModel.findNextLevel()) {
 //            0 -> startActivity(intentFor<GameActivity>())
-//            -1 -> replaceGameFinishedFragment()
+//            -1 -> startFinishActivity()
 //        }
-
     }
 
     private fun addLevelSolvedFragment() {
@@ -64,14 +63,7 @@ class AfterGameActivity : LifecycleActivity(), AnkoLogger {
                 LevelSolvedBeforeFragment.newInstance(),
                 R.id.fragment_container)
     }
-
-    private fun replaceGameFinishedFragment() {
-        ActivityUtils.replaceFragment(
-                supportFragmentManager,
-                GameFinishedFragment.newInstance(),
-                R.id.fragment_container)
-    }
-
+}
 //                if (nextLevel != null) {
 //
 //                    addLevelSolvedFragment(
@@ -97,26 +89,6 @@ class AfterGameActivity : LifecycleActivity(), AnkoLogger {
 //            .queryFirst { it.equalTo(Constants.REALM_FIELD_ID, packId) }?.levels
 //            ?.count { it.state == Constants.STATE_LOCKED }!!
 //
-//    private fun isPackSolved(realm: Realm, packId: String) {
-//        // If we solved the whole pack
-//        val pack = realm.where(Pack::class.java)
-//                .equalTo(Constants.REALM_FIELD_ID, packId)
-//                .findFirst()
-//        if (!pack?.levels?.any { it.state == Constants.STATE_IN_PROGRESS }!!) {
-//            // Change its state to "solved"
-//            realm.executeTransaction { pack.state = Constants.STATE_SOLVED }
-//
-//            // Find next locked pack to play in
-//            val nextPack = realm.where(Pack::class.java)
-//                    .equalTo(Constants.REALM_FIELD_STATE, Constants.STATE_LOCKED)
-//                    .findFirst()
-//            if (nextPack != null) {
-//                realm.executeTransaction { nextPack.state = Constants.STATE_IN_PROGRESS }
-//            }
-//        }
-//    }
-
-
 //    override fun onNextLevelSelected() {
 //        if (nextLevel != null) {
 //            levelId = nextLevel!!.id
@@ -124,5 +96,3 @@ class AfterGameActivity : LifecycleActivity(), AnkoLogger {
 //        } else {
 //            showGameFinishedFragment()
 //        }
-//    }
-}

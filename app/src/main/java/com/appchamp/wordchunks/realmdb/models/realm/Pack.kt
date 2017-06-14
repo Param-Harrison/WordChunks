@@ -22,7 +22,6 @@ open class Pack : RealmModel {
 
 }
 
-
 // States of pack
 enum class PackState(val value: Int) {
     LOCKED(0),

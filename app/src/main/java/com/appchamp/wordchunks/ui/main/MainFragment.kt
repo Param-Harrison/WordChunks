@@ -1,23 +1,24 @@
 package com.appchamp.wordchunks.ui.main
 
-import android.content.Context
+import android.arch.lifecycle.LifecycleFragment
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
+import com.appchamp.wordchunks.ui.finish.FinishActivity
+import com.appchamp.wordchunks.ui.game.GameActivity
+import com.appchamp.wordchunks.ui.packs.PacksActivity
+import com.appchamp.wordchunks.util.Constants
 import kotlinx.android.synthetic.main.frag_main.*
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.share
+import org.jetbrains.anko.*
 
 
-class MainFragment : Fragment(), AnkoLogger {
+class MainFragment : LifecycleFragment(), AnkoLogger {
 
-    private lateinit var onMainFragmentClickListener: OnMainFragmentClickListener
-
-    companion object {
-        internal fun newInstance() = MainFragment()
+    private val viewModel by lazy {
+        ViewModelProviders.of(activity).get(MainViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -28,51 +29,48 @@ class MainFragment : Fragment(), AnkoLogger {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        imgSettingsIcon.setOnClickListener { onSettingsClick() }
         imgShareIcon.setOnClickListener { onShareClick() }
         btnPlay.setOnClickListener { onPlayClick() }
         btnDaily.setOnClickListener { onDailyClick() }
-        btnPacks.setOnClickListener { onPacksClick() }
+        btnPacks.setOnClickListener { startPacksActivity() }
         btnStore.setOnClickListener { onStoreClick() }
     }
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        // This makes sure that the container activity has implemented
-        // the onMainFragmentClickListener interface. If not, it throws an exception
-        try {
-            onMainFragmentClickListener = context as OnMainFragmentClickListener
-        } catch (e: ClassCastException) {
-            throw ClassCastException(context.toString()
-                    + " must implement OnMainFragmentClickListener")
-        }
-    }
-
-    private fun onSettingsClick() = onMainFragmentClickListener.showSlidingMenu()
-
     private fun onShareClick() {
-        context.share(
+        activity.share(
                 "WordChunks is AWESOME and I think you'll love it. Get it! -- [link]",
                 "My current puzzle")
     }
 
     private fun onPlayClick() {
-        //val levelId: String? = getLastCurrentLevelId()
-        //info { levelId }
-//        if (levelId != null) {
-//            onMainFragmentClickListener.startGameActivity(levelId)
-//        } else {
-//            // If all levels and packs were solved, showing the fragment
-//            onMainFragmentClickListener.showGameFinishedFragment()
-//        }
-    }
+        val levelId = viewModel.getLevelId()
+        if (levelId != null) {
+            startGameActivity(levelId)
+        } else {
+            // All levels and packs were solved
+            startFinishActivity()
 
-    private fun onPacksClick() = onMainFragmentClickListener.startPacksActivity()
+        }
+    }
 
     private fun onStoreClick() {}
 
     private fun onDailyClick() {}
 
-//    private fun getLastCurrentLevelId(): String? =
-//            Level().queryLast { it.equalTo(REALM_FIELD_STATE, STATE_CURRENT) }?.id
+    private fun startGameActivity(levelId: String) {
+        startActivity(activity.intentFor<GameActivity>(
+                Constants.EXTRA_LEVEL_ID to levelId).clearTop())
+        activity.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
+    }
+
+    private fun startPacksActivity() {
+        startActivity(activity.intentFor<PacksActivity>().clearTop())
+        activity.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
+    }
+
+    private fun startFinishActivity() {
+        activity.startActivity<FinishActivity>()
+        activity.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
+    }
+
 }

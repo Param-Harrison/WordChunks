@@ -9,12 +9,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
+import com.appchamp.wordchunks.ui.finish.FinishActivity
+import com.appchamp.wordchunks.ui.game.GameActivity
+import com.appchamp.wordchunks.util.Constants
 import com.appchamp.wordchunks.util.Constants.CLUE_ID_KEY
 import com.appchamp.wordchunks.util.Constants.COLOR_ID_KEY
 import com.appchamp.wordchunks.util.Constants.FACT_ID_KEY
 import com.appchamp.wordchunks.util.Constants.LEFT_ID_KEY
 import kotlinx.android.synthetic.main.frag_level_solved.*
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.clearTop
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.startActivity
 import java.util.*
 
 
@@ -33,21 +39,26 @@ class LevelSolvedFragment : LifecycleFragment(), AnkoLogger {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rlNextLevel.setOnClickListener {  }
+        rlNextLevel.setOnClickListener {
+            val nextLevelId = viewModel.getNextLevelId()
+            if (nextLevelId != null) {
+                startGameActivity(nextLevelId)
+            } else {
+                startFinishActivity()
+            }
+        }
     }
 
-    override fun onActivityCreated(@Nullable savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        subscribeUi(viewModel)
+    private fun startGameActivity(levelId: String) {
+        startActivity(activity.intentFor<GameActivity>(
+                Constants.EXTRA_LEVEL_ID to levelId).clearTop())
+        activity.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
 
-    private fun subscribeUi(viewModel: AfterGameViewModel) {
-//        viewModel.getLevel().observe(this, android.arch.lifecycle.Observer {
-//            it?.let {
-//
-//            }
-//        })
+    private fun startFinishActivity() {
+        activity.startActivity<FinishActivity>()
+        activity.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
+        activity.finish()
     }
 
     private fun setPackColor() {

@@ -86,5 +86,7 @@ class App : Application() {
             editor.putBoolean(PREFS_IS_DB_EXISTS, false)
         }
         editor.apply()
+        // Delete realm db before creating new objects.
+        Realm.deleteRealm(RealmConfiguration.Builder().build())
     }
 }

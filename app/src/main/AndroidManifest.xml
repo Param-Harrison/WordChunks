@@ -26,8 +26,9 @@
         <activity android:name=".ui.levels.LevelsActivity" />
         <activity android:name=".ui.game.GameActivity" />
         <activity android:name=".ui.tutorial.TutorialActivity" />
-        <activity android:name="com.appchamp.wordchunks.ui.hint.HintActivity" />
-        <activity android:name=".ui.aftergame.AfterGameActivity"></activity>
+        <activity android:name=".ui.hint.HintActivity" />
+        <activity android:name=".ui.aftergame.AfterGameActivity" />
+        <activity android:name=".ui.finish.FinishActivity"></activity>
     </application>
 
 </manifest>

@@ -26,14 +26,6 @@
             android:textColor="#f2f2f2"
             android:textSize="@dimen/toolbar_title_txt_size" />
 
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="20dp"
-            android:contentDescription="@null"
-            android:src="@drawable/ic_medal" />
-
     </RelativeLayout>
 
     <LinearLayout
@@ -65,7 +57,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@null"
                 android:scaleType="fitXY"
-                android:src="@drawable/next_level_left_rect" />
+                android:src="@drawable/finish_left_rect" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -83,7 +75,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/rate_us"
-                    android:textColor="#f1c40f"
+                    android:textColor="#b388ff"
                     android:textSize="18sp"
                     tools:ignore="MissingPrefix" />
 

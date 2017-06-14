@@ -6,17 +6,6 @@
       {
         "clue": "SPORTS",
         "fact": "some fact sport",
-        "words": "AA,BB CC,DD EE,FF GG,HH II,JJ KK,LL"
-      }
-    ]
-  },
-  {
-    "title": "AZURE",
-    "color": "#00bdbd",
-    "levels": [
-      {
-        "clue": "SPORTS",
-        "fact": "some fact sport",
         "words": "AA,BB"
       }
     ]
@@ -28,7 +17,18 @@
       {
         "clue": "SPORTS",
         "fact": "some fact sport",
-        "words": "AA,BB"
+        "words": "AA1,BB1"
+      }
+    ]
+  },
+  {
+    "title": "AZURE",
+    "color": "#00bdbd",
+    "levels": [
+      {
+        "clue": "SPORTS",
+        "fact": "some fact sport",
+        "words": "AA2,BB2"
       }
     ]
   }

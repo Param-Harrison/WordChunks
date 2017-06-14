@@ -7,9 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
-        android:paddingEnd="@dimen/toolbar_padding"
-        android:paddingStart="@dimen/toolbar_padding">
+        android:layout_height="@dimen/toolbar_height">
 
         <ImageView
             android:id="@+id/imgSettingsIcon"
@@ -18,6 +16,8 @@
             android:layout_alignParentStart="true"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/settings_hint"
+            android:paddingEnd="@dimen/toolbar_padding"
+            android:paddingStart="@dimen/toolbar_padding"
             android:src="@drawable/ic_action_settings" />
 
         <ImageView
@@ -27,6 +27,8 @@
             android:layout_alignParentEnd="true"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/share_hint"
+            android:paddingEnd="@dimen/toolbar_padding"
+            android:paddingStart="@dimen/toolbar_padding"
             android:src="@drawable/ic_share_white_24dp" />
 
     </RelativeLayout>

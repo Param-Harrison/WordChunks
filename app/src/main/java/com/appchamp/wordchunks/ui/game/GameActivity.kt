@@ -55,8 +55,7 @@ class GameActivity : LifecycleActivity() {
         }
     }
 
-    // Sets custom fonts.
-    // (This is a temporary solution until Android O release).
+    // Sets custom fonts. (This is a temporary solution until Android O release).
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
