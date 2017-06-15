@@ -9,6 +9,7 @@ import com.appchamp.wordchunks.realmdb.utils.*
 import io.realm.Realm
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
+import java.util.*
 
 
 class AfterGameViewModel(application: Application, levelId: String) : AndroidViewModel(application),
@@ -17,10 +18,16 @@ class AfterGameViewModel(application: Application, levelId: String) : AndroidVie
     private val db: Realm = Realm.getDefaultInstance()
     // Live data
     private var level: LiveRealmObject<Level>
+    private var nextLevel: Level?
+    private var pack: Pack?
+    private var i: Int
 
     init {
         // Load level from the Realm db as LiveData
         level = db.levelModel().findLevelById(levelId)
+        nextLevel = db.levelModel().findLevelByState(LevelState.LOCKED.value)
+        pack = level.value?.packId?.let { db.packModel().findPackById(it) }
+        i = Random().nextInt(72 - 1)  //todo
     }
 
     fun getLevel(): LiveRealmObject<Level> = level
@@ -33,7 +40,6 @@ class AfterGameViewModel(application: Application, levelId: String) : AndroidVie
      * Finds next locked level to play.
      */
     fun unlockNextLevel() {
-        val nextLevel = db.levelModel().findLevelByState(LevelState.LOCKED.value)
         // If next level exists
         nextLevel?.let {
             // Set next level state as in progress
@@ -43,9 +49,8 @@ class AfterGameViewModel(application: Application, levelId: String) : AndroidVie
     }
 
     fun getNextLevelId(): String? {
-        val nextLevelId = db.levelModel().findLevelByState(LevelState.LOCKED.value)?.id
-        info { "NEXT LEVEL ID=" + nextLevelId }
-        return nextLevelId
+        info { "NEXT LEVEL ID=" + nextLevel?.id }
+        return nextLevel?.id
     }
 
     /**
@@ -62,12 +67,12 @@ class AfterGameViewModel(application: Application, levelId: String) : AndroidVie
      * Returns true, if was solved the whole pack.
      */
     fun isPackSolved(): Boolean {
-        val pack = level.value?.packId?.let { db.packModel().findPackById(it) }
-
         if (pack?.state == PackState.IN_PROGRESS.value) {
-            if (pack.levels.count { it.state == PackState.IN_PROGRESS.value } == 0) {
+            if (pack?.levels?.count { it.state == PackState.IN_PROGRESS.value } == 0) {
                 // Changes pack state as "solved"
-                db.packModel().setPackState(pack, PackState.FINISHED.value)
+                pack?.let {
+                    db.packModel().setPackState(it, PackState.FINISHED.value)
+                }
                 return true
             }
         }
@@ -81,6 +86,30 @@ class AfterGameViewModel(application: Application, levelId: String) : AndroidVie
         val nextPack = db.packModel().findPackByState(PackState.LOCKED.value)
         // Changes pack state as "in progress"
         nextPack?.let { db.packModel().setPackState(it, PackState.IN_PROGRESS.value) }
+    }
+
+    fun getLevelClue(): String? {
+        return nextLevel?.clue
+    }
+
+    fun getPackColor(): String {
+        return  nextLevel?.color ?: "#febb5a"
+    }
+
+    fun getFunFact(): String? {
+        return level.value?.fact
+    }
+
+    fun getLevelsLeft(): Int {
+        return pack?.levels?.count { it.state == PackState.LOCKED.value } as Int
+    }
+
+    fun  getPackId(): String {
+        return pack?.id!!
+    }
+
+    fun getRand(): Int {
+        return i
     }
 
     /**
@@ -116,4 +145,5 @@ class AfterGameViewModel(application: Application, levelId: String) : AndroidVie
             return AfterGameViewModel(application, levelId) as T
         }
     }
+
 }

@@ -209,8 +209,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:drawableLeft="@drawable/ic_info"
-            android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:padding="10dp"
             android:textColor="#aaaaaa"

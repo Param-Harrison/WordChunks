@@ -44,10 +44,14 @@
     <string name="tutorial">tutorial</string>
     <string name="all_packs_finished">ALL PACKS FINISHED</string>
     <string name="show_a_hint_for">SHOW A HINT FOR</string>
-    <string name="entire_solution">ENTIRE SOLUTION</string>
+    <string name="full_solution">FULL SOLUTION</string>
     <string name="congratulations">CONGRATULATIONS!</string>
     <string name="first_letter">FIRST LETTER</string>
     <string name="first_chunk">FIRST CHUNK</string>
-    <string name="first_and_dots">%s...</string>
+    <string name="first_and_dots">%s…</string>
+    <string name="you_finished_the_whole_pack">YOU\'VE FINISHED THE WHOLE PACK!</string>
+    <string name="only_one_level_left">ONLY ONE LEVEL LEFT IN PACK</string>
+    <string name="you_finished_all_packs">YOU\'VE FINISHED ALL PACKS AND LEVELS</string>
+    <string name="num_levels_left">%d LEVELS LEFT IN PACK</string>
 
 </resources>

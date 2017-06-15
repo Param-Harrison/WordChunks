@@ -1,67 +1,51 @@
 package com.appchamp.wordchunks.ui.hint
 
+import android.arch.lifecycle.LifecycleActivity
+import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.appchamp.wordchunks.R
-import com.appchamp.wordchunks.util.ActivityUtils
 import com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID
+import kotlinx.android.synthetic.main.titlebar.*
+import org.jetbrains.anko.AnkoLogger
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 
-class HintActivity : AppCompatActivity(), OnHintFirstFragClickListener,
-        OnHintSecondFragClickListener {
+class HintActivity : LifecycleActivity(), AnkoLogger {
 
-    lateinit var levelId: String
-    var isHintSecondFragShowing = false
+    private lateinit var levelId: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_hint)
 
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                    .add(R.id.flActHint, HintFirstFragment())
+                    .commit()
+        }
         // Getting level id through Intents
         levelId = requireNotNull(intent.getStringExtra(EXTRA_LEVEL_ID),
                 { "Activity parameter 'EXTRA_LEVEL_ID' is missing" })
-        addHintFirstFragment(levelId)
+
+        val factory = HintViewModel.Factory(application, levelId)
+        ViewModelProviders.of(this, factory).get(HintViewModel::class.java)
     }
 
-    private fun addHintFirstFragment(levelId: String) {
-        ActivityUtils.addFragment(
-                supportFragmentManager,
-                HintFirstFragment.newInstance(levelId),
-                R.id.flActHint)
+    // Sets custom fonts. (This is a temporary solution until Android O release).
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
 
-    private fun replaceHintFirstFragment(levelId: String) {
-        ActivityUtils.replaceFragment(
-                supportFragmentManager,
-                HintFirstFragment.newInstance(levelId),
-                R.id.flActHint)
+    override fun onResume() {
+        super.onResume()
+
+        imgBackArrow?.setOnClickListener { onBackPressed() }
+        tvTitle?.text = getString(R.string.show_a_hint_for)
     }
 
     override fun onBackPressed() {
-        if (isHintSecondFragShowing) {
-            replaceHintFirstFragment(levelId)
-        } else {
-            super.onBackPressed()
-        }
-    }
-
-    override fun onHintWordSelected(wordId: String) {
-        isHintSecondFragShowing = true
-        ActivityUtils.replaceFragment(
-                supportFragmentManager,
-                HintSecondFragment.newInstance(wordId),
-                R.id.flActHint)
-    }
-
-    override fun onBackArrowFromHintSecondClick() {
-        replaceHintFirstFragment(levelId)
-    }
-
-    override fun onCloseFromHintSecondClick() {
         super.onBackPressed()
-    }
-
-    override fun onBackArrowFromHintFirstClick() {
-        onBackPressed()
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
     }
 }

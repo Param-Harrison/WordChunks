@@ -33,6 +33,10 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
 
     fun getLevel(): LiveRealmObject<Level> = level
 
+    fun  getPackId(): String {
+        return level.value?.packId!!
+    }
+
     /**
      * To avoid conflicts between transactions while reading and writing chunks states,
      * I've separated them: liveData, and RealmList

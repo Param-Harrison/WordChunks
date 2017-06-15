@@ -12,9 +12,9 @@ open class Chunk : RealmModel {
     var chunk: String = ""
     @Required
     var levelId: String = ""
+    var wordId: String = ""
     var state: Long = 0  // should be Long because of the currentTimeMillis
     var position: Int = 0
-    var wordId: String = ""
 
 }
 

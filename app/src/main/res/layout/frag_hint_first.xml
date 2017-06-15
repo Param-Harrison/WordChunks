@@ -8,39 +8,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/top"
-            android:contentDescription="@null" />
-
-        <TextView
-            fontPath="fonts/nunitoextrabold.ttf"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/show_a_hint_for"
-            android:textColor="@color/title_txt"
-            android:textSize="@dimen/toolbar_title_txt_size"
-            tools:ignore="MissingPrefix" />
-
-        <ImageView
-            android:id="@+id/imgBackArrow"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:contentDescription="@null"
-            android:paddingEnd="20dp"
-            android:paddingStart="20dp"
-            android:src="@drawable/ic_back" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <include layout="@layout/titlebar"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvWordsHints"

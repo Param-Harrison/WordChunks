@@ -69,7 +69,7 @@ class PacksActivity : BaseActivity<PacksViewModel>() {
      */
     private fun startLevelsActivity(packId: String) {
         startActivity(intentFor<LevelsActivity>(EXTRA_PACK_ID to packId).clearTop())
-        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
         finish()
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
 }

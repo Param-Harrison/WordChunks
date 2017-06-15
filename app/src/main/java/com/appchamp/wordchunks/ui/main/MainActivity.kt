@@ -53,9 +53,9 @@ class MainActivity : BaseActivity<MainViewModel>(), AnkoLogger {
         imgSettingsIcon.setOnClickListener { onSettingsClick() }
 
         // Sliding menu listeners
-        btnHowToPlay.setOnClickListener { showTutorial() }
-        btnRateUs.setOnClickListener { browse("market://details?id=$packageName") }
-        btnFeedback.setOnClickListener {
+        tvHowToPlay.setOnClickListener { showTutorial() }
+        tvRateUs.setOnClickListener { browse("market://details?id=$packageName") }
+        tvFeedback.setOnClickListener {
             email(
                     "jkozhukhovskaya@gmail.com", // todo
                     "Feedback for WordChunks",

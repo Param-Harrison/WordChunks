@@ -2,8 +2,10 @@ package com.appchamp.wordchunks.ui.aftergame
 
 import android.arch.lifecycle.LifecycleFragment
 import android.arch.lifecycle.ViewModelProviders
+import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
+import android.support.annotation.ColorInt
 import android.support.annotation.Nullable
 import android.view.LayoutInflater
 import android.view.View
@@ -12,16 +14,8 @@ import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.ui.finish.FinishActivity
 import com.appchamp.wordchunks.ui.game.GameActivity
 import com.appchamp.wordchunks.util.Constants
-import com.appchamp.wordchunks.util.Constants.CLUE_ID_KEY
-import com.appchamp.wordchunks.util.Constants.COLOR_ID_KEY
-import com.appchamp.wordchunks.util.Constants.FACT_ID_KEY
-import com.appchamp.wordchunks.util.Constants.LEFT_ID_KEY
 import kotlinx.android.synthetic.main.frag_level_solved.*
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.clearTop
-import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.startActivity
-import java.util.*
+import org.jetbrains.anko.*
 
 
 class LevelSolvedFragment : LifecycleFragment(), AnkoLogger {
@@ -47,49 +41,52 @@ class LevelSolvedFragment : LifecycleFragment(), AnkoLogger {
                 startFinishActivity()
             }
         }
+
+        setPackColor(Color.parseColor(viewModel.getPackColor()))
+        setClue(viewModel.getLevelClue())
+        setFunFact(viewModel.getFunFact())
+        setLevelsLeft(viewModel.getLevelsLeft())
+        setExcellent()
     }
 
     private fun startGameActivity(levelId: String) {
         startActivity(activity.intentFor<GameActivity>(
                 Constants.EXTRA_LEVEL_ID to levelId).clearTop())
+        activity.finish()
         activity.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
 
     private fun startFinishActivity() {
         activity.startActivity<FinishActivity>()
-        activity.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
         activity.finish()
+        activity.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
 
-    private fun setPackColor() {
-        val color = arguments.getInt(COLOR_ID_KEY)
+    private fun setPackColor(@ColorInt color: Int) {
         val drawable = imgRectBg.drawable as GradientDrawable
         drawable.setColor(color)
-        tvNextLevelTitle.setTextColor(color)
+        tvNextLevelTitle.textColor = color
     }
 
-    private fun setClue() {
-        tvNextLevelClue.text = arguments.getString(CLUE_ID_KEY)
+    private fun setClue(clue: String?) {
+        tvNextLevelClue.text = clue ?: resources.getString(R.string.congratulations)
     }
 
-    private fun setFunFact() {
-        tvFunFact.text = arguments.getString(FACT_ID_KEY)
+    private fun setFunFact(fact: String?) {
+        tvFunFact.text = fact ?: resources.getString(R.string.congratulations)
     }
 
-    private fun setLevelsLeft() {
-        val left = arguments.getInt(LEFT_ID_KEY)
-        when (left) {
-            0 -> tvLevelsLeft.text = "YOU'VE FINISHED THE WHOLE PACK!"
-            1 -> tvLevelsLeft.text = "ONLY ONE LEVEL LEFT IN PACK"
-            -1 -> tvLevelsLeft.text = "YOU'VE FINISHED ALL PACKS AND LEVELS"
-            else -> tvLevelsLeft.text = left.toString() + " LEVELS LEFT IN PACK"
+    private fun setLevelsLeft(levelsLeft: Int) {
+        when (levelsLeft) {
+            0 -> tvLevelsLeft.text = getString(R.string.you_finished_the_whole_pack)
+            1 -> tvLevelsLeft.text = getString(R.string.only_one_level_left)
+            -1 -> tvLevelsLeft.text = getString(R.string.you_finished_all_packs)
+            else -> tvLevelsLeft.text = getString(R.string.num_levels_left, levelsLeft)
         }
     }
 
     private fun setExcellent() {
-        val res = context.resources
-        val congrats = res.getStringArray(R.array.congrats)
-        val i = Random().nextInt(congrats.size - 1)
-        tvExcellent.text = congrats[i]
+        val congrats = resources.getStringArray(R.array.congrats)
+        tvExcellent.text = congrats[viewModel.getRand()]
     }
 }

@@ -35,4 +35,12 @@ class ChunkDao(private val realm: Realm) {
                 .findAllAsync()
                 .asLiveData()
     }
+
+    fun findChunkByWordId(wordId: String): Chunk {
+        return realm
+                .where(Chunk::class.java)
+                .equalTo(Constants.REALM_FIELD_WORD_ID, wordId)
+                .findFirst()
+    }
+
 }

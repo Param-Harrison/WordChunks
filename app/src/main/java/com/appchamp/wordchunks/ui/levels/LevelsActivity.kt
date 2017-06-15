@@ -65,8 +65,8 @@ class LevelsActivity : BaseActivity<LevelsViewModel>(), AnkoLogger {
 
     private fun startGameActivity(levelId: String) {
         startActivity(intentFor<GameActivity>(EXTRA_LEVEL_ID to levelId).clearTop())
-        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
         finish()
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
 
     /**

@@ -1,7 +1,6 @@
 package com.appchamp.wordchunks.ui.game.adapters
 
 import android.graphics.drawable.GradientDrawable
-import android.support.annotation.ColorInt
 import android.support.v7.widget.RecyclerView
 import android.util.TypedValue
 import android.view.Gravity
@@ -16,12 +15,11 @@ import com.appchamp.wordchunks.extensions.color
 import com.appchamp.wordchunks.extensions.gone
 import com.appchamp.wordchunks.extensions.visible
 import com.appchamp.wordchunks.realmdb.models.realm.Word
-import com.appchamp.wordchunks.util.Constants
-import io.realm.RealmList
+import com.appchamp.wordchunks.realmdb.models.realm.WordState
 import kotlinx.android.synthetic.main.item_word.view.*
 
-
-class WordsHintAdapter(private val words: RealmList<Word>, @ColorInt private val packColor: Int,
+// todo packColor
+class WordsHintAdapter(private var words: List<Word> = listOf(),
                        private val wordClick: (Word) -> Unit) :
         RecyclerView.Adapter<WordsHintAdapter.ViewHolder>() {
 
@@ -33,29 +31,35 @@ class WordsHintAdapter(private val words: RealmList<Word>, @ColorInt private val
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         setAnimation(holder.itemView, position)
 
-        holder.bind(words[position], packColor, position)
+        holder.bind(words[position], position)
     }
 
     override fun getItemCount() = words.size
 
+    fun updateItems(words: List<Word>) {
+        this.words = words
+        notifyDataSetChanged()
+    }
+
     class ViewHolder(view: View, val wordClick: (Word) -> Unit) : RecyclerView.ViewHolder(view) {
 
-        fun bind(word: Word, @ColorInt packColor: Int, pos: Int) = with(itemView) {
+        fun bind(word: Word, pos: Int) = with(itemView) {
             val wordState = word.state
             val drawable = imgRectBg.drawable as GradientDrawable
             when (wordState) {
-                Constants.WORD_STATE_NOT_SOLVED -> {
+                WordState.NOT_SOLVED.value -> {
                     val wordLength = word.word.length
                     tvWord.text = resources.getString(R.string.number_of_letters, wordLength)
                     tvWordNum.text = (pos + 1).toString()
                     drawable.setColor(context.color(R.color.word_rect_bg))
                 }
                 else -> {
+                    itemView.isEnabled = false
                     tvWord.text = word.word
-                    tvWord.setTextColor(packColor)
+                    //tvWord.setTextColor(packColor)
                     icon.visible()
                     tvWordNum.gone()
-                    drawable.setColor(packColor)
+                    //drawable.setColor(packColor)
                     itemView.alpha = 0.4f
                 }
             }

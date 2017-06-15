@@ -1,29 +1,23 @@
 package com.appchamp.wordchunks.ui.aftergame
 
+import android.arch.lifecycle.LifecycleFragment
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
+import com.appchamp.wordchunks.ui.levels.LevelsActivity
 import com.appchamp.wordchunks.util.Constants
 import kotlinx.android.synthetic.main.frag_level_solved_before.*
+import org.jetbrains.anko.clearTop
+import org.jetbrains.anko.intentFor
 
 
-class LevelSolvedBeforeFragment : Fragment() {
+class LevelSolvedBeforeFragment : LifecycleFragment() {
 
-//    private var callback: OnGameFragClickListener? = null
-
-    companion object {
-//        fun newInstance(fact: String?): LevelSolvedBeforeFragment {
-//            val args = Bundle()
-//            args.putString(Constants.FACT_ID_KEY, fact)
-//            val levelSolvedBeforeFrag: LevelSolvedBeforeFragment = newInstance()
-//            levelSolvedBeforeFrag.arguments = args
-//            return levelSolvedBeforeFrag
-//        }
-
-        fun newInstance(): LevelSolvedBeforeFragment = LevelSolvedBeforeFragment()
+    private val viewModel by lazy {
+        ViewModelProviders.of(activity).get(AfterGameViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -33,14 +27,23 @@ class LevelSolvedBeforeFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-//        rlBackToLevels.setOnClickListener { callback!!.onBackToLevelsClick() }
-//        setFunFact()
+
+        rlBackToLevels.setOnClickListener { backToLevelsActivity(viewModel.getPackId()) }
+
+        setFunFact(viewModel.getFunFact())
     }
 
-    private fun setFunFact() {
-        if (arguments != null && arguments.containsKey(Constants.FACT_ID_KEY)) {
-            val fact = arguments.getString(Constants.FACT_ID_KEY)
-            tvFunFact.text = fact
-        }
+    private fun setFunFact(fact: String?) {
+        tvFunFact.text = fact
+    }
+
+    /**
+     * Back navigation. Navigates to LevelsActivity passing Pack id by the Intent.
+     */
+    private fun backToLevelsActivity(packId: String) {
+        // Passing pack's id by the Intent.
+        startActivity(activity.intentFor<LevelsActivity>(Constants.EXTRA_PACK_ID to packId).clearTop())
+        activity.finish()
+        activity.overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
     }
 }

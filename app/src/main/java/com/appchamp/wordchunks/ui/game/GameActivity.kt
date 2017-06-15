@@ -10,9 +10,11 @@ import com.appchamp.wordchunks.realmdb.models.realm.Level
 import com.appchamp.wordchunks.realmdb.models.realm.Word
 import com.appchamp.wordchunks.ui.aftergame.AfterGameActivity
 import com.appchamp.wordchunks.ui.hint.HintActivity
+import com.appchamp.wordchunks.ui.levels.LevelsActivity
 import com.appchamp.wordchunks.ui.tutorial.TutorialActivity
 import com.appchamp.wordchunks.util.ActivityUtils
 import com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID
+import com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID
 import com.appchamp.wordchunks.util.Constants.PREFS_HOW_TO_PLAY
 import com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFS
 import io.realm.RealmResults
@@ -32,6 +34,11 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 class GameActivity : LifecycleActivity() {
 
     private lateinit var levelId: String
+
+    private val viewModel by lazy {
+        val factory = GameViewModel.Factory(application, levelId)
+        ViewModelProviders.of(this, factory).get(GameViewModel::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,10 +72,6 @@ class GameActivity : LifecycleActivity() {
         levelId = requireNotNull(intent.getStringExtra(EXTRA_LEVEL_ID),
                 { "Activity parameter 'EXTRA_LEVEL_ID' is missing" })
 
-        val factory = GameViewModel.Factory(application, levelId)
-
-        val viewModel = ViewModelProviders.of(this, factory).get(GameViewModel::class.java)
-
         // Observe updates to the LiveData level.
         viewModel.getLevel()
                 .observe(this, Observer<Level> {
@@ -85,10 +88,9 @@ class GameActivity : LifecycleActivity() {
     }
 
     fun startAfterGameActivity() {
-        startActivity(intentFor<AfterGameActivity>(
-                EXTRA_LEVEL_ID to levelId).clearTop())
-        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
+        startActivity(intentFor<AfterGameActivity>(EXTRA_LEVEL_ID to levelId).clearTop())
         finish()  // to go back on the levels screen from after game activity
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
 
     override fun onStart() {
@@ -107,9 +109,9 @@ class GameActivity : LifecycleActivity() {
      * Back navigation. Navigates from GameActivity to LevelsActivity passing Pack id in the Intent.
      */
     private fun backToLevelsActivity() {
-        //val packId = Level().queryFirst { it.equalTo(REALM_FIELD_ID, levelId) }?.packId
         // Passing pack's id through the Intent.
-        //startActivity(intentFor<LevelsActivity>(EXTRA_PACK_ID to packId))
+        startActivity(intentFor<LevelsActivity>(EXTRA_PACK_ID to viewModel.getPackId()).clearTop())
+        finish()
         overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
     }
 

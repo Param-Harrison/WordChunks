@@ -13,12 +13,6 @@ object Constants {
 
     const val EXTRA_PACK_ID = "EXTRA_PACK_ID"
     const val EXTRA_LEVEL_ID = "EXTRA_LEVEL_ID"
-    const val LEVEL_ID_KEY = "LEVEL_ID_KEY"
-    const val COLOR_ID_KEY = "COLOR_ID_KEY"
-    const val FACT_ID_KEY = "FACT_ID_KEY"
-    const val LEFT_ID_KEY = "LEFT_ID_KEY"
-    const val CLUE_ID_KEY = "CLUE_ID_KEY"
-    const val WORD_ID_KEY = "WORD_ID_KEY"
 
     const val REALM_FIELD_ID = "id"
     const val REALM_FIELD_STATE = "state"
@@ -28,8 +22,4 @@ object Constants {
 
     const val WORDS_GRID_NUM = 2
     const val CHUNKS_GRID_NUM = 4
-
-    // States of words
-    const val WORD_STATE_NOT_SOLVED = 0
-    const val WORD_STATE_SOLVED = 1
 }

@@ -5,30 +5,30 @@
     "levels": [
       {
         "clue": "SPORTS",
-        "fact": "some fact sport",
-        "words": "AA,BB"
+        "fact": "The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet.",
+        "words": "SO,CC,ER"
       }
     ]
   },
   {
     "title": "AZURE",
-    "color": "#00bdbd",
+    "color": "#f02b66",
     "levels": [
       {
-        "clue": "SPORTS",
-        "fact": "some fact sport",
+        "clue": "ANIMALS",
+        "fact": "some fact aniamls",
         "words": "AA1,BB1"
       }
     ]
   },
   {
     "title": "AZURE",
-    "color": "#00bdbd",
+    "color": "#ff7058",
     "levels": [
       {
-        "clue": "SPORTS",
-        "fact": "some fact sport",
-        "words": "AA2,BB2"
+        "clue": "PEOPLE",
+        "fact": "some fact people",
+        "words": "AA1,BB1"
       }
     ]
   }

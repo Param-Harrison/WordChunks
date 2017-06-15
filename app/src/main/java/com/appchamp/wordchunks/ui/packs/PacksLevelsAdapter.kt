@@ -53,7 +53,6 @@ class PacksLevelsAdapter<T>(private var items: List<T> = listOf(),
 
                     tvItemTitle.setTextColor(context.color(R.color.pack_title_txt_locked))
                     tvItemSubtitle.setTextColor(context.color(R.color.pack_title_txt_locked))
-
                 }
                 else -> {
                     itemView.isEnabled = true

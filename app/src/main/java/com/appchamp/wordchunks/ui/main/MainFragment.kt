@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.ui.finish.FinishActivity
 import com.appchamp.wordchunks.ui.game.GameActivity
@@ -49,13 +50,16 @@ class MainFragment : LifecycleFragment(), AnkoLogger {
         } else {
             // All levels and packs were solved
             startFinishActivity()
-
         }
     }
 
-    private fun onStoreClick() {}
+    private fun onStoreClick() {
+        Toast.makeText(context, "COMING SOON", Toast.LENGTH_SHORT).show()
+    }
 
-    private fun onDailyClick() {}
+    private fun onDailyClick() {
+        Toast.makeText(context, "COMING SOON", Toast.LENGTH_SHORT).show()
+    }
 
     private fun startGameActivity(levelId: String) {
         startActivity(activity.intentFor<GameActivity>(

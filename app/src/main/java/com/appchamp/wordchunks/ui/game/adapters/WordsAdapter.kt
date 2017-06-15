@@ -1,6 +1,8 @@
 package com.appchamp.wordchunks.ui.game.adapters
 
+import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.support.annotation.ColorInt
 import android.support.v7.widget.RecyclerView
 import android.util.TypedValue
 import android.view.Gravity
@@ -13,12 +15,14 @@ import com.appchamp.wordchunks.extensions.color
 import com.appchamp.wordchunks.extensions.gone
 import com.appchamp.wordchunks.extensions.visible
 import com.appchamp.wordchunks.realmdb.models.realm.Word
-import com.appchamp.wordchunks.util.Constants
+import com.appchamp.wordchunks.realmdb.models.realm.WordState
 import kotlinx.android.synthetic.main.item_word.view.*
 
-// todo packColor
-class WordsAdapter(private var words: List<Word> = listOf()) : //, @ColorInt private val packColor: Int) :
+
+class WordsAdapter(private var words: List<Word> = listOf()) :
         RecyclerView.Adapter<WordsAdapter.ViewHolder>() {
+
+    var packColor: Int? = Color.parseColor("#cccccc")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_word, parent, false)
@@ -26,7 +30,7 @@ class WordsAdapter(private var words: List<Word> = listOf()) : //, @ColorInt pri
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(words[position], position)//, packColor)
+        packColor?.let { holder.bind(words[position], it, position) }
     }
 
     override fun getItemCount() = words.size
@@ -36,13 +40,17 @@ class WordsAdapter(private var words: List<Word> = listOf()) : //, @ColorInt pri
         notifyDataSetChanged()
     }
 
+    fun setPackColor(colorStr: String) {
+        this.packColor = Color.parseColor(colorStr)
+    }
+
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(word: Word, position: Int/*, @ColorInt packColor: Int*/) = with(itemView) {
+        fun bind(word: Word, @ColorInt packColor: Int, position: Int) = with(itemView) {
             val wordState = word.state
             val drawable = imgRectBg.drawable as GradientDrawable
             when (wordState) {
-                Constants.WORD_STATE_NOT_SOLVED -> {
+                WordState.NOT_SOLVED.value -> {
                     val wordLength = word.word.length
                     tvWord.text = resources.getString(R.string.number_of_letters, wordLength)
                     tvWordNum.text = word.getProperIndex()
@@ -50,10 +58,10 @@ class WordsAdapter(private var words: List<Word> = listOf()) : //, @ColorInt pri
                 }
                 else -> {
                     tvWord.text = word.word
-                    //tvWord.setTextColor(packColor)
+                    tvWord.setTextColor(packColor)
                     icon.visible()
                     tvWordNum.gone()
-                    //drawable.setColor(packColor)
+                    drawable.setColor(packColor)
                 }
             }
             when (position) {

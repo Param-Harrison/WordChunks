@@ -65,6 +65,7 @@ class GameFragment : LifecycleFragment(), AnkoLogger {
         viewModel.getLevel().observe(this, Observer {
             it?.let {
                 wordsAdapter.updateItems(it.words)
+                wordsAdapter.setPackColor(it.color)
                 chunksAdapter.updateItems(it.chunks)
             }
         })
