@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/gradient_game_finish"
-    android:orientation="vertical"
-    tools:ignore="MissingPrefix">
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -18,9 +16,9 @@
             android:contentDescription="@null" />
 
         <TextView
-            fontPath="fonts/nunitoextrabold.ttf"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fontFamily="@font/nunitoextrabold"
             android:gravity="center"
             android:text="@string/all_packs_finished"
             android:textColor="#f2f2f2"
@@ -52,7 +50,7 @@
 
             <ImageView
                 android:id="@+id/imgRectBg"
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:contentDescription="@null"
@@ -67,33 +65,32 @@
                 android:gravity="end"
                 android:orientation="vertical"
                 android:paddingBottom="4dp"
-                android:paddingEnd="17dp">
+                android:paddingEnd="17dp"
+                android:paddingRight="17dp">
 
                 <TextView
                     android:id="@+id/tvNextLevelTitle"
-                    fontPath="fonts/nunitoextrabold.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunitoextrabold"
                     android:text="@string/rate_us"
                     android:textColor="#b388ff"
-                    android:textSize="18sp"
-                    tools:ignore="MissingPrefix" />
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/tvNextLevelClue"
-                    fontPath="fonts/nunitosemibold.ttf"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="-4dp"
+                    android:fontFamily="@font/nunitosemibold"
                     android:text="@string/it_means_so_much_for_us"
                     android:textColor="#b5b5b5"
-                    android:textSize="10sp"
-                    tools:ignore="MissingPrefix" />
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
             <ImageView
-                android:layout_width="wrap_content"
+                android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/next_level"
@@ -112,21 +109,6 @@
         android:layout_marginTop="-40dp"
         android:gravity="center">
 
-        <TextView
-            android:id="@+id/tvLevelsLeft"
-            fontPath="fonts/nunitobold.ttf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:drawablePadding="10dp"
-            android:gravity="center_vertical"
-            android:padding="10dp"
-            android:text="@string/we_will_add_new_packs_soon"
-            android:textColor="#ffffff"
-            android:textSize="12sp"
-            tools:ignore="MissingPrefix" />
-
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -134,6 +116,20 @@
             android:background="@drawable/top"
             android:contentDescription="@null"
             android:rotation="180" />
+
+        <TextView
+            android:id="@+id/tvLevelsLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/nunitobold"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:text="@string/we_will_add_new_packs_soon"
+            android:textColor="#ffffff"
+            android:textSize="12sp" />
 
     </RelativeLayout>
 

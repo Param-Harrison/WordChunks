@@ -1,19 +1,22 @@
 package com.appchamp.wordchunks.ui.hint
 
-import android.arch.lifecycle.LifecycleActivity
+import android.arch.lifecycle.LifecycleRegistry
+import android.arch.lifecycle.LifecycleRegistryOwner
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID
 import kotlinx.android.synthetic.main.titlebar.*
-import org.jetbrains.anko.AnkoLogger
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 
-class HintActivity : LifecycleActivity(), AnkoLogger {
+class HintActivity :  AppCompatActivity(), LifecycleRegistryOwner {
 
     private lateinit var levelId: String
+
+    private val lifecycleRegistry: LifecycleRegistry by lazy { LifecycleRegistry(this) }
+
+    override fun getLifecycle(): LifecycleRegistry = lifecycleRegistry
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,11 +33,6 @@ class HintActivity : LifecycleActivity(), AnkoLogger {
 
         val factory = HintViewModel.Factory(application, levelId)
         ViewModelProviders.of(this, factory).get(HintViewModel::class.java)
-    }
-
-    // Sets custom fonts. (This is a temporary solution until Android O release).
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
 
     override fun onResume() {

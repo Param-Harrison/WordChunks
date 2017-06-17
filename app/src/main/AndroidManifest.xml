@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.appchamp.wordchunks"
-    android:versionCode="1"
-    android:versionName="1.0">
+ >
 
     <application
         android:name=".App"
@@ -28,7 +27,7 @@
         <activity android:name=".ui.tutorial.TutorialActivity" />
         <activity android:name=".ui.hint.HintActivity" />
         <activity android:name=".ui.aftergame.AfterGameActivity" />
-        <activity android:name=".ui.finish.FinishActivity"></activity>
+        <activity android:name=".ui.finish.FinishActivity"/>
     </application>
 
 </manifest>

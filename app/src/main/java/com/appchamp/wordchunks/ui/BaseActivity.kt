@@ -4,10 +4,8 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LifecycleRegistry
 import android.arch.lifecycle.LifecycleRegistryOwner
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 /**
  * Any custom fragment or activity can be turned into a LifecycleOwner by implementing
@@ -28,10 +26,4 @@ abstract class BaseActivity<T : AndroidViewModel> : AppCompatActivity(), Lifecyc
     }
 
     override fun getLifecycle(): LifecycleRegistry = lifecycleRegistry
-
-    // Sets custom fonts.
-    // (This is a temporary solution until Android O release).
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
-    }
 }

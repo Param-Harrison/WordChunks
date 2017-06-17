@@ -44,7 +44,7 @@
     <string name="tutorial">tutorial</string>
     <string name="all_packs_finished">ALL PACKS FINISHED</string>
     <string name="show_a_hint_for">SHOW A HINT FOR</string>
-    <string name="full_solution">FULL SOLUTION</string>
+    <string name="full_solution">FULL WORD</string>
     <string name="congratulations">CONGRATULATIONS!</string>
     <string name="first_letter">FIRST LETTER</string>
     <string name="first_chunk">FIRST CHUNK</string>
@@ -53,5 +53,10 @@
     <string name="only_one_level_left">ONLY ONE LEVEL LEFT IN PACK</string>
     <string name="you_finished_all_packs">YOU\'VE FINISHED ALL PACKS AND LEVELS</string>
     <string name="num_levels_left">%d LEVELS LEFT IN PACK</string>
+    <string name="send_feedback">SEND FEEDBACK</string>
+    <string name="rate_the_app">RATE THE APP!</string>
+    <string name="show_the">SHOW THE…</string>
+    <string name="sherlock_holmes">SHERLOCK HOLMES</string>
+    <string name="hint_amp_shuffle"><![CDATA[HINT & SHUFFLE]]></string>
 
 </resources>

@@ -16,13 +16,12 @@
 
     <TextView
         android:id="@+id/tvTitle"
-        fontPath="fonts/nunitoextrabold.ttf"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fontFamily="@font/nunitoextrabold"
         android:gravity="center"
         android:textColor="@color/title_txt"
         android:textSize="@dimen/toolbar_title_txt_size"
-        tools:ignore="MissingPrefix"
         tools:text="@string/title_select_pack" />
 
 </RelativeLayout>

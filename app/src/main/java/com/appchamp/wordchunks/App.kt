@@ -9,7 +9,6 @@ import com.squareup.leakcanary.LeakCanary
 import com.uphyca.stetho_realm.RealmInspectorModulesProvider
 import io.realm.Realm
 import io.realm.RealmConfiguration
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 import java.io.File
 
 
@@ -21,8 +20,6 @@ class App : Application() {
         initLeakCanary()
 
         initStetho()
-
-        initCalligraphy()
 
         // The Realm lifecycle can be managed in the ViewModel and closed when the ViewModel is
         // no longer being used.
@@ -50,14 +47,6 @@ class App : Application() {
                         .enableWebKitInspector(
                                 RealmInspectorModulesProvider.builder(this).build())
                         .build())
-    }
-
-    private fun initCalligraphy() {
-        CalligraphyConfig.initDefault(CalligraphyConfig.Builder()
-                .setDefaultFontPath("fonts/nunitobold.ttf")
-                .setFontAttrId(R.attr.fontPath)
-                .build()
-        )
     }
 
     private fun initRealm(): RealmConfiguration {

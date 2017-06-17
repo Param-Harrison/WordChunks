@@ -8,15 +8,14 @@
     android:orientation="vertical">
 
     <TextView
-        fontPath="fonts/nunitoblack.ttf"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:fontFamily="@font/nunitoblack"
         android:paddingTop="40dp"
         android:text="@string/settings_hint"
         android:textColor="#ffffff"
-        android:textSize="20sp"
-        tools:ignore="MissingPrefix" />
+        android:textSize="20sp" />
 
     <LinearLayout
         android:layout_width="200dp"
@@ -32,10 +31,13 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:background="#4f418e"
+            android:fontFamily="@font/nunitoblack"
             android:foreground="?android:attr/selectableItemBackground"
             android:padding="10dp"
-            android:text="SEND FEEDBACK"
-            android:textAlignment="center" />
+            android:text="@string/send_feedback"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tvHowToPlay"
@@ -43,10 +45,13 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:background="#5b48b3"
+            android:fontFamily="@font/nunitoblack"
             android:foreground="?android:attr/selectableItemBackground"
             android:padding="10dp"
-            android:text="HOW TO PLAY?"
-            android:textAlignment="center" />
+            android:text="@string/how_to_play"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/tvRateUs"
@@ -54,10 +59,13 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:background="#6950e1"
+            android:fontFamily="@font/nunitoblack"
             android:foreground="?android:attr/selectableItemBackground"
             android:padding="10dp"
-            android:text="RATE THE APP!"
-            android:textAlignment="center" />
+            android:text="@string/rate_the_app"
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="14sp" />
 
     </LinearLayout>
 

@@ -10,28 +10,30 @@
 
     <ImageView
         android:id="@+id/imgRectBg"
-        android:layout_width="wrap_content"
+        android:layout_width="46dp"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
         android:scaleType="fitXY"
-        tools:src="@drawable/btn_store_rect" />
+        tools:src="@drawable/btn_store_rect"
+        android:contentDescription="@null" />
 
     <TextView
         android:id="@+id/txtTitle"
-        fontPath="fonts/nunitoextrabold.ttf"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fontFamily="@font/nunitoextrabold"
         android:gravity="end|center_vertical"
         android:paddingEnd="@dimen/cbtn_title_padding_end"
+        android:paddingRight="@dimen/cbtn_title_padding_end"
         android:textSize="@dimen/cbtn_title_size"
-        tools:ignore="MissingPrefix"
         tools:text="@string/store_btn_txt" />
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="wrap_content"
+        android:layout_width="46dp"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
+        android:contentDescription="@null"
         android:scaleType="centerInside"
         tools:src="@drawable/ic_store" />
 

@@ -1,21 +1,20 @@
 package com.appchamp.wordchunks.ui.aftergame
 
-import android.arch.lifecycle.LifecycleActivity
+import android.arch.lifecycle.LifecycleRegistry
+import android.arch.lifecycle.LifecycleRegistryOwner
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.realmdb.models.realm.LevelState
 import com.appchamp.wordchunks.ui.levels.LevelsActivity
 import com.appchamp.wordchunks.util.ActivityUtils
 import com.appchamp.wordchunks.util.Constants
-import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 
-class AfterGameActivity : LifecycleActivity(), AnkoLogger {
+class AfterGameActivity : AppCompatActivity(), LifecycleRegistryOwner {
 
     private lateinit var levelId: String
 
@@ -24,16 +23,15 @@ class AfterGameActivity : LifecycleActivity(), AnkoLogger {
         ViewModelProviders.of(this, factory).get(AfterGameViewModel::class.java)
     }
 
+    private val lifecycleRegistry: LifecycleRegistry by lazy { LifecycleRegistry(this) }
+
+    override fun getLifecycle(): LifecycleRegistry = lifecycleRegistry
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_after_game)
 
         subscribeUi()
-    }
-
-    // Sets custom fonts. (This is a temporary solution until Android O release).
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
 
     private fun subscribeUi() {

@@ -1,10 +1,12 @@
 package com.appchamp.wordchunks.ui.game
 
-import android.arch.lifecycle.LifecycleActivity
+import android.arch.lifecycle.LifecycleRegistry
+import android.arch.lifecycle.LifecycleRegistryOwner
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.realmdb.models.realm.Level
 import com.appchamp.wordchunks.realmdb.models.realm.Word
@@ -23,7 +25,6 @@ import kotlinx.android.synthetic.main.titlebar.*
 import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivity
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
 
 
 /**
@@ -31,7 +32,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper
  * handles intent extra data, shows tutorial activity on the first run.
  * GameViewModel shares level ID between this activity and its fragment.
  */
-class GameActivity : LifecycleActivity() {
+class GameActivity : AppCompatActivity(), LifecycleRegistryOwner {
 
     private lateinit var levelId: String
 
@@ -39,6 +40,10 @@ class GameActivity : LifecycleActivity() {
         val factory = GameViewModel.Factory(application, levelId)
         ViewModelProviders.of(this, factory).get(GameViewModel::class.java)
     }
+
+    private val lifecycleRegistry: LifecycleRegistry by lazy { LifecycleRegistry(this) }
+
+    override fun getLifecycle(): LifecycleRegistry = lifecycleRegistry
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,11 +65,6 @@ class GameActivity : LifecycleActivity() {
         if (savedInstanceState == null) {
             ActivityUtils.addFragment(supportFragmentManager, GameFragment(), R.id.fragment_container)
         }
-    }
-
-    // Sets custom fonts. (This is a temporary solution until Android O release).
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase))
     }
 
     private fun subscribeUi() {

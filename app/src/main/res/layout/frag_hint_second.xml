@@ -13,16 +13,16 @@
 
         <TextView
             android:id="@+id/textView"
-            fontPath="fonts/nunitoextrabold.ttf"
+            android:fontFamily="@font/nunitoextrabold"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:gravity="center"
             android:text="@string/show_a_hint_for"
             android:textColor="@color/title_txt"
-            android:textSize="@dimen/toolbar_title_txt_size"
-            tools:ignore="MissingPrefix" />
+            android:textSize="@dimen/toolbar_title_txt_size" />
 
     </RelativeLayout>
 
@@ -40,6 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="false"
+            android:layout_alignParentRight="false"
             android:adjustViewBounds="true"
             android:contentDescription="@null"
             android:scaleType="fitXY"
@@ -47,7 +48,7 @@
 
         <TextView
             android:id="@+id/tvWordLetters"
-            fontPath="fonts/nunitobold.ttf"
+            android:fontFamily="@font/nunitobold"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical|end"
@@ -56,19 +57,18 @@
             android:paddingStart="12dp"
             android:textColor="#ffffff"
             android:textSize="12sp"
-            tools:ignore="MissingPrefix"
             tools:text="10 LETTERS" />
 
         <TextView
             android:id="@+id/tvWordNumber"
-            fontPath="fonts/nunitoextrabold.ttf"
+            android:fontFamily="@font/nunitoextrabold"
             android:layout_width="32dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="false"
+            android:layout_alignParentRight="false"
             android:gravity="center"
             android:textColor="#37474f"
             android:textSize="15sp"
-            tools:ignore="MissingPrefix"
             tools:text="1" />
 
     </RelativeLayout>
@@ -94,7 +94,7 @@
 
         <TextView
             android:id="@+id/tvHint"
-            fontPath="fonts/nunitoblack.ttf"
+            android:fontFamily="@font/nunitoblack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -102,7 +102,6 @@
             android:paddingBottom="5dp"
             android:textColor="#37474f"
             android:textSize="20sp"
-            tools:ignore="MissingPrefix"
             tools:text="POTATO" />
 
     </RelativeLayout>
@@ -125,16 +124,15 @@
             android:orientation="vertical">
 
             <TextView
-                fontPath="fonts/nunitoextrabold.ttf"
+                android:fontFamily="@font/nunitoextrabold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
-                android:text="SHOW THE..."
+                android:text="@string/show_the"
                 android:textAlignment="center"
                 android:textColor="#eeeeee"
-                android:textSize="18sp"
-                tools:ignore="MissingPrefix" />
+                android:textSize="18sp" />
 
             <com.appchamp.wordchunks.ui.customviews.CustomButton
                 android:id="@+id/btnFirstLetter"

@@ -16,9 +16,10 @@
 
     <ImageView
         android:id="@+id/imgRectBg"
-        android:layout_width="wrap_content"
+        android:layout_width="42dp"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="false"
+        android:layout_alignParentRight="false"
         android:adjustViewBounds="true"
         android:contentDescription="@null"
         android:scaleType="fitXY"
@@ -26,41 +27,41 @@
 
     <TextView
         android:id="@+id/tvWord"
-        fontPath="fonts/nunitobolditalic.ttf"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fontFamily="@font/nunitobolditalic"
         android:gravity="center_vertical|end"
         android:letterSpacing="0.1"
         android:paddingEnd="12dp"
         android:paddingStart="12dp"
         android:textColor="#ffffff"
         android:textSize="15sp"
-        tools:ignore="MissingPrefix"
         tools:text="10 LETTERS" />
 
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="wrap_content"
+        android:layout_width="42dp"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="false"
+        android:layout_alignParentRight="false"
         android:adjustViewBounds="true"
         android:contentDescription="@null"
         android:padding="5dp"
         android:scaleType="centerInside"
         android:src="@drawable/ic_fish"
         android:visibility="gone"
-        tools:visibility="invisible" />
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/tvWordNum"
-        fontPath="fonts/nunitoextrabold.ttf"
         android:layout_width="42dp"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="false"
+        android:layout_alignParentRight="false"
+        android:fontFamily="@font/nunitoextrabold"
         android:gravity="center"
         android:textColor="#37474f"
         android:textSize="15sp"
-        tools:ignore="MissingPrefix"
         tools:text="1" />
 
 </RelativeLayout>

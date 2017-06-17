@@ -13,12 +13,11 @@
 
     <TextView
         android:id="@+id/tvChunk"
-        fontPath="fonts/nunitoextrabold.ttf"
+        android:fontFamily="@font/nunitoextrabold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#222a34"
         android:textSize="21sp"
-        tools:ignore="MissingPrefix"
         tools:text="ABCD" />
 
 </RelativeLayout>

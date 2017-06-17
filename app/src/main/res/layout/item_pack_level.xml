@@ -28,27 +28,26 @@
         android:gravity="end"
         android:orientation="vertical"
         android:paddingBottom="4dp"
-        android:paddingEnd="17dp">
+        android:paddingEnd="17dp"
+        android:paddingRight="17dp">
 
         <TextView
             android:id="@+id/tvItemTitle"
-            fontPath="fonts/nunitoextrabold.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nunitoextrabold"
             android:textColor="@color/pack_title_txt_locked"
             android:textSize="18sp"
-            tools:ignore="MissingPrefix"
             tools:text="AZURE" />
 
         <TextView
             android:id="@+id/tvItemSubtitle"
-            fontPath="fonts/nunitosemibold.ttf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="-4dp"
+            android:fontFamily="@font/nunitosemibold"
             android:textColor="@color/pack_title_txt_locked"
             android:textSize="10sp"
-            tools:ignore="MissingPrefix"
             tools:text="13/13" />
 
     </LinearLayout>
