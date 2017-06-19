@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2017 Julia Kozhukhovskaya
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,12 +29,12 @@
 
         <TextView
             android:id="@+id/textView"
-            android:fontFamily="@font/nunitoextrabold"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
+            android:fontFamily="@font/nunitoextrabold"
             android:gravity="center"
             android:text="@string/show_a_hint_for"
             android:textColor="@color/title_txt"
@@ -48,9 +64,9 @@
 
         <TextView
             android:id="@+id/tvWordLetters"
-            android:fontFamily="@font/nunitobold"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fontFamily="@font/nunitobold"
             android:gravity="center_vertical|end"
             android:letterSpacing="0.1"
             android:paddingEnd="12dp"
@@ -61,11 +77,11 @@
 
         <TextView
             android:id="@+id/tvWordNumber"
-            android:fontFamily="@font/nunitoextrabold"
             android:layout_width="32dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="false"
             android:layout_alignParentRight="false"
+            android:fontFamily="@font/nunitoextrabold"
             android:gravity="center"
             android:textColor="#37474f"
             android:textSize="15sp"
@@ -94,10 +110,10 @@
 
         <TextView
             android:id="@+id/tvHint"
-            android:fontFamily="@font/nunitoblack"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:fontFamily="@font/nunitoblack"
             android:gravity="center"
             android:paddingBottom="5dp"
             android:textColor="#37474f"
@@ -124,9 +140,9 @@
             android:orientation="vertical">
 
             <TextView
-                android:fontFamily="@font/nunitoextrabold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/nunitoextrabold"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
                 android:text="@string/show_the"
