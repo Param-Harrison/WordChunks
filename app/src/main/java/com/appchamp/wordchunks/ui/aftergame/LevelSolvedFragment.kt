@@ -15,10 +15,12 @@ import com.appchamp.wordchunks.ui.finish.FinishActivity
 import com.appchamp.wordchunks.ui.game.GameActivity
 import com.appchamp.wordchunks.util.Constants
 import kotlinx.android.synthetic.main.frag_level_solved.*
-import org.jetbrains.anko.*
+import org.jetbrains.anko.clearTop
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.startActivity
 
 
-class LevelSolvedFragment : LifecycleFragment(), AnkoLogger {
+class LevelSolvedFragment : LifecycleFragment() {
 
     private val viewModel by lazy {
         ViewModelProviders.of(activity).get(AfterGameViewModel::class.java)
@@ -65,7 +67,7 @@ class LevelSolvedFragment : LifecycleFragment(), AnkoLogger {
     private fun setPackColor(@ColorInt color: Int) {
         val drawable = imgRectBg.drawable as GradientDrawable
         drawable.setColor(color)
-        tvNextLevelTitle.textColor = color
+        tvNextLevelTitle.setTextColor(color)
     }
 
     private fun setClue(clue: String?) {

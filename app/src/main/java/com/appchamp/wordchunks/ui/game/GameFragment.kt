@@ -20,10 +20,9 @@ import com.appchamp.wordchunks.util.Constants.CHUNKS_GRID_NUM
 import com.appchamp.wordchunks.util.Constants.WORDS_GRID_NUM
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.frag_game.*
-import org.jetbrains.anko.AnkoLogger
 
 
-class GameFragment : LifecycleFragment(), AnkoLogger {
+class GameFragment : LifecycleFragment() {
 
     private val viewModel by lazy {
         ViewModelProviders.of(activity).get(GameViewModel::class.java)

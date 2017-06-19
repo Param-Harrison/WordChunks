@@ -15,12 +15,11 @@ import io.realm.RealmResults
 import kotlinx.android.synthetic.main.act_packs_levels.*
 import kotlinx.android.synthetic.main.titlebar.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
-import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
 
 
-class LevelsActivity : BaseActivity<LevelsViewModel>(), AnkoLogger {
+class LevelsActivity : BaseActivity<LevelsViewModel>() {
 
     override val viewModelClass = LevelsViewModel::class.java
 

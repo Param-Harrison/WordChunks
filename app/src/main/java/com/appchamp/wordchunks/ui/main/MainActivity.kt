@@ -15,10 +15,13 @@ import com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFS
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu
 import kotlinx.android.synthetic.main.frag_main.*
 import kotlinx.android.synthetic.main.frag_sliding_menu.*
-import org.jetbrains.anko.*
+import org.jetbrains.anko.act
+import org.jetbrains.anko.browse
+import org.jetbrains.anko.email
+import org.jetbrains.anko.startActivity
 
 
-class MainActivity : BaseActivity<MainViewModel>(), AnkoLogger {
+class MainActivity : BaseActivity<MainViewModel>() {
 
     private lateinit var menu: SlidingMenu
 
@@ -29,8 +32,8 @@ class MainActivity : BaseActivity<MainViewModel>(), AnkoLogger {
         setContentView(R.layout.act_main)
 
         val sp = getSharedPreferences(WORD_CHUNKS_PREFS, Context.MODE_PRIVATE)
-        val isRealmExists = sp.getBoolean(PREFS_IS_DB_EXISTS, false)
-        info { "isRealmExists=" + isRealmExists }
+        val isRealmExists = sp.getBoolean(PREFS_IS_DB_EXISTS, true)  // false for debugging
+
         if (isRealmExists) { // always false while debugging
             // update an existing realm objects here
             // updateRealmDb();

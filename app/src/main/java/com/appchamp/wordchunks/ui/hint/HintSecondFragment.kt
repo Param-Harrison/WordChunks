@@ -9,10 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
 import kotlinx.android.synthetic.main.frag_hint_second.*
-import org.jetbrains.anko.AnkoLogger
 
 
-class HintSecondFragment : LifecycleFragment(), AnkoLogger {
+class HintSecondFragment : LifecycleFragment() {
 
     private val viewModel by lazy {
         ViewModelProviders.of(activity).get(HintViewModel::class.java)

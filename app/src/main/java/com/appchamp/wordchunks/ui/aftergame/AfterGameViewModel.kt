@@ -7,13 +7,10 @@ import android.arch.lifecycle.ViewModelProvider
 import com.appchamp.wordchunks.realmdb.models.realm.*
 import com.appchamp.wordchunks.realmdb.utils.*
 import io.realm.Realm
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 import java.util.*
 
 
-class AfterGameViewModel(application: Application, levelId: String) : AndroidViewModel(application),
-        AnkoLogger {
+class AfterGameViewModel(application: Application, levelId: String) : AndroidViewModel(application) {
 
     private val db: Realm = Realm.getDefaultInstance()
     // Live data
@@ -49,7 +46,6 @@ class AfterGameViewModel(application: Application, levelId: String) : AndroidVie
     }
 
     fun getNextLevelId(): String? {
-        info { "NEXT LEVEL ID=" + nextLevel?.id }
         return nextLevel?.id
     }
 

@@ -66,9 +66,9 @@ class WordsAdapter(private var words: List<Word> = listOf()) :
             }
             when (position) {
             // If right column
-                1, 3, 5 -> setItemLayout(RelativeLayout.ALIGN_PARENT_END, Gravity.START)
+                1, 3, 5 -> setItemLayout(RelativeLayout.ALIGN_PARENT_RIGHT, Gravity.START)
             // If left column
-                else -> setItemLayout(RelativeLayout.ALIGN_PARENT_START, Gravity.END)
+                else -> setItemLayout(RelativeLayout.ALIGN_PARENT_LEFT, Gravity.END)
             }
         }
 

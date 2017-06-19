@@ -4,9 +4,6 @@ import android.app.Application
 import android.content.Context
 import com.appchamp.wordchunks.util.Constants.PREFS_IS_DB_EXISTS
 import com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFS
-import com.facebook.stetho.Stetho
-import com.squareup.leakcanary.LeakCanary
-import com.uphyca.stetho_realm.RealmInspectorModulesProvider
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import java.io.File
@@ -17,9 +14,9 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        initLeakCanary()
+//        initLeakCanary()
 
-        initStetho()
+//        initStetho()
 
         // The Realm lifecycle can be managed in the ViewModel and closed when the ViewModel is
         // no longer being used.
@@ -31,23 +28,23 @@ class App : Application() {
         isRealmExists(config)
     }
 
-    private fun initLeakCanary() {
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return
-        }
-        LeakCanary.install(this)
-    }
+//    private fun initLeakCanary() {
+//        if (LeakCanary.isInAnalyzerProcess(this)) {
+//            // This process is dedicated to LeakCanary for heap analysis.
+//            // You should not init your app in this process.
+//            return
+//        }
+//        LeakCanary.install(this)
+//    }
 
-    private fun initStetho() {
-        Stetho.initialize(
-                Stetho.newInitializerBuilder(this)
-                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                        .enableWebKitInspector(
-                                RealmInspectorModulesProvider.builder(this).build())
-                        .build())
-    }
+//    private fun initStetho() {
+//        Stetho.initialize(
+//                Stetho.newInitializerBuilder(this)
+//                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+//                        .enableWebKitInspector(
+//                                RealmInspectorModulesProvider.builder(this).build())
+//                        .build())
+//    }
 
     private fun initRealm(): RealmConfiguration {
         Realm.init(this)
@@ -66,8 +63,10 @@ class App : Application() {
         // If Realm DB file exists.
         if (File(config.path).exists()) {
             // Putting in shared prefs true value
-            editor.putBoolean(PREFS_IS_DB_EXISTS, false)  // false for debugging
+            editor.putBoolean(PREFS_IS_DB_EXISTS, true)  // false for debugging
         } else {
+            // Delete realm db before creating new objects.
+            Realm.deleteRealm(RealmConfiguration.Builder().build())
             // doesn't exists if:
             // 1. user cleared data
             // 2. user just installed the app
@@ -75,7 +74,5 @@ class App : Application() {
             editor.putBoolean(PREFS_IS_DB_EXISTS, false)
         }
         editor.apply()
-        // Delete realm db before creating new objects.
-        Realm.deleteRealm(RealmConfiguration.Builder().build())
     }
 }

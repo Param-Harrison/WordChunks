@@ -11,11 +11,9 @@ import com.appchamp.wordchunks.realmdb.utils.chunkModel
 import com.appchamp.wordchunks.realmdb.utils.levelModel
 import com.appchamp.wordchunks.realmdb.utils.wordModel
 import io.realm.Realm
-import org.jetbrains.anko.AnkoLogger
 
 
-class HintViewModel(application: Application, levelId: String) : AndroidViewModel(application),
-        AnkoLogger {
+class HintViewModel(application: Application, levelId: String) : AndroidViewModel(application) {
 
     private val db: Realm = Realm.getDefaultInstance()
     // Live data

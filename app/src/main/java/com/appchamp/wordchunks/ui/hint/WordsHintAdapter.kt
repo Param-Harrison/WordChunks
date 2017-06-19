@@ -1,6 +1,8 @@
-package com.appchamp.wordchunks.ui.game.adapters
+package com.appchamp.wordchunks.ui.hint
 
+import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
+import android.support.annotation.ColorInt
 import android.support.v7.widget.RecyclerView
 import android.util.TypedValue
 import android.view.Gravity
@@ -16,12 +18,14 @@ import com.appchamp.wordchunks.extensions.gone
 import com.appchamp.wordchunks.extensions.visible
 import com.appchamp.wordchunks.realmdb.models.realm.Word
 import com.appchamp.wordchunks.realmdb.models.realm.WordState
-import kotlinx.android.synthetic.main.item_word.view.*
+import kotlinx.android.synthetic.main.item_word_hint.view.*
 
-// todo packColor
+
 class WordsHintAdapter(private var words: List<Word> = listOf(),
                        private val wordClick: (Word) -> Unit) :
         RecyclerView.Adapter<WordsHintAdapter.ViewHolder>() {
+
+    var packColor: Int? = Color.parseColor("#cccccc")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_word_hint, parent, false)
@@ -31,7 +35,7 @@ class WordsHintAdapter(private var words: List<Word> = listOf(),
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         setAnimation(holder.itemView, position)
 
-        holder.bind(words[position], position)
+        packColor?.let { holder.bind(words[position], it, position) }
     }
 
     override fun getItemCount() = words.size
@@ -41,9 +45,13 @@ class WordsHintAdapter(private var words: List<Word> = listOf(),
         notifyDataSetChanged()
     }
 
+    fun setPackColor(colorStr: String) {
+        this.packColor = Color.parseColor(colorStr)
+    }
+
     class ViewHolder(view: View, val wordClick: (Word) -> Unit) : RecyclerView.ViewHolder(view) {
 
-        fun bind(word: Word, pos: Int) = with(itemView) {
+        fun bind(word: Word, @ColorInt packColor: Int, pos: Int) = with(itemView) {
             val wordState = word.state
             val drawable = imgRectBg.drawable as GradientDrawable
             when (wordState) {
@@ -56,16 +64,16 @@ class WordsHintAdapter(private var words: List<Word> = listOf(),
                 else -> {
                     itemView.isEnabled = false
                     tvWord.text = word.word
-                    //tvWord.setTextColor(packColor)
+                    tvWord.setTextColor(packColor)
                     icon.visible()
                     tvWordNum.gone()
-                    //drawable.setColor(packColor)
+                    drawable.setColor(packColor)
                     itemView.alpha = 0.4f
                 }
             }
 
             // left column
-            setItemLayout(RelativeLayout.ALIGN_PARENT_START, Gravity.END)
+            setItemLayout(RelativeLayout.ALIGN_PARENT_LEFT, Gravity.END)
 
             itemView.setOnClickListener { wordClick(word) }
         }

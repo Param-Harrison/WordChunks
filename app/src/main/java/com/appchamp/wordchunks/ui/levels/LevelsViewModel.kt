@@ -7,10 +7,9 @@ import com.appchamp.wordchunks.realmdb.models.realm.LevelState
 import com.appchamp.wordchunks.realmdb.utils.LiveRealmResults
 import com.appchamp.wordchunks.realmdb.utils.levelModel
 import io.realm.Realm
-import org.jetbrains.anko.AnkoLogger
 
 
-class LevelsViewModel(application: Application?) : AndroidViewModel(application), AnkoLogger {
+class LevelsViewModel(application: Application?) : AndroidViewModel(application) {
 
     private val db: Realm = Realm.getDefaultInstance()
 

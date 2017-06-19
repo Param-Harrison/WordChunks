@@ -10,11 +10,9 @@ import com.appchamp.wordchunks.realmdb.models.realm.*
 import com.appchamp.wordchunks.realmdb.utils.*
 import io.realm.Realm
 import io.realm.RealmList
-import org.jetbrains.anko.AnkoLogger
 
 
-class GameViewModel(application: Application, levelId: String) : AndroidViewModel(application),
-        AnkoLogger {
+class GameViewModel(application: Application, levelId: String) : AndroidViewModel(application) {
 
     private val db: Realm = Realm.getDefaultInstance()
     // Live data

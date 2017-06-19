@@ -9,12 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.ui.game.CustomGridLayoutManager
-import com.appchamp.wordchunks.ui.game.adapters.WordsHintAdapter
 import kotlinx.android.synthetic.main.frag_hint_first.*
-import org.jetbrains.anko.AnkoLogger
 
 
-class HintFirstFragment : LifecycleFragment(), AnkoLogger {
+class HintFirstFragment : LifecycleFragment() {
 
     private lateinit var wordsHintAdapter: WordsHintAdapter
 
@@ -39,6 +37,7 @@ class HintFirstFragment : LifecycleFragment(), AnkoLogger {
         viewModel.getLevel().observe(this, Observer {
             it?.let {
                 wordsHintAdapter.updateItems(it.words)
+                wordsHintAdapter.setPackColor(it.color)
             }
         })
     }

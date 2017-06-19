@@ -13,10 +13,13 @@ import com.appchamp.wordchunks.ui.game.GameActivity
 import com.appchamp.wordchunks.ui.packs.PacksActivity
 import com.appchamp.wordchunks.util.Constants
 import kotlinx.android.synthetic.main.frag_main.*
-import org.jetbrains.anko.*
+import org.jetbrains.anko.clearTop
+import org.jetbrains.anko.intentFor
+import org.jetbrains.anko.share
+import org.jetbrains.anko.startActivity
 
 
-class MainFragment : LifecycleFragment(), AnkoLogger {
+class MainFragment : LifecycleFragment() {
 
     private val viewModel by lazy {
         ViewModelProviders.of(activity).get(MainViewModel::class.java)
