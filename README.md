@@ -1,4 +1,4 @@
-# WordChunks [beta]
+# WordChunks [beta] - Find hidden words in a grid of chunks.
 
 <img alt='WordChunks Game' src='https://github.com/jkozh/WordChunks/blob/master/images/logo.jpg' width='80%'/>
 
@@ -6,7 +6,13 @@
 <a href='https://play.google.com/store/apps/details?id=com.appchamp.wordchunks&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width=20%/></a>
 
 Find hidden words in a grid of chunks.
-The six hidden words are broken into chunks of two, three or four letters and shuffled in a grid. You have to tap the chunks in the correct order to unscramble the words. There is no time limit and you can find the words in any order. 
+The six hidden words are broken into chunks of two, three or four letters and shuffled in a grid. You have to tap the chunks in the correct order to unscramble the words. There is no time limit and you can find the words in any order.
+
+- It's free, seriously!
+- Easy to play, hard to beat!
+- Unlock levels and packs by solving them. The more you play, the better you get at it.
+- Made with love, and with pets.
+- No pay to play, no pay to win.
 
 ### Some pleasant surprises for me while refactoring Java -> Kotlin code:
 
