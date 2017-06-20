@@ -30,8 +30,6 @@ import kotlinx.android.synthetic.main.item_chunk.view.*
 import java.util.*
 
 
-
-
 class ChunksAdapter(private var chunks: List<Chunk> = listOf(),
                     private val chunkClick: (Chunk) -> Unit) :
         RecyclerView.Adapter<ChunksAdapter.ViewHolder>() {

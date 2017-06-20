@@ -125,7 +125,11 @@ class GameFragment : LifecycleFragment() {
     }
 
     private fun updateChunksTextView(text: String) {
+//        tvInputChunks.text = ""
+//        TextViewCompat.setAutoSizeTextTypeWithDefaults(tvInputChunks, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM)
         tvInputChunks.text = text
+//        TextViewCompat.setAutoSizeTextTypeWithDefaults(tvInputChunks, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM)
+
     }
 
     private fun updateChunksCountView(length: Int?) {
