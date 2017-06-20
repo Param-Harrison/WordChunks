@@ -14,6 +14,9 @@ The six hidden words are broken into chunks of two, three or four letters and sh
 - Made with love, and with pets.
 - No pay to play, no pay to win.
 
+### Screenshots
+<img src='https://github.com/jkozh/WordChunks/blob/master/images/Phone%20Screenshot%201.jpg' width=25%/><img src='https://github.com/jkozh/WordChunks/blob/master/images/Phone%20Screenshot%202.jpg' width=25%/><img src='https://github.com/jkozh/WordChunks/blob/master/images/Phone%20Screenshot%203.jpg' width=25%/><img src='https://github.com/jkozh/WordChunks/blob/master/images/Phone%20Screenshot%204.jpg' width=25%/><img src='https://github.com/jkozh/WordChunks/blob/master/images/Phone%20Screenshot%205.jpg' width=25%/>
+
 ### Some pleasant surprises for me while refactoring Java -> Kotlin code:
 
 ---
