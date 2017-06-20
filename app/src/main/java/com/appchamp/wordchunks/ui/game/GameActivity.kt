@@ -96,6 +96,7 @@ class GameActivity : AppCompatActivity(), LifecycleRegistryOwner {
                 })
         viewModel.getLiveWords().observe(this, Observer<RealmResults<Word>> {
             it?.let {
+
                 if (viewModel.isLevelSolved()) {
                     startAfterGameActivity()
                 }

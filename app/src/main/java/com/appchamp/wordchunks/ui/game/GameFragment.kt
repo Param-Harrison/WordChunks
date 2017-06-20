@@ -36,12 +36,17 @@ import com.appchamp.wordchunks.util.Constants.CHUNKS_GRID_NUM
 import com.appchamp.wordchunks.util.Constants.WORDS_GRID_NUM
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.frag_game.*
+import xyz.hanks.library.SmallBang
 
 
 class GameFragment : LifecycleFragment() {
 
     private val viewModel by lazy {
         ViewModelProviders.of(activity).get(GameViewModel::class.java)
+    }
+
+    private val smallBang by lazy {
+        SmallBang.attach2Window(activity)
     }
 
     private lateinit var wordsAdapter: WordsAdapter
@@ -92,7 +97,11 @@ class GameFragment : LifecycleFragment() {
                 val pos = viewModel.isWordSolved()
                 if (pos != -1) {
                     wordsAdapter.notifyItemChanged(pos)
-                    viewModel.onWordSolved().forEach { chunksAdapter.notifyItemChanged(it) }
+                    viewModel.onWordSolved().forEach {
+                        chunksAdapter.notifyItemChanged(it)
+                        val v = rvWords.layoutManager.findViewByPosition(pos)
+                        smallBang.bang(v)
+                    }
                 }
             }
         })

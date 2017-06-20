@@ -43,7 +43,7 @@ class WordsAdapter(private var words: List<Word> = listOf()) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        packColor?.let { holder.bind(words[position], it, position) }
+        packColor?.let { holder.bind(words[position], it) }
     }
 
     override fun getItemCount() = words.size
@@ -59,7 +59,7 @@ class WordsAdapter(private var words: List<Word> = listOf()) :
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(word: Word, @ColorInt packColor: Int, position: Int) = with(itemView) {
+        fun bind(word: Word, @ColorInt packColor: Int) = with(itemView) {
             val wordState = word.state
             val drawable = imgRectBg.drawable as GradientDrawable
             when (wordState) {
@@ -77,36 +77,6 @@ class WordsAdapter(private var words: List<Word> = listOf()) :
                     drawable.setColor(packColor)
                 }
             }
-//            when (position) {
-//            // If right column
-//                1, 3, 5 -> setItemLayout(RelativeLayout.ALIGN_PARENT_RIGHT, Gravity.START)
-//            // If left column
-//                else -> setItemLayout(RelativeLayout.ALIGN_PARENT_LEFT, Gravity.END)
-//            }
         }
-
-//        private fun setItemLayout(alignParent: Int, gravity: Int) {
-//            val params = LayoutParams(itemView.dip(32), LayoutParams.MATCH_PARENT)
-//
-//            params.addRule(alignParent, RelativeLayout.TRUE)
-//
-//            itemView.icon.layoutParams = params
-//            itemView.imgRectBg.layoutParams = params
-//
-//            val params2 = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
-//
-//            params2.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE)
-//            itemView.tvWord.layoutParams = params2
-//            TextViewCompat.setAutoSizeTextTypeWithDefaults(itemView.tvWord, TextViewCompat.AUTO_SIZE_TEXT_TYPE_UNIFORM)
-//            itemView.tvWord.gravity = gravity
-//            itemView.tvWord.setPadding(itemView.dip(38), 0 , itemView.dip(12), 0)
-//            itemView.tvWord.maxHeight = itemView.dip(38)
-//            //itemView.tvWord.setAutoSizeTextTypeWithDefaults()
-//
-//           // params = LayoutParams(itemView.dip(32), LayoutParams.MATCH_PARENT)
-//
-//            params.addRule(alignParent, RelativeLayout.TRUE)
-//            itemView.tvWordNum.layoutParams = params
-//        }
     }
 }
