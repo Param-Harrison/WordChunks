@@ -81,7 +81,7 @@
             android:gravity="center"
             android:paddingBottom="5dp"
             android:textColor="#37474f"
-            android:textSize="20sp"
+            android:textSize="20dp"
             tools:text="EXCELLENT!" />
 
     </RelativeLayout>
@@ -136,7 +136,7 @@
                     android:text="@string/fun_fact"
                     android:textAlignment="center"
                     android:textColor="#dedede"
-                    android:textSize="12sp" />
+                    android:textSize="12dp" />
 
             </RelativeLayout>
 
@@ -149,7 +149,7 @@
                 android:paddingEnd="20dp"
                 android:paddingStart="20dp"
                 android:textColor="#c7c7c7"
-                android:textSize="12sp"
+                android:textSize="12dp"
                 tools:text="The sentence “The quick brown fox jumps over a lazy dog.” uses every letter of the alphabet." />
 
         </LinearLayout>
@@ -201,7 +201,7 @@
                     android:layout_marginTop="-4dp"
                     android:fontFamily="@font/nunitosemibold"
                     android:textColor="#b5b5b5"
-                    android:textSize="10sp"
+                    android:textSize="10dp"
                     tools:text="ANIMALS" />
 
             </LinearLayout>
@@ -234,7 +234,7 @@
             android:gravity="center_vertical"
             android:padding="10dp"
             android:textColor="#ffffff"
-            android:textSize="12sp"
+            android:textSize="12dp"
             tools:text="5 LEVELS LEFT IN PACK" />
 
     </RelativeLayout>

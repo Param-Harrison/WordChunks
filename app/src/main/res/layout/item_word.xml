@@ -39,7 +39,7 @@
         android:paddingRight="8dp"
         android:paddingStart="38dp"
         android:textColor="#ffffff"
-        android:textSize="14sp"
+        android:textSize="14dp"
         app:autoSizeMinTextSize="8sp"
         app:autoSizeTextType="uniform"
         tools:text="10 LETTERS" />
@@ -79,7 +79,7 @@
         android:fontFamily="@font/nunitoextrabold"
         android:gravity="center"
         android:textColor="#37474f"
-        android:textSize="15sp"
+        android:textSize="15dp"
         tools:text="1" />
 
 </RelativeLayout>

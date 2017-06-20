@@ -30,7 +30,7 @@
         android:paddingTop="40dp"
         android:text="@string/settings_hint"
         android:textColor="#ffffff"
-        android:textSize="20sp" />
+        android:textSize="20dp" />
 
     <LinearLayout
         android:layout_width="200dp"
@@ -52,7 +52,7 @@
             android:text="@string/send_feedback"
             android:textAlignment="center"
             android:textColor="#ffffff"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <TextView
             android:id="@+id/tvHowToPlay"
@@ -66,7 +66,7 @@
             android:text="@string/how_to_play"
             android:textAlignment="center"
             android:textColor="#ffffff"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <TextView
             android:id="@+id/tvRateUs"
@@ -80,7 +80,7 @@
             android:text="@string/rate_the_app"
             android:textAlignment="center"
             android:textColor="#ffffff"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
     </LinearLayout>
 

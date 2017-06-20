@@ -91,7 +91,7 @@
                     android:fontFamily="@font/nunitoextrabold"
                     android:text="@string/rate_us"
                     android:textColor="#b388ff"
-                    android:textSize="18sp" />
+                    android:textSize="18dp" />
 
                 <TextView
                     android:id="@+id/tvNextLevelClue"
@@ -101,7 +101,7 @@
                     android:fontFamily="@font/nunitosemibold"
                     android:text="@string/it_means_so_much_for_us"
                     android:textColor="#b5b5b5"
-                    android:textSize="10sp" />
+                    android:textSize="10dp" />
 
             </LinearLayout>
 
@@ -145,7 +145,7 @@
             android:padding="10dp"
             android:text="@string/we_will_add_new_packs_soon"
             android:textColor="#ffffff"
-            android:textSize="12sp" />
+            android:textSize="12dp" />
 
     </RelativeLayout>
 

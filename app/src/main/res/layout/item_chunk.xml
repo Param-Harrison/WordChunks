@@ -40,8 +40,8 @@
         android:paddingRight="5dp"
         android:paddingStart="5dp"
         android:textColor="#222a34"
-        android:textSize="21sp"
-        app:autoSizeMinTextSize="8sp"
+        android:textSize="21dp"
+        app:autoSizeMinTextSize="8dp"
         app:autoSizeTextType="uniform"
         tools:text="ABCD" />
 
