@@ -21,7 +21,8 @@ WordChunks is a word game that test your knowledge of dictionary and spelling. T
 
 <img src='https://github.com/jkozh/WordChunks/blob/master/images/Phone%20Screenshot%204.jpg' width=25% hspace="10"><img src='https://github.com/jkozh/WordChunks/blob/master/images/Phone%20Screenshot%205.jpg' width=25% hspace="10">
 
-### Some pleasant surprises for me while refactoring Java -> Kotlin code:
+
+### Some pleasant surprises for me while refactoring Java -> Kotlin
 
 ---
 
