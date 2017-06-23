@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2017 Julia Kozhukhovskaya
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -35,7 +34,6 @@
     <string name="number_of_levels_locked">%d LEVELS</string>
     <string name="number_of_levels">%1$d/%2$d  LEVELS</string>
     <string name="level_num">LEVEL %d</string>
-    <string name="send_hint_text">Combine letter groups then hit Send button</string>
     <string name="share_hint">share</string>
     <string name="sleeping_cat">sleeping cat</string>
     <string name="list_number">%1$d. %2$s</string>
@@ -74,5 +72,7 @@
     <string name="show_the">SHOW THE…</string>
     <string name="sherlock_holmes">SHERLOCK HOLMES</string>
     <string name="hint_amp_shuffle"><![CDATA[HINT & SHUFFLE]]></string>
+    <string name="language">LANGUAGE:</string>
+    <string name="version">ver. %s</string>
 
 </resources>

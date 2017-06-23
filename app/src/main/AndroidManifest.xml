@@ -27,7 +27,7 @@
         android:theme="@style/WordChunksAppTheme.FullScreen">
         <activity
             android:name=".ui.main.MainActivity"
-            android:configChanges="keyboard|screenSize|orientation"
+            android:configChanges="locale|screenSize|orientation"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>

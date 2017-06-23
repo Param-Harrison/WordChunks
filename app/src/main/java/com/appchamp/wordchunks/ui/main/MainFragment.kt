@@ -58,6 +58,7 @@ class MainFragment : LifecycleFragment() {
 
     private fun onShareClick() {
         activity.share(
+                // todo localize
                 "WordChunks is AWESOME and I think you'll love it. Get it! -- [link]",
                 "My current puzzle")
     }

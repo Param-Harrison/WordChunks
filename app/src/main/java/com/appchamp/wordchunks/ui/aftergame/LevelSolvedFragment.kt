@@ -31,6 +31,8 @@ import com.appchamp.wordchunks.ui.finish.FinishActivity
 import com.appchamp.wordchunks.ui.game.GameActivity
 import com.appchamp.wordchunks.util.Constants
 import kotlinx.android.synthetic.main.frag_level_solved.*
+import nl.dionsegijn.konfetti.models.Shape
+import nl.dionsegijn.konfetti.models.Size
 import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.startActivity
@@ -50,6 +52,16 @@ class LevelSolvedFragment : LifecycleFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewKonfetti.build()
+                .addColors(Color.YELLOW, Color.GREEN, Color.MAGENTA)
+                .setDirection(0.0, 359.0)
+                .setSpeed(1f, 5f)
+                .setFadeOutEnabled(true)
+                .setTimeToLive(2000L)
+                .addShapes(Shape.RECT, Shape.CIRCLE)
+                .addSizes(Size(12))
+                .setPosition(-50f, viewKonfetti.width + 50f, -50f, -50f)
+                .stream(300, 5000L)
 
         rlNextLevel.setOnClickListener {
             val nextLevelId = viewModel.getNextLevelId()

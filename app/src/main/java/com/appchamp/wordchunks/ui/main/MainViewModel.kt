@@ -35,11 +35,9 @@ class MainViewModel(application: Application?) : AndroidViewModel(application) {
         if (packs.isEmpty()) return
 
         db.gameModel().createPacks(packs)
-        // Initialize game state for the first time in the beginning.
-        initFirstGameState()
     }
 
-    private fun initFirstGameState() {
+    fun initFirstGameState() {
         val pack = db.packModel().findPackByState(PackState.LOCKED.value)
         pack?.let { db.packModel().setPackState(it, PackState.IN_PROGRESS.value) }
         val level = db.levelModel().findLevelByState(LevelState.LOCKED.value)

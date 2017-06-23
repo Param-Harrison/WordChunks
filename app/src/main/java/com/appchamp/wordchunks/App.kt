@@ -17,78 +17,77 @@
 package com.appchamp.wordchunks
 
 import android.app.Application
-import android.content.Context
-import com.appchamp.wordchunks.util.Constants.PREFS_IS_DB_EXISTS
-import com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFS
+import android.content.res.Configuration
+import com.appchamp.wordchunks.util.Constants.LANG_RU
+import com.appchamp.wordchunks.util.Constants.SUPPORTED_LOCALES
+import com.facebook.stetho.Stetho
+import com.franmontiel.localechanger.LocaleChanger
+import com.squareup.leakcanary.LeakCanary
+import com.uphyca.stetho_realm.RealmInspectorModulesProvider
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import java.io.File
+import java.util.*
 
+
+// The Realm lifecycle can be managed in the ViewModel and closed when the ViewModel is
+// no longer being used.
+// LiveData class works well with Realm’s observable live data, providing a layer
+// of abstraction so that the Activity isn’t exposed to RealmResults and RealmObjects.
 
 class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
 
-//        initLeakCanary()
+        LocaleChanger.initialize(applicationContext, SUPPORTED_LOCALES)
 
-//        initStetho()
+        initLeakCanary()
 
-        // The Realm lifecycle can be managed in the ViewModel and closed when the ViewModel is
-        // no longer being used.
-        // LiveData class works well with Realm’s observable live data, providing a layer
-        // of abstraction so that the Activity isn’t exposed to RealmResults and RealmObjects.
+        initStetho()
 
-        val config = initRealm()
-
-        isRealmExists(config)
+        // User's system language is Russian
+        if (Locale.getDefault().language.contentEquals(LANG_RU)) {
+            initRealm("wordChunksRus")
+        } else { // User's system language is English or else
+            initRealm("wordChunks")
+        }
     }
 
-//    private fun initLeakCanary() {
-//        if (LeakCanary.isInAnalyzerProcess(this)) {
-//            // This process is dedicated to LeakCanary for heap analysis.
-//            // You should not init your app in this process.
-//            return
-//        }
-//        LeakCanary.install(this)
-//    }
-
-//    private fun initStetho() {
-//        Stetho.initialize(
-//                Stetho.newInitializerBuilder(this)
-//                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-//                        .enableWebKitInspector(
-//                                RealmInspectorModulesProvider.builder(this).build())
-//                        .build())
-//    }
-
-    private fun initRealm(): RealmConfiguration {
+    private fun initRealm(name: String) {
         Realm.init(this)
-
         val realmConfiguration = RealmConfiguration.Builder()
+                .name(name)
                 .deleteRealmIfMigrationNeeded()
                 .build()
         Realm.setDefaultConfiguration(realmConfiguration)
-        return realmConfiguration
+
+        // If realm database isn't exists then delete before creating new objects.
+        if (!File(realmConfiguration.path).exists()) {
+            Realm.deleteRealm(realmConfiguration)
+        }
     }
 
-    private fun isRealmExists(config: RealmConfiguration) {
-        val sp = getSharedPreferences(WORD_CHUNKS_PREFS, Context.MODE_PRIVATE)
-        val editor = sp.edit()
-        // Better this approach, because the user could clear cache data, and DB will be gone!
-        // If Realm DB file exists.
-        if (File(config.path).exists()) {
-            // Putting in shared prefs true value
-            editor.putBoolean(PREFS_IS_DB_EXISTS, true)  // false for debugging
-        } else {
-            // Delete realm db before creating new objects.
-            Realm.deleteRealm(RealmConfiguration.Builder().build())
-            // doesn't exists if:
-            // 1. user cleared data
-            // 2. user just installed the app
-            // put in shared prefs false value
-            editor.putBoolean(PREFS_IS_DB_EXISTS, false)
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        LocaleChanger.onConfigurationChanged()
+    }
+
+    private fun initLeakCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return
         }
-        editor.apply()
+        LeakCanary.install(this)
+    }
+
+    private fun initStetho() {
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(
+                                RealmInspectorModulesProvider.builder(this).build())
+                        .build())
     }
 }
