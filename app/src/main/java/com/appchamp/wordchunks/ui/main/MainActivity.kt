@@ -19,22 +19,23 @@ package com.appchamp.wordchunks.ui.main
 import android.content.Context
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import com.appchamp.wordchunks.BuildConfig
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.realmdb.models.pojo.packsFromJSONFile
+import com.appchamp.wordchunks.realmdb.utils.gameModel
 import com.appchamp.wordchunks.ui.BaseActivity
 import com.appchamp.wordchunks.ui.tutorial.TutorialActivity
 import com.appchamp.wordchunks.util.ActivityUtils
-import com.appchamp.wordchunks.util.Constants
+import com.appchamp.wordchunks.util.Constants.FILE_NAME_DATA
+import com.appchamp.wordchunks.util.Constants.FILE_NAME_DATA_RU
 import com.appchamp.wordchunks.util.Constants.SUPPORTED_LOCALES
 import com.franmontiel.localechanger.LocaleChanger
 import com.franmontiel.localechanger.utils.ActivityRecreationHelper
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu
 import io.realm.Realm
+import io.realm.RealmConfiguration
 import kotlinx.android.synthetic.main.frag_main.*
 import kotlinx.android.synthetic.main.frag_sliding_menu.*
-import org.jetbrains.anko.act
 import org.jetbrains.anko.browse
 import org.jetbrains.anko.email
 import org.jetbrains.anko.startActivity
@@ -52,12 +53,6 @@ class MainActivity : BaseActivity<MainViewModel>() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_main)
 
-//        if (isRealmExists) { // always false while debugging
-//            // update an existing realm objects here
-//            // updateRealmDb();
-//        } else {
-        // Creates realm objects from json file if this is first launch
-//        }
         if (savedInstanceState == null) {
             addMainFragment()
         }
@@ -92,13 +87,37 @@ class MainActivity : BaseActivity<MainViewModel>() {
         radioButtonEn.setOnClickListener {
             if (LocaleChanger.getLocale() != SUPPORTED_LOCALES[0]) {
                 LocaleChanger.setLocale(SUPPORTED_LOCALES[0])
+
+                initRealmOnLangChanged(FILE_NAME_DATA)
+
                 ActivityRecreationHelper.recreate(this, true)
             }
         }
         radioButtonRu.setOnClickListener {
             if (LocaleChanger.getLocale() != SUPPORTED_LOCALES[1]) {
                 LocaleChanger.setLocale(SUPPORTED_LOCALES[1])
+
+                initRealmOnLangChanged(FILE_NAME_DATA_RU)
+
                 ActivityRecreationHelper.recreate(this, true)
+            }
+        }
+    }
+
+    fun initRealmOnLangChanged(dbName: String) {
+        val conf = RealmConfiguration.Builder()
+                .name(dbName)
+                .deleteRealmIfMigrationNeeded()
+                .build()
+
+        Realm.setDefaultConfiguration(conf)
+        if (!File(conf.path).exists()) {
+            val packs = packsFromJSONFile(baseContext, dbName + ".json")
+            if (packs.isEmpty()) return
+
+            Realm.getDefaultInstance().use {
+                it.gameModel().createPacks(packs)
+                it.gameModel().initFirstGameSatate()
             }
         }
     }
@@ -110,18 +129,6 @@ class MainActivity : BaseActivity<MainViewModel>() {
     override fun onResume() {
         super.onResume()
         ActivityRecreationHelper.onResume(this)
-        Log.d("SSSSSSSSSSS", ""+File(Realm.getDefaultInstance().configuration.path).exists())
-        Log.d("SSSSSSSSSSS", ""+File(Realm.getDefaultInstance().configuration.path))
-        Log.d("SSSSSSSSSSS", ""+Realm.getDefaultInstance().configuration.path)
-        if (!File(Realm.getDefaultInstance().configuration.path).exists()) {
-            if (Locale.getDefault() == SUPPORTED_LOCALES[1]) {
-                viewModel.initGame(packsFromJSONFile(act, Constants.FILE_NAME_DATA_RU_JSON))
-            } else {
-                viewModel.initGame(packsFromJSONFile(act, Constants.FILE_NAME_DATA_JSON))
-            }
-            // Initialize game state for the first time in the beginning.
-            viewModel.initFirstGameState()
-        }
 
         if (Locale.getDefault() == SUPPORTED_LOCALES[1]) {
             radioButtonRu.isChecked = true
@@ -142,11 +149,9 @@ class MainActivity : BaseActivity<MainViewModel>() {
                 R.id.fragment_container)
     }
 
-    override fun onBackPressed() {
-        when {
-            menu.isMenuShowing -> menu.toggle()  // Collapse the sliding menu
-            else -> super.onBackPressed()
-        }
+    override fun onBackPressed() = when {
+        menu.isMenuShowing -> menu.toggle()  // Collapse the sliding menu on back pressed
+        else -> super.onBackPressed()
     }
 
     private fun showTutorial() = startActivity<TutorialActivity>()

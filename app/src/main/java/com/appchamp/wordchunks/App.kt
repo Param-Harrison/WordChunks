@@ -18,6 +18,10 @@ package com.appchamp.wordchunks
 
 import android.app.Application
 import android.content.res.Configuration
+import com.appchamp.wordchunks.realmdb.models.pojo.packsFromJSONFile
+import com.appchamp.wordchunks.realmdb.utils.gameModel
+import com.appchamp.wordchunks.util.Constants.FILE_NAME_DATA
+import com.appchamp.wordchunks.util.Constants.FILE_NAME_DATA_RU
 import com.appchamp.wordchunks.util.Constants.LANG_RU
 import com.appchamp.wordchunks.util.Constants.SUPPORTED_LOCALES
 import com.facebook.stetho.Stetho
@@ -48,12 +52,15 @@ class App : Application() {
 
         // User's system language is Russian
         if (Locale.getDefault().language.contentEquals(LANG_RU)) {
-            initRealm("wordChunksRus")
+            initRealm(FILE_NAME_DATA_RU)
         } else { // User's system language is English or else
-            initRealm("wordChunks")
+            initRealm(FILE_NAME_DATA)
         }
     }
 
+    /**
+     * Initialize with default users configurations.
+     */
     private fun initRealm(name: String) {
         Realm.init(this)
         val realmConfiguration = RealmConfiguration.Builder()
@@ -62,9 +69,17 @@ class App : Application() {
                 .build()
         Realm.setDefaultConfiguration(realmConfiguration)
 
-        // If realm database isn't exists then delete before creating new objects.
+        // If realm database doesn't exists then delete before creating new objects.
         if (!File(realmConfiguration.path).exists()) {
             Realm.deleteRealm(realmConfiguration)
+
+            val packs = packsFromJSONFile(baseContext, name + ".json")
+            if (packs.isEmpty()) return
+
+            Realm.getDefaultInstance().use {
+                it.gameModel().createPacks(packs)
+                it.gameModel().initFirstGameSatate()
+            }
         }
     }
 

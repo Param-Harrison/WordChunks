@@ -20,10 +20,9 @@ import com.appchamp.wordchunks.extensions.isEven
 import com.appchamp.wordchunks.extensions.shuffleIntArray
 import com.appchamp.wordchunks.realmdb.models.pojo.LevelJson
 import com.appchamp.wordchunks.realmdb.models.pojo.PackJson
-import com.appchamp.wordchunks.realmdb.models.realm.Chunk
-import com.appchamp.wordchunks.realmdb.models.realm.Level
-import com.appchamp.wordchunks.realmdb.models.realm.Pack
-import com.appchamp.wordchunks.realmdb.models.realm.Word
+import com.appchamp.wordchunks.realmdb.models.realm.*
+import com.appchamp.wordchunks.realmdb.utils.levelModel
+import com.appchamp.wordchunks.realmdb.utils.packModel
 import com.appchamp.wordchunks.util.Constants
 import io.realm.Realm
 import io.realm.RealmList
@@ -127,5 +126,12 @@ class GameDao(private val realm: Realm) {
             chunks[shuffledArray[chunksSize - i - 1]].position = shuffledArray[i]
         }
         return chunks
+    }
+
+    fun initFirstGameSatate() {
+        val pack = realm.packModel().findPackByState(PackState.LOCKED.value)
+        pack?.let { realm.packModel().setPackState(it, PackState.IN_PROGRESS.value) }
+        val level = realm.levelModel().findLevelByState(LevelState.LOCKED.value)
+        level?.let { realm.levelModel().setLevelState(it, LevelState.IN_PROGRESS.value) }
     }
 }

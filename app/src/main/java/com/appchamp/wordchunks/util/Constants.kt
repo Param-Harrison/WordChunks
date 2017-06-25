@@ -26,17 +26,14 @@ object Constants {
             Locale("ru", "RU")
     )
 
-    const val FILE_NAME_DATA_JSON = "data.json"
-    const val FILE_NAME_DATA_RU_JSON = "data-ru.json"
+    const val FILE_NAME_DATA = "data"
+    const val FILE_NAME_DATA_RU = "data-ru"
     const val WORDS_SEPARATOR = " "
     const val CHUNKS_SEPARATOR = ","
 
     const val WORD_CHUNKS_PREFS = "WORD_CHUNKS_PREFS"
-    const val PREFS_IS_DB_EXISTS = "PREFS_IS_DB_EXISTS"
     const val PREFS_HOW_TO_PLAY = "PREFS_HOW_TO_PLAY"
-    const val PREFS_SELECTED_LANG = "PREFS_SELECTED_LANG"
     const val LANG_RU = "ru"
-    const val LANG_EN = "en"
 
     const val EXTRA_PACK_ID = "EXTRA_PACK_ID"
     const val EXTRA_LEVEL_ID = "EXTRA_LEVEL_ID"

@@ -28,5 +28,5 @@ fun Realm.levelModel(): LevelDao = LevelDao(this)
 fun Realm.chunkModel(): ChunkDao = ChunkDao(this)
 fun Realm.wordModel(): WordDao = WordDao(this)
 
-fun <T: RealmModel> RealmResults<T>.asLiveData() = LiveRealmResults<T>(this)
-fun <T: RealmModel> T.asLiveData() = LiveRealmObject<T>(this)
+fun <T: RealmModel> RealmResults<T>.asLiveData() = LiveRealmResults(this)
+fun <T: RealmModel> T.asLiveData() = LiveRealmObject(this)
