@@ -133,5 +133,17 @@ class GameDao(private val realm: Realm) {
         pack?.let { realm.packModel().setPackState(it, PackState.IN_PROGRESS.value) }
         val level = realm.levelModel().findLevelByState(LevelState.LOCKED.value)
         level?.let { realm.levelModel().setLevelState(it, LevelState.IN_PROGRESS.value) }
+        realm.executeTransaction { it.createObject(Game::class.java) }
+
+    }
+
+    fun findGame(): Game {
+        return realm.where(Game::class.java).findFirst()
+    }
+
+    fun setShowTutorial(game: Game, value: Boolean) {
+        realm.executeTransaction {
+            game.showTutorial = value
+        }
     }
 }

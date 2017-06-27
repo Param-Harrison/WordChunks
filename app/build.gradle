@@ -37,8 +37,8 @@ android {
         applicationId "com.appchamp.wordchunks"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 1  // DO NOT FORGET TO INCREMENT THIS!
-        versionName "1.0.beta"
+        versionCode 2 // DO NOT FORGET TO INCREMENT THIS!
+        versionName "1.2.beta"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config
     }
@@ -54,7 +54,7 @@ android {
 }
 
 repositories {
-    maven { url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo' }
+//    maven { url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo' }
     maven { url 'http://jzaccone.github.io/SlidingMenu-aar' }
     maven { url "http://dl.bintray.com/glomadrian/maven" }
     maven { url "https://jitpack.io" }
@@ -85,10 +85,10 @@ dependencies {
     compile 'nl.dionsegijn:konfetti:1.0.2'
     compile 'com.github.franmontiel:LocaleChanger:0.9.1'
 
-    compile 'com.facebook.stetho:stetho:1.5.0'
-    compile 'com.uphyca:stetho_realm:2.0.0'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+//    compile 'com.facebook.stetho:stetho:1.5.0'
+//    compile 'com.uphyca:stetho_realm:2.0.0'
+//    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+//    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+//    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
 }
 apply plugin: 'realm-android'

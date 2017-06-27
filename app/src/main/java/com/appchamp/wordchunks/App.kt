@@ -19,18 +19,15 @@ package com.appchamp.wordchunks
 import android.app.Application
 import android.content.res.Configuration
 import com.appchamp.wordchunks.realmdb.models.pojo.packsFromJSONFile
+import com.appchamp.wordchunks.realmdb.utils.RealmFactory
 import com.appchamp.wordchunks.realmdb.utils.gameModel
 import com.appchamp.wordchunks.util.Constants.FILE_NAME_DATA
 import com.appchamp.wordchunks.util.Constants.FILE_NAME_DATA_RU
+import com.appchamp.wordchunks.util.Constants.JSON
 import com.appchamp.wordchunks.util.Constants.LANG_RU
 import com.appchamp.wordchunks.util.Constants.SUPPORTED_LOCALES
-import com.facebook.stetho.Stetho
 import com.franmontiel.localechanger.LocaleChanger
-import com.squareup.leakcanary.LeakCanary
-import com.uphyca.stetho_realm.RealmInspectorModulesProvider
 import io.realm.Realm
-import io.realm.RealmConfiguration
-import java.io.File
 import java.util.*
 
 
@@ -46,9 +43,9 @@ class App : Application() {
 
         LocaleChanger.initialize(applicationContext, SUPPORTED_LOCALES)
 
-        initLeakCanary()
-
-        initStetho()
+//        initLeakCanary()
+//
+//        initStetho()
 
         // User's system language is Russian
         if (Locale.getDefault().language.contentEquals(LANG_RU)) {
@@ -61,25 +58,23 @@ class App : Application() {
     /**
      * Initialize with default users configurations.
      */
-    private fun initRealm(name: String) {
+    private fun initRealm(dbName: String) {
         Realm.init(this)
-        val realmConfiguration = RealmConfiguration.Builder()
-                .name(name)
-                .deleteRealmIfMigrationNeeded()
-                .build()
-        Realm.setDefaultConfiguration(realmConfiguration)
+        val realmFactory: RealmFactory = RealmFactory()
+        realmFactory.setRealmConfiguration(dbName)
+        if (!realmFactory.isRealmFileExists(dbName)) {
 
-        // If realm database doesn't exists then delete before creating new objects.
-        if (!File(realmConfiguration.path).exists()) {
-            Realm.deleteRealm(realmConfiguration)
+            //Realm.deleteRealm(realmFactory.getRealmConfiguration(dbName))
 
-            val packs = packsFromJSONFile(baseContext, name + ".json")
+            val packs = packsFromJSONFile(baseContext, dbName + JSON)
             if (packs.isEmpty()) return
 
             Realm.getDefaultInstance().use {
                 it.gameModel().createPacks(packs)
                 it.gameModel().initFirstGameSatate()
             }
+        } else {
+            // update game data here
         }
     }
 
@@ -88,21 +83,21 @@ class App : Application() {
         LocaleChanger.onConfigurationChanged()
     }
 
-    private fun initLeakCanary() {
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return
-        }
-        LeakCanary.install(this)
-    }
-
-    private fun initStetho() {
-        Stetho.initialize(
-                Stetho.newInitializerBuilder(this)
-                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                        .enableWebKitInspector(
-                                RealmInspectorModulesProvider.builder(this).build())
-                        .build())
-    }
+//    private fun initLeakCanary() {
+//        if (LeakCanary.isInAnalyzerProcess(this)) {
+//            // This process is dedicated to LeakCanary for heap analysis.
+//            // You should not init your app in this process.
+//            return
+//        }
+//        LeakCanary.install(this)
+//    }
+//
+//    private fun initStetho() {
+//        Stetho.initialize(
+//                Stetho.newInitializerBuilder(this)
+//                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+//                        .enableWebKitInspector(
+//                                RealmInspectorModulesProvider.builder(this).build())
+//                        .build())
+//    }
 }

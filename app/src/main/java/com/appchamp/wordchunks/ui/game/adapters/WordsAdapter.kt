@@ -29,7 +29,9 @@ import com.appchamp.wordchunks.extensions.gone
 import com.appchamp.wordchunks.extensions.visible
 import com.appchamp.wordchunks.realmdb.models.realm.Word
 import com.appchamp.wordchunks.realmdb.models.realm.WordState
+import com.appchamp.wordchunks.util.Constants
 import kotlinx.android.synthetic.main.item_word.view.*
+import java.util.*
 
 
 class WordsAdapter(private var words: List<Word> = listOf()) :
@@ -65,7 +67,12 @@ class WordsAdapter(private var words: List<Word> = listOf()) :
             when (wordState) {
                 WordState.NOT_SOLVED.value -> {
                     val wordLength = word.word.length
-                    tvWord.text = resources.getString(R.string.number_of_letters, wordLength)
+                    //
+                    if (Locale.getDefault() == Constants.SUPPORTED_LOCALES[1]) {
+                        tvWord.text = resources.getString(R.string.number_of_letters_ru, wordLength)
+                    } else {
+                        tvWord.text = resources.getString(R.string.number_of_letters, wordLength)
+                    }
                     tvWordNum.text = word.getProperIndex()
                     drawable.setColor(context.color(R.color.word_rect_bg))
                 }

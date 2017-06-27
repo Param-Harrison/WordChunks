@@ -33,7 +33,7 @@ class RealmFactory {
     }
 
     /* RealmConfiguration */
-    private fun getRealmConfiguration(dbName: String): RealmConfiguration {
+    fun getRealmConfiguration(dbName: String): RealmConfiguration {
         return RealmConfiguration.Builder()
                 .name(dbName)
                 .deleteRealmIfMigrationNeeded()
@@ -49,5 +49,15 @@ class RealmFactory {
 
         val realmFile = File(realmConfiguration.path)
         return realmFile.exists()
+    }
+
+    fun setRealmConfiguration(dbName: String) {
+        val realmConfiguration = RealmConfiguration.Builder()
+                .name(dbName)
+                .deleteRealmIfMigrationNeeded()
+                .build()
+
+        Realm.setDefaultConfiguration(realmConfiguration)
+
     }
 }

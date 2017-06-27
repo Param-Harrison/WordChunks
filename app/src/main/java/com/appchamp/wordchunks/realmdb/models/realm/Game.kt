@@ -25,9 +25,8 @@ import io.realm.annotations.Required
 open class Game : RealmModel {
 
     @Required
-    var lang: String = ""
-    @Required
     var currentLevel: String = ""
+    var showTutorial: Boolean = true
 
 }
 

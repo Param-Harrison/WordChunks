@@ -22,24 +22,24 @@ import android.os.Bundle
 import com.appchamp.wordchunks.BuildConfig
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.realmdb.models.pojo.packsFromJSONFile
+import com.appchamp.wordchunks.realmdb.utils.RealmFactory
 import com.appchamp.wordchunks.realmdb.utils.gameModel
 import com.appchamp.wordchunks.ui.BaseActivity
 import com.appchamp.wordchunks.ui.tutorial.TutorialActivity
 import com.appchamp.wordchunks.util.ActivityUtils
 import com.appchamp.wordchunks.util.Constants.FILE_NAME_DATA
 import com.appchamp.wordchunks.util.Constants.FILE_NAME_DATA_RU
+import com.appchamp.wordchunks.util.Constants.JSON
 import com.appchamp.wordchunks.util.Constants.SUPPORTED_LOCALES
 import com.franmontiel.localechanger.LocaleChanger
 import com.franmontiel.localechanger.utils.ActivityRecreationHelper
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu
 import io.realm.Realm
-import io.realm.RealmConfiguration
 import kotlinx.android.synthetic.main.frag_main.*
 import kotlinx.android.synthetic.main.frag_sliding_menu.*
 import org.jetbrains.anko.browse
 import org.jetbrains.anko.email
 import org.jetbrains.anko.startActivity
-import java.io.File
 import java.util.*
 
 
@@ -105,14 +105,10 @@ class MainActivity : BaseActivity<MainViewModel>() {
     }
 
     fun initRealmOnLangChanged(dbName: String) {
-        val conf = RealmConfiguration.Builder()
-                .name(dbName)
-                .deleteRealmIfMigrationNeeded()
-                .build()
-
-        Realm.setDefaultConfiguration(conf)
-        if (!File(conf.path).exists()) {
-            val packs = packsFromJSONFile(baseContext, dbName + ".json")
+        val realmFactory: RealmFactory = RealmFactory()
+        realmFactory.setRealmConfiguration(dbName)
+        if (!realmFactory.isRealmFileExists(dbName)) {
+            val packs = packsFromJSONFile(baseContext, dbName + JSON)
             if (packs.isEmpty()) return
 
             Realm.getDefaultInstance().use {

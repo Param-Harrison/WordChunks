@@ -47,7 +47,7 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
 
     fun getLevel(): LiveRealmObject<Level> = level
 
-    fun  getPackId(): String {
+    fun getPackId(): String {
         return level.value?.packId!!
     }
 
@@ -168,6 +168,11 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
         }
     }
 
+    fun isShowTutorial(): Boolean {
+        val game = db.gameModel().findGame()
+        return game.showTutorial
+    }
+
     /**
      * This method will be called when this ViewModel is no longer used and will be destroyed.
      *
@@ -175,6 +180,7 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
      * prevent a leak of this ViewModel... Like RealmResults and the instance of Realm!
      */
     override fun onCleared() {
+        db.gameModel().setShowTutorial(db.gameModel().findGame(), false)
         db.close()
         super.onCleared()
     }

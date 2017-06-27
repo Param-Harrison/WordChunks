@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright 2017 Julia Kozhukhovskaya
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+
+    <string name="app_name">WordChunks</string>
+
+    <!-- Main Buttons text -->
+    <string name="play_btn_txt">ИГРАТЬ</string>
+    <string name="daily_puzzle_btn_txt">ИГРА ДНЯ</string>
+    <string name="all_packs_btn_txt">ВСЕ ПАКИ</string>
+    <string name="store_btn_txt">МАГАЗИН</string>
+
+    <string name="settings_hint">НАСТРОЙКИ</string>
+    <string name="back_hint">назад</string>
+
+    <string name="title_select_pack">ВЫБРАТЬ ПАК</string>
+
+    <string name="title_select_level">ВЫБРАТЬ УРОВЕНЬ</string>
+    <string name="number_of_letters">%d БУКВ</string>
+    <string name="number_of_levels_locked">%d УРОВНЕЙ</string>
+    <string name="number_of_levels">%1$d/%2$d  УРОВНЕЙ</string>
+
+    <string name="level_num">УРОВЕНЬ %d</string>
+    <string name="level_title">УРОВЕНЬ %d</string>
+
+    <string name="share_hint">поделиться</string>
+    <string name="sleeping_cat">спящий кот</string>
+    <string name="list_number">%1$d. %2$s</string>
+    <string name="solutions">РЕШЕНИЯ</string>
+    <string name="clear">очистить</string>
+    <string name="shuffle">перемешать</string>
+    <string name="hint">подсказка</string>
+    <string name="level_finished">УРОВЕНЬ ПРОЙДЕН</string>
+    <string name="next_level">СЛЕДУЮЩИЙ УРОВЕНЬ</string>
+    <string name="fun_fact">ЗАНИМАТЕЛЬНЫЙ ФАКТ</string>
+    <string name="we_will_add_new_packs_soon">НОВЫЕ УРОВНИ БУДУТ СКОРО ДОБАВЛЕНЫ!</string>
+    <string name="it_means_so_much_for_us">НАМ ВАЖНО ЗНАТЬ ВАШЕ МНЕНИЕ</string>
+    <string name="rate_us">ОЦЕНИТЬ WordChunks</string>
+    <string name="level_already_completed">УРОВЕНЬ УЖЕ БЫЛ ПРОЙДЕН</string>
+    <string name="back_to_levels">НАЗАД К УРОВНЯМ</string>
+    <string name="how_to_play">КАК ИГРАТЬ?</string>
+    <string name="tutorial3">3. Воспользуйтесь ИНСТРУМЕНТАМИ если застряли.</string>
+    <string name="tutorial2">2. Чтобы составить слово, нужно кликать на группы букв, а чтобы отменить выделеную группу, нужно снова на нее кликнуть.</string>
+    <string name="tutorial0">Ответы будут АВТОМАТИЧЕСКИ приняты при верном решении.</string>
+    <string name="tutorial1">1. Все данные решения приведены на одну и ту же тему, например:</string>
+    <string name="tutorial">обучение</string>
+    <string name="all_packs_finished">ВСЕ ПАКИ ПРОЙДЕНЫ</string>
+    <string name="show_a_hint_for">ПОКАЗАТЬ ПОДСКАЗКУ ДЛЯ</string>
+    <string name="full_solution">ВСЕ СЛОВО</string>
+    <string name="congratulations">ПОЗДРАВЛЕНИЯ!</string>
+    <string name="first_letter">ПЕРВАЯ БУКВА</string>
+    <string name="first_chunk">ПЕРВАЯ ГРУППА БУКВ</string>
+    <string name="first_and_dots">%s…</string>
+    <string name="you_finished_the_whole_pack">ВЫ ПРОШЛИ ВЕСЬ ПАК!</string>
+    <string name="only_one_level_left">ТОЛЬКО ОДИН УРОВЕНЬ ОСТАЛСЯ В ПАКЕ</string>
+    <string name="you_finished_all_packs">ВЫ ПРОШЛИ ВСЕ УРОВНИ И ПАКИ</string>
+    <string name="num_levels_left">%d УРОВНЕЙ ОСТАЛОСЬ В ПАКЕ</string>
+    <string name="send_feedback">НАПИШИТЕ НАМ!</string>
+    <string name="rate_the_app">ОЦЕНИТЬ ИГРУ!</string>
+    <string name="show_the">ПОКАЗАТЬ…</string>
+    <string name="sherlock_holmes">ШЕРЛОК ХОЛМС</string>
+    <string name="hint_amp_shuffle"><![CDATA[ПОДСКАЗКА & ПЕРЕМЕШИВАНИЕ]]></string>
+    <string name="language">ЯЗЫК:</string>
+    <string name="version">вер. %s</string>
+    <string name="number_of_letters_ru">%d БУКВ</string>
+</resources>

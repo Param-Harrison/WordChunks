@@ -28,6 +28,7 @@ object Constants {
 
     const val FILE_NAME_DATA = "data"
     const val FILE_NAME_DATA_RU = "data-ru"
+    const val JSON = ".json"
     const val WORDS_SEPARATOR = " "
     const val CHUNKS_SEPARATOR = ","
 

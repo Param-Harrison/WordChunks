@@ -17,6 +17,7 @@
 package com.appchamp.wordchunks.ui.packs
 
 import android.arch.lifecycle.Observer
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.appchamp.wordchunks.R
@@ -24,6 +25,7 @@ import com.appchamp.wordchunks.realmdb.models.realm.Pack
 import com.appchamp.wordchunks.ui.BaseActivity
 import com.appchamp.wordchunks.ui.levels.LevelsActivity
 import com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID
+import com.franmontiel.localechanger.LocaleChanger
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.act_packs_levels.*
 import kotlinx.android.synthetic.main.titlebar.*
@@ -51,6 +53,10 @@ class PacksActivity : BaseActivity<PacksViewModel>() {
         imgBackArrow.setOnClickListener { onBackPressed() }
 
         subscribeToModel()
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleChanger.configureBaseContext(newBase))
     }
 
     private fun subscribeToModel() {

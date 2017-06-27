@@ -16,9 +16,11 @@
 
 package com.appchamp.wordchunks.ui.finish
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.appchamp.wordchunks.R
+import com.franmontiel.localechanger.LocaleChanger
 import kotlinx.android.synthetic.main.act_finish.*
 import org.jetbrains.anko.browse
 
@@ -34,5 +36,9 @@ class FinishActivity : AppCompatActivity() {
         super.onResume()
 
         rlRateUs.setOnClickListener { browse("market://details?id=$packageName") }
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleChanger.configureBaseContext(newBase))
     }
 }

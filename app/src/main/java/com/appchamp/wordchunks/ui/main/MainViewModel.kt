@@ -27,13 +27,6 @@ class MainViewModel(application: Application?) : AndroidViewModel(application) {
 
     private val db: Realm = Realm.getDefaultInstance()
 
-//    fun initGame(packs: List<PackJson>) {
-//        if (packs.isEmpty()) return
-//
-//        db.gameModel().createPacks(packs)
-//        db.gameModel().initFirstGameSatate()
-//    }
-
     fun getLevelId(): String? {
         val level = db.levelModel().findLevelByState(LevelState.IN_PROGRESS.value)
         return level?.id

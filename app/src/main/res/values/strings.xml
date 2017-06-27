@@ -74,5 +74,6 @@
     <string name="hint_amp_shuffle"><![CDATA[HINT & SHUFFLE]]></string>
     <string name="language">LANGUAGE:</string>
     <string name="version">ver. %s</string>
+    <string name="number_of_letters_ru">%d БУКВ</string>
 
 </resources>

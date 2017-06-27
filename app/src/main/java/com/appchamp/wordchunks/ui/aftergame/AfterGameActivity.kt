@@ -19,6 +19,7 @@ package com.appchamp.wordchunks.ui.aftergame
 import android.arch.lifecycle.LifecycleRegistry
 import android.arch.lifecycle.LifecycleRegistryOwner
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.appchamp.wordchunks.R
@@ -26,6 +27,7 @@ import com.appchamp.wordchunks.realmdb.models.realm.LevelState
 import com.appchamp.wordchunks.ui.levels.LevelsActivity
 import com.appchamp.wordchunks.util.ActivityUtils
 import com.appchamp.wordchunks.util.Constants
+import com.franmontiel.localechanger.LocaleChanger
 import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
 
@@ -50,6 +52,10 @@ class AfterGameActivity : AppCompatActivity(), LifecycleRegistryOwner {
         subscribeUi()
     }
 
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleChanger.configureBaseContext(newBase))
+    }
+    
     private fun subscribeUi() {
         // Getting solved level ID by the Intent.
         levelId = requireNotNull(intent.getStringExtra(Constants.EXTRA_LEVEL_ID),

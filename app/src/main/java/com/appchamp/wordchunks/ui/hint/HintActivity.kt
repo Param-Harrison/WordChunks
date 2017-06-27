@@ -19,10 +19,12 @@ package com.appchamp.wordchunks.ui.hint
 import android.arch.lifecycle.LifecycleRegistry
 import android.arch.lifecycle.LifecycleRegistryOwner
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID
+import com.franmontiel.localechanger.LocaleChanger
 import kotlinx.android.synthetic.main.titlebar.*
 
 
@@ -49,6 +51,10 @@ class HintActivity :  AppCompatActivity(), LifecycleRegistryOwner {
 
         val factory = HintViewModel.Factory(application, levelId)
         ViewModelProviders.of(this, factory).get(HintViewModel::class.java)
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleChanger.configureBaseContext(newBase))
     }
 
     override fun onResume() {

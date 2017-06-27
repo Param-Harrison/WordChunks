@@ -20,7 +20,6 @@ import android.arch.lifecycle.LifecycleRegistry
 import android.arch.lifecycle.LifecycleRegistryOwner
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.appchamp.wordchunks.R
@@ -33,8 +32,6 @@ import com.appchamp.wordchunks.ui.tutorial.TutorialActivity
 import com.appchamp.wordchunks.util.ActivityUtils
 import com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID
 import com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID
-import com.appchamp.wordchunks.util.Constants.PREFS_HOW_TO_PLAY
-import com.appchamp.wordchunks.util.Constants.WORD_CHUNKS_PREFS
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.frag_game.*
 import kotlinx.android.synthetic.main.titlebar.*
@@ -64,22 +61,19 @@ class GameActivity : AppCompatActivity(), LifecycleRegistryOwner {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_game)
+        subscribeUi()
 
-        val sp = getSharedPreferences(WORD_CHUNKS_PREFS, Context.MODE_PRIVATE)
-        val editor = sp.edit()
         // Shows tutorial on first game start
-        if (sp.getBoolean(PREFS_HOW_TO_PLAY, true)) {
+        if (viewModel.isShowTutorial()) {
             // Show how to play tutorial
             startTutorialActivity()
             // Never show tutorial again
-            editor.putBoolean(PREFS_HOW_TO_PLAY, false)
-            editor.apply()
         }
-        subscribeUi()
 
         // Add game fragment if this is first creation
         if (savedInstanceState == null) {
-            ActivityUtils.addFragment(supportFragmentManager, GameFragment(), R.id.fragment_container)
+            ActivityUtils.addFragment(
+                    supportFragmentManager, GameFragment(), R.id.fragment_container)
         }
     }
 

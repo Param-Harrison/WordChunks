@@ -16,9 +16,11 @@
 
 package com.appchamp.wordchunks.ui.tutorial
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.appchamp.wordchunks.R
+import com.franmontiel.localechanger.LocaleChanger
 import kotlinx.android.synthetic.main.act_tutorial.*
 
 
@@ -29,5 +31,9 @@ class TutorialActivity : AppCompatActivity() {
         setContentView(R.layout.act_tutorial)
 
         imgClose.setOnClickListener { onBackPressed() }
+    }
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleChanger.configureBaseContext(newBase))
     }
 }
