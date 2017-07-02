@@ -25,10 +25,10 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 android {
     signingConfigs {
         config {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
+            keyAlias 'keystore'
+            keyPassword 'T6i9njt^'
+            storeFile file('C:/Users/julia/Dropbox/key-store/keystore.jks')
+            storePassword 'T6i9njt^'
         }
     }
     compileSdkVersion 26
@@ -41,6 +41,7 @@ android {
         versionName "1.2.beta"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -78,17 +79,15 @@ dependencies {
     compile 'hanks.xyz:smallbang-library:0.1.2'
     compile 'com.google.code.gson:gson:2.8.1'
     compile 'me.everything:overscroll-decor-android:1.0.4'
-    compile 'pl.droidsonroids.gif:android-gif-drawable:1.2.7'
     compile 'org.jetbrains.anko:anko-commons:0.10.1'
     compile 'me.grantland:autofittextview:0.2.1'
     compile 'com.github.glomadrian:Grav:1.1'
     compile 'nl.dionsegijn:konfetti:1.0.2'
     compile 'com.github.franmontiel:LocaleChanger:0.9.1'
-
-//    compile 'com.facebook.stetho:stetho:1.5.0'
-//    compile 'com.uphyca:stetho_realm:2.0.0'
-//    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
-//    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
-//    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+    //    compile 'com.facebook.stetho:stetho:1.5.0'
+    //    compile 'com.uphyca:stetho_realm:2.0.0'
+    //    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.1'
+    //    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
+    //    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.1'
 }
 apply plugin: 'realm-android'

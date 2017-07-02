@@ -26,12 +26,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:drawableLeft="@drawable/ic_settings_dark"
-        android:drawablePadding="10dp"
+        android:drawablePadding="5dp"
+        android:drawableTop="@drawable/ic_settings"
         android:fontFamily="@font/nunitoblack"
         android:paddingTop="40dp"
         android:text="@string/settings_hint"
-        android:textColor="#20313a"
+        android:textColor="#212b2f"
         android:textSize="20dp" />
 
     <LinearLayout
@@ -51,6 +51,7 @@
             android:layout_marginBottom="10dp"
             android:drawableLeft="@drawable/ic_lang"
             android:drawablePadding="6dp"
+            android:drawableStart="@drawable/ic_lang"
             android:fontFamily="@font/nunitoblack"
             android:text="@string/language"
             android:textColor="#ffffff"
@@ -65,9 +66,9 @@
                 android:id="@+id/radioButtonEn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_eng"
+                android:drawableLeft="@drawable/ic_us_flag"
                 android:drawablePadding="10dp"
-                android:drawableStart="@drawable/ic_eng"
+                android:drawableStart="@drawable/ic_us_flag"
                 android:padding="5dp"
                 android:text="English" />
 
@@ -76,9 +77,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                android:drawableLeft="@drawable/ic_ru"
+                android:drawableLeft="@drawable/ic_rus_flag"
                 android:drawablePadding="10dp"
-                android:drawableStart="@drawable/ic_ru"
+                android:drawableStart="@drawable/ic_rus_flag"
                 android:padding="5dp"
                 android:text="Русский" />
 
@@ -101,7 +102,7 @@
             android:paddingTop="8dp"
             android:text="@string/send_feedback"
             android:textColor="#ffffff"
-            android:textSize="14dp"
+            android:textSize="13dp"
             app:autoSizeMinTextSize="8sp"
             app:autoSizeTextType="uniform" />
 
@@ -112,9 +113,9 @@
             android:layout_gravity="start|center_vertical"
             android:layout_marginBottom="10dp"
             android:background="@drawable/btn_daily_rect"
-            android:drawableEnd="@drawable/ic_how_to"
+            android:drawableEnd="@drawable/ic_how_to_play"
             android:drawablePadding="10dp"
-            android:drawableRight="@drawable/ic_how_to"
+            android:drawableRight="@drawable/ic_how_to_play"
             android:fontFamily="@font/nunitoblack"
             android:paddingBottom="8dp"
             android:paddingLeft="12dp"
@@ -122,7 +123,7 @@
             android:paddingTop="8dp"
             android:text="@string/how_to_play"
             android:textColor="#ffffff"
-            android:textSize="14dp"
+            android:textSize="13dp"
             app:autoSizeMinTextSize="8sp"
             app:autoSizeTextType="uniform" />
 
@@ -142,7 +143,7 @@
             android:paddingTop="8dp"
             android:text="@string/rate_the_app"
             android:textColor="#ffffff"
-            android:textSize="14dp"
+            android:textSize="13dp"
             app:autoSizeMinTextSize="8sp"
             app:autoSizeTextType="uniform" />
 

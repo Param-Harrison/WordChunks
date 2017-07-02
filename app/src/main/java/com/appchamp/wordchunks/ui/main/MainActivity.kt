@@ -50,6 +50,8 @@ class MainActivity : BaseActivity<MainViewModel>() {
     override val viewModelClass = MainViewModel::class.java
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        // Make sure this is before calling super.onCreate
+        setTheme(R.style.WordChunksAppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_main)
 

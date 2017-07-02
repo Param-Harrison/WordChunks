@@ -29,7 +29,8 @@
             android:name=".ui.main.MainActivity"
             android:configChanges="locale|screenSize|orientation"
             android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -50,4 +50,21 @@
         <item>30</item>
     </integer-array>
 
+    <string-array name="path">
+        <item>com.github.glomadrian.grav.generator.animation.PathAnimator</item>
+        <item>com.github.glomadrian.grav.generator.animation.BallSizeAnimator</item>
+    </string-array>
+    <string-array name="red">
+        <item>#ba0303</item>
+        <item>#ff7878</item>
+        <item>#9e3535</item>
+        <item>#fd3939</item>
+    </string-array>
+
+    <string-array name="BallWaveAnimations">
+        <item>com.github.glomadrian.grav.generator.animation.SideToSideAnimator</item>
+        <item>com.github.glomadrian.grav.generator.animation.ShakeAnimator</item>
+        <item>com.github.glomadrian.grav.generator.animation.BallSizeAnimator</item>
+    </string-array>
+
 </resources>

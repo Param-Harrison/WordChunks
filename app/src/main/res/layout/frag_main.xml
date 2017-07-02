@@ -34,7 +34,16 @@
             android:contentDescription="@string/settings_hint"
             android:paddingEnd="@dimen/toolbar_padding"
             android:paddingStart="@dimen/toolbar_padding"
-            android:src="@drawable/ic_action_settings" />
+            app:srcCompat="@drawable/ic_settings" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/nunitobold"
+            android:gravity="center"
+            android:text="WordChunks"
+            android:textColor="#f2f2f2"
+            android:textSize="20dp" />
 
         <ImageView
             android:id="@+id/imgShareIcon"
@@ -46,120 +55,102 @@
             android:contentDescription="@string/share_hint"
             android:paddingEnd="@dimen/toolbar_padding"
             android:paddingStart="@dimen/toolbar_padding"
-            android:src="@drawable/ic_share_white_24dp" />
+            app:srcCompat="@drawable/ic_share" />
 
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2">
-
-        <ImageView
-            android:id="@+id/imgLogo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/logo" />
+        android:layout_weight="1">
 
         <com.github.glomadrian.grav.GravView
             android:id="@+id/grav"
-            android:layout_width="170dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            app:alpha_from="100"
-            app:alpha_max_duration="3000"
-            app:alpha_min_duration="1600"
-            app:alpha_to="200"
-            app:animationGenerators="@array/WallaIcon"
-            app:ball_from_size="2dp"
-            app:ball_to_size="5dp"
+            app:animationGenerators="@array/BallWaveAnimations"
+            app:ball_size="3dp"
+            app:ball_size_from_size="3dp"
+            app:ball_size_to_size="6dp"
             app:colorGenerator="com.github.glomadrian.grav.generator.paint.OneColorGenerator"
             app:gravGenerator="com.github.glomadrian.grav.generator.grav.BallGenerator"
-            app:percent_points_array="@array/walla_points_percent_points"
-            app:pointGenerator="com.github.glomadrian.grav.generator.point.PercentPointGenerator"
-            app:shake_direction="vertical"
-            app:shake_max_duration="3500"
-            app:shake_min_duration="1100"
-            app:shake_variance="3dp"
-            app:single_color="#7264df" />
-
-    </RelativeLayout>
-
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:gravity="center_horizontal|bottom"
-        android:orientation="vertical">
-
-        <com.appchamp.wordchunks.ui.customviews.CustomButton
-            android:id="@+id/btnPlay"
-            style="@style/CustomButtonStyle"
-            app:cb_bg="@drawable/btn_play_rect"
-            app:cb_color_title="@color/play_txt_color"
-            app:cb_icon="@drawable/ic_play"
-            app:cb_title="@string/play_btn_txt" />
-
-        <com.appchamp.wordchunks.ui.customviews.CustomButton
-            android:id="@+id/btnDaily"
-            style="@style/CustomButtonStyle"
-            app:cb_bg="@drawable/btn_daily_rect"
-            app:cb_color_title="@color/daily_txt_color"
-            app:cb_icon="@drawable/ic_puzzle"
-            app:cb_title="@string/daily_puzzle_btn_txt" />
-
-        <com.appchamp.wordchunks.ui.customviews.CustomButton
-            android:id="@+id/btnPacks"
-            style="@style/CustomButtonStyle"
-            app:cb_bg="@drawable/btn_packs_rect"
-            app:cb_color_title="@color/packs_txt_color"
-            app:cb_icon="@drawable/ic_packs"
-            app:cb_title="@string/all_packs_btn_txt" />
-
-        <com.appchamp.wordchunks.ui.customviews.CustomButton
-            android:id="@+id/btnStore"
-            style="@style/CustomButtonStyle"
-            app:cb_bg="@drawable/btn_store_rect"
-            app:cb_color_title="@color/store_txt_color"
-            app:cb_icon="@drawable/ic_store"
-            app:cb_title="@string/store_btn_txt" />
-
-    </LinearLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center_horizontal"
-        android:paddingLeft="@dimen/rl_padding_start"
-        android:paddingStart="@dimen/rl_padding_start">
+            app:pointGenerator="com.github.glomadrian.grav.generator.point.RegularPointGenerator"
+            app:regular_cell_size="700"
+            app:regular_variance="700"
+            app:shake_direction="horizontal"
+            app:shake_variance="50dp"
+            app:side_to_side_direction="downToUp"
+            app:side_to_side_max_duration="10000"
+            app:side_to_side_min_duration="5000"
+            app:single_color="#48ffffff" />
 
         <ImageView
-            android:id="@+id/imgCat"
-            android:layout_width="@dimen/cat_img_width"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/sleeping_cat"
+            android:background="@drawable/top"
+            android:contentDescription="@null" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:layout_above="@+id/btns_group"
+            android:layout_centerHorizontal="true"
             android:src="@drawable/cat_sleep" />
 
-        <pl.droidsonroids.gif.GifImageView
-            android:layout_width="@dimen/zzz1_img_width"
+        <LinearLayout
+            android:id="@+id/btns_group"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/imgCat"
-            android:layout_toRightOf="@+id/imgCat"
-            android:paddingBottom="@dimen/zzz1_padding_bottom"
-            android:src="@drawable/zzz" />
+    android:layout_alignParentBottom="true"
+        android:layout_marginBottom="100dp"
+     android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-        <pl.droidsonroids.gif.GifImageView
-            android:layout_width="@dimen/zzz2_img_width"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/imgCat"
-            android:layout_toRightOf="@+id/imgCat"
-            android:paddingBottom="@dimen/zzz2_padding_bottom"
-            android:src="@drawable/zzz" />
+            <com.appchamp.wordchunks.ui.customviews.CustomButton
+                android:id="@+id/btnPlay"
+                style="@style/CustomButtonStyle"
+                app:cb_bg="@drawable/btn_play_rect"
+                app:cb_color_title="@color/play_txt_color"
+                app:cb_icon="@drawable/ic_play"
+                app:cb_title="@string/play_btn_txt" />
+
+            <com.appchamp.wordchunks.ui.customviews.CustomButton
+                android:id="@+id/btnDaily"
+                style="@style/CustomButtonStyle"
+                app:cb_bg="@drawable/btn_daily_rect"
+                app:cb_color_title="@color/daily_txt_color"
+                app:cb_icon="@drawable/ic_puzzle"
+                app:cb_title="@string/daily_puzzle_btn_txt" />
+
+            <com.appchamp.wordchunks.ui.customviews.CustomButton
+                android:id="@+id/btnPacks"
+                style="@style/CustomButtonStyle"
+                app:cb_bg="@drawable/btn_packs_rect"
+                app:cb_color_title="@color/packs_txt_color"
+                app:cb_icon="@drawable/ic_packs"
+                app:cb_title="@string/all_packs_btn_txt" />
+
+            <com.appchamp.wordchunks.ui.customviews.CustomButton
+                android:id="@+id/btnStore"
+                style="@style/CustomButtonStyle"
+                app:cb_bg="@drawable/btn_store_rect"
+                app:cb_color_title="@color/store_txt_color"
+                app:cb_icon="@drawable/ic_store"
+                app:cb_title="@string/store_btn_txt" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@+id/btns_group"
+       android:layout_centerHorizontal="true"
+            android:layout_marginTop="-70dp"
+            android:contentDescription="@null"
+            app:srcCompat="@drawable/ic_fish" />
 
     </RelativeLayout>
+
 
 </LinearLayout>

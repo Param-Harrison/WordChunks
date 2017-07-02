@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2017 Julia Kozhukhovskaya
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,18 +14,12 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/gradient_main">
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@drawable/top"
-        android:contentDescription="@null"
-        android:rotation="180" />
-
-</FrameLayout>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:opacity="opaque">
+    <item android:drawable="@color/background_main" />
+    <item>
+        <bitmap
+            android:gravity="center"
+            android:src="@drawable/ic_splash" />
+    </item>
+</layer-list>
