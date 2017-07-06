@@ -18,44 +18,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_login"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height">
 
-        <ImageView
-            android:id="@+id/imgSettingsIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/settings_hint"
-            android:paddingEnd="@dimen/toolbar_padding"
-            android:paddingStart="@dimen/toolbar_padding"
-            app:srcCompat="@drawable/ic_settings" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/nunitoextrabold"
             android:gravity="center"
-            android:text="WordChunks"
+            android:text="@string/authentication"
             android:textColor="#f2f2f2"
-            android:textSize="20dp" />
-
-        <ImageView
-            android:id="@+id/imgShareIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:contentDescription="@string/share_hint"
-            android:paddingEnd="@dimen/toolbar_padding"
-            android:paddingStart="@dimen/toolbar_padding"
-            app:srcCompat="@drawable/ic_share" />
+            android:textSize="18dp" />
 
     </RelativeLayout>
 
@@ -92,67 +69,78 @@
             android:contentDescription="@null" />
 
         <ImageView
-            android:id="@+id/cat_logo"
+            android:id="@+id/logo"
             android:layout_width="wrap_content"
-            android:layout_height="110dp"
+            android:layout_height="200dp"
             android:layout_above="@+id/btns_group"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="20dp"
-            android:src="@drawable/cat_purr" />
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@null"
+            android:src="@drawable/logo" />
 
         <LinearLayout
             android:id="@+id/btns_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="100dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
+            <TextView
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunitobold"
+                android:paddingBottom="10dp"
+                android:text="@string/you_can_save_your_game_progress_with_this"
+                android:textAlignment="center"
+                android:textColor="#f0f0f0"
+                android:textSize="17dp" />
+
             <com.appchamp.wordchunks.ui.customviews.CustomButton
-                android:id="@+id/btnPlay"
+                android:id="@+id/btnGoogle"
                 style="@style/CustomButtonStyle"
-                app:cb_bg="@drawable/btn_play_rect"
+                app:cb_bg="@drawable/rect_google"
                 app:cb_color_title="@color/play_txt_color"
-                app:cb_icon="@drawable/ic_play"
-                app:cb_title="@string/play_btn_txt" />
+                app:cb_icon="@drawable/ic_google"
+                app:cb_title="@string/sign_in_with_google" />
 
             <com.appchamp.wordchunks.ui.customviews.CustomButton
-                android:id="@+id/btnDaily"
+                android:id="@+id/btnFacebook"
                 style="@style/CustomButtonStyle"
-                app:cb_bg="@drawable/btn_daily_rect"
-                app:cb_color_title="@color/daily_txt_color"
-                app:cb_icon="@drawable/ic_puzzle"
-                app:cb_title="@string/daily_puzzle_btn_txt" />
+                app:cb_bg="@drawable/rect_facebook"
+                app:cb_color_title="@color/play_txt_color"
+                app:cb_icon="@drawable/ic_facebook"
+                app:cb_title="@string/sign_in_with_facebook" />
 
             <com.appchamp.wordchunks.ui.customviews.CustomButton
-                android:id="@+id/btnPacks"
+                android:id="@+id/btnTwitter"
                 style="@style/CustomButtonStyle"
-                app:cb_bg="@drawable/btn_packs_rect"
-                app:cb_color_title="@color/packs_txt_color"
-                app:cb_icon="@drawable/ic_packs"
-                app:cb_title="@string/all_packs_btn_txt" />
+                app:cb_bg="@drawable/rect_twitter"
+                app:cb_color_title="@color/play_txt_color"
+                app:cb_icon="@drawable/ic_twitter"
+                app:cb_title="@string/sign_in_with_twitter" />
+
+            <TextView
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunitobold"
+                android:paddingBottom="10dp"
+                android:text="@string/or_you_can_sign_in_later"
+                android:textAlignment="center"
+                android:textColor="#f0f0f0"
+                android:textSize="15dp" />
 
             <com.appchamp.wordchunks.ui.customviews.CustomButton
                 android:id="@+id/btnStore"
                 style="@style/CustomButtonStyle"
-                app:cb_bg="@drawable/btn_store_rect"
-                app:cb_color_title="@color/store_txt_color"
-                app:cb_icon="@drawable/ic_store"
-                app:cb_title="@string/store_btn_txt" />
+                app:cb_bg="@drawable/rect_guest"
+                app:cb_color_title="@color/play_txt_color"
+                app:cb_icon="@drawable/ic_fish_24dp"
+                app:cb_title="@string/skip_play_as_guest" />
 
         </LinearLayout>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_below="@+id/btns_group"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="-70dp"
-            android:contentDescription="@null"
-            app:srcCompat="@drawable/ic_fish" />
-
     </RelativeLayout>
-
 
 </LinearLayout>

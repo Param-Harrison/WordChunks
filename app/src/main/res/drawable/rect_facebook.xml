@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><!--
+<?xml version="1.0" encoding="utf-8"?>
+<!--
   ~ Copyright 2017 Julia Kozhukhovskaya
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,13 +15,20 @@
   ~ limitations under the License.
   -->
 
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <gradient
-        android:angle="0"
-        android:endColor="#f06292"
-        android:startColor="#bf74cb"
-        android:type="linear" />
+    <item android:state_pressed="false">
+        <shape android:shape="rectangle">
+            <solid android:color="#475993" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
 
-</shape>
+    <item android:state_pressed="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#6C86DA" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+
+</selector>

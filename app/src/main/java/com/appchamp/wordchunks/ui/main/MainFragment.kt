@@ -33,9 +33,14 @@ import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
 import org.jetbrains.anko.share
 import org.jetbrains.anko.startActivity
+import xyz.hanks.library.SmallBang
 
 
 class MainFragment : LifecycleFragment() {
+
+    private val smallBang by lazy {
+        SmallBang.attach2Window(activity)
+    }
 
     private val viewModel by lazy {
         ViewModelProviders.of(activity).get(MainViewModel::class.java)
@@ -54,12 +59,14 @@ class MainFragment : LifecycleFragment() {
         btnDaily.setOnClickListener { onDailyClick() }
         btnPacks.setOnClickListener { startPacksActivity() }
         btnStore.setOnClickListener { onStoreClick() }
+        cat_logo.setOnClickListener { smallBang.bang(it) }
     }
 
     private fun onShareClick() {
         activity.share(
                 // todo localize
-                "WordChunks is AWESOME and I think you'll love it. Get it! -- [link]",
+                "WordChunks is AWESOME and I think you'll love it. Get it! -- "
+                        + "https://play.google.com/store/apps/details?id=com.appchamp.wordchunks",
                 "My current puzzle")
     }
 

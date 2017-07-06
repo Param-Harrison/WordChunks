@@ -52,7 +52,7 @@ class PacksLevelsAdapter<T>(private var items: List<T> = listOf(),
         notifyDataSetChanged()
     }
 
-    class ViewHolder<in T>(view: View, val itemClick: (T) -> Unit) : RecyclerView.ViewHolder(view) {
+    class ViewHolder<in T>(view: View, private val itemClick: (T) -> Unit) : RecyclerView.ViewHolder(view) {
 
         fun bind(item: T, position: Int) = with(itemView) {
             val itemState = getItemState(item)

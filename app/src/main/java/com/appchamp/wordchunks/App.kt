@@ -26,7 +26,10 @@ import com.appchamp.wordchunks.util.Constants.FILE_NAME_DATA_RU
 import com.appchamp.wordchunks.util.Constants.JSON
 import com.appchamp.wordchunks.util.Constants.LANG_RU
 import com.appchamp.wordchunks.util.Constants.SUPPORTED_LOCALES
+import com.facebook.stetho.Stetho
 import com.franmontiel.localechanger.LocaleChanger
+import com.squareup.leakcanary.LeakCanary
+import com.uphyca.stetho_realm.RealmInspectorModulesProvider
 import io.realm.Realm
 import java.util.*
 
@@ -43,9 +46,9 @@ class App : Application() {
 
         LocaleChanger.initialize(applicationContext, SUPPORTED_LOCALES)
 
-//        initLeakCanary()
-//
-//        initStetho()
+        initLeakCanary()
+
+        initStetho()
 
         // User's system language is Russian
         if (Locale.getDefault().language.contentEquals(LANG_RU)) {
@@ -83,21 +86,21 @@ class App : Application() {
         LocaleChanger.onConfigurationChanged()
     }
 
-//    private fun initLeakCanary() {
-//        if (LeakCanary.isInAnalyzerProcess(this)) {
-//            // This process is dedicated to LeakCanary for heap analysis.
-//            // You should not init your app in this process.
-//            return
-//        }
-//        LeakCanary.install(this)
-//    }
-//
-//    private fun initStetho() {
-//        Stetho.initialize(
-//                Stetho.newInitializerBuilder(this)
-//                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-//                        .enableWebKitInspector(
-//                                RealmInspectorModulesProvider.builder(this).build())
-//                        .build())
-//    }
+    private fun initLeakCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return
+        }
+        LeakCanary.install(this)
+    }
+
+    private fun initStetho() {
+        Stetho.initialize(
+                Stetho.newInitializerBuilder(this)
+                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
+                        .enableWebKitInspector(
+                                RealmInspectorModulesProvider.builder(this).build())
+                        .build())
+    }
 }
