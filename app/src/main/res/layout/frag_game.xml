@@ -15,6 +15,7 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/contentGame"
     android:layout_width="match_parent"
@@ -23,26 +24,37 @@
 
     <include layout="@layout/titlebar" />
 
-    <TextView
+    <RelativeLayout
+        android:id="@+id/rl"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nunitoextrabold"
-        android:gravity="center_horizontal"
-        android:letterSpacing="0.2"
-        android:paddingBottom="4dp"
-        android:text="@string/solutions"
-        android:textColor="#4d6c96"
-        android:textSize="9sp" />
+        android:layout_height="wrap_content">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvWords"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="30dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        tools:layout_height="150dp"
-        tools:listitem="@layout/item_word" />
+        <TextView
+            android:id="@+id/tvSolutions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunitoblack"
+            android:gravity="center_horizontal"
+            android:letterSpacing="0.2"
+            android:paddingBottom="20dp"
+            android:text="@string/solutions"
+            android:textColor="#4d6c96"
+            android:textSize="10dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvWords"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvSolutions"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            tools:layout_height="150dp"
+            tools:listitem="@layout/item_word" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/llPackBg"
@@ -69,21 +81,37 @@
                 android:layout_marginTop="20dp"
                 android:orientation="horizontal"
                 android:paddingEnd="10dp"
-                android:paddingStart="10dp">
+                android:paddingLeft="18dp"
+                android:paddingRight="10dp"
+                android:paddingStart="18dp">
 
-                <ImageView
-                    android:id="@+id/imgHint"
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/shuffle_hint_rect"
-                    android:contentDescription="@string/hint"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:paddingBottom="4dp"
-                    android:paddingEnd="8dp"
-                    android:paddingStart="8dp"
-                    android:src="@drawable/ic_hint" />
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/imgHint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:background="@drawable/shuffle_hint_rect"
+                        android:contentDescription="@string/hint"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:paddingBottom="4dp"
+                        android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
+                        app:srcCompat="@drawable/ic_hint" />
+
+                    <ImageView
+                        android:id="@+id/imgHintHolder"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_alignEnd="@+id/imgHint"
+                        android:layout_alignRight="@+id/imgHint"
+                        app:srcCompat="@drawable/ic_hint" />
+
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -96,14 +124,14 @@
                     android:paddingStart="6dp">
 
                     <ImageView
-                        android:id="@+id/imgChunksCount"
+                        android:id="@+id/imgClear"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:contentDescription="@string/clear"
-                        android:src="@drawable/ic_2"
                         android:visibility="invisible"
+                        app:srcCompat="@drawable/ic_clear"
                         tools:visibility="visible" />
 
                     <me.grantland.widget.AutofitLayout
@@ -130,13 +158,12 @@
                     </me.grantland.widget.AutofitLayout>
 
                     <ImageView
-                        android:id="@+id/imgClear"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/imgChunksCount"
+                        android:layout_width="24dp"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:contentDescription="@string/clear"
-                        android:src="@drawable/ic_clear"
+                        android:src="@drawable/ic_0"
                         android:visibility="invisible"
                         tools:visibility="visible" />
 
@@ -154,7 +181,7 @@
                     android:paddingBottom="4dp"
                     android:paddingEnd="8dp"
                     android:paddingStart="8dp"
-                    android:src="@drawable/ic_shuffle" />
+                    app:srcCompat="@drawable/ic_shuffle" />
 
             </LinearLayout>
 

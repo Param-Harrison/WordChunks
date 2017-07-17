@@ -31,7 +31,6 @@
     <string name="level_title">УРОВЕНЬ %d</string>
 
 
-    <string name="list_number">%1$d. %2$s</string>
     <string name="solutions">РЕШЕНИЯ</string>
     <string name="clear">очистить</string>
     <string name="shuffle">перемешать</string>
@@ -56,7 +55,6 @@
     <string name="congratulations">ПОЗДРАВЛЕНИЯ!</string>
     <string name="first_letter">ПЕРВАЯ БУКВА</string>
     <string name="first_chunk">ПЕРВАЯ ГРУППА БУКВ</string>
-    <string name="first_and_dots">%s…</string>
     <string name="you_finished_the_whole_pack">ВЫ ПРОШЛИ ВЕСЬ ПАК!</string>
     <string name="only_one_level_left">ТОЛЬКО ОДИН УРОВЕНЬ ОСТАЛСЯ В ПАКЕ</string>
     <string name="you_finished_all_packs">ВЫ ПРОШЛИ ВСЕ УРОВНИ И ПАКИ</string>
@@ -74,6 +72,7 @@
     <string name="store_btn_txt">МАГАЗИН</string>
     <string name="share_hint">поделиться</string>
     <string name="sleeping_cat">спящий кот</string>
+    <string name="complete">ПРОЙДЕНО</string>
     <!-- Main Screen END -->
 
     <!-- Settings Screen START -->
@@ -83,22 +82,13 @@
     <string name="how_to_play">КАК ИГРАТЬ?</string>
     <string name="rate_the_app">ОЦЕНИТЬ ИГРУ!</string>
     <string name="version">вер. %s</string>
-    <!-- Settings Screen END -->
-
-    <string name="circle">
-M527.023,71.8233 C780.213,71.8233,985.464,277.075,985.464,530.265
-C985.464,783.455,780.213,988.707,527.023,988.707
-C273.832,988.707,68.5809,783.455,68.5809,530.265
-C68.5809,277.075,273.832,71.8233,527.023,71.8233 Z
-  </string>
-
-    <!-- Login Screen -->
     <string name="authentication">АВТОРИЗАЦИЯ</string>
-    <string name="you_can_save_your_game_progress_with_this">Чтобы сохранить ваш игровой процесс, войдите:</string>
-
-    <string name="sign_in_with_google">Войти через Google</string>
-    <string name="sign_in_with_facebook">Войти через Facebook</string>
-    <string name="sign_in_with_twitter">Войти через Twitter</string>
-    <string name="or_you_can_sign_in_later">Или авторизуйтесь позже:</string>
-    <string name="skip_play_as_guest">Пропустить, играть гостем</string>
+    <string name="guest">Гость</string>
+    <!-- Settings Screen END -->
+    <string name="change">СМЕНИТЬ</string>
+    <string name="cancel">ОТМЕНИТЬ</string>
+    <string name="warning">Внимание!</string>
+    <string name="dialog_message_lang_change">Ваш игровой прогресс будет потерян, чтобы сохранить все ваши достижения авторизуйтесь сначала.</string>
+    <string name="facebook_coming">Facebook авторизация скоро будет</string>
+    <string name="twitter_coming">Twitter авторизация скоро будет</string>
 </resources>

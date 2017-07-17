@@ -19,22 +19,25 @@ package com.appchamp.wordchunks.ui.game
 import android.arch.lifecycle.LifecycleFragment
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.support.annotation.Nullable
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
+import berlin.volders.badger.BadgeShape
+import berlin.volders.badger.Badger
+import berlin.volders.badger.CountBadge
 import com.appchamp.wordchunks.R
-import com.appchamp.wordchunks.extensions.drawable
 import com.appchamp.wordchunks.extensions.invisible
 import com.appchamp.wordchunks.extensions.visible
-import com.appchamp.wordchunks.realmdb.models.realm.Chunk
 import com.appchamp.wordchunks.ui.game.adapters.ChunksAdapter
 import com.appchamp.wordchunks.ui.game.adapters.WordsAdapter
 import com.appchamp.wordchunks.util.Constants.CHUNKS_GRID_NUM
 import com.appchamp.wordchunks.util.Constants.WORDS_GRID_NUM
-import io.realm.RealmResults
 import kotlinx.android.synthetic.main.frag_game.*
 import xyz.hanks.library.SmallBang
 
@@ -61,7 +64,26 @@ class GameFragment : LifecycleFragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Create and set the adapters for the RecyclerViews.
+
+        // todo generate gradient
+        val colors = intArrayOf(Color.parseColor("#7161aa"), Color.parseColor("#6353b5"))
+        val gd = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
+        llPackBg.background = gd
+
+        // todo hints
+        val circleFactory: CountBadge.Factory = CountBadge.Factory(
+                BadgeShape.circle(1f, Gravity.BOTTOM),
+                Color.parseColor("#c33a51"),
+                Color.parseColor("#ffffff")
+        )
+        Badger.sett<CountBadge>(imgHintHolder, circleFactory).count = 23
+    }
+
+    override fun onActivityCreated(@Nullable savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        subscribeUi(viewModel) // Create and set the adapters for the RecyclerViews.
+
         setupWordsAdapter()
         setupChunksAdapter()
 
@@ -71,26 +93,34 @@ class GameFragment : LifecycleFragment() {
             chunksAdapter.notifyDataSetChanged()
         }
         imgClear.setOnClickListener {
-            viewModel.onClearClick().forEach { chunksAdapter.notifyItemChanged(it) }
+            viewModel.onClearClick().forEach {
+                chunksAdapter.notifyItemChanged(it)
+            }
         }
     }
 
-    override fun onActivityCreated(@Nullable savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        subscribeUi(viewModel)
-    }
-
     private fun subscribeUi(viewModel: GameViewModel) {
-        viewModel.getLevel().observe(this, Observer {
+        viewModel.getLiveLevel().observe(this, Observer {
             it?.let {
-                wordsAdapter.updateItems(it.words)
                 wordsAdapter.setPackColor(it.color)
-                chunksAdapter.updateItems(it.chunks)
+                tvSolutions.setTextColor(Color.parseColor(it.color))
             }
         })
-        viewModel.getLiveChunks().observe(this, Observer<RealmResults<Chunk>> {
+
+        viewModel.getLiveWords().observe(this, Observer {
             it?.let {
+                it.toList().let { words -> wordsAdapter.updateItems(words) }
+            }
+        })
+
+        viewModel.getLiveChunks().observe(this, Observer {
+            it?.let {
+                it.toList().let { chunks ->
+                    if (chunks.none { it.position != 0 }) {
+                        viewModel.onShuffleClick()
+                    }
+                    chunksAdapter.updateItems(chunks)
+                }
                 updateChunksTextView(viewModel.getSelectedChunksString())
                 updateChunksCountView(viewModel.getSelectedChunksLength())
                 updateClearIcon(viewModel.getClearIconVisibility())
@@ -100,7 +130,7 @@ class GameFragment : LifecycleFragment() {
                     viewModel.onWordSolved().forEach {
                         chunksAdapter.notifyItemChanged(it)
                         val v = rvWords.layoutManager.findViewByPosition(pos)
-                        smallBang.bang(v)
+                        smallBang?.bang(v)
                     }
                 }
             }
@@ -138,11 +168,13 @@ class GameFragment : LifecycleFragment() {
     }
 
     private fun updateChunksCountView(length: Int?) {
-        var imgId = resources.getIdentifier("ic_$length", "drawable", context.packageName)
-        if (imgId == 0) {
-            imgId = resources.getIdentifier("ic_0", "drawable", context.packageName)
-        }
-        imgChunksCount.setImageDrawable(context.drawable(imgId))
+        val squareFactory: CountBadge.Factory = CountBadge.Factory(
+                BadgeShape.circle(1f, Gravity.NO_GRAVITY),
+                Color.parseColor("#000000"),
+                Color.parseColor("#ffffff")
+        )
+        Badger.sett<CountBadge>(imgChunksCount, squareFactory).count = length ?: 0
+
         updateChunksCountView(length != 0)
     }
 

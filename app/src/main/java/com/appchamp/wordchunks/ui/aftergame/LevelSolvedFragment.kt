@@ -75,7 +75,7 @@ class LevelSolvedFragment : LifecycleFragment() {
         setPackColor(Color.parseColor(viewModel.getPackColor()))
         setClue(viewModel.getLevelClue())
         setFunFact(viewModel.getFunFact())
-        setLevelsLeft(viewModel.getLevelsLeft())
+//        setLevelsLeft(viewModel.getLevelsLeft())
         setExcellent()
     }
 

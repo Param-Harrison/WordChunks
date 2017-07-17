@@ -17,6 +17,7 @@
 package com.appchamp.wordchunks.ui.game.adapters
 
 import android.graphics.Color
+import android.graphics.Paint
 import android.graphics.drawable.GradientDrawable
 import android.support.annotation.ColorInt
 import android.support.v7.widget.RecyclerView
@@ -29,6 +30,7 @@ import com.appchamp.wordchunks.extensions.gone
 import com.appchamp.wordchunks.extensions.visible
 import com.appchamp.wordchunks.realmdb.models.realm.Word
 import com.appchamp.wordchunks.realmdb.models.realm.WordState
+import com.appchamp.wordchunks.realmdb.models.realm.getProperIndex
 import com.appchamp.wordchunks.util.Constants
 import kotlinx.android.synthetic.main.item_word.view.*
 import java.util.*
@@ -78,6 +80,7 @@ class WordsAdapter(private var words: List<Word> = listOf()) :
                 }
                 else -> {
                     tvWord.text = word.word
+                    tvWord.paintFlags = tvWord.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
                     tvWord.setTextColor(packColor)
                     icon.visible()
                     tvWordNum.gone()

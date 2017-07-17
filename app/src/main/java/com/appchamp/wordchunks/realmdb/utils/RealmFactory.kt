@@ -21,24 +21,19 @@ import io.realm.RealmConfiguration
 import java.io.File
 
 
-
-
 class RealmFactory {
 
-    /* Realm
-     * CAUTION: Be careful which thread you call this from, it is not Thread safe.
-     */
-    fun getRealmInstance(dbName: String): Realm {
-        return Realm.getInstance(getRealmConfiguration(dbName))
-    }
-
-    /* RealmConfiguration */
-    fun getRealmConfiguration(dbName: String): RealmConfiguration {
-        return RealmConfiguration.Builder()
+    fun setRealmConfiguration(dbName: String): RealmConfiguration {
+        val realmConfiguration = RealmConfiguration.Builder()
                 .name(dbName)
                 .deleteRealmIfMigrationNeeded()
                 .build()
+
+        //Realm.deleteRealm(realmConfiguration)
+        Realm.setDefaultConfiguration(realmConfiguration)
+        return realmConfiguration
     }
+
 
     /* Check for Realm file */
     fun isRealmFileExists(dbName: String): Boolean {
@@ -49,15 +44,5 @@ class RealmFactory {
 
         val realmFile = File(realmConfiguration.path)
         return realmFile.exists()
-    }
-
-    fun setRealmConfiguration(dbName: String) {
-        val realmConfiguration = RealmConfiguration.Builder()
-                .name(dbName)
-                .deleteRealmIfMigrationNeeded()
-                .build()
-
-        Realm.setDefaultConfiguration(realmConfiguration)
-
     }
 }

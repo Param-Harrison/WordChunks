@@ -26,6 +26,11 @@ import io.realm.Realm
 
 class WordDao(private val realm: Realm) {
 
+    fun createOrUpdateWordsFromJson(json: String) {
+        realm.executeTransaction { realm ->
+            realm.createOrUpdateAllFromJson(Word::class.java, json)
+        }
+    }
 
     /**
      * Custom set methods.

@@ -20,8 +20,13 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import com.appchamp.wordchunks.realmdb.models.realm.*
-import com.appchamp.wordchunks.realmdb.utils.*
+import com.appchamp.wordchunks.realmdb.models.realm.Level
+import com.appchamp.wordchunks.realmdb.models.realm.LevelState
+import com.appchamp.wordchunks.realmdb.models.realm.Pack
+import com.appchamp.wordchunks.realmdb.models.realm.PackState
+import com.appchamp.wordchunks.realmdb.utils.LiveRealmObject
+import com.appchamp.wordchunks.realmdb.utils.levelModel
+import com.appchamp.wordchunks.realmdb.utils.packModel
 import io.realm.Realm
 import java.util.*
 
@@ -70,8 +75,8 @@ class AfterGameViewModel(application: Application, levelId: String) : AndroidVie
      */
     fun resetLevel() {
         level.value?.let {
-            it.words.forEach { db.wordModel().setWordState(it, WordState.NOT_SOLVED.value) }
-            it.chunks.forEach { db.chunkModel().setChunkState(it, ChunkState.NORMAL.value) }
+            //  it.words.forEach { db.wordModel().setWordState(it, WordState.NOT_SOLVED.value) }
+            // it.chunks.forEach { db.chunkModel().setChunkState(it, ChunkState.NORMAL.value) }
         }
     }
 
@@ -80,13 +85,13 @@ class AfterGameViewModel(application: Application, levelId: String) : AndroidVie
      */
     fun isPackSolved(): Boolean {
         if (pack?.state == PackState.IN_PROGRESS.value) {
-            if (pack?.levels?.count { it.state == PackState.IN_PROGRESS.value } == 0) {
-                // Changes pack state as "solved"
-                pack?.let {
-                    db.packModel().setPackState(it, PackState.FINISHED.value)
-                }
-                return true
-            }
+//            if (pack?.levels?.count { it.state == PackState.IN_PROGRESS.value } == 0) {
+//                // Changes pack state as "solved"
+//                pack?.let {
+//                    db.packModel().setPackState(it, PackState.FINISHED.value)
+//                }
+//                return true
+//            }
         }
         return false
     }
@@ -111,10 +116,10 @@ class AfterGameViewModel(application: Application, levelId: String) : AndroidVie
     fun getFunFact(): String? {
         return level.value?.fact
     }
-
-    fun getLevelsLeft(): Int {
-        return pack?.levels?.count { it.state == PackState.LOCKED.value } as Int
-    }
+//
+//    fun getLevelsLeft(): Int {
+//        return pack?.levels?.count { it.state == PackState.LOCKED.value } as Int
+//    }
 
     fun  getPackId(): String {
         return pack?.id!!

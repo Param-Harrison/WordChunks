@@ -64,11 +64,11 @@ class GameActivity : AppCompatActivity(), LifecycleRegistryOwner {
         subscribeUi()
 
         // Shows tutorial on first game start
-        if (viewModel.isShowTutorial()) {
-            // Show how to play tutorial
-            startTutorialActivity()
-            // Never show tutorial again
-        }
+//        if (viewModel.isShowTutorial()) {
+//            // Show how to play tutorial
+//            startTutorialActivity()
+//            // Never show tutorial again
+//        }
 
         // Add game fragment if this is first creation
         if (savedInstanceState == null) {
@@ -83,7 +83,7 @@ class GameActivity : AppCompatActivity(), LifecycleRegistryOwner {
                 { "Activity parameter 'EXTRA_LEVEL_ID' is missing" })
 
         // Observe updates to the LiveData level.
-        viewModel.getLevel()
+        viewModel.getLiveLevel()
                 .observe(this, Observer<Level> {
                     // update UI titlebar
                     it?.let { tvTitle.text = it.clue }

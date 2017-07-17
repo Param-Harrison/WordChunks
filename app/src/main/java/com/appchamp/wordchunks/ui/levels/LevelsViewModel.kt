@@ -21,6 +21,7 @@ import android.arch.lifecycle.AndroidViewModel
 import com.appchamp.wordchunks.realmdb.models.realm.Level
 import com.appchamp.wordchunks.realmdb.models.realm.LevelState
 import com.appchamp.wordchunks.realmdb.utils.LiveRealmResults
+import com.appchamp.wordchunks.realmdb.utils.asLiveData
 import com.appchamp.wordchunks.realmdb.utils.levelModel
 import io.realm.Realm
 
@@ -29,8 +30,14 @@ class LevelsViewModel(application: Application?) : AndroidViewModel(application)
 
     private val db: Realm = Realm.getDefaultInstance()
 
-    private lateinit var levels: LiveRealmResults<Level>
+    private var levels: LiveRealmResults<Level>
     private lateinit var packId: String
+
+    init {
+        // Load packs from realm db
+        //packs = db.packModel().findAllPacks()
+        levels = db.where(Level::class.java).findAllAsync().asLiveData()
+    }
 
     fun getLevels(packId: String): LiveRealmResults<Level> {
         // Load levels from realm db

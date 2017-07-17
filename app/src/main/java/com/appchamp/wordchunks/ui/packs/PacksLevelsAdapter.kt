@@ -109,11 +109,11 @@ class PacksLevelsAdapter<T>(private var items: List<T> = listOf(),
             when (item) {
                 is Pack -> {
                     if (getItemState(item) == PackState.LOCKED.value) {
-                        return res.getString(R.string.number_of_levels_locked, item.levels.size)
+                        return res.getString(R.string.number_of_levels_locked, 6) //item.levels.size)
                     } else {
-                        val solvedLevelsCount = item.levels.count { it.state == PackState.FINISHED.value }
+                        val solvedLevelsCount = 8 //item.levels.count { it.state == PackState.FINISHED.value }
                         return res.getString(R.string.number_of_levels,
-                                solvedLevelsCount, item.levels.size)
+                                solvedLevelsCount, 7) //item.levels.size)
                     }
                 }
                 is Level -> return item.clue

@@ -25,6 +25,11 @@ import io.realm.Realm
 
 class ChunkDao(private val realm: Realm) {
 
+    fun createOrUpdateChunksFromJson(json: String) {
+        realm.executeTransaction { realm ->
+            realm.createOrUpdateAllFromJson(Chunk::class.java, json)
+        }
+    }
 
     /**
      * Custom set methods.
@@ -58,5 +63,4 @@ class ChunkDao(private val realm: Realm) {
                 .equalTo(Constants.REALM_FIELD_WORD_ID, wordId)
                 .findFirst()
     }
-
 }

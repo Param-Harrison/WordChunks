@@ -18,27 +18,20 @@ package com.appchamp.wordchunks
 
 import android.app.Application
 import android.content.res.Configuration
-import com.appchamp.wordchunks.realmdb.models.pojo.packsFromJSONFile
 import com.appchamp.wordchunks.realmdb.utils.RealmFactory
-import com.appchamp.wordchunks.realmdb.utils.gameModel
-import com.appchamp.wordchunks.util.Constants.FILE_NAME_DATA
-import com.appchamp.wordchunks.util.Constants.FILE_NAME_DATA_RU
-import com.appchamp.wordchunks.util.Constants.JSON
 import com.appchamp.wordchunks.util.Constants.LANG_RU
 import com.appchamp.wordchunks.util.Constants.SUPPORTED_LOCALES
-import com.facebook.stetho.Stetho
 import com.franmontiel.localechanger.LocaleChanger
-import com.squareup.leakcanary.LeakCanary
-import com.uphyca.stetho_realm.RealmInspectorModulesProvider
 import io.realm.Realm
 import java.util.*
 
-
-// The Realm lifecycle can be managed in the ViewModel and closed when the ViewModel is
-// no longer being used.
-// LiveData class works well with Realm’s observable live data, providing a layer
-// of abstraction so that the Activity isn’t exposed to RealmResults and RealmObjects.
-
+/**
+ * App initializes:
+ *
+ * LocaleChanger
+ * Realm
+ *
+ */
 class App : Application() {
 
     override fun onCreate() {
@@ -46,16 +39,16 @@ class App : Application() {
 
         LocaleChanger.initialize(applicationContext, SUPPORTED_LOCALES)
 
-        initLeakCanary()
-
-        initStetho()
-
+        when {
         // User's system language is Russian
-        if (Locale.getDefault().language.contentEquals(LANG_RU)) {
-            initRealm(FILE_NAME_DATA_RU)
-        } else { // User's system language is English or else
-            initRealm(FILE_NAME_DATA)
+            Locale.getDefault().language.contentEquals(LANG_RU) -> initRealm(SUPPORTED_LOCALES[1].displayLanguage)
+            else -> initRealm(SUPPORTED_LOCALES[0].displayLanguage)
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        LocaleChanger.onConfigurationChanged()
     }
 
     /**
@@ -65,42 +58,5 @@ class App : Application() {
         Realm.init(this)
         val realmFactory: RealmFactory = RealmFactory()
         realmFactory.setRealmConfiguration(dbName)
-        if (!realmFactory.isRealmFileExists(dbName)) {
-
-            //Realm.deleteRealm(realmFactory.getRealmConfiguration(dbName))
-
-            val packs = packsFromJSONFile(baseContext, dbName + JSON)
-            if (packs.isEmpty()) return
-
-            Realm.getDefaultInstance().use {
-                it.gameModel().createPacks(packs)
-                it.gameModel().initFirstGameSatate()
-            }
-        } else {
-            // update game data here
-        }
-    }
-
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-        LocaleChanger.onConfigurationChanged()
-    }
-
-    private fun initLeakCanary() {
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            // This process is dedicated to LeakCanary for heap analysis.
-            // You should not init your app in this process.
-            return
-        }
-        LeakCanary.install(this)
-    }
-
-    private fun initStetho() {
-        Stetho.initialize(
-                Stetho.newInitializerBuilder(this)
-                        .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
-                        .enableWebKitInspector(
-                                RealmInspectorModulesProvider.builder(this).build())
-                        .build())
     }
 }

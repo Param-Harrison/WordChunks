@@ -15,6 +15,7 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rlItem"
     android:layout_width="match_parent"
@@ -85,6 +86,6 @@
         android:adjustViewBounds="true"
         android:contentDescription="@null"
         android:scaleType="centerInside"
-        android:src="@drawable/ic_locked" />
+        app:srcCompat="@drawable/ic_locked" />
 
 </RelativeLayout>

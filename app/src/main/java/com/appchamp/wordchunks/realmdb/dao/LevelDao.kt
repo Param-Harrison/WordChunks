@@ -28,6 +28,12 @@ import io.realm.Realm
 
 class LevelDao(private val realm: Realm) {
 
+    fun createOrUpdateLevelsFromJson(json: String) {
+        realm.executeTransaction { realm ->
+            realm.createOrUpdateAllFromJson(Level::class.java, json)
+        }
+    }
+
     /**
      * Custom finder methods.
      */
@@ -60,4 +66,5 @@ class LevelDao(private val realm: Realm) {
             level.state = state
         }
     }
+
 }

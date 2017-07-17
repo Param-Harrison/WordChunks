@@ -17,6 +17,7 @@
 package com.appchamp.wordchunks.realmdb.models.realm
 
 import io.realm.RealmModel
+import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass
 import io.realm.annotations.Required
 
@@ -24,11 +25,14 @@ import io.realm.annotations.Required
 @RealmClass
 open class Chunk : RealmModel {
 
+    @PrimaryKey
+    @Required
+    var id: String = ""
     @Required
     var chunk: String = ""
     @Required
     var levelId: String = ""
-    var wordId: String = ""
+    // var wordId: String = ""
     var state: Long = 0  // should be Long because of the currentTimeMillis
     var position: Int = 0
 

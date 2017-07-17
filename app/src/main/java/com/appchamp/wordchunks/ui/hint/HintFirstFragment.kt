@@ -17,7 +17,6 @@
 package com.appchamp.wordchunks.ui.hint
 
 import android.arch.lifecycle.LifecycleFragment
-import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -50,12 +49,12 @@ class HintFirstFragment : LifecycleFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        viewModel.getLevel().observe(this, Observer {
-            it?.let {
-                wordsHintAdapter.updateItems(it.words)
-                wordsHintAdapter.setPackColor(it.color)
-            }
-        })
+//        viewModel.getLevel().observe(this, Observer {
+//            it?.let {
+//                wordsHintAdapter.updateItems(it.words)
+//                wordsHintAdapter.setPackColor(it.color)
+//            }
+//        })
     }
 
     private fun setupWordsHintAdapter() {

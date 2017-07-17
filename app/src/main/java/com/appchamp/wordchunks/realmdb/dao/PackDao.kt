@@ -25,6 +25,11 @@ import io.realm.Realm
 
 class PackDao(private val realm: Realm) {
 
+    fun createOrUpdatePacksFromJson(json: String) {
+        realm.executeTransaction { realm ->
+            realm.createOrUpdateAllFromJson(Pack::class.java, json)
+        }
+    }
 
     /**
      * Custom finder methods.

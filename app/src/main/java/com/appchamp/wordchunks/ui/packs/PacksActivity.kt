@@ -62,18 +62,19 @@ class PacksActivity : BaseActivity<PacksViewModel>() {
     private fun subscribeToModel() {
         // Observe updates to our LiveData packs.
         viewModel
-                .getPacks()
+                .getLivePacks()
                 .observe(this, Observer<RealmResults<Pack>> {
                     // update UI
                     val adapter = PacksLevelsAdapter<Pack> {
-                        // Navigates to LevelsActivity passing packId in the Intent.
+                        // Navigates to the LevelsActivity passing pack id in the Intent.
                         startLevelsActivity(it.id)
                     }
-                    it?.let { adapter.updateItems(it) }
+
+                    it?.toList()?.let { packs -> adapter.updateItems(packs) }
                     rvList.adapter = adapter
                 })
 
-        // Scrolling RecyclerView to the last "current", or "solved" level item.
+        // Scroll RecyclerView to the last "current", or "solved" level item.
         // indexOfLast gets last index, or -1 if the list does not contain that item.
         rvList.smoothScrollToPosition(viewModel.getLastPackPos())
     }

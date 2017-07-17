@@ -35,19 +35,9 @@ open class Word : RealmModel {
     var state: Int = 0  // 0 = not solved, 1 = solved
     var position: Int = 0
 
-    fun getProperIndex() = (position + 1).toString()
-
-
-//    fun getProperIndex() = when (position) {
-//        0 -> "1"
-//        1 -> "4"
-//        2 -> "2"
-//        3 -> "5"
-//        4 -> "3"
-//        5 -> "6"
-//        else -> throw IllegalArgumentException("Invalid index param value")
-//    }
 }
+
+fun Word.getProperIndex() = (this.position + 1).toString()
 
 // States of word
 enum class WordState(val value: Int) {

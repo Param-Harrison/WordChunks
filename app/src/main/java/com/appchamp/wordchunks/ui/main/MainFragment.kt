@@ -38,13 +38,9 @@ import xyz.hanks.library.SmallBang
 
 class MainFragment : LifecycleFragment() {
 
-    private val smallBang by lazy {
-        SmallBang.attach2Window(activity)
-    }
+    private val smallBang by lazy { SmallBang.attach2Window(activity) }
 
-    private val viewModel by lazy {
-        ViewModelProviders.of(activity).get(MainViewModel::class.java)
-    }
+    private val viewModel by lazy { ViewModelProviders.of(activity).get(MainViewModel::class.java) }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -53,13 +49,18 @@ class MainFragment : LifecycleFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         imgShareIcon.setOnClickListener { onShareClick() }
         btnPlay.setOnClickListener { onPlayClick() }
         btnDaily.setOnClickListener { onDailyClick() }
         btnPacks.setOnClickListener { startPacksActivity() }
         btnStore.setOnClickListener { onStoreClick() }
-        cat_logo.setOnClickListener { smallBang.bang(it) }
+        circularProgressBar.setOnClickListener { smallBang.bang(it) }
+        circularProgressBar.setValue(9F)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        grav.stop()
     }
 
     private fun onShareClick() {

@@ -20,12 +20,12 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
+import android.util.Log
 import com.appchamp.wordchunks.extensions.isEven
 import com.appchamp.wordchunks.extensions.shuffleIntArray
 import com.appchamp.wordchunks.realmdb.models.realm.*
 import com.appchamp.wordchunks.realmdb.utils.*
 import io.realm.Realm
-import io.realm.RealmList
 
 
 class GameViewModel(application: Application, levelId: String) : AndroidViewModel(application) {
@@ -43,21 +43,19 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
         chunks = db.chunkModel().findChunksByLevelId(levelId)
         // Load words from the Realm db as LiveData
         words = db.wordModel().findWordsByLevelId(levelId)
+
+        Log.d("MAIN", "INIT")
     }
 
-    fun getLevel(): LiveRealmObject<Level> = level
+    fun getLiveLevel(): LiveRealmObject<Level> = level
 
     fun getPackId(): String {
         return level.value?.packId!!
     }
 
-    /**
-     * To avoid conflicts between transactions while reading and writing chunks states,
-     * I've separated them: liveData, and RealmList
-     */
-    fun getChunks(): RealmList<Chunk>? = level.value?.chunks
-
-    fun getLiveChunks(): LiveRealmResults<Chunk> = chunks
+    fun getLiveChunks(): LiveRealmResults<Chunk> {
+        return chunks
+    }
 
     fun getLiveWords(): LiveRealmResults<Word> = words
 
@@ -65,7 +63,7 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
      * Gets filtered and sorted by time-pressed chunks, and transforms them into string.
      */
     fun getSelectedChunks(): List<Chunk>? {
-        return getChunks()
+        return getLiveChunks().value
                 ?.filter { it.state > ChunkState.NORMAL.value }
                 ?.sortedBy { it.state }
     }
@@ -111,7 +109,7 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
     }
 
     fun isWordSolved(): Int {
-        level.value?.words?.filter { it.state == WordState.NOT_SOLVED.value }
+        getLiveWords().value?.filter { it.state == WordState.NOT_SOLVED.value }
                 ?.forEach {
                     if (it.word == getSelectedChunksString()) {
                         //removeChunks()
@@ -146,7 +144,7 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
      * chunk in the RecyclerView in the db.
      */
     fun onShuffleClick() {
-        val numberOfChunks = getChunks()?.size
+        val numberOfChunks = getLiveChunks().value?.size
         numberOfChunks?.let {
             val shuffledArray = IntArray(numberOfChunks, { it }).shuffleIntArray()
 
@@ -156,10 +154,10 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
                 else -> numberOfChunks / 2 + 1
             }
 
-            for (i in 0..size - 1) {
+            for (i in 0 until size) {
                 val pos1 = shuffledArray[i]
                 val pos2 = shuffledArray[numberOfChunks - i - 1]
-                getChunks()?.let {
+                getLiveChunks().value?.let {
                     // Swapping chunk positions
                     it[pos1]?.let { chunk -> db.chunkModel().setChunkPosition(chunk, pos2) }
                     it[pos2]?.let { chunk -> db.chunkModel().setChunkPosition(chunk, pos1) }
@@ -168,10 +166,10 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
         }
     }
 
-    fun isShowTutorial(): Boolean {
-        val game = db.gameModel().findGame()
-        return game.showTutorial
-    }
+//    fun isShowTutorial(): Boolean {
+//        val game = db.gameModel().findGame()
+//        return game.showTutorial
+//    }
 
     /**
      * This method will be called when this ViewModel is no longer used and will be destroyed.
@@ -180,7 +178,7 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
      * prevent a leak of this ViewModel... Like RealmResults and the instance of Realm!
      */
     override fun onCleared() {
-        db.gameModel().setShowTutorial(db.gameModel().findGame(), false)
+//        db.gameModel().setShowTutorial(db.gameModel().findGame(), false)
         db.close()
         super.onCleared()
     }

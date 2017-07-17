@@ -10,7 +10,7 @@ WordChunks is a word game that test your knowledge of dictionary and spelling. T
 <a href='https://play.google.com/store/apps/details?id=com.appchamp.wordchunks&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png' width=20%/></a>
 
 - Easy to play, hard to beat!
-- Unlock levels and packs by solving them. The more you play, the better you get at it.
+- Unlock levels and packsLiveData by solving them. The more you play, the better you get at it.
 - Made with love, and with pets.
 - No pay to play, no pay to win.
 
