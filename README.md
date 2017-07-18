@@ -22,6 +22,17 @@ WordChunks is a word game that test your knowledge of dictionary and spelling. T
 <img src='https://github.com/jkozh/WordChunks/blob/master/images/Phone%20Screenshot%204.jpg' width=25% hspace="10"><img src='https://github.com/jkozh/WordChunks/blob/master/images/Phone%20Screenshot%205.jpg' width=25% hspace="10">
 
 
+### Changelog
+##### [1.3.beta] - 7/17/2017
+##### ADDED:
+- New anonymous authentication.
+- Now you can save your game progress by signing up via Google.
+- New animations.
+- New Changelog section.
+
+##### CHANGED:
+- Fix phrasing and spelling in Russian translation.
+
 ### Some pleasant surprises for me while refactoring Java -> Kotlin
 
 ---
