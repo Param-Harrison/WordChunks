@@ -28,9 +28,9 @@ import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.extensions.color
 import com.appchamp.wordchunks.extensions.gone
 import com.appchamp.wordchunks.extensions.visible
-import com.appchamp.wordchunks.realmdb.models.realm.Word
-import com.appchamp.wordchunks.realmdb.models.realm.WordState
-import com.appchamp.wordchunks.realmdb.models.realm.getProperIndex
+import com.appchamp.wordchunks.models.realm.Word
+import com.appchamp.wordchunks.models.realm.WordState
+import com.appchamp.wordchunks.models.realm.getProperIndex
 import com.appchamp.wordchunks.util.Constants
 import kotlinx.android.synthetic.main.item_word.view.*
 import java.util.*

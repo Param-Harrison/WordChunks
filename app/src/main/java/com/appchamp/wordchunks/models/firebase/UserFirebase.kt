@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.appchamp.wordchunks.realmdb.models.gson
+package com.appchamp.wordchunks.models.firebase
 
 
-open class LevelGson {
-    val id: String = ""
-    val packId: String = ""
-    val clue: String = ""
-    val fact: String = ""
-    val color: String = ""
-}
+class UserFirebase(
+        var id: String = "",
+        var email: String = "",
+        var hints: Int = 0,
+        var levelsSolved: Int = 0
+
+)

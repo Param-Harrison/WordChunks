@@ -41,7 +41,7 @@
             android:layout_height="match_parent"
             android:fontFamily="@font/nunitoextrabold"
             android:gravity="center"
-            android:text="@string/app_name"
+            android:text="@string/titlebar_main"
             android:textColor="#f2f2f2"
             android:textSize="20dp" />
 
@@ -109,7 +109,7 @@
                 app:border_width="10dp"
                 app:centercircle_diammterer="1"
                 app:draw_anticlockwise="false"
-                app:progress_color="#fcc397"
+                app:progress_color="#f77c88"
                 app:progress_startAngle="-90" />
 
             <TextView
@@ -186,13 +186,23 @@
             android:layout_below="@+id/btns_group"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="-70dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:drawableTop="@drawable/ic_fish"
             android:fontFamily="@font/nunitoextrabold"
-            android:text="CHANGELOG"
+            android:text="@string/changelog"
             android:textColor="#69000000"
             android:textSize="9dp" />
 
-    </RelativeLayout>
+        <ImageView
+            android:id="@+id/imgChangeLog"
+            android:layout_width="13dp"
+            android:layout_height="13dp"
+            android:layout_alignEnd="@+id/changeLog"
+            android:layout_alignRight="@+id/changeLog"
+            android:layout_alignTop="@+id/changeLog"
+            android:contentDescription="@null"
+            android:src="@drawable/dot" />
 
+    </RelativeLayout>
 
 </LinearLayout>

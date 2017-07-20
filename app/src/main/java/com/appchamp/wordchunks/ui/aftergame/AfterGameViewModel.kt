@@ -20,10 +20,10 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import com.appchamp.wordchunks.realmdb.models.realm.Level
-import com.appchamp.wordchunks.realmdb.models.realm.LevelState
-import com.appchamp.wordchunks.realmdb.models.realm.Pack
-import com.appchamp.wordchunks.realmdb.models.realm.PackState
+import com.appchamp.wordchunks.models.realm.Level
+import com.appchamp.wordchunks.models.realm.LevelState
+import com.appchamp.wordchunks.models.realm.Pack
+import com.appchamp.wordchunks.models.realm.PackState
 import com.appchamp.wordchunks.realmdb.utils.LiveRealmObject
 import com.appchamp.wordchunks.realmdb.utils.levelModel
 import com.appchamp.wordchunks.realmdb.utils.packModel

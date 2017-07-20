@@ -21,7 +21,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.appchamp.wordchunks.R
-import com.appchamp.wordchunks.realmdb.models.realm.Pack
+import com.appchamp.wordchunks.models.realm.Pack
 import com.appchamp.wordchunks.ui.BaseActivity
 import com.appchamp.wordchunks.ui.levels.LevelsActivity
 import com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID

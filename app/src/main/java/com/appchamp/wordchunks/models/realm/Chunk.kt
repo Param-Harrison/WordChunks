@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.appchamp.wordchunks.realmdb.models.realm
+package com.appchamp.wordchunks.models.realm
 
 import io.realm.RealmModel
 import io.realm.annotations.PrimaryKey
@@ -23,22 +23,25 @@ import io.realm.annotations.Required
 
 
 @RealmClass
-open class Pack : RealmModel {
+open class Chunk : RealmModel {
 
     @PrimaryKey
     @Required
     var id: String = ""
     @Required
-    var title: String = ""
+    var chunk: String = ""
     @Required
-    var color: String = ""
-    var state: Int = 0  // LOCKED = 0, IN_PROGRESS = 1, FINISHED = 2
-    //var levels: RealmList<Level> = RealmList()
+    var levelId: String = ""
+    // var wordId: String = ""
+    var state: Long = 0  // should be Long because of the currentTimeMillis
+    var position: Int = 0
+
 }
 
-// States of the pack
-enum class PackState(val value: Int) {
-    LOCKED(0),
-    IN_PROGRESS(1),
-    FINISHED(2)
+fun List<Chunk>.chunksToString(): String = map { it.chunk }.joinToString(separator = "")
+
+// States of chunk
+enum class ChunkState(val value: Long) {
+    NORMAL(0),
+    GONE(-1)
 }

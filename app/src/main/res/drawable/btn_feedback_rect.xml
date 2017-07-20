@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright 2017 Julia Kozhukhovskaya
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,9 +14,7 @@
   ~ limitations under the License.
   -->
 
-
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
 
     <!-- "shadow" -->
     <item>
@@ -31,7 +28,7 @@
         android:bottom="4dp"
         android:state_pressed="false">
         <shape android:shape="rectangle">
-            <solid android:color="#efefef" />
+            <solid android:color="#59569e" />
             <corners android:radius="10dp" />
         </shape>
     </item>

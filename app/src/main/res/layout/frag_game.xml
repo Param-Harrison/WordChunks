@@ -109,7 +109,7 @@
                         android:layout_height="18dp"
                         android:layout_alignEnd="@+id/imgHint"
                         android:layout_alignRight="@+id/imgHint"
-                        app:srcCompat="@drawable/ic_hint" />
+                        app:srcCompat="@drawable/dot" />
 
                 </RelativeLayout>
 
@@ -163,7 +163,7 @@
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:src="@drawable/ic_0"
+                        android:src="@drawable/dot"
                         android:visibility="invisible"
                         tools:visibility="visible" />
 

@@ -15,9 +15,7 @@
   -->
 
 <resources>
-
     <string name="app_name">Словорезка</string>
-
     <string name="back_hint">назад</string>
 
     <string name="title_select_pack">ВЫБРАТЬ ПАК</string>
@@ -29,7 +27,6 @@
 
     <string name="level_num">УРОВЕНЬ %d</string>
     <string name="level_title">УРОВЕНЬ %d</string>
-
 
     <string name="solutions">РЕШЕНИЯ</string>
     <string name="clear">очистить</string>
@@ -64,31 +61,38 @@
     <string name="show_the">ПОКАЗАТЬ…</string>
     <string name="number_of_letters_ru">%d БУКВ</string>
 
-    <!-- Main Screen START -->
-    <!-- Main Buttons text -->
+    <!-- START Main Screen -->
+    <!-- START Main Title -->
+    <string name="titlebar_main">СЛОВОРЕЗКА</string>
+    <string name="settings_hint">НАСТРОЙКИ</string>
+    <string name="share_hint">поделиться</string>
+    <!-- END Main Title -->
+    <!-- START Main Buttons titles -->
     <string name="play_btn_txt">ИГРАТЬ!</string>
     <string name="daily_puzzle_btn_txt">ИГРА ДНЯ</string>
     <string name="all_packs_btn_txt">ВСЕ ПАКИ</string>
     <string name="store_btn_txt">МАГАЗИН</string>
-    <string name="share_hint">поделиться</string>
-    <string name="sleeping_cat">спящий кот</string>
+    <!-- END Main Buttons titles -->
+
     <string name="complete">ПРОЙДЕНО</string>
+    <string name="changelog">ИЗМЕНЕНИЯ</string>
     <!-- Main Screen END -->
 
     <!-- Settings Screen START -->
-    <string name="settings_hint">НАСТРОЙКИ</string>
     <string name="language">ЯЗЫК:</string>
     <string name="send_feedback">ОТПРАВИТЬ ОТЗЫВ</string>
     <string name="how_to_play">КАК ИГРАТЬ?</string>
     <string name="rate_the_app">ОЦЕНИТЬ ИГРУ!</string>
     <string name="version">вер. %s</string>
-    <string name="authentication">АВТОРИЗАЦИЯ</string>
-    <string name="guest">Гость</string>
-    <!-- Settings Screen END -->
-    <string name="change">СМЕНИТЬ</string>
-    <string name="cancel">ОТМЕНИТЬ</string>
-    <string name="warning">Внимание!</string>
-    <string name="dialog_message_lang_change">Ваш игровой прогресс будет потерян, чтобы сохранить все ваши достижения авторизуйтесь сначала.</string>
+    <string name="authentication">АВТОРИЗАЦИЯ:</string>
+    <string name="guest">ГОСТЬ</string>
     <string name="facebook_coming">Facebook авторизация скоро будет</string>
     <string name="twitter_coming">Twitter авторизация скоро будет</string>
+    <!-- START Change Language Dialog Warning -->
+    <string name="warning">ВНИМАНИЕ</string>
+    <string name="dialog_message_lang_change">Ваш игровой прогресс будет потерян, чтобы сохранить все ваши достижения, авторизуйтесь сначала.</string>
+    <string name="change">СМЕНИТЬ</string>
+    <string name="cancel">ОТМЕНИТЬ</string>
+    <!-- END Change Language Dialog Warning -->
+    <!-- END Settings Screen -->
 </resources>

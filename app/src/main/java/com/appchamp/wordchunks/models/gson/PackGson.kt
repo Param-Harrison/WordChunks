@@ -14,30 +14,11 @@
  * limitations under the License.
  */
 
-package com.appchamp.wordchunks.ui.store
-
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import com.appchamp.wordchunks.R
-import kotlinx.android.synthetic.main.act_store.*
+package com.appchamp.wordchunks.models.gson
 
 
-class StoreActivity : AppCompatActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.act_store)
-
-        imgCloseIcon.setOnClickListener {
-            onBackPressed()
-            finish()
-        }
-    }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-        grav.stop()
-    }
-
+open class PackGson {
+    val id: String = ""
+    val title: String = ""
+    val color: String = ""
 }

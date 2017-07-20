@@ -54,7 +54,6 @@ class MainActivity : BaseMainActivity() {
     private lateinit var menu: SlidingMenu
     private lateinit var progressDialog: SpotsDialog
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         // Make sure this is before calling super.onCreate
         setTheme(R.style.WordChunksAppTheme)
@@ -82,7 +81,6 @@ class MainActivity : BaseMainActivity() {
                 viewModel.fetchFirebaseUser(currentUser.uid)
             }
         }
-
     }
 
     private fun subscribeUi() {
@@ -105,9 +103,6 @@ class MainActivity : BaseMainActivity() {
         imgGoogleSettings.setOnClickListener { onGoogleClick() }
         imgFacebookSettings.setOnClickListener { showSnackbar(getString(R.string.facebook_coming)) }
         imgTwitterSettings.setOnClickListener { showSnackbar(getString(R.string.twitter_coming)) }
-        changeLog.setOnClickListener {
-            //viewModel.changeData()
-        }
         tvVersion.text = resources.getString(R.string.version, BuildConfig.VERSION_NAME)
         updateAuthInfo()
     }
@@ -286,6 +281,7 @@ class MainActivity : BaseMainActivity() {
                     SUPPORTED_LOCALES[0] -> radioButtonRu.isChecked = true
                 }
             })
+            builder.setIcon(R.drawable.ic_warning)
             builder.setTitle(R.string.warning)
             // Create the AlertDialog
             val dialog = builder.create()
@@ -335,18 +331,9 @@ class MainActivity : BaseMainActivity() {
 
     private fun onFeedbackClick() {
 //        Instabug.invoke(InstabugInvocationMode.NEW_FEEDBACK)
-        email(
-                "jkozhukhovskaya@gmail.com", // todo
-                "Feedback for WordChunks",
-                """
-                        -----------------
-                        ID: ${BuildConfig.APPLICATION_ID}
-                        DebugApp version: ${BuildConfig.VERSION_CODE}
-                        Device: ${Build.MODEL}
-                        System version: ${Build.VERSION.RELEASE}
-                        -----------------
-
-                        """
+        email(getString(R.string.feedback_email), getString(R.string.feedback_subject),
+                getString(R.string.feedback_text, BuildConfig.APPLICATION_ID,
+                        BuildConfig.VERSION_CODE, Build.MODEL, Build.VERSION.RELEASE)
         )
     }
 
@@ -357,4 +344,10 @@ class MainActivity : BaseMainActivity() {
     private fun showSnackbar(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
     }
+
+    /**
+     * AUTHENTICATION METHODS GOES BELOW:
+     */
+
+
 }

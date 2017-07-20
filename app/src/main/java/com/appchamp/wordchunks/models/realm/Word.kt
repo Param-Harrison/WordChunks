@@ -14,13 +14,33 @@
  * limitations under the License.
  */
 
-package com.appchamp.wordchunks.realmdb.models.firebase
+package com.appchamp.wordchunks.models.realm
+
+import io.realm.RealmModel
+import io.realm.annotations.PrimaryKey
+import io.realm.annotations.RealmClass
+import io.realm.annotations.Required
 
 
-class UserFirebase(
-        var id: String = "",
-        var email: String = "",
-        var hints: Int = 0,
-        var levelsSolved: Int = 0
+@RealmClass
+open class Word : RealmModel {
 
-)
+    @PrimaryKey
+    @Required
+    var id: String = ""
+    @Required
+    var levelId: String = ""
+    @Required
+    var word: String = ""
+    var state: Int = 0  // 0 = not solved, 1 = solved
+    var position: Int = 0
+
+}
+
+fun Word.getProperIndex() = (this.position + 1).toString()
+
+// States of word
+enum class WordState(val value: Int) {
+    NOT_SOLVED(0),
+    SOLVED(1)
+}

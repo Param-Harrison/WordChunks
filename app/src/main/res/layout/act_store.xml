@@ -15,8 +15,170 @@
   -->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_hint_first"
     android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/toolbar_height">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/settings_hint"
+            android:paddingEnd="@dimen/toolbar_padding"
+            android:paddingStart="@dimen/toolbar_padding"
+            app:srcCompat="@drawable/ic_store_white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/nunitoextrabold"
+            android:gravity="center"
+            android:text="@string/store_btn_txt"
+            android:textColor="#f2f2f2"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/imgCloseIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/share_hint"
+            android:paddingEnd="@dimen/toolbar_padding"
+            android:paddingStart="@dimen/toolbar_padding"
+            app:srcCompat="@drawable/ic_close" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.github.glomadrian.grav.GravView
+            android:id="@+id/grav"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/changeLog"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            app:animationGenerators="@array/BallWaveAnimations"
+            app:ball_size="3dp"
+            app:ball_size_from_size="3dp"
+            app:ball_size_to_size="6dp"
+            app:colorGenerator="com.github.glomadrian.grav.generator.paint.OneColorGenerator"
+            app:gravGenerator="com.github.glomadrian.grav.generator.grav.BallGenerator"
+            app:pointGenerator="com.github.glomadrian.grav.generator.point.RegularPointGenerator"
+            app:regular_cell_size="700"
+            app:regular_variance="700"
+            app:shake_direction="horizontal"
+            app:shake_variance="50dp"
+            app:side_to_side_direction="downToUp"
+            app:side_to_side_max_duration="10000"
+            app:side_to_side_min_duration="5000"
+            app:single_color="#48ffffff" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/main_shadow"
+            android:contentDescription="@null" />
+
+
+        <LinearLayout
+            android:id="@+id/btns_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:contentDescription="@null"
+                android:src="@drawable/cat_store" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/nunitoblack"
+                android:text="YOU HAVE 2 HINTS"
+                android:textAlignment="center"
+                android:textColor="#f2f2f2"
+                android:textSize="17dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/nunitoblack"
+                android:text="BUY SOME AND LET'S PLAY!"
+                android:textAlignment="center"
+                android:textColor="#f2f2f2"
+                android:textSize="15dp" />
+
+            <com.appchamp.wordchunks.ui.customviews.CustomButton
+                style="@style/CustomButtonStyle"
+                android:layout_marginBottom="10dp"
+                app:cb_bg="@drawable/btn_play_rect"
+                app:cb_color_title="@color/play_txt_color"
+                app:cb_icon="@drawable/ic_video"
+                app:cb_title="1 FREE HINT - WATCH A VIDEO" />
+
+            <com.appchamp.wordchunks.ui.customviews.CustomButton
+
+                style="@style/CustomButtonStyle"
+                app:cb_bg="@drawable/btn_store_rect"
+                app:cb_color_title="@color/store_txt_color"
+                app:cb_icon="@drawable/ic_badge20"
+                app:cb_title="20 HINTS - $0.99" />
+
+            <com.appchamp.wordchunks.ui.customviews.CustomButton
+
+                style="@style/CustomButtonStyle"
+                app:cb_bg="@drawable/btn_daily_rect"
+                app:cb_color_title="@color/daily_txt_color"
+                app:cb_icon="@drawable/ic_badge50"
+                app:cb_title="50 HINTS - $1.99" />
+
+            <com.appchamp.wordchunks.ui.customviews.CustomButton
+
+                style="@style/CustomButtonStyle"
+                app:cb_bg="@drawable/btn_109_hints_rect"
+                app:cb_color_title="@color/store_txt_color"
+                app:cb_icon="@drawable/ic_badge109"
+                app:cb_title="109 HINTS - $4.99" />
+
+            <com.appchamp.wordchunks.ui.customviews.CustomButton
+
+                style="@style/CustomButtonStyle"
+                app:cb_bg="@drawable/btn_packs_rect"
+                app:cb_color_title="@color/packs_txt_color"
+                app:cb_icon="@drawable/ic_badge229"
+                app:cb_title="229 HINTS - $9.99" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/main_shadow"
+            android:contentDescription="@null"
+            android:rotation="180" />
+
+    </RelativeLayout>
 
 </LinearLayout>

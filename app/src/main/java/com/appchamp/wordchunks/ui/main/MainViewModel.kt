@@ -21,16 +21,16 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
+import com.appchamp.wordchunks.models.firebase.UserFirebase
+import com.appchamp.wordchunks.models.gson.ChunkGson
+import com.appchamp.wordchunks.models.gson.LevelGson
+import com.appchamp.wordchunks.models.gson.PackGson
+import com.appchamp.wordchunks.models.gson.WordGson
+import com.appchamp.wordchunks.models.realm.Chunk
+import com.appchamp.wordchunks.models.realm.LevelState
+import com.appchamp.wordchunks.models.realm.User
+import com.appchamp.wordchunks.models.realm.Word
 import com.appchamp.wordchunks.realmdb.firebaseDao.fetchFirebaseList
-import com.appchamp.wordchunks.realmdb.models.firebase.UserFirebase
-import com.appchamp.wordchunks.realmdb.models.gson.ChunkGson
-import com.appchamp.wordchunks.realmdb.models.gson.LevelGson
-import com.appchamp.wordchunks.realmdb.models.gson.PackGson
-import com.appchamp.wordchunks.realmdb.models.gson.WordGson
-import com.appchamp.wordchunks.realmdb.models.realm.Chunk
-import com.appchamp.wordchunks.realmdb.models.realm.LevelState
-import com.appchamp.wordchunks.realmdb.models.realm.User
-import com.appchamp.wordchunks.realmdb.models.realm.Word
 import com.appchamp.wordchunks.realmdb.utils.chunkModel
 import com.appchamp.wordchunks.realmdb.utils.levelModel
 import com.appchamp.wordchunks.realmdb.utils.packModel
@@ -50,15 +50,41 @@ class MainViewModel(application: Application?) : AndroidViewModel(application) {
     private val firebaseDb: DatabaseReference = FirebaseDatabase.getInstance().reference
     private val gson: Gson = Gson()
     private val isRealmLoaded = MutableLiveData<Boolean>()
+    private var dailyPuzzleLevelId: String? = null
 
-    fun isRealmLoaded(): LiveData<Boolean> {
-        return isRealmLoaded
-    }
+    fun isRealmLoaded(): LiveData<Boolean> = isRealmLoaded
 
     fun getLevelId() = realmDb.levelModel().findLevelByState(LevelState.IN_PROGRESS.value)?.id
 
+    fun getDailyPuzzleLevelId() = dailyPuzzleLevelId
+
+    fun fetchDailyLevel() {
+        isRealmLoaded.postValue(false)
+        firebaseDb.fetchFirebaseList<LevelGson>(
+                {
+                    loadLevelsIntoRealm(it)
+                    dailyPuzzleLevelId = it.last().id
+                    Log.d(TAG, "LAST ID" + it.last().id)
+                },
+                { Log.d(TAG, "ERROR:" + it) },
+                getLang(),
+                "daily/levels"
+        )
+        firebaseDb.fetchFirebaseList<WordGson>(
+                { loadWordsIntoRealm(it) },
+                { Log.d(TAG, "ERROR:" + it) },
+                getLang(),
+                "daily/words"
+        )
+        firebaseDb.fetchFirebaseList<ChunkGson>(
+                { loadChunksIntoRealm(it) },
+                { Log.d(TAG, "ERROR:" + it) },
+                getLang(),
+                "daily/chunks"
+        )
+    }
+
     private fun getLang() = when (Locale.getDefault()) {
-        Constants.SUPPORTED_LOCALES[0] -> "eng"
         Constants.SUPPORTED_LOCALES[1] -> "rus"
         else -> "eng"
     }
@@ -94,7 +120,6 @@ class MainViewModel(application: Application?) : AndroidViewModel(application) {
         val json = gson.toJson(firebaseList)
         Log.d(TAG, "PACKS AS GSON = " + json)
         realmDb.packModel().createOrUpdatePacksFromJson(json)
-//        packsLiveData = realmDb.packModel().findAllPacks()
     }
 
     private fun loadLevelsIntoRealm(firebaseList: MutableList<LevelGson>) {
@@ -164,5 +189,4 @@ class MainViewModel(application: Application?) : AndroidViewModel(application) {
         realmDb.close()
         super.onCleared()
     }
-
 }

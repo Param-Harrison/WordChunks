@@ -32,8 +32,8 @@ import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.extensions.color
 import com.appchamp.wordchunks.extensions.gone
 import com.appchamp.wordchunks.extensions.visible
-import com.appchamp.wordchunks.realmdb.models.realm.Word
-import com.appchamp.wordchunks.realmdb.models.realm.WordState
+import com.appchamp.wordchunks.models.realm.Word
+import com.appchamp.wordchunks.models.realm.WordState
 import kotlinx.android.synthetic.main.item_word_hint.view.*
 
 

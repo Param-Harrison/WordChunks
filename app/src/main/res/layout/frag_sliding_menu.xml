@@ -51,25 +51,27 @@
             android:paddingEnd="20dp"
             android:paddingStart="20dp">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:drawableLeft="@drawable/ic_user"
-                android:drawablePadding="6dp"
-                android:drawableStart="@drawable/ic_user"
-                android:fontFamily="@font/nunitoblack"
-                android:text="@string/authentication"
-                android:textColor="#212b2f"
-                android:textSize="16dp" />
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:layout_marginBottom="15dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
                 android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginRight="10dp"
+                    android:drawableLeft="@drawable/ic_user"
+                    android:drawablePadding="6dp"
+                    android:drawableStart="@drawable/ic_user"
+                    android:fontFamily="@font/nunitoblack"
+                    android:text="@string/authentication"
+                    android:textColor="#212b2f"
+                    android:textSize="16dp" />
 
                 <TextView
                     android:id="@+id/tvProvider"
@@ -80,57 +82,107 @@
                     android:layout_marginRight="5dp"
                     android:background="@drawable/rect_sign_out"
                     android:fontFamily="@font/nunitobold"
+                    android:gravity="end"
                     android:paddingBottom="2dp"
                     android:paddingEnd="5dp"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp"
                     android:paddingStart="5dp"
                     android:paddingTop="2dp"
-                    android:textColor="#ffffff"
+                    android:textColor="#212b2f"
                     android:textSize="10dp"
-                    tools:text="Google" />
+                    tools:text="GUEST" />
 
-                <TextView
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:orientation="horizontal">
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginRight="5dp"
-                    android:fontFamily="@font/nunitobold"
-                    android:text="ID: "
-                    android:textColor="#ffffff"
-                    android:textSize="14dp" />
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/tvUserId"
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:gravity="end"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
+                            android:layout_marginRight="5dp"
+                            android:fontFamily="@font/nunitoextrabold"
+                            android:gravity="end"
+                            android:text="USER ID: "
+                            android:textColor="#658291"
+                            android:textSize="14dp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="5dp"
+                        android:fontFamily="@font/nunitoextrabold"
+                        android:gravity="end"
+                        android:text="HINTS: "
+                        android:textColor="#658291"
+                        android:textSize="14dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunitosemibold"
-                    android:singleLine="true"
-                    android:textColor="#ffffff"
-                    android:textSize="14dp"
-                    tools:text="12345678..." />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvUserId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunitosemibold"
+                        android:singleLine="true"
+                        android:textColor="#8db3c7"
+                        android:textSize="14dp"
+                        tools:text="12345678..." />
+
+                    <TextView
+                        android:id="@+id/tvUserHints"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:fontFamily="@font/nunitosemibold"
+                        android:singleLine="true"
+                        android:text="12"
+                        android:textColor="#8db3c7"
+                        android:textSize="14dp"
+                        tools:text="12" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tvSignOut"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/rect_sign_out"
-                android:drawableLeft="@drawable/ic_sign_out"
-                android:drawablePadding="10dp"
-                android:fontFamily="@font/nunitosemibold"
-                android:paddingBottom="5dp"
-                android:paddingEnd="20dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingStart="20dp"
-                android:paddingTop="5dp"
-                android:text="Sign Out"
-                android:textColor="#ffffff"
-                android:textSize="12dp" />
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/ic_signup"
+                android:drawablePadding="6dp"
+                android:drawableStart="@drawable/ic_signup"
+                android:fontFamily="@font/nunitoblack"
+                android:text="SIGN UP:"
+                android:textColor="#212b2f"
+                android:textSize="16dp" />
 
             <LinearLayout
                 android:id="@+id/btns_group_social"
@@ -141,17 +193,19 @@
                 <ImageView
                     android:id="@+id/imgGoogleSettings"
                     android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_height="39dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/rect_google"
-                    android:padding="10dp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:paddingBottom="12dp"
+                    android:paddingTop="8dp"
                     app:srcCompat="@drawable/ic_google" />
 
                 <ProgressBar
                     android:id="@+id/progressBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_marginBottom="10dp"
                     android:visibility="gone"
                     tools:visibility="visible" />
@@ -208,6 +262,7 @@
                     android:fontFamily="@font/nunitobold"
                     android:padding="5dp"
                     android:text="@string/english"
+                    android:textColor="#FF8DB3C7"
                     android:textSize="14dp" />
 
                 <RadioButton
@@ -220,6 +275,7 @@
                     android:drawableStart="@drawable/ic_rus_flag"
                     android:padding="5dp"
                     android:text="@string/russian"
+                    android:textColor="#FF8DB3C7"
                     android:textSize="14dp" />
 
             </RadioGroup>
@@ -233,31 +289,34 @@
                 <ImageView
                     android:id="@+id/imgFeedback"
                     android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_height="39dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/btn_packs_rect"
-                    android:padding="10dp"
+                    android:background="@drawable/btn_feedback_rect"
+                    android:paddingBottom="14dp"
+                    android:paddingTop="10dp"
                     app:srcCompat="@drawable/ic_feedback" />
 
                 <ImageView
                     android:id="@+id/imgHowToPlay"
                     android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_height="39dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/btn_daily_rect"
-                    android:padding="10dp"
+                    android:background="@drawable/btn_feedback_rect"
+                    android:paddingBottom="14dp"
+                    android:paddingTop="10dp"
                     app:srcCompat="@drawable/ic_how_to_play" />
 
                 <ImageView
                     android:id="@+id/imgRateUs"
                     android:layout_width="35dp"
-                    android:layout_height="35dp"
+                    android:layout_height="39dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/btn_store_rect"
-                    android:padding="10dp"
+                    android:background="@drawable/btn_feedback_rect"
+                    android:paddingBottom="14dp"
+                    android:paddingTop="10dp"
                     app:srcCompat="@drawable/ic_rate" />
             </LinearLayout>
 
@@ -275,6 +334,25 @@
             android:textSize="13dp"
             tools:text="ver. 1.2.beta" />
 
+        <TextView
+            android:id="@+id/tvSignOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginBottom="20dp"
+            android:drawablePadding="10dp"
+            android:fontFamily="@font/nunitosemibold"
+            android:paddingBottom="5dp"
+            android:paddingEnd="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingStart="20dp"
+            android:paddingTop="5dp"
+            android:text="S"
+            android:textColor="#475d68"
+            android:textSize="12dp" />
+
     </LinearLayout>
+
 
 </ScrollView>

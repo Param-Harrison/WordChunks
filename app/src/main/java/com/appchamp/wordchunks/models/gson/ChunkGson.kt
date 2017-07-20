@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.appchamp.wordchunks.realmdb.models.gson
+package com.appchamp.wordchunks.models.gson
 
 
-open class PackGson {
+open class ChunkGson {
     val id: String = ""
-    val title: String = ""
-    val color: String = ""
+    val levelId: String = ""
+    val chunk: String = ""
 }

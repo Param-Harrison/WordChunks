@@ -18,9 +18,9 @@ package com.appchamp.wordchunks.ui.packs
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
-import com.appchamp.wordchunks.realmdb.models.realm.LevelState
-import com.appchamp.wordchunks.realmdb.models.realm.Pack
-import com.appchamp.wordchunks.realmdb.models.realm.PackState
+import com.appchamp.wordchunks.models.realm.LevelState
+import com.appchamp.wordchunks.models.realm.Pack
+import com.appchamp.wordchunks.models.realm.PackState
 import com.appchamp.wordchunks.realmdb.utils.LiveRealmResults
 import com.appchamp.wordchunks.realmdb.utils.levelModel
 import com.appchamp.wordchunks.realmdb.utils.packModel

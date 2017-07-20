@@ -23,7 +23,7 @@ import android.arch.lifecycle.ViewModelProvider
 import android.util.Log
 import com.appchamp.wordchunks.extensions.isEven
 import com.appchamp.wordchunks.extensions.shuffleIntArray
-import com.appchamp.wordchunks.realmdb.models.realm.*
+import com.appchamp.wordchunks.models.realm.*
 import com.appchamp.wordchunks.realmdb.utils.*
 import io.realm.Realm
 

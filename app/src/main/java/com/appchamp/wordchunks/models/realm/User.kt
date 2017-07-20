@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.appchamp.wordchunks.realmdb.models.realm
+package com.appchamp.wordchunks.models.realm
 
 import io.realm.RealmModel
 import io.realm.annotations.PrimaryKey

@@ -26,9 +26,9 @@ import android.view.ViewGroup
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.extensions.color
 import com.appchamp.wordchunks.extensions.drawable
-import com.appchamp.wordchunks.realmdb.models.realm.Level
-import com.appchamp.wordchunks.realmdb.models.realm.Pack
-import com.appchamp.wordchunks.realmdb.models.realm.PackState
+import com.appchamp.wordchunks.models.realm.Level
+import com.appchamp.wordchunks.models.realm.Pack
+import com.appchamp.wordchunks.models.realm.PackState
 import kotlinx.android.synthetic.main.item_pack_level.view.*
 
 

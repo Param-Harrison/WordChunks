@@ -16,7 +16,7 @@
 
 package com.appchamp.wordchunks.realmdb.dao
 
-import com.appchamp.wordchunks.realmdb.models.realm.Chunk
+import com.appchamp.wordchunks.models.realm.Chunk
 import com.appchamp.wordchunks.realmdb.utils.LiveRealmResults
 import com.appchamp.wordchunks.realmdb.utils.asLiveData
 import com.appchamp.wordchunks.util.Constants

@@ -23,8 +23,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.appchamp.wordchunks.R
-import com.appchamp.wordchunks.realmdb.models.realm.Level
-import com.appchamp.wordchunks.realmdb.models.realm.Word
+import com.appchamp.wordchunks.models.realm.Level
 import com.appchamp.wordchunks.ui.aftergame.AfterGameActivity
 import com.appchamp.wordchunks.ui.hint.HintActivity
 import com.appchamp.wordchunks.ui.levels.LevelsActivity
@@ -32,7 +31,6 @@ import com.appchamp.wordchunks.ui.tutorial.TutorialActivity
 import com.appchamp.wordchunks.util.ActivityUtils
 import com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID
 import com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID
-import io.realm.RealmResults
 import kotlinx.android.synthetic.main.frag_game.*
 import kotlinx.android.synthetic.main.titlebar.*
 import org.jetbrains.anko.clearTop
@@ -88,7 +86,7 @@ class GameActivity : AppCompatActivity(), LifecycleRegistryOwner {
                     // update UI titlebar
                     it?.let { tvTitle.text = it.clue }
                 })
-        viewModel.getLiveWords().observe(this, Observer<RealmResults<Word>> {
+        viewModel.getLiveWords().observe(this, Observer {
             it?.let {
 
                 if (viewModel.isLevelSolved()) {
@@ -98,7 +96,7 @@ class GameActivity : AppCompatActivity(), LifecycleRegistryOwner {
         })
     }
 
-    fun startAfterGameActivity() {
+    private fun startAfterGameActivity() {
         startActivity(intentFor<AfterGameActivity>(EXTRA_LEVEL_ID to levelId).clearTop())
         finish()  // to go back on the levels screen from after game activity
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)

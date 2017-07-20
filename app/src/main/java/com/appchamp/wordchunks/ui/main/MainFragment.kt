@@ -17,17 +17,27 @@
 package com.appchamp.wordchunks.ui.main
 
 import android.arch.lifecycle.LifecycleFragment
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
+import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import berlin.volders.badger.BadgeShape
+import berlin.volders.badger.Badger
+import berlin.volders.badger.CountBadge
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.ui.finish.FinishActivity
 import com.appchamp.wordchunks.ui.game.GameActivity
 import com.appchamp.wordchunks.ui.packs.PacksActivity
+import com.appchamp.wordchunks.ui.store.StoreActivity
 import com.appchamp.wordchunks.util.Constants
+import dmax.dialog.SpotsDialog
 import kotlinx.android.synthetic.main.frag_main.*
 import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
@@ -41,6 +51,10 @@ class MainFragment : LifecycleFragment() {
     private val smallBang by lazy { SmallBang.attach2Window(activity) }
 
     private val viewModel by lazy { ViewModelProviders.of(activity).get(MainViewModel::class.java) }
+
+    private lateinit var sharedPref: SharedPreferences
+
+    private lateinit var progressDialog: SpotsDialog
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -56,6 +70,41 @@ class MainFragment : LifecycleFragment() {
         btnStore.setOnClickListener { onStoreClick() }
         circularProgressBar.setOnClickListener { smallBang.bang(it) }
         circularProgressBar.setValue(9F)
+        changeLog.setOnClickListener { showChangeLogDialog() }
+
+        sharedPref = activity.getPreferences(Context.MODE_PRIVATE)
+        val isChangelogUpdated = sharedPref.getBoolean(getString(R.string.saved_changelog_state), true)
+        if (isChangelogUpdated) {
+            val circleFactory: CountBadge.Factory = CountBadge.Factory(
+                    BadgeShape.circle(1f, Gravity.BOTTOM),
+                    Color.parseColor("#d50000"),
+                    Color.parseColor("#ffffff")
+            )
+            Badger.sett<CountBadge>(imgChangeLog, circleFactory).count = 1
+        }
+        progressDialog = SpotsDialog(context, "Downloading today's daily puzzle…", R.style.CustomProgressDialog)
+        progressDialog.setCancelable(false)
+    }
+
+    private fun showChangeLogDialog() {
+        // Show Warning dialog
+        val builder = AlertDialog.Builder(context)
+        // Add the buttons
+        builder.setPositiveButton(R.string.ok, { dialog, _ ->
+            // User clicked OK button
+            dialog.dismiss()
+        })
+        builder.setTitle(R.string.changelog)
+        builder.setIcon(R.drawable.ic_changelog)
+        // Create the AlertDialog
+        val dialog = builder.create()
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.setMessage(resources.getString(R.string.changelog_message))
+        dialog.show()
+        val editor = sharedPref.edit()
+        editor.putBoolean(getString(R.string.saved_changelog_state), false)
+        editor.apply()
+        imgChangeLog.visibility = View.GONE
     }
 
     override fun onDestroyView() {
@@ -64,11 +113,7 @@ class MainFragment : LifecycleFragment() {
     }
 
     private fun onShareClick() {
-        activity.share(
-                // todo localize
-                "WordChunks is AWESOME and I think you'll love it. Get it! -- "
-                        + "https://play.google.com/store/apps/details?id=com.appchamp.wordchunks",
-                "My current puzzle")
+        activity.share(getString(R.string.share_text), getString(R.string.share_subject))
     }
 
     private fun onPlayClick() {
@@ -82,11 +127,21 @@ class MainFragment : LifecycleFragment() {
     }
 
     private fun onStoreClick() {
-        Toast.makeText(context, "COMING SOON", Toast.LENGTH_SHORT).show()
+        startActivity(activity.intentFor<StoreActivity>().clearTop())
     }
 
     private fun onDailyClick() {
-        Toast.makeText(context, "COMING SOON", Toast.LENGTH_SHORT).show()
+        progressDialog.show()
+        viewModel.fetchDailyLevel()
+        viewModel.isRealmLoaded().observe(this, Observer {
+            if (it!!) {
+                progressDialog.dismiss()
+                viewModel.getDailyPuzzleLevelId()?.let { startGameActivity(it) }
+            }
+        })
+//        if (dailyLevelId != null) {
+//            startGameActivity(dailyLevelId)
+//        }
     }
 
     private fun startGameActivity(levelId: String) {
@@ -104,5 +159,4 @@ class MainFragment : LifecycleFragment() {
         activity.startActivity<FinishActivity>()
         activity.overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
-
 }

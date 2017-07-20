@@ -21,7 +21,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.appchamp.wordchunks.R
-import com.appchamp.wordchunks.realmdb.models.realm.Level
+import com.appchamp.wordchunks.models.realm.Level
 import com.appchamp.wordchunks.ui.BaseActivity
 import com.appchamp.wordchunks.ui.game.GameActivity
 import com.appchamp.wordchunks.ui.packs.PacksActivity
@@ -29,7 +29,6 @@ import com.appchamp.wordchunks.ui.packs.PacksLevelsAdapter
 import com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID
 import com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID
 import com.franmontiel.localechanger.LocaleChanger
-import io.realm.RealmResults
 import kotlinx.android.synthetic.main.act_packs_levels.*
 import kotlinx.android.synthetic.main.titlebar.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
@@ -69,7 +68,7 @@ class LevelsActivity : BaseActivity<LevelsViewModel>() {
         // Observe updates to the LiveData levels.
         viewModel
                 .getLevels(packId)
-                .observe(this, Observer<RealmResults<Level>> {
+                .observe(this, Observer {
                     // update UI
                     val adapter = PacksLevelsAdapter<Level> {
                         // Navigates up to GameActivity passing levelId in the Intent.

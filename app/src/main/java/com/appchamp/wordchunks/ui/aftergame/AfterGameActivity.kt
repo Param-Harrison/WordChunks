@@ -23,7 +23,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.appchamp.wordchunks.R
-import com.appchamp.wordchunks.realmdb.models.realm.LevelState
+import com.appchamp.wordchunks.models.realm.LevelState
 import com.appchamp.wordchunks.ui.levels.LevelsActivity
 import com.appchamp.wordchunks.util.ActivityUtils
 import com.appchamp.wordchunks.util.Constants
