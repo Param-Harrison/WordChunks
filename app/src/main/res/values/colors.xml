@@ -17,43 +17,49 @@
 
 <resources>
 
-    <!-- Chunk -->
-    <color name="white">#ffffff</color>
-    <color name="white_15_percent">#26ffffff</color>
-    <color name="white_30_percent">#4Dffffff</color>
-    <!-- DELETE ALL ABOVE -->
+    <!-- SPLASH Screen colors -->
+    <color name="bg_splashscreen">#373e52</color>
 
-    <!-- Main screen colors -->
-    <color name="background_main">#383838</color>
+    <!-- MAIN Screen colors -->
+    <color name="main_darker">#373e52</color>
+    <color name="main_grey">#acbbe4</color>
+    <color name="progress_game">#f3f3f3</color>
 
-    <color name="btn_txt_main">#eeeeee</color>
-    <color name="btn_txt_play_pressed">#59569e</color>
-    <color name="btn_txt_daily_pressed">#f25192</color>
-    <color name="btn_txt_packs_pressed">#f77c88</color>
-    <color name="btn_txt_store_pressed">#fcc397</color>
+    <color name="tv_btn_main">#f2f2f2</color>
+    <color name="tv_btn_play_pressed">#d53d6e</color>
+    <color name="tv_btn_daily_pressed">#f27a31</color>
+    <color name="tv_btn_packs_pressed">#4b9fd8</color>
+    <color name="tv_btn_store_pressed">#77ad8d</color>
 
-    <color name="btn_rect_play">#59569e</color>
-    <color name="btn_rect_play_pressed">#726eca</color>
+    <color name="shape_btn_play">#f16d97</color>
+    <color name="shape_btn_play_pressed">#b95071</color>
 
-    <color name="btn_rect_daily">#f25192</color>
-    <color name="btn_rect_daily_pressed">#ff82b4</color>
+    <color name="shape_btn_daily">#faa750</color>
+    <color name="shape_btn_daily_pressed">#d77b19</color>
 
-    <color name="btn_rect_packs">#f77c88</color>
-    <color name="btn_rect_packs_pressed">#ff9da6</color>
+    <color name="shape_btn_packs">#6bcff6</color>
+    <color name="shape_btn_packs_pressed">#239fcf</color>
 
-    <color name="btn_rect_store">#fcc397</color>
-    <color name="btn_rect_store_pressed">#ffdabd</color>
+    <color name="shape_btn_store">#b0dab2</color>
+    <color name="shape_btn_store_pressed">#54b459</color>
 
-    <color name="btn_rect_game_finish">#FFAB40</color>
+    <!-- SETTINGS Slide Menu colors -->
+    <color name="shape_btn_settings">#2a303f</color>
 
-    <!-- Packs screen -->
+    <!-- GAME Screen colors -->
+    <color name="shape_rv_words">#eff5ff</color>
+
+    <!-- PACKS/LEVELS Screen -->
     <color name="title_txt">#e2e2e2</color>
     <color name="item_number_txt">#7f7f7f</color>
     <color name="pack_rect_left_locked">#20000000</color>
     <color name="pack_title_txt_locked">#20000000</color>
     <color name="pack_num_of_levels_txt">#dddddd</color>
 
-    <!-- Words -->
+    <!-- RecyclerView Item Word -->
     <color name="word_rect_bg">#687b85</color>
+    <color name="main_btn_shadow">#464d63</color>
+
+    <!-- RecyclerView Item Chunk -->
 
 </resources>

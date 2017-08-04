@@ -76,6 +76,7 @@
     <dimen name="list_padding">10dp</dimen>
     <dimen name="shadow_width">15dp</dimen>
     <dimen name="chunk_textsize">18sp</dimen>
+    <dimen name="radius_btn">15dp</dimen>
 
 
 </resources>

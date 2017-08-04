@@ -16,7 +16,9 @@
 
 package com.appchamp.wordchunks.models.gson
 
+import android.support.annotation.Keep
 
+@Keep
 open class PackGson {
     val id: String = ""
     val title: String = ""

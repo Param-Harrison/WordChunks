@@ -21,7 +21,15 @@
         <attr name="cb_icon" format="reference" />
         <attr name="cb_bg" format="reference" />
         <attr name="cb_color_title" format="color" />
+    </declare-styleable>
 
+    <declare-styleable name="CustomButtonSubtitle">
+        <attr name="cbs_title" format="string" />
+        <attr name="cbs_subtitle" format="string" />
+        <attr name="cbs_icon" format="reference" />
+        <attr name="cbs_bg" format="reference" />
+        <attr name="cbs_color_title" format="color" />
+        <attr name="cbs_color_subtitle" format="color" />
     </declare-styleable>
 
 </resources>

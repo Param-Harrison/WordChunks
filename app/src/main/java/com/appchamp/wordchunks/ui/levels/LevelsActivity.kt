@@ -43,7 +43,7 @@ class LevelsActivity : BaseActivity<LevelsViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_packs_levels)
-        llPacksLevels.setBackgroundResource(R.drawable.gradient_levels)
+//        llPacksLevels.setBackgroundResource(R.drawable.gradient_levels)
         tvTitle.text = getString(R.string.title_select_level)
         rvList.layoutManager = LinearLayoutManager(this)
         rvList.setHasFixedSize(true)
@@ -52,7 +52,7 @@ class LevelsActivity : BaseActivity<LevelsViewModel>() {
         OverScrollDecoratorHelper.setUpOverScroll(
                 rvList, OverScrollDecoratorHelper.ORIENTATION_VERTICAL)
 
-        imgBackArrow.setOnClickListener { onBackPressed() }
+        btnBack.setOnClickListener { onBackPressed() }
 
         subscribeUi()
     }
@@ -61,20 +61,28 @@ class LevelsActivity : BaseActivity<LevelsViewModel>() {
         super.attachBaseContext(LocaleChanger.configureBaseContext(newBase))
     }
 
+    /**
+     * Navigates back to PacksActivity.
+     */
+    override fun onBackPressed() {
+        super.onBackPressed()
+        backToPacksActivity()
+    }
+
     private fun subscribeUi() {
         // Getting pack id by the Intent.
         val packId = requireNotNull(intent.getStringExtra(EXTRA_PACK_ID),
                 { "Activity parameter 'EXTRA_PACK_ID' is missing" })
         // Observe updates to the LiveData levels.
         viewModel
-                .getLevels(packId)
+                .getLiveLevels(packId)
                 .observe(this, Observer {
                     // update UI
                     val adapter = PacksLevelsAdapter<Level> {
                         // Navigates up to GameActivity passing levelId in the Intent.
                         startGameActivity(it.id)
                     }
-                    it?.let { adapter.updateItems(it) }
+                    it?.toList()?.let { levels -> adapter.updateItems(levels) }
                     rvList.adapter = adapter
                 })
 
@@ -87,14 +95,6 @@ class LevelsActivity : BaseActivity<LevelsViewModel>() {
         startActivity(intentFor<GameActivity>(EXTRA_LEVEL_ID to levelId).clearTop())
         finish()
         overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
-    }
-
-    /**
-     * Navigates back to PacksActivity.
-     */
-    override fun onBackPressed() {
-        super.onBackPressed()
-        backToPacksActivity()
     }
 
     /**

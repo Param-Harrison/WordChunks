@@ -26,7 +26,7 @@ import java.util.*
  */
 fun IntArray.shuffleIntArray(): IntArray {
     val rand = Random()
-    for (i in 0..size - 1) {
+    for (i in 0 until size) {
         val randPos = rand.nextInt(this.size)
         // Simple swap;
         val a = this[randPos]

@@ -24,13 +24,22 @@ import com.appchamp.wordchunks.util.Constants.REALM_FIELD_ID
 import com.appchamp.wordchunks.util.Constants.REALM_FIELD_PACK_ID
 import com.appchamp.wordchunks.util.Constants.REALM_FIELD_STATE
 import io.realm.Realm
+import io.realm.RealmResults
 
 
 class LevelDao(private val realm: Realm) {
 
     fun createOrUpdateLevelsFromJson(json: String) {
-        realm.executeTransaction { realm ->
-            realm.createOrUpdateAllFromJson(Level::class.java, json)
+        realm.executeTransaction {
+            it.createOrUpdateAllFromJson(Level::class.java, json)
+//            it.where(Level::class.java).findAll().mapIndexed { i, level ->
+//                // todo
+//                // Temporary workaround
+//                when (Locale.getDefault()) {
+//                    Constants.SUPPORTED_LOCALES[1] -> level.title = "УРОВЕНЬ " + i.toString()
+//                    else -> level.title = "LEVEL " + i.toString()
+//                }
+//            }
         }
     }
 
@@ -43,6 +52,22 @@ class LevelDao(private val realm: Realm) {
             .equalTo(REALM_FIELD_PACK_ID, packId)
             .findAllAsync()
             .asLiveData()
+
+    fun findLevelsByPackIdList(packId: String): RealmResults<Level> = realm
+            .where(Level::class.java)
+            .equalTo(REALM_FIELD_PACK_ID, packId)
+            .findAll()
+
+    fun findAllLevelsLive(): LiveRealmResults<Level> = realm
+            .where(Level::class.java)
+            .equalTo("daily", false)
+            .findAllAsync()
+            .asLiveData()
+
+    fun findAllLevelsList(): List<Level> = realm
+            .where(Level::class.java)
+            .equalTo("daily", false)
+            .findAll()
 
     fun findLevelById(levelId: String): LiveRealmObject<Level> = realm
             .where(Level::class.java)
@@ -67,4 +92,12 @@ class LevelDao(private val realm: Realm) {
         }
     }
 
+    fun deleteLevelById(levelId: String) {
+        realm.executeTransaction {
+            it.where(Level::class.java)
+                    .equalTo(REALM_FIELD_ID, levelId)
+                    .findAll()
+                    .deleteFirstFromRealm()
+        }
+    }
 }

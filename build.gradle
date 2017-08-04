@@ -21,7 +21,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.0-alpha7'
+        classpath 'com.android.tools.build:gradle:3.0.0-alpha9'
         classpath 'io.realm:realm-gradle-plugin:3.5.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:3.1.0'
@@ -32,8 +32,6 @@ allprojects {
     repositories {
         google()
         maven { url 'https://jitpack.io' }
-        // In order to resolve the Twitter SDK
-        //maven { url 'https://maven.fabric.io/public' }
     }
 }
 

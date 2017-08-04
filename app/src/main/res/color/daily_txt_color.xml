@@ -16,6 +16,6 @@
   -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="@color/btn_txt_daily_pressed" android:state_pressed="true" />
-    <item android:color="@color/btn_txt_main" android:state_pressed="false" />
+    <item android:color="@color/tv_btn_daily_pressed" android:state_pressed="true" />
+    <item android:color="@color/tv_btn_main" android:state_pressed="false" />
 </selector>

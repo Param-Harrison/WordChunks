@@ -24,8 +24,9 @@ import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.extensions.invisible
+import com.appchamp.wordchunks.models.realm.CHUNK_STATE_GONE
+import com.appchamp.wordchunks.models.realm.CHUNK_STATE_NORMAL
 import com.appchamp.wordchunks.models.realm.Chunk
-import com.appchamp.wordchunks.models.realm.ChunkState
 import kotlinx.android.synthetic.main.item_chunk.view.*
 import java.util.*
 
@@ -41,7 +42,7 @@ class ChunksAdapter(private var chunks: List<Chunk> = listOf(),
 
     override fun onBindViewHolder(holder: ChunksAdapter.ViewHolder, i: Int) {
         // To prevent appearance of the gone chunks on start
-        if (chunks[chunks[i].position].state != ChunkState.GONE.value) {
+        if (chunks[chunks[i].position].state != CHUNK_STATE_GONE) {
             setAnimation(holder.itemView, i)
         }
 
@@ -61,19 +62,19 @@ class ChunksAdapter(private var chunks: List<Chunk> = listOf(),
         notifyDataSetChanged()
     }
 
-    class ViewHolder(view: View, val chunkClick: (Chunk) -> Unit) : RecyclerView.ViewHolder(view) {
+    class ViewHolder(view: View, private val chunkClick: (Chunk) -> Unit) : RecyclerView.ViewHolder(view) {
 
         fun bind(chunk: Chunk) = with(itemView) {
             val chunkState = chunk.state
 
             when (chunkState) {
             // Normal chunk state
-                ChunkState.NORMAL.value -> {
+                CHUNK_STATE_NORMAL -> {
                     rlChunk.background.alpha = 255
                     tvChunk.alpha = 1f
                 }
             // Gone state
-                ChunkState.GONE.value -> {
+                CHUNK_STATE_GONE -> {
                     rlChunk.invisible()
                 }
             // Clicked chunk state

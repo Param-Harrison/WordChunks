@@ -43,7 +43,7 @@ object Constants {
     const val REALM_FIELD_LEVEL_ID = "levelId"
     const val REALM_FIELD_PACK_ID = "packId"
 
-    const val WORDS_GRID_NUM = 2
+    const val WORDS_GRID_NUM = 1
     const val CHUNKS_GRID_NUM = 4
 
 }

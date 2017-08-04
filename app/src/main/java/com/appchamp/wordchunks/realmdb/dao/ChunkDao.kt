@@ -63,4 +63,16 @@ class ChunkDao(private val realm: Realm) {
                 .equalTo(Constants.REALM_FIELD_WORD_ID, wordId)
                 .findFirst()
     }
+
+    /**
+     * Custom delete methods.
+     */
+    fun deleteChunksByLevelId(levelId: String) {
+        realm.executeTransaction {
+            it.where(Chunk::class.java)
+                    .equalTo(Constants.REALM_FIELD_LEVEL_ID, levelId)
+                    .findAll()
+                    .deleteAllFromRealm()
+        }
+    }
 }

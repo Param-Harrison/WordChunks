@@ -18,36 +18,62 @@ package com.appchamp.wordchunks.ui.levels
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
-import com.appchamp.wordchunks.models.realm.Level
-import com.appchamp.wordchunks.models.realm.LevelState
+import com.appchamp.wordchunks.models.realm.*
 import com.appchamp.wordchunks.realmdb.utils.LiveRealmResults
-import com.appchamp.wordchunks.realmdb.utils.asLiveData
 import com.appchamp.wordchunks.realmdb.utils.levelModel
+import com.appchamp.wordchunks.realmdb.utils.wordModel
 import io.realm.Realm
 
 
 class LevelsViewModel(application: Application?) : AndroidViewModel(application) {
 
-    private val db: Realm = Realm.getDefaultInstance()
+    private val dbRealm: Realm = Realm.getDefaultInstance()
 
-    private var levels: LiveRealmResults<Level>
-    private lateinit var packId: String
+    private lateinit var levels: LiveRealmResults<Level>
+
+    private var currentLevel: Level?
+
 
     init {
-        // Load packs from realm db
-        //packs = db.packModel().findAllPacks()
-        levels = db.where(Level::class.java).findAllAsync().asLiveData()
+        // Retrieves all of the pack's levels from the Realm as LiveRealmResults objects list.
+        currentLevel = dbRealm.levelModel().findLevelByState(IN_PROGRESS)
     }
 
-    fun getLevels(packId: String): LiveRealmResults<Level> {
-        // Load levels from realm db
-        levels = db.levelModel().findLevelsByPackId(packId)
-        this.packId = packId
+    fun getLiveLevels(id: String): LiveRealmResults<Level> {
+        if (currentLevel != null) {
+            currentLevel?.id?.let {
+                if (isLevelSolved(it)) {
+                    markLevelSolved()
+                    makeNewCurrentLevel()
+                }
+            }
+        } else {
+            makeNewCurrentLevel()
+        }
+        levels = dbRealm.levelModel().findLevelsByPackId(id)
         return levels
     }
 
+    private fun markLevelSolved() {
+        currentLevel?.let { dbRealm.levelModel().setLevelState(it, FINISHED) }
+    }
+
+    private fun isLevelSolved(id: String): Boolean {
+        val words = dbRealm.wordModel().findWordsByLevelIdList(id)
+        return words.all { it.state == WORD_STATE_SOLVED }
+    }
+
+    private fun makeNewCurrentLevel() {
+        val firstLockedLevel = dbRealm.levelModel().findLevelByState(LOCKED)
+        firstLockedLevel?.let {
+            dbRealm.levelModel().setLevelState(it, IN_PROGRESS)
+            currentLevel = firstLockedLevel
+        }
+    }
+
     fun getLastLevelPos() = levels.value?.indexOfLast {
-        it.state == LevelState.IN_PROGRESS.value || it.state == LevelState.FINISHED.value } ?: 0
+        it.state == IN_PROGRESS || it.state == FINISHED
+    } ?: 0
 
     /**
      * This method will be called when this ViewModel is no longer used and will be destroyed.
@@ -56,7 +82,7 @@ class LevelsViewModel(application: Application?) : AndroidViewModel(application)
      * prevent a leak of this ViewModel... Like RealmResults and the instance of Realm!
      */
     override fun onCleared() {
-        db.close()
+        dbRealm.close()
         super.onCleared()
     }
 }

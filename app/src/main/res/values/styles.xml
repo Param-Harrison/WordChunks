@@ -18,17 +18,17 @@
 
     <!-- Base application theme. -->
     <style name="WordChunksAppTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:windowBackground">@color/background_main</item>
+        <item name="android:windowBackground">@color/main</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
-        <item name="colorPrimary">@color/btn_rect_play</item>
-        <item name="colorAccent">@color/btn_rect_daily</item>
-        <item name="colorPrimaryDark">@color/btn_rect_play</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:windowBackground">@drawable/splash_screen</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="CustomButtonStyle">
@@ -40,8 +40,10 @@
 
     <style name="CustomProgressDialog" parent="android:Theme.DeviceDefault.Dialog">
         <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
-        <item name="DialogSpotColor">@android:color/holo_purple</item>
+        <item name="DialogSpotColor">@color/shape_btn_packs</item>
         <item name="DialogSpotCount">5</item>
+        <item name="android:fontFamily">@font/vag</item>
     </style>
 
+    <color name="main">#4c546a</color>
 </resources>

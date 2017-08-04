@@ -40,8 +40,6 @@ open class Chunk : RealmModel {
 
 fun List<Chunk>.chunksToString(): String = map { it.chunk }.joinToString(separator = "")
 
-// States of chunk
-enum class ChunkState(val value: Long) {
-    NORMAL(0),
-    GONE(-1)
-}
+// States of the chunk
+val CHUNK_STATE_NORMAL = 0L
+val CHUNK_STATE_GONE = -1L

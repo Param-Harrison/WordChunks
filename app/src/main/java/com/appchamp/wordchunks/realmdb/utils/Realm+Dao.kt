@@ -16,13 +16,15 @@
 
 package com.appchamp.wordchunks.realmdb.utils
 
-import com.appchamp.wordchunks.realmdb.dao.*
+import com.appchamp.wordchunks.realmdb.dao.ChunkDao
+import com.appchamp.wordchunks.realmdb.dao.LevelDao
+import com.appchamp.wordchunks.realmdb.dao.PackDao
+import com.appchamp.wordchunks.realmdb.dao.WordDao
 import io.realm.Realm
 import io.realm.RealmModel
 import io.realm.RealmResults
 
 
-fun Realm.gameModel(): GameDao = GameDao(this)
 fun Realm.packModel(): PackDao = PackDao(this)
 fun Realm.levelModel(): LevelDao = LevelDao(this)
 fun Realm.chunkModel(): ChunkDao = ChunkDao(this)

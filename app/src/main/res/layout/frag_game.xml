@@ -22,45 +22,46 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/titlebar" />
-
     <RelativeLayout
-        android:id="@+id/rl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tvSolutions"
+        <View
+            android:id="@+id/gradient"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#7bda7a" />
+
+        <include
+            android:id="@+id/titlebar"
+            layout="@layout/titlebar" />
+
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/nunitoblack"
-            android:gravity="center_horizontal"
-            android:letterSpacing="0.2"
-            android:paddingBottom="20dp"
-            android:text="@string/solutions"
-            android:textColor="#4d6c96"
-            android:textSize="10dp" />
+            android:layout_below="@+id/titlebar"
+            android:background="@drawable/striped_shadow40_bg"
+            android:contentDescription="@null" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvWords"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tvSolutions"
-            android:layout_centerInParent="true"
-            android:layout_centerVertical="true"
-            android:layout_marginBottom="30dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            tools:layout_height="150dp"
+            android:layout_below="@+id/titlebar"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/shape_rv_words"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            tools:layout_height="190dp"
             tools:listitem="@layout/item_word" />
 
     </RelativeLayout>
 
     <LinearLayout
-        android:id="@+id/llPackBg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/gradient_game"
         android:orientation="vertical"
         android:paddingTop="1dp">
 
@@ -68,139 +69,165 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/main_shadow"
-                android:contentDescription="@null" />
-
             <LinearLayout
                 android:id="@+id/llInputForm"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginTop="20dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="5dp"
                 android:orientation="horizontal"
-                android:paddingEnd="10dp"
-                android:paddingLeft="18dp"
-                android:paddingRight="10dp"
-                android:paddingStart="18dp">
+                android:paddingTop="10dp">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
-
-                    <ImageView
-                        android:id="@+id/imgHint"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-                        android:background="@drawable/shuffle_hint_rect"
-                        android:contentDescription="@string/hint"
-                        android:foreground="?android:attr/selectableItemBackground"
-                        android:paddingBottom="4dp"
-                        android:paddingEnd="8dp"
-                        android:paddingStart="8dp"
-                        app:srcCompat="@drawable/ic_hint" />
-
-                    <ImageView
-                        android:id="@+id/imgHintHolder"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
-                        android:layout_alignEnd="@+id/imgHint"
-                        android:layout_alignRight="@+id/imgHint"
-                        app:srcCompat="@drawable/dot" />
-
-                </RelativeLayout>
+                <ImageView
+                    android:id="@+id/btnShuffle"
+                    android:layout_width="40dp"
+                    android:layout_height="44dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="8dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/shape_btn_chunk"
+                    android:contentDescription="@string/shuffle"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:paddingBottom="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    app:srcCompat="@drawable/ic_shuffle" />
 
                 <RelativeLayout
                     android:layout_width="0dp"
                     android:layout_height="44dp"
-                    android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:background="@drawable/input_form_rect"
-                    android:paddingBottom="4dp"
-                    android:paddingEnd="6dp"
-                    android:paddingStart="6dp">
-
-                    <ImageView
-                        android:id="@+id/imgClear"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:contentDescription="@string/clear"
-                        android:visibility="invisible"
-                        app:srcCompat="@drawable/ic_clear"
-                        tools:visibility="visible" />
+                    android:background="@drawable/shape_input_form">
 
                     <me.grantland.widget.AutofitLayout
+                        android:id="@+id/autofit"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true">
+                        android:layout_height="wrap_content">
 
                         <TextView
                             android:id="@+id/tvInputChunks"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
+                            android:layout_marginTop="-5dp"
                             android:ellipsize="none"
-                            android:fontFamily="@font/nunitoblack"
+                            android:fontFamily="@font/vag"
+                            android:gravity="center_horizontal"
                             android:paddingEnd="30dp"
-                            android:paddingLeft="30dp"
+                            android:paddingLeft="26dp"
                             android:paddingRight="30dp"
-                            android:paddingStart="30dp"
+                            android:paddingStart="26dp"
                             android:singleLine="true"
-                            android:textColor="#263238"
+                            android:textColor="@color/main_darker"
                             android:textSize="22dp"
-                            tools:text="WORDAAAAAAAAAAAAAAA" />
+                            tools:text="WORDAAAAA" />
 
                     </me.grantland.widget.AutofitLayout>
 
+                    <RelativeLayout
+                        android:id="@+id/rlChunksCount"
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp"
+                        android:gravity="center">
+
+                        <View
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/shape_circle_badge" />
+
+                        <TextView
+                            android:id="@+id/tvChunksCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="-6dp"
+                            android:contentDescription="@null"
+                            android:fontFamily="@font/vag"
+                            android:textColor="#ffffff"
+                            android:textSize="14dp"
+                            tools:text="42" />
+
+                    </RelativeLayout>
+
+
                     <ImageView
-                        android:id="@+id/imgChunksCount"
-                        android:layout_width="24dp"
+                        android:id="@+id/btnClear"
+                        android:layout_width="35dp"
                         android:layout_height="match_parent"
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
-                        android:src="@drawable/dot"
+                        android:layout_centerVertical="true"
+                        android:contentDescription="@string/clear"
+                        android:paddingBottom="13dp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
                         android:visibility="invisible"
+                        app:srcCompat="@drawable/ic_clear"
                         tools:visibility="visible" />
 
                 </RelativeLayout>
 
-                <ImageView
-                    android:id="@+id/imgShuffle"
+                <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginStart="8dp"
-                    android:background="@drawable/shuffle_hint_rect"
-                    android:contentDescription="@string/shuffle"
-                    android:foreground="?android:attr/selectableItemBackground"
-                    android:paddingBottom="4dp"
-                    android:paddingEnd="8dp"
-                    android:paddingStart="8dp"
-                    app:srcCompat="@drawable/ic_shuffle" />
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/btnHint"
+                        android:layout_width="40dp"
+                        android:layout_height="44dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/shape_btn_chunk"
+                        android:contentDescription="@string/hint"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:paddingBottom="4dp"
+                        android:paddingEnd="10dp"
+                        android:paddingStart="10dp"
+                        app:srcCompat="@drawable/ic_hint" />
+
+                    <RelativeLayout
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignEnd="@id/btnHint"
+                        android:layout_alignRight="@id/btnHint"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginStart="8dp">
+
+                        <View
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:background="@drawable/shape_circle_hint" />
+
+                        <TextView
+                            android:id="@+id/tvHintsCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="-4dp"
+                            android:contentDescription="@null"
+                            android:fontFamily="@font/vag"
+                            android:text="12"
+                            android:textColor="@color/main_darker"
+                            android:textSize="12dp"
+                            tools:text="42" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
 
             </LinearLayout>
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_gravity="bottom"
-                android:background="@drawable/main_shadow"
-                android:contentDescription="@null"
-                android:rotation="180" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvChunks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/llInputForm"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
                 android:paddingTop="16dp"
                 tools:listitem="@layout/item_chunk" />
 

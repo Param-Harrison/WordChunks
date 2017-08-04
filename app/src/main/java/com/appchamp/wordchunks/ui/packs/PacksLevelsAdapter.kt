@@ -26,9 +26,12 @@ import android.view.ViewGroup
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.extensions.color
 import com.appchamp.wordchunks.extensions.drawable
+import com.appchamp.wordchunks.models.realm.FINISHED
+import com.appchamp.wordchunks.models.realm.LOCKED
 import com.appchamp.wordchunks.models.realm.Level
 import com.appchamp.wordchunks.models.realm.Pack
-import com.appchamp.wordchunks.models.realm.PackState
+import com.appchamp.wordchunks.realmdb.utils.levelModel
+import io.realm.Realm
 import kotlinx.android.synthetic.main.item_pack_level.view.*
 
 
@@ -58,10 +61,10 @@ class PacksLevelsAdapter<T>(private var items: List<T> = listOf(),
             val itemState = getItemState(item)
             val itemColor = getItemColor(item)
             val drawable = imgRectBg.drawable as GradientDrawable
-            rlItem.background = context.drawable(R.drawable.main_bg_rect)
+            rlItem.background = context.drawable(R.drawable.shape_btn_main)
 
             when (itemState) {
-                PackState.LOCKED.value -> {
+                LOCKED -> {
                     itemView.isEnabled = false
                     drawable.setColor(context.color(R.color.pack_rect_left_locked))
                     icon.setImageDrawable(context.drawable(R.drawable.ic_locked))
@@ -76,7 +79,7 @@ class PacksLevelsAdapter<T>(private var items: List<T> = listOf(),
                     tvItemTitle.setTextColor(itemColor)
                     tvItemSubtitle.setTextColor(context.color(R.color.pack_num_of_levels_txt))
 
-                    if (itemState == PackState.FINISHED.value) {
+                    if (itemState == FINISHED) {
                         icon.setImageDrawable(context.drawable(R.drawable.ic_solved))
                     } else  {
                         icon.setImageDrawable(context.drawable(R.drawable.ic_current))
@@ -99,7 +102,7 @@ class PacksLevelsAdapter<T>(private var items: List<T> = listOf(),
 
         private fun getItemTitle(item: T, i: Int, res: Resources): String {
             when (item) {
-                is Pack -> return res.getString(R.string.list_number, i + 1, item.title)
+                is Pack -> return item.title
                 is Level -> return res.getString(R.string.level_title, i + 1)
                 else -> throw ClassCastException("Object was not of type Pack, or Level")
             }
@@ -108,12 +111,17 @@ class PacksLevelsAdapter<T>(private var items: List<T> = listOf(),
         private fun getItemSubtitle(item: T, res: Resources): String? {
             when (item) {
                 is Pack -> {
-                    if (getItemState(item) == PackState.LOCKED.value) {
-                        return res.getString(R.string.number_of_levels_locked, 6) //item.levels.size)
+                    var numberOfLevels = 0
+                    var numberOfSolvedLevels = 0
+                    Realm.getDefaultInstance().use {
+                        val levels = it.levelModel().findLevelsByPackIdList(item.id)
+                        numberOfLevels = levels.size
+                        numberOfSolvedLevels = levels.count { it.state == FINISHED }
+                    }
+                    if (getItemState(item) == LOCKED) {
+                        return res.getString(R.string.number_of_levels_locked, numberOfLevels)
                     } else {
-                        val solvedLevelsCount = 8 //item.levels.count { it.state == PackState.FINISHED.value }
-                        return res.getString(R.string.number_of_levels,
-                                solvedLevelsCount, 7) //item.levels.size)
+                        return res.getString(R.string.number_of_levels, numberOfSolvedLevels, numberOfLevels)
                     }
                 }
                 is Level -> return item.clue

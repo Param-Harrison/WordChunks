@@ -16,17 +16,29 @@
   -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/gradient_main">
+    android:layout_height="match_parent">
 
-    <ImageView
+    <com.github.glomadrian.grav.GravView
+        android:id="@+id/gravMain"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@drawable/main_shadow"
-        android:contentDescription="@null"
-        android:rotation="180" />
+        android:layout_height="match_parent"
+        app:animationGenerators="@array/BallWaveAnimations"
+        app:ball_size="3dp"
+        app:ball_size_from_size="3dp"
+        app:ball_size_to_size="6dp"
+        app:colorGenerator="com.github.glomadrian.grav.generator.paint.OneColorGenerator"
+        app:gravGenerator="com.github.glomadrian.grav.generator.grav.BallGenerator"
+        app:pointGenerator="com.github.glomadrian.grav.generator.point.RegularPointGenerator"
+        app:regular_cell_size="700"
+        app:regular_variance="700"
+        app:shake_direction="horizontal"
+        app:shake_variance="50dp"
+        app:side_to_side_direction="downToUp"
+        app:side_to_side_max_duration="10000"
+        app:side_to_side_min_duration="5000"
+        app:single_color="#48ffffff" />
 
 </FrameLayout>

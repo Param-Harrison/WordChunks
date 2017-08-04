@@ -21,67 +21,74 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.util.Log
-import com.appchamp.wordchunks.models.firebase.UserFirebase
 import com.appchamp.wordchunks.models.gson.ChunkGson
 import com.appchamp.wordchunks.models.gson.LevelGson
 import com.appchamp.wordchunks.models.gson.PackGson
 import com.appchamp.wordchunks.models.gson.WordGson
-import com.appchamp.wordchunks.models.realm.Chunk
-import com.appchamp.wordchunks.models.realm.LevelState
-import com.appchamp.wordchunks.models.realm.User
-import com.appchamp.wordchunks.models.realm.Word
+import com.appchamp.wordchunks.models.realm.*
 import com.appchamp.wordchunks.realmdb.firebaseDao.fetchFirebaseList
-import com.appchamp.wordchunks.realmdb.utils.chunkModel
-import com.appchamp.wordchunks.realmdb.utils.levelModel
-import com.appchamp.wordchunks.realmdb.utils.packModel
-import com.appchamp.wordchunks.realmdb.utils.wordModel
+import com.appchamp.wordchunks.realmdb.utils.*
 import com.appchamp.wordchunks.util.Constants
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.*
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import io.realm.Realm
 import java.util.*
 
 
 class MainViewModel(application: Application?) : AndroidViewModel(application) {
-
     private val TAG: String = javaClass.simpleName
     private val realmDb: Realm = Realm.getDefaultInstance()
     private val firebaseDb: DatabaseReference = FirebaseDatabase.getInstance().reference
     private val gson: Gson = Gson()
     private val isRealmLoaded = MutableLiveData<Boolean>()
     private var dailyPuzzleLevelId: String? = null
+    private lateinit var levels: LiveRealmResults<Level>
 
-    fun isRealmLoaded(): LiveData<Boolean> = isRealmLoaded
+    fun isRealmLoaded(): LiveData<Boolean> {
+        isRealmLoaded.value?.let {
+            if (it) {
+                levels = realmDb.levelModel().findAllLevelsLive()
+            }
+        }
+        return isRealmLoaded
+    }
 
-    fun getLevelId() = realmDb.levelModel().findLevelByState(LevelState.IN_PROGRESS.value)?.id
+    fun getLevelId(): String {
+        val firstLevelInProgress = realmDb.levelModel().findLevelByState(IN_PROGRESS)
+        if (firstLevelInProgress == null) {
+            val firstLevelLocked = realmDb.levelModel().findLevelByState(LOCKED)
+            if (firstLevelLocked != null) {
+                return firstLevelLocked.id
+            }
+        } else {
+            return firstLevelInProgress.id
+        }
+        return ""
+    }
 
     fun getDailyPuzzleLevelId() = dailyPuzzleLevelId
 
     fun fetchDailyLevel() {
         isRealmLoaded.postValue(false)
-        firebaseDb.fetchFirebaseList<LevelGson>(
-                {
-                    loadLevelsIntoRealm(it)
-                    dailyPuzzleLevelId = it.last().id
-                    Log.d(TAG, "LAST ID" + it.last().id)
-                },
+        firebaseDb.fetchFirebaseList<LevelGson>({
+            loadLevelsIntoRealm(it)
+            dailyPuzzleLevelId = it.last().id
+            Log.d(TAG, "LAST ID" + it.last().id)
+        },
                 { Log.d(TAG, "ERROR:" + it) },
                 getLang(),
-                "daily/levels"
-        )
+                "daily/levels")
         firebaseDb.fetchFirebaseList<WordGson>(
                 { loadWordsIntoRealm(it) },
                 { Log.d(TAG, "ERROR:" + it) },
                 getLang(),
-                "daily/words"
-        )
+                "daily/words")
         firebaseDb.fetchFirebaseList<ChunkGson>(
                 { loadChunksIntoRealm(it) },
                 { Log.d(TAG, "ERROR:" + it) },
                 getLang(),
-                "daily/chunks"
-        )
+                "daily/chunks")
     }
 
     private fun getLang() = when (Locale.getDefault()) {
@@ -89,95 +96,65 @@ class MainViewModel(application: Application?) : AndroidViewModel(application) {
         else -> "eng"
     }
 
-    init {
+    fun fetchDataFromFirebase() {
         firebaseDb.fetchFirebaseList<PackGson>(
                 { loadPacksIntoRealm(it) },
                 { Log.d(TAG, "ERROR:" + it) },
                 getLang(),
-                "packs"
-        )
+                "packs")
         firebaseDb.fetchFirebaseList<LevelGson>(
                 { loadLevelsIntoRealm(it) },
                 { Log.d(TAG, "ERROR:" + it) },
                 getLang(),
-                "levels"
-        )
+                "levels")
         firebaseDb.fetchFirebaseList<WordGson>(
                 { loadWordsIntoRealm(it) },
                 { Log.d(TAG, "ERROR:" + it) },
                 getLang(),
-                "words"
-        )
+                "words")
         firebaseDb.fetchFirebaseList<ChunkGson>(
                 { loadChunksIntoRealm(it) },
                 { Log.d(TAG, "ERROR:" + it) },
                 getLang(),
-                "chunks"
-        )
+                "chunks")
     }
 
     private fun loadPacksIntoRealm(firebaseList: MutableList<PackGson>) {
         val json = gson.toJson(firebaseList)
-        Log.d(TAG, "PACKS AS GSON = " + json)
         realmDb.packModel().createOrUpdatePacksFromJson(json)
     }
 
     private fun loadLevelsIntoRealm(firebaseList: MutableList<LevelGson>) {
         val json = gson.toJson(firebaseList)
-        Log.d(TAG, "LEVELS AS GSON = " + json)
         realmDb.levelModel().createOrUpdateLevelsFromJson(json)
     }
 
     private fun loadWordsIntoRealm(firebaseList: MutableList<WordGson>) {
         val json = gson.toJson(firebaseList)
-        Log.d(TAG, "WORDS GSON = " + json)
         realmDb.wordModel().createOrUpdateWordsFromJson(json)
-        // For debugging purposes
-        realmDb.where(Word::class.java).findAll().forEach {
-            Log.d(TAG, it.toString())
-        }
     }
 
     private fun loadChunksIntoRealm(firebaseList: MutableList<ChunkGson>) {
         val json = gson.toJson(firebaseList)
-        Log.d(TAG, "CHUNKS GSON = " + json)
         realmDb.chunkModel().createOrUpdateChunksFromJson(json)
-        // For debugging purposes
-        realmDb.where(Chunk::class.java).findAll().forEach {
-            Log.d(TAG, it.toString())
-        }
         isRealmLoaded.postValue(true)
     }
 
-    fun writeNewUser(firebaseUser: FirebaseUser) {
-        val userId = firebaseUser.uid
-        val userEmail = firebaseUser.email ?: ""
-        val user = UserFirebase(userId, userEmail, 12, 1)
-        firebaseDb.child("users").child(userId).child(getLang()).setValue(user)
+    fun getCircularProgressValue(): Float {
+        realmDb.where(Level::class.java).findAll().map {
+            Log.d(TAG, "LEVEL====" + it)
+        }
+        realmDb.where(Word::class.java).findAll().map {
+            Log.d(TAG, "WORD====" + it)
+        }
+        val levels = realmDb.where(Level::class.java)
+                .equalTo("daily", false)
+                .findAll()
+        levels.count { it.state == FINISHED }
+                .let { return it * 100F / (levels.size) }
+
+
     }
-
-    fun fetchFirebaseUser(uid: String) {
-        firebaseDb.child("users").child(uid).child(getLang())
-                .addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        println(snapshot.value)
-                        val user = snapshot.getValue(UserFirebase::class.java)
-                        Log.d(TAG, "USER FETCHED FROM FIREBASE = " + user.toString())
-                        val realmUser = User()
-                        realmUser.id = user?.id ?: ""
-                        realmUser.email = user?.email ?: ""
-                        realmUser.hints = user?.hints ?: 0
-                        realmUser.levelsSolved = user?.levelsSolved ?: 0
-                        realmDb.executeTransaction {
-                            it.copyToRealmOrUpdate(realmUser)
-                        }
-
-                    }
-
-                    override fun onCancelled(databaseError: DatabaseError) {}
-                })
-    }
-
 
     /**
      * This method will be called when this ViewModel is no longer used and will be destroyed.

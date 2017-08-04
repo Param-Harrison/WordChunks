@@ -15,71 +15,56 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cvWord"
     android:layout_width="match_parent"
-    android:layout_height="32dp"
-    android:layout_marginBottom="5dp"
-    android:layout_marginEnd="8dp"
-    android:layout_marginStart="8dp"
-    android:layout_marginTop="5dp"
-    android:background="@drawable/word_bg_rect"
-    tools:layout_width="100dp">
+    android:layout_height="wrap_content"
+    tools:showIn="@layout/frag_game">
 
-    <TextView
-        android:id="@+id/tvWord"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_centerVertical="true"
-        android:fontFamily="@font/nunitoextrabold"
-        android:gravity="center_vertical"
-        android:paddingEnd="8dp"
-        android:paddingLeft="42dp"
-        android:paddingRight="8dp"
-        android:paddingStart="42dp"
-        android:textColor="#ffffff"
-        android:textSize="14dp"
-        app:autoSizeMinTextSize="8sp"
-        app:autoSizeTextType="uniform"
-        tools:text="10 LETTERS" />
-
-    <ImageView
-        android:id="@+id/imgRectBg"
-        android:layout_width="32dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentRight="false"
-        android:adjustViewBounds="true"
-        android:contentDescription="@null"
-        android:scaleType="fitXY"
-        android:src="@drawable/word_rect" />
-
-
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="32dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentRight="false"
-        android:adjustViewBounds="true"
-        android:contentDescription="@null"
-        android:padding="5dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_fish"
-        android:visibility="gone"
-        tools:visibility="visible" />
-
-    <TextView
-        android:id="@+id/tvWordNum"
-        android:layout_width="32dp"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="false"
-        android:layout_alignParentRight="false"
-        android:fontFamily="@font/nunitoextrabold"
+    <LinearLayout
+        android:id="@+id/cvWord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="#37474f"
-        android:textSize="15dp"
-        tools:text="1" />
+        android:orientation="horizontal"
+        android:paddingBottom="2dp"
+        android:paddingTop="2dp">
+
+        <TextView
+            android:id="@+id/tvLetters"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_btn_word"
+            android:fontFamily="@font/vag"
+            android:paddingBottom="2dp"
+            android:paddingEnd="12dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:paddingStart="12dp"
+            android:textColor="@color/main"
+            android:textSize="16dp"
+            tools:text="W" />
+
+        <TextView
+            android:id="@+id/tvDots"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/vag"
+            android:gravity="center_vertical"
+            android:textColor="@color/main_grey"
+            android:textSize="14dp"
+            tools:text=" \u25CF \u25CF \u25CF \u25CF \u25CF \u25CF \u25CF \u25CF" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/viewWordSeparator"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/cvWord"
+        android:layout_marginEnd="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginStart="20dp"
+        android:background="#e7edf7" />
 
 </RelativeLayout>

@@ -64,8 +64,7 @@
     <string name="show_the">SHOW THE…</string>
     <string name="sherlock_holmes">SHERLOCK HOLMES</string>
     <string name="hint_amp_shuffle"><![CDATA[HINT & SHUFFLE]]></string>
-    <string name="language">LANGUAGE:</string>
-    <string name="version">ver. %s</string>
+    <string name="version" translatable="false">%s</string>
     <string name="number_of_letters_ru">%d БУКВ</string>
 
     <string name="circle" translatable="false">
@@ -91,13 +90,13 @@
     <string name="share_subject" translatable="false">My current puzzle</string>
     <!-- END Main Title -->
     <!-- START Main Buttons titles -->
-    <string name="play_btn_txt">PLAY!</string>
+    <string name="play_btn_txt">PLAY</string>
     <string name="daily_puzzle_btn_txt">DAILY PUZZLE</string>
     <string name="all_packs_btn_txt">ALL PACKS</string>
     <string name="store_btn_txt">STORE</string>
     <!-- END Main Buttons titles -->
     <string name="complete">COMPLETE</string>
-    <string name="changelog">CHANGELOG</string>
+
     <string name="ok" translatable="false">OK</string>
     <string name="changelog_message" translatable="false">
         [1.3.beta] - 7/17/2017\n\n
@@ -110,19 +109,13 @@
         CHANGED:\n
         - Fix phrasing and spelling in Russian translation.
     </string>
-    <!-- Main Screen END -->
+    <string name="downloading_levels">DOWNLOADING LEVELS…</string>
+    <string name="downloading_daily">DOWNLOADING…</string>
+    <!-- END Main Screen -->
 
-    <!-- Settings Screen START -->
-    <string name="russian" translatable="false">РУССКИЙ</string>
-    <string name="english" translatable="false">ENGLISH</string>
-    <!-- START Change Language Dialog Warning -->
-    <string name="warning">WARNING</string>
-    <string name="dialog_message_lang_change">Your current game progress will be lost, to save it you have to sign in first.</string>
-    <string name="change">CHANGE</string>
-    <string name="cancel">@android:string/cancel</string>
-    <!-- END Change Language Dialog Warning -->
-    <string name="facebook_coming">Facebook Sign In Will Be Soon</string>
-    <string name="twitter_coming">Twitter Sign In Will Be Soon</string>
+    <!-- START Settings Screen -->
+    <string name="connect_clicked">We are working on that feature!</string>
+
     <string name="saved_changelog_state" translatable="false">saved_changelog_state</string>
     <string name="feedback_email" translatable="false">jkozhukhovskaya@gmail.com</string>
     <string name="feedback_subject" translatable="false">Feedback for WordChunks</string>
@@ -134,5 +127,13 @@
         System version: %4$s\n
         -----------------\n\n
     </string>
+    <string name="percent_complete" translatable="false">%.0f%%</string>
+    <string name="connect">CONNECT</string>
+    <string name="feedback">FEEDBACK</string>
+    <string name="rate">RATE</string>
+    <string name="language">LANGUAGE:</string>
+    <string name="dot" translatable="false">&#160;&#160;\u25CF</string>
+
+
     <!-- END Settings Screen -->
 </resources>

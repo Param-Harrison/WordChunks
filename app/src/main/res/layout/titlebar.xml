@@ -15,28 +15,29 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/toolbar_height"
     tools:showIn="@layout/act_packs_levels">
 
     <ImageView
-        android:id="@+id/imgBackArrow"
+        android:id="@+id/btnBack"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/back_hint"
         android:paddingEnd="16dp"
         android:paddingStart="16dp"
-        android:src="@drawable/ic_back" />
+        app:srcCompat="@drawable/ic_back" />
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fontFamily="@font/nunitoextrabold"
+        android:fontFamily="@font/vag"
         android:gravity="center"
-        android:textColor="@color/title_txt"
+        android:textColor="#ffffff"
         android:textSize="@dimen/toolbar_title_txt_size"
         tools:text="@string/title_select_pack" />
 

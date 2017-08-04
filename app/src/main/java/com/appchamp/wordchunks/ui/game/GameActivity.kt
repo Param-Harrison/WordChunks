@@ -16,63 +16,34 @@
 
 package com.appchamp.wordchunks.ui.game
 
-import android.arch.lifecycle.LifecycleRegistry
-import android.arch.lifecycle.LifecycleRegistryOwner
 import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.models.realm.Level
-import com.appchamp.wordchunks.ui.aftergame.AfterGameActivity
-import com.appchamp.wordchunks.ui.hint.HintActivity
+import com.appchamp.wordchunks.ui.customviews.RoundedDialog
 import com.appchamp.wordchunks.ui.levels.LevelsActivity
-import com.appchamp.wordchunks.ui.tutorial.TutorialActivity
 import com.appchamp.wordchunks.util.ActivityUtils
 import com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID
 import com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID
-import kotlinx.android.synthetic.main.frag_game.*
 import kotlinx.android.synthetic.main.titlebar.*
 import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
-import org.jetbrains.anko.startActivity
 
 
 /**
- * GameActivity contains GameFragment, manages navigation to the previous and next activity,
- * handles intent extra data, shows tutorial activity on the first run.
- * GameViewModel shares level ID between this activity and its fragment.
+ * GameViewModel shares the level ID between the GameActivity and GameFragment.
  */
-class GameActivity : AppCompatActivity(), LifecycleRegistryOwner {
-
-    private lateinit var levelId: String
-
-    private val viewModel by lazy {
-        val factory = GameViewModel.Factory(application, levelId)
-        ViewModelProviders.of(this, factory).get(GameViewModel::class.java)
-    }
-
-    private val lifecycleRegistry: LifecycleRegistry by lazy { LifecycleRegistry(this) }
-
-    override fun getLifecycle(): LifecycleRegistry = lifecycleRegistry
+class GameActivity : BaseGameActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_game)
-        subscribeUi()
-
-        // Shows tutorial on first game start
-//        if (viewModel.isShowTutorial()) {
-//            // Show how to play tutorial
-//            startTutorialActivity()
-//            // Never show tutorial again
-//        }
-
-        // Add game fragment if this is first creation
         if (savedInstanceState == null) {
-            ActivityUtils.addFragment(
-                    supportFragmentManager, GameFragment(), R.id.fragment_container)
+            ActivityUtils.addFragment(supportFragmentManager, GameFragment(),
+                    R.id.fragment_container)
         }
+        subscribeUi()
+        showLevelSolvedDialog()
     }
 
     private fun subscribeUi() {
@@ -81,37 +52,37 @@ class GameActivity : AppCompatActivity(), LifecycleRegistryOwner {
                 { "Activity parameter 'EXTRA_LEVEL_ID' is missing" })
 
         // Observe updates to the LiveData level.
-        viewModel.getLiveLevel()
-                .observe(this, Observer<Level> {
-                    // update UI titlebar
-                    it?.let { tvTitle.text = it.clue }
-                })
+        viewModel.getLiveLevel().observe(this, Observer<Level> {
+            // update UI titlebar with clue
+            it?.let { tvTitle.text = it.clue }
+        })
         viewModel.getLiveWords().observe(this, Observer {
             it?.let {
-
                 if (viewModel.isLevelSolved()) {
-                    startAfterGameActivity()
+                    showLevelSolvedDialog()
                 }
             }
         })
     }
 
-    private fun startAfterGameActivity() {
-        startActivity(intentFor<AfterGameActivity>(EXTRA_LEVEL_ID to levelId).clearTop())
-        finish()  // to go back on the levels screen from after game activity
-        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
+    private fun showLevelSolvedDialog() {
+        val dialog = RoundedDialog.newInstance()
+        dialog.show(supportFragmentManager, "fragment_level_solved")
     }
 
     override fun onStart() {
         super.onStart()
-        // Sets click listeners
-        imgBackArrow.setOnClickListener { onBackPressed() }
-        imgHint.setOnClickListener { startHintActivity() }
+        // Setup click listeners
+        btnBack.setOnClickListener { onBackPressed() }
+
     }
 
     override fun onBackPressed() {
         super.onBackPressed()
-        backToLevelsActivity()
+        // If it's not a daily puzzle, back to the levels screen
+        if (!viewModel.isDailyLevel()) {
+            backToLevelsActivity()
+        }
     }
 
     /**
@@ -119,18 +90,10 @@ class GameActivity : AppCompatActivity(), LifecycleRegistryOwner {
      */
     private fun backToLevelsActivity() {
         // Passing pack's id through the Intent.
-        startActivity(intentFor<LevelsActivity>(EXTRA_PACK_ID to viewModel.getPackId()).clearTop())
-        finish()
-        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
-    }
-
-    private fun startTutorialActivity() {
-        startActivity<TutorialActivity>()
-    }
-
-    fun startHintActivity() {
-        // Passing level's id through the Intent.
-        startActivity(intentFor<HintActivity>(EXTRA_LEVEL_ID to levelId))
-        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
+        viewModel.getPackId()?.let {
+            startActivity(intentFor<LevelsActivity>(EXTRA_PACK_ID to it).clearTop())
+            finish()
+            overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
+        }
     }
 }

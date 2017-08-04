@@ -23,14 +23,10 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.support.annotation.Nullable
-import android.view.Gravity
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AccelerateDecelerateInterpolator
-import berlin.volders.badger.BadgeShape
-import berlin.volders.badger.Badger
-import berlin.volders.badger.CountBadge
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.extensions.invisible
 import com.appchamp.wordchunks.extensions.visible
@@ -43,15 +39,9 @@ import xyz.hanks.library.SmallBang
 
 
 class GameFragment : LifecycleFragment() {
-
-    private val viewModel by lazy {
-        ViewModelProviders.of(activity).get(GameViewModel::class.java)
-    }
-
-    private val smallBang by lazy {
-        SmallBang.attach2Window(activity)
-    }
-
+    private val TAG: String = javaClass.simpleName
+    private val viewModel by lazy { ViewModelProviders.of(activity).get(GameViewModel::class.java) }
+    private val smallBang by lazy { SmallBang.attach2Window(activity) }
     private lateinit var wordsAdapter: WordsAdapter
     private lateinit var chunksAdapter: ChunksAdapter
 
@@ -64,19 +54,10 @@ class GameFragment : LifecycleFragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         // todo generate gradient
-        val colors = intArrayOf(Color.parseColor("#7161aa"), Color.parseColor("#6353b5"))
+        val colors = intArrayOf(Color.parseColor("#7bda7a"), Color.parseColor("#1ce4cf"))
         val gd = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
-        llPackBg.background = gd
-
-        // todo hints
-        val circleFactory: CountBadge.Factory = CountBadge.Factory(
-                BadgeShape.circle(1f, Gravity.BOTTOM),
-                Color.parseColor("#c33a51"),
-                Color.parseColor("#ffffff")
-        )
-        Badger.sett<CountBadge>(imgHintHolder, circleFactory).count = 23
+        gradient.background = gd
     }
 
     override fun onActivityCreated(@Nullable savedInstanceState: Bundle?) {
@@ -88,28 +69,43 @@ class GameFragment : LifecycleFragment() {
         setupChunksAdapter()
 
         // Click listeners
-        imgShuffle.setOnClickListener {
+        btnShuffle.setOnClickListener {
             viewModel.onShuffleClick()
             chunksAdapter.notifyDataSetChanged()
         }
-        imgClear.setOnClickListener {
+        btnHint.setOnClickListener { onHintClicked() }
+        btnClear.setOnClickListener {
             viewModel.onClearClick().forEach {
                 chunksAdapter.notifyItemChanged(it)
             }
         }
     }
 
+    private fun onHintClicked() {
+        val wordPos = viewModel.onHintClicked()
+        Log.d(TAG, "POS = " + wordPos)
+        if (wordPos != -1) {
+
+            wordsAdapter.notifyItemChanged(wordPos)
+
+//            val hintedWordView = rvWords.findViewHolderForLayoutPosition(wordPos).itemView.tvLetters
+//            smallBang?.bang(hintedWordView)
+        }
+    }
+
     private fun subscribeUi(viewModel: GameViewModel) {
         viewModel.getLiveLevel().observe(this, Observer {
-            it?.let {
-                wordsAdapter.setPackColor(it.color)
-                tvSolutions.setTextColor(Color.parseColor(it.color))
-            }
+            it?.let { wordsAdapter.setPackColor(it.color) }
         })
 
         viewModel.getLiveWords().observe(this, Observer {
             it?.let {
-                it.toList().let { words -> wordsAdapter.updateItems(words) }
+                it.toList().let { words ->
+                    if (words.none { it.position != 0 }) {
+                        viewModel.setupWordsPositions()
+                    }
+                    wordsAdapter.updateItems(words)
+                }
             }
         })
 
@@ -124,13 +120,11 @@ class GameFragment : LifecycleFragment() {
                 updateChunksTextView(viewModel.getSelectedChunksString())
                 updateChunksCountView(viewModel.getSelectedChunksLength())
                 updateClearIcon(viewModel.getClearIconVisibility())
-                val pos = viewModel.isWordSolved()
-                if (pos != -1) {
-                    wordsAdapter.notifyItemChanged(pos)
+                val wordPos = viewModel.isWordSolved()
+                if (wordPos != -1) {
+                    wordsAdapter.notifyItemChanged(wordPos)
                     viewModel.onWordSolved().forEach {
                         chunksAdapter.notifyItemChanged(it)
-                        val v = rvWords.layoutManager.findViewByPosition(pos)
-                        smallBang?.bang(v)
                     }
                 }
             }
@@ -142,14 +136,14 @@ class GameFragment : LifecycleFragment() {
         rvWords.adapter = wordsAdapter
         rvWords.layoutManager = CustomGridLayoutManager(activity, WORDS_GRID_NUM)
         rvWords.setHasFixedSize(true)
-        rvWords.translationY = 0.5F
-        rvWords.alpha = 0f
-        rvWords.animate()
-                .translationY(0F)
-                .setDuration(1000)
-                .alpha(1f)
-                .setInterpolator(AccelerateDecelerateInterpolator())
-                .start()
+//        rvWords.translationY = 0.5F
+//        rvWords.alpha = 0f
+//        rvWords.animate()
+//                .translationY(0F)
+//                .setDuration(1000)
+//                .alpha(1f)
+//                .setInterpolator(AccelerateDecelerateInterpolator())
+//                .start()
     }
 
     private fun setupChunksAdapter() {
@@ -168,23 +162,17 @@ class GameFragment : LifecycleFragment() {
     }
 
     private fun updateChunksCountView(length: Int?) {
-        val squareFactory: CountBadge.Factory = CountBadge.Factory(
-                BadgeShape.circle(1f, Gravity.NO_GRAVITY),
-                Color.parseColor("#000000"),
-                Color.parseColor("#ffffff")
-        )
-        Badger.sett<CountBadge>(imgChunksCount, squareFactory).count = length ?: 0
-
+        tvChunksCount.text = length.toString()
         updateChunksCountView(length != 0)
     }
 
     private fun updateChunksCountView(isVisible: Boolean) = when {
-        isVisible -> imgChunksCount.visible()
-        else -> imgChunksCount.invisible()
+        isVisible -> rlChunksCount.visible()
+        else -> rlChunksCount.invisible()
     }
 
     private fun updateClearIcon(isVisible: Boolean) = when {
-        isVisible -> imgClear.visible()
-        else -> imgClear.invisible()
+        isVisible -> btnClear.visible()
+        else -> btnClear.invisible()
     }
 }

@@ -29,70 +29,55 @@ import io.realm.Realm
 
 
 class GameViewModel(application: Application, levelId: String) : AndroidViewModel(application) {
-
-    private val db: Realm = Realm.getDefaultInstance()
-    // Live data
+    private val TAG: String = javaClass.simpleName
+    private val realmDb: Realm = Realm.getDefaultInstance()
     private var level: LiveRealmObject<Level>
     private var chunks: LiveRealmResults<Chunk>
     private var words: LiveRealmResults<Word>
 
     init {
-        // Load level from the Realm db as LiveData
-        level = db.levelModel().findLevelById(levelId)
-        // Load chunks from the Realm db as LiveData
-        chunks = db.chunkModel().findChunksByLevelId(levelId)
-        // Load words from the Realm db as LiveData
-        words = db.wordModel().findWordsByLevelId(levelId)
-
-        Log.d("MAIN", "INIT")
+        // Loads levels, chunks, and words from the Realm realmDb as LiveData
+        level = realmDb.levelModel().findLevelById(levelId)
+        chunks = realmDb.chunkModel().findChunksByLevelId(levelId)
+        words = realmDb.wordModel().findWordsByLevelId(levelId)
     }
 
     fun getLiveLevel(): LiveRealmObject<Level> = level
 
-    fun getPackId(): String {
-        return level.value?.packId!!
-    }
+    fun getPackId(): String? = level.value?.packId
 
-    fun getLiveChunks(): LiveRealmResults<Chunk> {
-        return chunks
-    }
+    fun getLiveChunks(): LiveRealmResults<Chunk> = chunks
 
     fun getLiveWords(): LiveRealmResults<Word> = words
+
+    fun getSelectedChunksString(): String = getSelectedChunks()?.chunksToString() ?: ""
 
     /**
      * Gets filtered and sorted by time-pressed chunks, and transforms them into string.
      */
-    fun getSelectedChunks(): List<Chunk>? {
+    private fun getSelectedChunks(): List<Chunk>? {
         return getLiveChunks().value
-                ?.filter { it.state > ChunkState.NORMAL.value }
+                ?.filter { it.state > CHUNK_STATE_NORMAL }
                 ?.sortedBy { it.state }
-    }
-
-    fun getSelectedChunksString(): String {
-        return getSelectedChunks()?.chunksToString() ?: ""
     }
 
     /**
      * Returns the length of the selected chunks.
      */
-    fun getSelectedChunksLength(): Int {
-        return getSelectedChunksString().length
-    }
+    fun getSelectedChunksLength(): Int = getSelectedChunksString().length
 
-    fun getClearIconVisibility(): Boolean {
-        return getSelectedChunksLength() != 0
-    }
+    fun getClearIconVisibility(): Boolean = getSelectedChunksLength() != 0
 
     /**
-     * Flips chunk state on click, and stores it in the db.
+     * Flips chunk state on click, and stores it in the realmDb.
      *
      * @param chunk The clicked chunk object.
      */
     fun onChunkClick(chunk: Chunk) {
-        if (chunk.state == ChunkState.NORMAL.value) {
-            db.chunkModel().setChunkState(chunk, System.currentTimeMillis())
+        if (chunk.state == CHUNK_STATE_NORMAL) {
+            realmDb.chunkModel().setChunkState(chunk, System.currentTimeMillis())
         } else {
-            db.chunkModel().setChunkState(chunk, ChunkState.NORMAL.value)
+            realmDb.chunkModel().setChunkState(chunk, CHUNK_STATE_NORMAL)
         }
     }
 
@@ -102,18 +87,19 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
     fun onClearClick(): List<Int> {
         val clickedIndices: MutableList<Int> = mutableListOf()
         getSelectedChunks()?.map { it ->
-            db.chunkModel().setChunkState(it, ChunkState.NORMAL.value)
+            realmDb.chunkModel().setChunkState(it, CHUNK_STATE_NORMAL)
             clickedIndices.add(it.position)
         }
         return clickedIndices
     }
 
     fun isWordSolved(): Int {
-        getLiveWords().value?.filter { it.state == WordState.NOT_SOLVED.value }
+        getLiveWords().value
+                ?.filter { it.state == WORD_STATE_NOT_SOLVED }
                 ?.forEach {
                     if (it.word == getSelectedChunksString()) {
-                        //removeChunks()
-                        db.wordModel().setWordState(it, WordState.SOLVED.value)
+                        realmDb.wordModel().setWordState(it, WORD_STATE_SOLVED)
+                        realmDb.wordModel().setWordVisibleLettersNum(it, it.word.length)
                         return it.position
                     }
                 }
@@ -123,9 +109,8 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
     /**
      * Returns true if the level is solved, and false otherwise.
      */
-    fun isLevelSolved(): Boolean {
-        return words.value?.filter { it.state == WordState.NOT_SOLVED.value }?.isEmpty() ?: false
-    }
+    fun isLevelSolved() = words.value
+            ?.filter { it.state == WORD_STATE_NOT_SOLVED }?.isEmpty() ?: false
 
     /**
      * Returns the list of indices of the selected chunks to be updated by the adapter in the fragment.
@@ -133,7 +118,7 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
     fun onWordSolved(): List<Int> {
         val clickedIndices: MutableList<Int> = mutableListOf()
         getSelectedChunks()?.map { it ->
-            db.chunkModel().setChunkState(it, ChunkState.GONE.value)
+            realmDb.chunkModel().setChunkState(it, CHUNK_STATE_GONE)
             clickedIndices.add(it.position)
         }
         return clickedIndices
@@ -141,14 +126,14 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
 
     /**
      * This method is called whenever a user clicks on shuffle icon, it stores states of every
-     * chunk in the RecyclerView in the db.
+     * chunk in the RecyclerView in the realmDb.
      */
     fun onShuffleClick() {
         val numberOfChunks = getLiveChunks().value?.size
         numberOfChunks?.let {
             val shuffledArray = IntArray(numberOfChunks, { it }).shuffleIntArray()
 
-            // Reduced size for the efficiency
+            // Reduces the size for the efficiency
             val size = when {
                 numberOfChunks.isEven() -> numberOfChunks / 2
                 else -> numberOfChunks / 2 + 1
@@ -159,17 +144,36 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
                 val pos2 = shuffledArray[numberOfChunks - i - 1]
                 getLiveChunks().value?.let {
                     // Swapping chunk positions
-                    it[pos1]?.let { chunk -> db.chunkModel().setChunkPosition(chunk, pos2) }
-                    it[pos2]?.let { chunk -> db.chunkModel().setChunkPosition(chunk, pos1) }
+                    it[pos1]?.let { chunk -> realmDb.chunkModel().setChunkPosition(chunk, pos2) }
+                    it[pos2]?.let { chunk -> realmDb.chunkModel().setChunkPosition(chunk, pos1) }
                 }
             }
         }
     }
 
-//    fun isShowTutorial(): Boolean {
-//        val game = db.gameModel().findGame()
-//        return game.showTutorial
-//    }
+    fun setupWordsPositions() {
+        Log.d(TAG, "SETTING WORDS POSITIONS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        var wordPos = 0
+        getLiveWords().value?.forEach {
+            realmDb.wordModel().setWordPosition(it, wordPos++)
+        }
+    }
+
+    fun isDailyLevel(): Boolean = level.value?.daily!!
+
+    fun onHintClicked(): Int {
+        getLiveWords().value
+                ?.filter { it.state == WORD_STATE_NOT_SOLVED && it.visibleLettersNum < it.word.length }
+                ?.minBy { it.visibleLettersNum }
+                ?.let {
+                    Log.d(TAG, "IT.WORD = " + it.word)
+                    Log.d(TAG, "IT.POS = " + it.position)
+                    realmDb.wordModel()
+                            .setWordVisibleLettersNum(it, it.visibleLettersNum + 1)
+                    return it.position
+                }
+        return -1
+    }
 
     /**
      * This method will be called when this ViewModel is no longer used and will be destroyed.
@@ -178,8 +182,7 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
      * prevent a leak of this ViewModel... Like RealmResults and the instance of Realm!
      */
     override fun onCleared() {
-//        db.gameModel().setShowTutorial(db.gameModel().findGame(), false)
-        db.close()
+        realmDb.close()
         super.onCleared()
     }
 
@@ -194,4 +197,5 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
             return GameViewModel(application, levelId) as T
         }
     }
+
 }

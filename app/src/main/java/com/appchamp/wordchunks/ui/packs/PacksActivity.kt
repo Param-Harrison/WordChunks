@@ -26,7 +26,6 @@ import com.appchamp.wordchunks.ui.BaseActivity
 import com.appchamp.wordchunks.ui.levels.LevelsActivity
 import com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID
 import com.franmontiel.localechanger.LocaleChanger
-import io.realm.RealmResults
 import kotlinx.android.synthetic.main.act_packs_levels.*
 import kotlinx.android.synthetic.main.titlebar.*
 import me.everything.android.ui.overscroll.OverScrollDecoratorHelper
@@ -41,7 +40,7 @@ class PacksActivity : BaseActivity<PacksViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_packs_levels)
-        llPacksLevels.setBackgroundResource(R.drawable.gradient_packs)
+//        llPacksLevels.setBackgroundResource(R.drawable.gradient_packs)
         tvTitle.text = getString(R.string.title_select_pack)
         rvList.layoutManager = LinearLayoutManager(this)
         rvList.setHasFixedSize(true)
@@ -50,7 +49,7 @@ class PacksActivity : BaseActivity<PacksViewModel>() {
         OverScrollDecoratorHelper.setUpOverScroll(
                 rvList, OverScrollDecoratorHelper.ORIENTATION_VERTICAL)
 
-        imgBackArrow.setOnClickListener { onBackPressed() }
+        btnBack.setOnClickListener { onBackPressed() }
 
         subscribeToModel()
     }
@@ -59,11 +58,19 @@ class PacksActivity : BaseActivity<PacksViewModel>() {
         super.attachBaseContext(LocaleChanger.configureBaseContext(newBase))
     }
 
+    /**
+     * Navigates back to MainActivity.
+     */
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
+    }
+
     private fun subscribeToModel() {
         // Observe updates to our LiveData packs.
         viewModel
                 .getLivePacks()
-                .observe(this, Observer<RealmResults<Pack>> {
+                .observe(this, Observer {
                     // update UI
                     val adapter = PacksLevelsAdapter<Pack> {
                         // Navigates to the LevelsActivity passing pack id in the Intent.
@@ -77,14 +84,6 @@ class PacksActivity : BaseActivity<PacksViewModel>() {
         // Scroll RecyclerView to the last "current", or "solved" level item.
         // indexOfLast gets last index, or -1 if the list does not contain that item.
         rvList.smoothScrollToPosition(viewModel.getLastPackPos())
-    }
-
-    /**
-     * Navigates back to MainActivity.
-     */
-    override fun onBackPressed() {
-        super.onBackPressed()
-        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
     }
 
     /**

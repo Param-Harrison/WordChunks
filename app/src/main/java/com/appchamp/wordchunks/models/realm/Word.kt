@@ -34,13 +34,9 @@ open class Word : RealmModel {
     var word: String = ""
     var state: Int = 0  // 0 = not solved, 1 = solved
     var position: Int = 0
-
+    var visibleLettersNum: Int = 1
 }
 
-fun Word.getProperIndex() = (this.position + 1).toString()
-
-// States of word
-enum class WordState(val value: Int) {
-    NOT_SOLVED(0),
-    SOLVED(1)
-}
+// States of the word
+val WORD_STATE_NOT_SOLVED = 0
+val WORD_STATE_SOLVED = 1

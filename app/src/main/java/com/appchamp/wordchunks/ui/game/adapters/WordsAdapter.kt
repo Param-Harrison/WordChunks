@@ -17,29 +17,24 @@
 package com.appchamp.wordchunks.ui.game.adapters
 
 import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.drawable.GradientDrawable
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.support.annotation.ColorInt
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
-import com.appchamp.wordchunks.extensions.color
-import com.appchamp.wordchunks.extensions.gone
-import com.appchamp.wordchunks.extensions.visible
+import com.appchamp.wordchunks.models.realm.WORD_STATE_NOT_SOLVED
+import com.appchamp.wordchunks.models.realm.WORD_STATE_SOLVED
 import com.appchamp.wordchunks.models.realm.Word
-import com.appchamp.wordchunks.models.realm.WordState
-import com.appchamp.wordchunks.models.realm.getProperIndex
-import com.appchamp.wordchunks.util.Constants
 import kotlinx.android.synthetic.main.item_word.view.*
-import java.util.*
 
 
 class WordsAdapter(private var words: List<Word> = listOf()) :
         RecyclerView.Adapter<WordsAdapter.ViewHolder>() {
 
-    var packColor: Int? = Color.parseColor("#cccccc")
+    private var levelColor: Int = Color.parseColor("#7bda7a")
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_word, parent, false)
@@ -47,7 +42,7 @@ class WordsAdapter(private var words: List<Word> = listOf()) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        packColor?.let { holder.bind(words[position], it) }
+        holder.bind(words[position], levelColor)
     }
 
     override fun getItemCount() = words.size
@@ -58,33 +53,32 @@ class WordsAdapter(private var words: List<Word> = listOf()) :
     }
 
     fun setPackColor(colorStr: String) {
-        this.packColor = Color.parseColor(colorStr)
+        this.levelColor = Color.parseColor(colorStr)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(word: Word, @ColorInt packColor: Int) = with(itemView) {
-            val wordState = word.state
-            val drawable = imgRectBg.drawable as GradientDrawable
-            when (wordState) {
-                WordState.NOT_SOLVED.value -> {
-                    val wordLength = word.word.length
-                    //
-                    if (Locale.getDefault() == Constants.SUPPORTED_LOCALES[1]) {
-                        tvWord.text = resources.getString(R.string.number_of_letters_ru, wordLength)
-                    } else {
-                        tvWord.text = resources.getString(R.string.number_of_letters, wordLength)
-                    }
-                    tvWordNum.text = word.getProperIndex()
-                    drawable.setColor(context.color(R.color.word_rect_bg))
+        fun bind(word: Word, @ColorInt levelColor: Int) = with(itemView) {
+            val visibleLetters = word.word.take(word.visibleLettersNum)
+            tvLetters.text = visibleLetters.map { it + " " }.joinToString(separator = "").dropLast(1)
+
+            val repeatCount = word.word.length - word.visibleLettersNum
+            if (repeatCount > 0) {
+                tvDots.text = itemView.context.getString(R.string.dot).repeat(repeatCount)
+            } else {
+                tvDots.text = ""
+            }
+
+            when (word.state) {
+                WORD_STATE_SOLVED -> {
+                    tvLetters.background.colorFilter = PorterDuffColorFilter(
+                            levelColor, PorterDuff.Mode.SRC_IN)
+                    tvLetters.setTextColor(Color.parseColor("#ffffff"))
                 }
-                else -> {
-                    tvWord.text = word.word
-                    tvWord.paintFlags = tvWord.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-                    tvWord.setTextColor(packColor)
-                    icon.visible()
-                    tvWordNum.gone()
-                    drawable.setColor(packColor)
+                WORD_STATE_NOT_SOLVED -> {
+                    tvLetters.background.colorFilter = PorterDuffColorFilter(
+                            Color.parseColor("#acbbe4"), PorterDuff.Mode.SRC_IN)
+                    tvLetters.setTextColor(Color.parseColor("#4c546a"))
                 }
             }
         }

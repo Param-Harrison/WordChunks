@@ -28,20 +28,12 @@ open class Level : RealmModel {
     @PrimaryKey
     @Required
     var id: String = ""
-    @Required
+    var title: String = ""
     var packId: String = ""
     @Required
     var clue: String = ""
     @Required
     var color: String = ""
-    @Required
-    var fact: String = ""
     var state: Int = 0  // LOCKED = 0, IN_PROGRESS = 1, FINISHED = 2
-}
-
-// States of level
-enum class LevelState(val value: Int) {
-    LOCKED(0),
-    IN_PROGRESS(1),
-    FINISHED(2)
+    var daily: Boolean = false
 }

@@ -16,11 +16,13 @@
 
 package com.appchamp.wordchunks.models.gson
 
+import android.support.annotation.Keep
 
+@Keep
 open class LevelGson {
     val id: String = ""
     val packId: String = ""
     val clue: String = ""
-    val fact: String = ""
     val color: String = ""
+    val daily: Boolean = false
 }

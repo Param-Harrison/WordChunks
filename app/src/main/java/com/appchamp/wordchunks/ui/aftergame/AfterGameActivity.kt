@@ -16,86 +16,80 @@
 
 package com.appchamp.wordchunks.ui.aftergame
 
-import android.arch.lifecycle.LifecycleRegistry
-import android.arch.lifecycle.LifecycleRegistryOwner
-import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import com.appchamp.wordchunks.R
-import com.appchamp.wordchunks.models.realm.LevelState
-import com.appchamp.wordchunks.ui.levels.LevelsActivity
-import com.appchamp.wordchunks.util.ActivityUtils
-import com.appchamp.wordchunks.util.Constants
-import com.franmontiel.localechanger.LocaleChanger
-import org.jetbrains.anko.clearTop
-import org.jetbrains.anko.intentFor
 
-
-class AfterGameActivity : AppCompatActivity(), LifecycleRegistryOwner {
-
-    private lateinit var levelId: String
-
-    private val viewModel by lazy {
-        val factory = AfterGameViewModel.Factory(application, levelId)
-        ViewModelProviders.of(this, factory).get(AfterGameViewModel::class.java)
-    }
-
-    private val lifecycleRegistry: LifecycleRegistry by lazy { LifecycleRegistry(this) }
-
-    override fun getLifecycle(): LifecycleRegistry = lifecycleRegistry
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.act_after_game)
-
-        subscribeUi()
-    }
-
-    override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(LocaleChanger.configureBaseContext(newBase))
-    }
-    
-    private fun subscribeUi() {
-        // Getting solved level ID by the Intent.
-        levelId = requireNotNull(intent.getStringExtra(Constants.EXTRA_LEVEL_ID),
-                { "Activity parameter 'EXTRA_LEVEL_ID' is missing" })
-
-        // Get a state of the solved level, then show corresponding fragment
-        when (viewModel.getLevelState()) {
-        // If level in progress was solved
-            LevelState.IN_PROGRESS.value -> addLevelSolvedFragment()
-        // If level solved before was solved
-            LevelState.FINISHED.value -> addLevelSolvedBeforeFragment()
-        }
-    }
-
-    private fun addLevelSolvedFragment() {
-        ActivityUtils.addFragment(
-                supportFragmentManager,
-                LevelSolvedFragment(),
-                R.id.fragment_container)
-    }
-
-    private fun addLevelSolvedBeforeFragment() {
-        ActivityUtils.addFragment(
-                supportFragmentManager,
-                LevelSolvedBeforeFragment(),
-                R.id.fragment_container)
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        backToLevelsActivity(viewModel.getPackId())
-    }
-
-    /**
-     * Back navigation. Navigates to LevelsActivity passing Pack id by the Intent.
-     */
-    private fun backToLevelsActivity(packId: String) {
-        // Passing pack's id by the Intent.
-        startActivity(intentFor<LevelsActivity>(Constants.EXTRA_PACK_ID to packId).clearTop())
-        finish()
-        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
-    }
-}
+//class AfterGameActivity : AppCompatActivity(), LifecycleRegistryOwner {
+//
+//    private lateinit var levelId: String
+//    private val viewModel by lazy {
+//        val factory = AfterGameViewModel.Factory(application, levelId)
+//        ViewModelProviders.of(this, factory).get(AfterGameViewModel::class.java)
+//    }
+//    private val lifecycleRegistry: LifecycleRegistry by lazy { LifecycleRegistry(this) }
+//
+//    override fun getLifecycle(): LifecycleRegistry = lifecycleRegistry
+//
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContentView(R.layout.act_after_game)
+//
+//        subscribeUi()
+//    }
+//
+//    override fun attachBaseContext(newBase: Context) {
+//        super.attachBaseContext(LocaleChanger.configureBaseContext(newBase))
+//    }
+//
+//    override fun onBackPressed() {
+//        super.onBackPressed()
+//        if (viewModel.isDailyLevel()) {
+//            backToMainActivity()
+//        } else {
+//            backToLevelsActivity(viewModel.getPackId())
+//        }
+//    }
+//
+//    private fun subscribeUi() {
+//        // Getting solved level ID by the Intent.
+//        levelId = requireNotNull(intent.getStringExtra(Constants.EXTRA_LEVEL_ID),
+//                { "Activity parameter 'EXTRA_LEVEL_ID' is missing" })
+//
+//        // Get a state of the solved level, then show corresponding fragment
+//        when (viewModel.getLevelState()) {
+//        // Daily level is not marked as "in progress", it is locked state
+//            LevelState.LOCKED.value -> addLevelSolvedFragment()
+//        // If level "in progress"/"current" was solved
+//            LevelState.IN_PROGRESS.value -> addLevelSolvedFragment()
+//        // If level "solved before" was solved
+//            LevelState.FINISHED.value -> addLevelSolvedBeforeFragment()
+//        }
+//    }
+//
+//    private fun addLevelSolvedFragment() = supportFragmentManager
+//            .beginTransaction()
+//            .add(R.id.fragment_container, LevelSolvedFragment())
+//            .commit()
+//
+//    private fun addLevelSolvedBeforeFragment() = supportFragmentManager
+//            .beginTransaction()
+//            .add(R.id.fragment_container, LevelSolvedBeforeFragment())
+//            .commit()
+//
+//    /**
+//     * Back navigation. Navigates to MainActivity.
+//     */
+//    private fun backToMainActivity() {
+//        startActivity(intentFor<MainActivity>().clearTop())
+//        finish()
+//        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
+//    }
+//
+//    /**
+//     * Back navigation. Navigates to LevelsActivity passing Pack id by the Intent.
+//     */
+//    private fun backToLevelsActivity(packId: String) {
+//        // Passing pack's id by the Intent.
+//        startActivity(intentFor<LevelsActivity>(Constants.EXTRA_PACK_ID to packId).clearTop())
+//        finish()
+//        overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
+//    }
+//}

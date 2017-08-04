@@ -18,9 +18,10 @@ package com.appchamp.wordchunks.ui.packs
 
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
-import com.appchamp.wordchunks.models.realm.LevelState
+import com.appchamp.wordchunks.models.realm.FINISHED
+import com.appchamp.wordchunks.models.realm.IN_PROGRESS
+import com.appchamp.wordchunks.models.realm.LOCKED
 import com.appchamp.wordchunks.models.realm.Pack
-import com.appchamp.wordchunks.models.realm.PackState
 import com.appchamp.wordchunks.realmdb.utils.LiveRealmResults
 import com.appchamp.wordchunks.realmdb.utils.levelModel
 import com.appchamp.wordchunks.realmdb.utils.packModel
@@ -38,7 +39,7 @@ class PacksViewModel(application: Application?) : AndroidViewModel(application) 
     init {
         // Retrieves all of the packs from the Realm as LiveRealmResults objects list.
         packs = dbRealm.packModel().findAllPacks()
-        currentPack = dbRealm.packModel().findPackByState(PackState.IN_PROGRESS.value)
+        currentPack = dbRealm.packModel().findPackByState(IN_PROGRESS)
     }
 
     /**
@@ -48,6 +49,7 @@ class PacksViewModel(application: Application?) : AndroidViewModel(application) 
         if (currentPack != null) {
             currentPack?.id?.let {
                 if (isPackSolved(it)) {
+                    markPackSolved()
                     makeNewCurrentPack()
                 }
             }
@@ -57,33 +59,24 @@ class PacksViewModel(application: Application?) : AndroidViewModel(application) 
         return packs
     }
 
-    fun getCurrentPack(): Pack? {
-        if (currentPack != null) {
-            currentPack?.id?.let {
-                if (isPackSolved(it)) {
-                    makeNewCurrentPack()
-                }
-            }
-        } else {
-            makeNewCurrentPack()
-        }
-        return currentPack
+    private fun markPackSolved() {
+        currentPack?.let { dbRealm.packModel().setPackState(it, FINISHED) }
     }
 
     private fun makeNewCurrentPack() {
-        val firstLockedLevel = dbRealm.packModel().findPackByState(PackState.LOCKED.value)
-        firstLockedLevel?.let {
-            dbRealm.packModel().setPackState(it, PackState.IN_PROGRESS.value)
-            currentPack = firstLockedLevel
+        val firstLockedPack = dbRealm.packModel().findPackByState(LOCKED)
+        firstLockedPack?.let {
+            dbRealm.packModel().setPackState(it, IN_PROGRESS)
+            currentPack = firstLockedPack
         }
     }
 
     /**
-     * Returns true if the pack is solved, and false otherwise.
+     * Returns true if the pack was solved, and false otherwise.
      */
     private fun isPackSolved(packId: String): Boolean {
-        val levels = dbRealm.levelModel().findLevelsByPackId(packId)
-        return levels.value?.all { it.state == LevelState.FINISHED.value } ?: false
+        val levels = dbRealm.levelModel().findLevelsByPackIdList(packId)
+        return levels.all { it.state == FINISHED }
     }
 
     /**
@@ -91,8 +84,8 @@ class PacksViewModel(application: Application?) : AndroidViewModel(application) 
      * "finished" pack state.
      */
     fun getLastPackPos() = packs.value?.indexOfLast {
-        it.state == PackState.IN_PROGRESS.value
-                || it.state == PackState.FINISHED.value
+        it.state == IN_PROGRESS
+                || it.state == FINISHED
     } ?: 0
 
     /**

@@ -16,7 +16,7 @@
 
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:opacity="opaque">
-    <item android:drawable="@color/background_main" />
+    <item android:drawable="@color/bg_splashscreen" />
     <item>
         <bitmap
             android:gravity="center"

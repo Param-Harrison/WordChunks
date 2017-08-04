@@ -17,44 +17,57 @@
 package com.appchamp.wordchunks.realmdb.dao
 
 import com.appchamp.wordchunks.models.realm.Word
-import com.appchamp.wordchunks.realmdb.utils.LiveRealmObject
 import com.appchamp.wordchunks.realmdb.utils.LiveRealmResults
 import com.appchamp.wordchunks.realmdb.utils.asLiveData
 import com.appchamp.wordchunks.util.Constants
 import io.realm.Realm
+import io.realm.RealmResults
 
 
 class WordDao(private val realm: Realm) {
 
-    fun createOrUpdateWordsFromJson(json: String) {
-        realm.executeTransaction { realm ->
-            realm.createOrUpdateAllFromJson(Word::class.java, json)
-        }
+    fun createOrUpdateWordsFromJson(json: String) = realm.executeTransaction {
+        it.createOrUpdateAllFromJson(Word::class.java, json)
     }
 
     /**
      * Custom set methods.
      */
-    fun setWordState(word: Word, state: Int) {
-        realm.executeTransaction {
-            word.state = state
-        }
+    fun setWordState(word: Word, state: Int) = realm.executeTransaction {
+        word.state = state
     }
+
+    fun setWordVisibleLettersNum(word: Word, visibleLettersNum: Int) = realm.executeTransaction {
+        word.visibleLettersNum = visibleLettersNum
+    }
+
+
+    fun setWordPosition(word: Word, pos: Int) = realm.executeTransaction { word.position = pos }
 
     /**
      * Custom finder methods.
      */
-    fun findWordsByLevelId(levelId: String): LiveRealmResults<Word> {
-        return realm
-                .where(Word::class.java)
-                .equalTo(Constants.REALM_FIELD_LEVEL_ID, levelId)
-                .findAllAsync()
-                .asLiveData()
+    fun findWordsByLevelId(levelId: String): LiveRealmResults<Word> = realm
+            .where(Word::class.java)
+            .equalTo(Constants.REALM_FIELD_LEVEL_ID, levelId)
+            .findAllAsync()
+            .asLiveData()
+
+    fun findWordsByLevelIdList(levelId: String): RealmResults<Word> = realm
+            .where(Word::class.java)
+            .equalTo(Constants.REALM_FIELD_LEVEL_ID, levelId)
+            .findAll()
+
+    /**
+     * Custom delete methods.
+     */
+    fun deleteWordsByLevelId(levelId: String) {
+        realm.executeTransaction {
+            it.where(Word::class.java)
+                    .equalTo(Constants.REALM_FIELD_LEVEL_ID, levelId)
+                    .findAll()
+                    .deleteAllFromRealm()
+        }
     }
 
-    fun findWordById(id: String): LiveRealmObject<Word> = realm
-            .where(Word::class.java)
-            .equalTo(Constants.REALM_FIELD_ID, id)
-            .findFirst()
-            .asLiveData()
 }

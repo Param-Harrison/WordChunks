@@ -68,7 +68,7 @@
     <string name="share_hint">поделиться</string>
     <!-- END Main Title -->
     <!-- START Main Buttons titles -->
-    <string name="play_btn_txt">ИГРАТЬ!</string>
+    <string name="play_btn_txt">ИГРАТЬ</string>
     <string name="daily_puzzle_btn_txt">ИГРА ДНЯ</string>
     <string name="all_packs_btn_txt">ВСЕ ПАКИ</string>
     <string name="store_btn_txt">МАГАЗИН</string>
@@ -76,23 +76,17 @@
 
     <string name="complete">ПРОЙДЕНО</string>
     <string name="changelog">ИЗМЕНЕНИЯ</string>
+    <string name="downloading_levels">ЗАГРУЗКА УРОВНЕЙ…</string>
+    <string name="downloading_daily">ЗАГРУЗКА…</string>
     <!-- Main Screen END -->
 
     <!-- Settings Screen START -->
+    <string name="connect_clicked">Находится в стадии разработки!</string>
     <string name="language">ЯЗЫК:</string>
-    <string name="send_feedback">ОТПРАВИТЬ ОТЗЫВ</string>
-    <string name="how_to_play">КАК ИГРАТЬ?</string>
-    <string name="rate_the_app">ОЦЕНИТЬ ИГРУ!</string>
-    <string name="version">вер. %s</string>
-    <string name="authentication">АВТОРИЗАЦИЯ:</string>
-    <string name="guest">ГОСТЬ</string>
-    <string name="facebook_coming">Facebook авторизация скоро будет</string>
-    <string name="twitter_coming">Twitter авторизация скоро будет</string>
-    <!-- START Change Language Dialog Warning -->
-    <string name="warning">ВНИМАНИЕ</string>
-    <string name="dialog_message_lang_change">Ваш игровой прогресс будет потерян, чтобы сохранить все ваши достижения, авторизуйтесь сначала.</string>
-    <string name="change">СМЕНИТЬ</string>
-    <string name="cancel">ОТМЕНИТЬ</string>
-    <!-- END Change Language Dialog Warning -->
+
+    <string name="rate">ОЦЕНИТЬ ИГРУ</string>
+    <string name="connect">АВТОРИЗАЦИЯ</string>
+    <string name="feedback">НАПИСАТЬ НАМ</string>
+
     <!-- END Settings Screen -->
 </resources>

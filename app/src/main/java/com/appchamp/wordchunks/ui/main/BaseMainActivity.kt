@@ -19,48 +19,14 @@ package com.appchamp.wordchunks.ui.main
 import android.arch.lifecycle.LifecycleRegistry
 import android.arch.lifecycle.LifecycleRegistryOwner
 import android.arch.lifecycle.ViewModelProviders
-import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import android.widget.Toast
-import com.appchamp.wordchunks.R
-import com.google.android.gms.auth.api.Auth
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.ConnectionResult
-import com.google.android.gms.common.api.GoogleApiClient
 
 
-abstract class BaseMainActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedListener,
-        LifecycleRegistryOwner {
+abstract class BaseMainActivity : AppCompatActivity(), LifecycleRegistryOwner {
 
-    private val TAG = javaClass.simpleName
     val viewModel: MainViewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
-    protected lateinit var mGoogleApiClient: GoogleApiClient
+
     private val lifecycleRegistry: LifecycleRegistry by lazy { LifecycleRegistry(this) }
 
     override fun getLifecycle(): LifecycleRegistry = lifecycleRegistry
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // Configure Google Sign In
-
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build()
-
-        mGoogleApiClient = GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build()
-    }
-
-    override fun onConnectionFailed(connectionResult: ConnectionResult) {
-        // An unresolvable error has occurred and Google APIs (including Sign-In) will not
-        // be available
-        Log.d(TAG, "onConnectionFailed:" + connectionResult)
-        Toast.makeText(this, "Google Play Services error. " +
-                connectionResult.errorMessage.toString(), Toast.LENGTH_SHORT).show()
-    }
 }
