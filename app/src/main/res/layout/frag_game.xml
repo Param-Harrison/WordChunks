@@ -190,6 +190,7 @@
                         app:srcCompat="@drawable/ic_hint" />
 
                     <RelativeLayout
+                        android:id="@+id/rlHintsView"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_alignEnd="@id/btnHint"

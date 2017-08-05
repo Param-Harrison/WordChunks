@@ -31,14 +31,25 @@
         android:paddingStart="16dp"
         app:srcCompat="@drawable/ic_back" />
 
-    <TextView
-        android:id="@+id/tvTitle"
+    <me.grantland.widget.AutofitLayout
+        android:id="@+id/autofit"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fontFamily="@font/vag"
-        android:gravity="center"
-        android:textColor="#ffffff"
-        android:textSize="@dimen/toolbar_title_txt_size"
-        tools:text="@string/title_select_pack" />
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="0dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginStart="40dp"
+            android:fontFamily="@font/vag"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/toolbar_title_txt_size"
+            tools:text="@string/title_select_pack" />
+
+    </me.grantland.widget.AutofitLayout>
 
 </RelativeLayout>

@@ -67,8 +67,8 @@
 
             </RelativeLayout>
 
-
             <TextView
+                android:id="@+id/tvExcellent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
@@ -77,7 +77,6 @@
                 android:fontFamily="@font/vag"
                 android:gravity="center_horizontal"
                 android:paddingEnd="30dp"
-
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
                 android:paddingStart="30dp"
@@ -86,6 +85,7 @@
                 android:textSize="18dp" />
 
             <TextView
+                android:id="@+id/tvHintsEarned"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
@@ -97,6 +97,7 @@
                 android:textSize="18dp" />
 
             <TextView
+                android:id="@+id/tvLevelsLeft"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
@@ -107,22 +108,23 @@
                 android:textColor="#f4f4f4"
                 android:textSize="14dp" />
 
-
             <TextView
+                android:id="@+id/btnNext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
                 android:background="@drawable/shape_dialog_button"
                 android:fontFamily="@font/vag"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:gravity="bottom|center"
                 android:padding="5dp"
                 android:text="NEXT"
                 android:textAlignment="center"
                 android:textColor="#ffffff"
                 android:textSize="22dp" />
+
         </LinearLayout>
 
     </RelativeLayout>
-
 
 </LinearLayout>

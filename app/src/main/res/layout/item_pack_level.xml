@@ -84,18 +84,21 @@
                     tools:text="AZURE" />
 
             </me.grantland.widget.AutofitLayout>
-        </RelativeLayout>
 
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tvItemSubtitle"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="-12dp"
+            android:ellipsize="end"
             android:fontFamily="@font/vag"
+            android:gravity="end"
+            android:maxLines="1"
             android:textColor="@color/pack_title_txt_locked"
             android:textSize="10dp"
-            tools:text="13/13" />
+            tools:text="EVERYONE HAS IT, NO ONE CAN LOSE IT." />
 
     </LinearLayout>
 

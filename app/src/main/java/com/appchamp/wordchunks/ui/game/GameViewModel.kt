@@ -28,6 +28,9 @@ import com.appchamp.wordchunks.realmdb.utils.*
 import io.realm.Realm
 
 
+/**
+ * GameViewModel shares the level ID between the GameActivity and GameFragment.
+ */
 class GameViewModel(application: Application, levelId: String) : AndroidViewModel(application) {
     private val TAG: String = javaClass.simpleName
     private val realmDb: Realm = Realm.getDefaultInstance()

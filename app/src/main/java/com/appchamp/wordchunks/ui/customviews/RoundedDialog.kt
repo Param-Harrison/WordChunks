@@ -41,16 +41,27 @@ class RoundedDialog : DialogFragment() {
         }
     }
 
+    // Defines the listener interface with a method passing back data result.
+    interface LevelSolvedDialogListener {
+        fun onNextBtnClickedDialog()
+    }
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.dialog_level_solved, container, false)
-        // Set background transparent
-        dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        // Set background transparent for rounded corners in the dialog.
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.setCanceledOnTouchOutside(false)
         return view
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Return input text back to activity through the implemented listener
+        val listener: LevelSolvedDialogListener = activity as LevelSolvedDialogListener
+
+        btnNext.setOnClickListener { listener.onNextBtnClickedDialog() }
 
         viewKonfetti?.build()
                 ?.addColors(

@@ -87,7 +87,8 @@ class GameFragment : LifecycleFragment() {
         if (wordPos != -1) {
 
             wordsAdapter.notifyItemChanged(wordPos)
-
+            smallBang?.bang(rlHintsView)
+            tvHintsCount.text = "11"
 //            val hintedWordView = rvWords.findViewHolderForLayoutPosition(wordPos).itemView.tvLetters
 //            smallBang?.bang(hintedWordView)
         }
