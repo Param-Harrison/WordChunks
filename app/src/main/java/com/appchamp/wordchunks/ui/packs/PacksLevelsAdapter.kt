@@ -26,6 +26,8 @@ import android.view.ViewGroup
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.extensions.color
 import com.appchamp.wordchunks.extensions.drawable
+import com.appchamp.wordchunks.extensions.gone
+import com.appchamp.wordchunks.extensions.visible
 import com.appchamp.wordchunks.models.realm.FINISHED
 import com.appchamp.wordchunks.models.realm.LOCKED
 import com.appchamp.wordchunks.models.realm.Level
@@ -63,31 +65,43 @@ class PacksLevelsAdapter<T>(private var items: List<T> = listOf(),
             val drawable = imgRectBg.drawable as GradientDrawable
             rlItem.background = context.drawable(R.drawable.shape_btn_main)
 
+
+            tvItemTitle.text = getItemTitle(item, position, resources)
+            when (item) {
+                is Pack -> {
+                    tvItemNumber.visible()
+                    tvItemNumber.setTextColor(Color.parseColor("#7d8cb6"))
+                    tvItemNumber.text = (item.number + 1).toString() + "."
+                    tvItemTitle.setTextColor(Color.parseColor("#e2e2e2"))
+                    tvItemSubtitle.setTextColor(itemColor)
+                }
+                is Level -> {
+                    tvItemNumber.gone()
+                    tvItemTitle.setTextColor(itemColor)
+                    tvItemSubtitle.setTextColor(Color.parseColor("#7d8cb6"))
+                }
+            }
+            tvItemSubtitle.text = getItemSubtitle(item, resources)
             when (itemState) {
                 LOCKED -> {
                     itemView.isEnabled = false
                     drawable.setColor(context.color(R.color.pack_rect_left_locked))
                     icon.setImageDrawable(context.drawable(R.drawable.ic_locked))
                     rlItem.background.alpha = 100
-
+                    tvItemNumber.setTextColor(context.color(R.color.pack_title_txt_locked))
                     tvItemTitle.setTextColor(context.color(R.color.pack_title_txt_locked))
                     tvItemSubtitle.setTextColor(context.color(R.color.pack_title_txt_locked))
                 }
                 else -> {
                     itemView.isEnabled = true
                     drawable.setColor(itemColor)
-                    tvItemTitle.setTextColor(itemColor)
-                    tvItemSubtitle.setTextColor(context.color(R.color.pack_num_of_levels_txt))
-
                     if (itemState == FINISHED) {
                         icon.setImageDrawable(context.drawable(R.drawable.ic_solved))
-                    } else  {
+                    } else {
                         icon.setImageDrawable(context.drawable(R.drawable.ic_current))
                     }
                 }
             }
-            tvItemTitle.text = getItemTitle(item, position, resources)
-            tvItemSubtitle.text = getItemSubtitle(item, resources)
 
             itemView.setOnClickListener { itemClick(item) }
         }

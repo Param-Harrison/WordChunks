@@ -24,6 +24,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
+import com.appchamp.wordchunks.ui.customviews.StoreDialog
 import com.appchamp.wordchunks.ui.game.GameActivity
 import com.appchamp.wordchunks.ui.packs.PacksActivity
 import com.appchamp.wordchunks.util.Constants
@@ -76,6 +77,8 @@ class MainFragment : LifecycleFragment() {
 
     private fun onStoreClick() {
         // show dialog
+        val dialog = StoreDialog.newInstance()
+        dialog.show(activity.supportFragmentManager, "fragment_store")
     }
 
     private fun onDailyClick() {

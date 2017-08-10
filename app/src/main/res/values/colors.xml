@@ -35,13 +35,13 @@
     <color name="shape_btn_play_pressed">#b95071</color>
 
     <color name="shape_btn_daily">#faa750</color>
-    <color name="shape_btn_daily_pressed">#d77b19</color>
+    <color name="shape_btn_daily_pressed">#df8626</color>
 
     <color name="shape_btn_packs">#6bcff6</color>
-    <color name="shape_btn_packs_pressed">#239fcf</color>
+    <color name="shape_btn_packs_pressed">#36b3e4</color>
 
     <color name="shape_btn_store">#b0dab2</color>
-    <color name="shape_btn_store_pressed">#54b459</color>
+    <color name="shape_btn_store_pressed">#89bf8c</color>
 
     <!-- SETTINGS Slide Menu colors -->
     <color name="shape_btn_settings">#2a303f</color>

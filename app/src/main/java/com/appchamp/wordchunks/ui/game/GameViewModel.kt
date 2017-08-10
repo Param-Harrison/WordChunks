@@ -55,6 +55,10 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
 
     fun getSelectedChunksString(): String = getSelectedChunks()?.chunksToString() ?: ""
 
+    fun getNextLevelColor(): String? {
+        return realmDb.levelModel().findLevelByState(LOCKED)?.color
+    }
+
     /**
      * Gets filtered and sorted by time-pressed chunks, and transforms them into string.
      */
@@ -200,5 +204,4 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
             return GameViewModel(application, levelId) as T
         }
     }
-
 }

@@ -29,12 +29,12 @@ import nl.dionsegijn.konfetti.models.Shape
 import nl.dionsegijn.konfetti.models.Size
 
 
-class RoundedDialog : DialogFragment() {
+class LevelSolvedDialog : DialogFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(): RoundedDialog {
-            val dialog = RoundedDialog()
+        fun newInstance(): LevelSolvedDialog {
+            val dialog = LevelSolvedDialog()
 //            val args = Bundle()
 //            dialog.arguments = args
             return dialog

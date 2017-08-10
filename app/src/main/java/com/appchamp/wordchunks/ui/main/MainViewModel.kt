@@ -122,11 +122,13 @@ class MainViewModel(application: Application?) : AndroidViewModel(application) {
     private fun loadPacksIntoRealm(firebaseList: MutableList<PackGson>) {
         val json = gson.toJson(firebaseList)
         realmDb.packModel().createOrUpdatePacksFromJson(json)
+        realmDb.packModel().setPackNumbers()
     }
 
     private fun loadLevelsIntoRealm(firebaseList: MutableList<LevelGson>) {
         val json = gson.toJson(firebaseList)
         realmDb.levelModel().createOrUpdateLevelsFromJson(json)
+        realmDb.levelModel().setLevelTitles(getLang())
     }
 
     private fun loadWordsIntoRealm(firebaseList: MutableList<WordGson>) {
@@ -152,8 +154,6 @@ class MainViewModel(application: Application?) : AndroidViewModel(application) {
                 .findAll()
         levels.count { it.state == FINISHED }
                 .let { return it * 100F / (levels.size) }
-
-
     }
 
     /**

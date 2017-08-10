@@ -40,7 +40,11 @@ class PackDao(private val realm: Realm) {
             .findAllAsync()
             .asLiveData()
 
-    fun findPackById(packId: String): Pack = realm
+    fun findAllPacksList(): List<Pack> = realm
+            .where(Pack::class.java)
+            .findAll()
+
+    fun findPackById(packId: String): Pack? = realm
             .where(Pack::class.java)
             .equalTo(Constants.REALM_FIELD_ID, packId)
             .findFirst()
@@ -58,6 +62,16 @@ class PackDao(private val realm: Realm) {
     fun setPackState(pack: Pack, state: Int) {
         realm.executeTransaction {
             pack.state = state
+        }
+    }
+
+    fun setPackNumbers() {
+        val packs = findAllPacksList()
+        realm.executeTransaction {
+            packs.mapIndexed { index, pack ->
+                pack.number = index
+            }
+
         }
     }
 }

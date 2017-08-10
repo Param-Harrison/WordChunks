@@ -18,6 +18,7 @@ package com.appchamp.wordchunks.ui.levels
 
 import android.arch.lifecycle.Observer
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import com.appchamp.wordchunks.R
@@ -43,6 +44,7 @@ class LevelsActivity : BaseActivity<LevelsViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_packs_levels)
+
 //        llPacksLevels.setBackgroundResource(R.drawable.gradient_levels)
         tvTitle.text = getString(R.string.title_select_level)
         rvList.layoutManager = LinearLayoutManager(this)
@@ -86,6 +88,8 @@ class LevelsActivity : BaseActivity<LevelsViewModel>() {
                     rvList.adapter = adapter
                 })
 
+        val packColor = viewModel.getPackColor() ?: "#7bda7a"
+        rlTitlebar.setBackgroundColor(Color.parseColor(packColor))  // get pack color
         // Scrolling RecyclerView to the last "current", or "solved" level item.
         // indexOfLast gets last index, or -1 if the list does not contain that item.
         rvList.smoothScrollToPosition(viewModel.getLastLevelPos())

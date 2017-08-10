@@ -16,10 +16,6 @@
 
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <solid android:color="#373e52" />
-    <corners
-        android:bottomLeftRadius="15dp"
-        android:bottomRightRadius="15dp"
-        android:topLeftRadius="0dp"
-        android:topRightRadius="0dp" />
+    <solid android:color="@color/main" />
+    <corners android:radius="@dimen/radius_btn" />
 </shape>

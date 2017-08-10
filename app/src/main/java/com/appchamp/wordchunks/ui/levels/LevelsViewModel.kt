@@ -21,6 +21,7 @@ import android.arch.lifecycle.AndroidViewModel
 import com.appchamp.wordchunks.models.realm.*
 import com.appchamp.wordchunks.realmdb.utils.LiveRealmResults
 import com.appchamp.wordchunks.realmdb.utils.levelModel
+import com.appchamp.wordchunks.realmdb.utils.packModel
 import com.appchamp.wordchunks.realmdb.utils.wordModel
 import io.realm.Realm
 
@@ -33,6 +34,7 @@ class LevelsViewModel(application: Application?) : AndroidViewModel(application)
 
     private var currentLevel: Level?
 
+    private lateinit var packId: String
 
     init {
         // Retrieves all of the pack's levels from the Realm as LiveRealmResults objects list.
@@ -40,6 +42,7 @@ class LevelsViewModel(application: Application?) : AndroidViewModel(application)
     }
 
     fun getLiveLevels(id: String): LiveRealmResults<Level> {
+        packId = id
         if (currentLevel != null) {
             currentLevel?.id?.let {
                 if (isLevelSolved(it)) {
@@ -69,6 +72,10 @@ class LevelsViewModel(application: Application?) : AndroidViewModel(application)
             dbRealm.levelModel().setLevelState(it, IN_PROGRESS)
             currentLevel = firstLockedLevel
         }
+    }
+
+    fun getPackColor(): String? {
+        return dbRealm.packModel().findPackById(packId)?.color
     }
 
     fun getLastLevelPos() = levels.value?.indexOfLast {

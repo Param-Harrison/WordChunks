@@ -23,7 +23,7 @@ import android.view.Gravity
 import android.widget.Toast
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.models.realm.Level
-import com.appchamp.wordchunks.ui.customviews.RoundedDialog
+import com.appchamp.wordchunks.ui.customviews.LevelSolvedDialog
 import com.appchamp.wordchunks.ui.levels.LevelsActivity
 import com.appchamp.wordchunks.util.ActivityUtils
 import com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID
@@ -37,10 +37,9 @@ import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
 
 
-class GameActivity : BaseGameActivity(), RoundedDialog.LevelSolvedDialogListener {
+class GameActivity : BaseGameActivity(), LevelSolvedDialog.LevelSolvedDialogListener {
 
     private lateinit var prefs: SharedPreferences
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -154,7 +153,7 @@ class GameActivity : BaseGameActivity(), RoundedDialog.LevelSolvedDialogListener
     }
 
     private fun showLevelSolvedDialog() {
-        val dialog = RoundedDialog.newInstance()
+        val dialog = LevelSolvedDialog.newInstance()
         dialog.show(supportFragmentManager, "fragment_level_solved")
         if (viewModel.isDailyLevel()) {
             // add + 3 HINTS

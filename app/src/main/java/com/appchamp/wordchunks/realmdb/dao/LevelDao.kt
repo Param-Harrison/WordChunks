@@ -79,8 +79,10 @@ class LevelDao(private val realm: Realm) {
     fun findLevelByState(state: Int): Level? = realm
             .where(Level::class.java)
             .equalTo(REALM_FIELD_STATE, state)
+            .equalTo("daily", false)
             .findFirst()
 //            .asLiveData()
+
 
     /**
      * Custom set methods.
@@ -89,6 +91,22 @@ class LevelDao(private val realm: Realm) {
     fun setLevelState(level: Level, state: Int) {
         realm.executeTransaction {
             level.state = state
+        }
+    }
+
+    fun setLevelTitles(lang: String) {
+        val levels = findAllLevelsList()
+        realm.executeTransaction {
+            levels.mapIndexed { index, level ->
+                when (lang) {
+                    "rus" -> level.title = "УРОВЕНЬ"
+                    else -> level.title = "LEVEL"
+                }
+                level.title += " " + index.toString()
+
+                // for debugging
+//                level.state = 2
+            }
         }
     }
 

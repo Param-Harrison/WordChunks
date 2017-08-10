@@ -32,6 +32,7 @@ open class Pack : RealmModel {
     var title: String = ""
     @Required
     var color: String = ""
+    var number: Int = 0
     var state: Int = 0  // LOCKED = 0, IN_PROGRESS = 1, FINISHED = 2
 }
 

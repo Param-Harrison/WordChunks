@@ -17,6 +17,7 @@
 package com.appchamp.wordchunks.ui.main
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -24,6 +25,8 @@ import android.widget.Toast
 import com.appchamp.wordchunks.BuildConfig
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.realmdb.utils.RealmFactory
+import com.appchamp.wordchunks.ui.game.GameActivity
+import com.appchamp.wordchunks.util.Constants
 import com.appchamp.wordchunks.util.Constants.SUPPORTED_LOCALES
 import com.badoo.mobile.util.WeakHandler
 import com.franmontiel.localechanger.LocaleChanger
@@ -36,7 +39,9 @@ import kotlinx.android.synthetic.main.act_main.*
 import kotlinx.android.synthetic.main.frag_main.*
 import kotlinx.android.synthetic.main.frag_sliding_menu.*
 import org.jetbrains.anko.browse
+import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.email
+import org.jetbrains.anko.intentFor
 import org.jetbrains.annotations.NotNull
 import java.util.*
 
@@ -47,6 +52,8 @@ class MainActivity : BaseMainActivity() {
     private lateinit var menu: SlidingMenu
     private var progressDialog: SpotsDialog? = null
     private lateinit var mHandler: WeakHandler
+    private lateinit var prefs: SharedPreferences
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Make sure setTheme is before calling super.onCreate
@@ -69,12 +76,13 @@ class MainActivity : BaseMainActivity() {
             // User authenticated, fetch data and observe it
             viewModel.fetchDataFromFirebase()
         }
+        prefs = getSharedPreferences("com.appchamp.wordchunks", MODE_PRIVATE)
     }
 
     override fun onStart() {
         super.onStart()
         btnSettings.setOnClickListener { onSettingsClick() }
-        btnConnect.setOnClickListener { onConnectClick() }
+        btnTutorial.setOnClickListener { onTutorialClick() }
         btnRate.setOnClickListener { onRateClick() }
         btnFeedback.setOnClickListener { onFeedbackClick() }
         tvVersion.text = resources.getString(R.string.version, BuildConfig.VERSION_NAME)
@@ -128,12 +136,24 @@ class MainActivity : BaseMainActivity() {
         })
     }
 
-    private fun onConnectClick() = showSnackbar(getString(R.string.connect_clicked))
+    private fun onTutorialClick() {
+        prefs.edit().putBoolean("TUTORIAL", true).apply()
+        val levelId = viewModel.getLevelId()
+        if (levelId != "") {
+            startGameActivity(levelId)
+        }
+    }
+
+    private fun startGameActivity(levelId: String) {
+        startActivity(intentFor<GameActivity>(
+                Constants.EXTRA_LEVEL_ID to levelId).clearTop())
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
+    }
 
     private fun setupGameProgressBar() {
         val value = viewModel.getCircularProgressValue()
         circularProgressBar.invalidate()
-        circularProgressBar.setValue(10F)
+        circularProgressBar.setValue(value)
         circularProgressBar.invalidate()
 
         if (value.isNaN()) {

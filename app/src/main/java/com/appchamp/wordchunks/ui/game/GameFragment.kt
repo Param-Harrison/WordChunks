@@ -53,18 +53,13 @@ class GameFragment : LifecycleFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // todo generate gradient
-        val colors = intArrayOf(Color.parseColor("#7bda7a"), Color.parseColor("#1ce4cf"))
-        val gd = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
-        gradient.background = gd
     }
 
     override fun onActivityCreated(@Nullable savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         subscribeUi(viewModel) // Create and set the adapters for the RecyclerViews.
-
+        setGameGradient()
         setupWordsAdapter()
         setupChunksAdapter()
 
@@ -81,11 +76,19 @@ class GameFragment : LifecycleFragment() {
         }
     }
 
+    private fun setGameGradient() {
+        // get current level color and next level color
+        val currentLevelColor = viewModel.getLiveLevel().value?.color ?: "#7bda7a"
+        val nextLevelColor = viewModel.getNextLevelColor() ?: currentLevelColor
+        val colors = intArrayOf(Color.parseColor(currentLevelColor), Color.parseColor(nextLevelColor))
+        val gd = GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, colors)
+        gradient.background = gd
+    }
+
     private fun onHintClicked() {
         val wordPos = viewModel.onHintClicked()
         Log.d(TAG, "POS = " + wordPos)
         if (wordPos != -1) {
-
             wordsAdapter.notifyItemChanged(wordPos)
             smallBang?.bang(rlHintsView)
             tvHintsCount.text = "11"
