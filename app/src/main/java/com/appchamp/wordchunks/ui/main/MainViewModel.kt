@@ -54,6 +54,10 @@ class MainViewModel(application: Application?) : AndroidViewModel(application) {
         return isRealmLoaded
     }
 
+    fun getFirstLevelId(): String {
+        return realmDb.where(Level::class.java).findFirst().id
+    }
+
     fun getLevelId(): String {
         val firstLevelInProgress = realmDb.levelModel().findLevelByState(IN_PROGRESS)
         if (firstLevelInProgress == null) {
@@ -143,6 +147,9 @@ class MainViewModel(application: Application?) : AndroidViewModel(application) {
     }
 
     fun getCircularProgressValue(): Float {
+        realmDb.where(User::class.java).findAll().map {
+            Log.d(TAG, "USER====" + it)
+        }
         realmDb.where(Level::class.java).findAll().map {
             Log.d(TAG, "LEVEL====" + it)
         }
@@ -156,6 +163,33 @@ class MainViewModel(application: Application?) : AndroidViewModel(application) {
                 .let { return it * 100F / (levels.size) }
     }
 
+    fun updateUser() {
+        val user = realmDb.where(User::class.java).findFirst()
+        if (user != null) {
+            Log.d(TAG, "USER NOT NULL")
+        } else {
+            Log.d(TAG, "USER IS NULL")
+            // Create user
+            realmDb.executeTransaction {
+                val newUser = realmDb.createObject(User::class.java)
+                newUser.hints = 10
+            }
+        }
+    }
+
+    fun getLevelTitle(): String {
+        val firstLevelInProgress = realmDb.levelModel().findLevelByState(IN_PROGRESS)
+        if (firstLevelInProgress == null) {
+            val firstLevelLocked = realmDb.levelModel().findLevelByState(LOCKED)
+            if (firstLevelLocked != null) {
+                return firstLevelLocked.title
+            }
+        } else {
+            return firstLevelInProgress.title
+        }
+        return ""
+    }
+
     /**
      * This method will be called when this ViewModel is no longer used and will be destroyed.
      *
@@ -165,5 +199,9 @@ class MainViewModel(application: Application?) : AndroidViewModel(application) {
     override fun onCleared() {
         realmDb.close()
         super.onCleared()
+    }
+
+    fun isRealmDatabaseExists(): Boolean {
+        return true
     }
 }

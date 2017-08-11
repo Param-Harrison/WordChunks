@@ -139,8 +139,8 @@
 
             <TextView
                 android:id="@+id/tvDailyBadge"
-                android:layout_width="18dp"
-                android:layout_height="18dp"
+                android:layout_width="11dp"
+                android:layout_height="11dp"
                 android:layout_alignEnd="@+id/btnDaily"
                 android:layout_alignRight="@+id/btnDaily"
                 android:layout_alignTop="@+id/btnDaily"
@@ -148,9 +148,10 @@
                 android:contentDescription="@null"
                 android:fontFamily="@font/vag"
                 android:gravity="center"
-                android:text="1"
-                android:textColor="#292929"
-                android:textSize="7dp" />
+                android:text="&#160;"
+                android:textColor="#ffffff"
+                android:textSize="7dp"
+                android:textStyle="bold" />
 
         </RelativeLayout>
 

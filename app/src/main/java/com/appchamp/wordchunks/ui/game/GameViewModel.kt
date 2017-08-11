@@ -182,6 +182,14 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
         return -1
     }
 
+    fun getHintsCount(): Int = realmDb.where(User::class.java).findFirst().hints
+
+    fun decrementHint() {
+        realmDb.executeTransaction {
+            it.where(User::class.java).findFirst().hints -= 1
+        }
+
+    }
     /**
      * This method will be called when this ViewModel is no longer used and will be destroyed.
      *
@@ -204,4 +212,5 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
             return GameViewModel(application, levelId) as T
         }
     }
+
 }

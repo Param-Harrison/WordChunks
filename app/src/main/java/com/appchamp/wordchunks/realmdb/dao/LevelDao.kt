@@ -102,7 +102,7 @@ class LevelDao(private val realm: Realm) {
                     "rus" -> level.title = "УРОВЕНЬ"
                     else -> level.title = "LEVEL"
                 }
-                level.title += " " + index.toString()
+                level.title += " " + (index + 1).toString()
 
                 // for debugging
 //                level.state = 2

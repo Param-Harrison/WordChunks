@@ -25,6 +25,7 @@ import android.widget.Toast
 import com.appchamp.wordchunks.BuildConfig
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.realmdb.utils.RealmFactory
+import com.appchamp.wordchunks.ui.customviews.LoadingDialog
 import com.appchamp.wordchunks.ui.game.GameActivity
 import com.appchamp.wordchunks.util.Constants
 import com.appchamp.wordchunks.util.Constants.SUPPORTED_LOCALES
@@ -33,7 +34,6 @@ import com.franmontiel.localechanger.LocaleChanger
 import com.franmontiel.localechanger.utils.ActivityRecreationHelper
 import com.google.firebase.auth.FirebaseAuth
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu
-import dmax.dialog.SpotsDialog
 import io.ghyeok.stickyswitch.widget.StickySwitch
 import kotlinx.android.synthetic.main.act_main.*
 import kotlinx.android.synthetic.main.frag_main.*
@@ -50,10 +50,9 @@ class MainActivity : BaseMainActivity() {
     private val TAG: String = javaClass.simpleName
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var menu: SlidingMenu
-    private var progressDialog: SpotsDialog? = null
     private lateinit var mHandler: WeakHandler
     private lateinit var prefs: SharedPreferences
-
+    private lateinit var loadingDialog: LoadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Make sure setTheme is before calling super.onCreate
@@ -69,14 +68,27 @@ class MainActivity : BaseMainActivity() {
         }
         setupSettingsMenu()
         setLanguageButton()
+        // todo check if the realm database en/ru exists
+        if (viewModel.isRealmDatabaseExists()) {
+
+            Log.d(TAG, "REALM DATABASE EXISTS")
+        } else {
+            Log.d(TAG, "REALM DATABASE NOT EXISTS")
+        }
         if (!isUserAuthenticated()) {
-            setupDownloadDialog()
             startAnonymousSignIn({ subscribeUiFirstRun() })
         } else {
-            // User authenticated, fetch data and observe it
+            // User already authenticated, fetch data and observe it
             viewModel.fetchDataFromFirebase()
         }
         prefs = getSharedPreferences("com.appchamp.wordchunks", MODE_PRIVATE)
+
+
+        // check if levels exists
+
+        loadingDialog = LoadingDialog.newInstance()
+        loadingDialog.show(supportFragmentManager, "fragment_loading")
+        loadingDialog.dismiss()
     }
 
     override fun onStart() {
@@ -121,24 +133,19 @@ class MainActivity : BaseMainActivity() {
         return currentUser != null
     }
 
-    private fun setupDownloadDialog() {
-        progressDialog = SpotsDialog(this, getString(R.string.downloading_levels),
-                R.style.CustomProgressDialog)
-        progressDialog?.setCancelable(false)
-    }
-
     private fun subscribeUiFirstRun() {
+        viewModel.updateUser()
         viewModel.fetchDataFromFirebase()
         viewModel.isRealmLoaded().observe(this, android.arch.lifecycle.Observer {
             if (it == true) {
-                progressDialog?.dismiss()
+//                progressDialog?.dismiss()
             }
         })
     }
 
     private fun onTutorialClick() {
         prefs.edit().putBoolean("TUTORIAL", true).apply()
-        val levelId = viewModel.getLevelId()
+        val levelId = viewModel.getFirstLevelId()
         if (levelId != "") {
             startGameActivity(levelId)
         }
@@ -184,7 +191,6 @@ class MainActivity : BaseMainActivity() {
     }
 
     private fun startAnonymousSignIn(success: () -> Unit) {
-        progressDialog?.show()
         firebaseAuth.signInAnonymously().addOnCompleteListener(this) {
             when {
                 it.isSuccessful -> success()
@@ -202,6 +208,7 @@ class MainActivity : BaseMainActivity() {
     private fun changeLocaleAndRecreate(locale: Locale) {
         LocaleChanger.setLocale(locale)
         reconfigureRealm(locale.displayLanguage)
+        subscribeUiFirstRun()
         ActivityRecreationHelper.recreate(this, true)
     }
 

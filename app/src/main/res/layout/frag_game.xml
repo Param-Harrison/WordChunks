@@ -134,7 +134,7 @@
                         <View
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:background="@drawable/shape_circle_badge" />
+                            android:background="@drawable/shape_badge_letters_counter" />
 
                         <TextView
                             android:id="@+id/tvChunksCount"

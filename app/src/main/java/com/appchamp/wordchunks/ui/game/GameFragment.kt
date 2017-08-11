@@ -62,6 +62,7 @@ class GameFragment : LifecycleFragment() {
         setGameGradient()
         setupWordsAdapter()
         setupChunksAdapter()
+        tvHintsCount.text = viewModel.getHintsCount().toString()
 
         // Click listeners
         btnShuffle.setOnClickListener {
@@ -91,7 +92,8 @@ class GameFragment : LifecycleFragment() {
         if (wordPos != -1) {
             wordsAdapter.notifyItemChanged(wordPos)
             smallBang?.bang(rlHintsView)
-            tvHintsCount.text = "11"
+            viewModel.decrementHint()
+            tvHintsCount.text = viewModel.getHintsCount().toString()
 //            val hintedWordView = rvWords.findViewHolderForLayoutPosition(wordPos).itemView.tvLetters
 //            smallBang?.bang(hintedWordView)
         }

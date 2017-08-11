@@ -64,61 +64,6 @@ class GameActivity : BaseGameActivity(), LevelSolvedDialog.LevelSolvedDialogList
         }
     }
 
-    private fun showIntroTutorial() {
-        // Show Tutorial
-        val fancyShowCaseView1 = FancyShowCaseView.Builder(this)
-                .title("In WordChunks, your challenge is to reconstruct hidden words using a grid of chunks.")
-                .fitSystemWindows(true)
-                .build()
-
-        val fancyShowCaseView2 = FancyShowCaseView.Builder(this)
-                .focusOn(tvTitle)
-                .focusShape(FocusShape.ROUNDED_RECTANGLE)
-                .title("Each level has a specific theme that all words are associated with!")
-                .fitSystemWindows(true)
-                .build()
-
-        val fancyShowCaseView3 = FancyShowCaseView.Builder(this)
-                .focusOn(rvWords)
-                .focusShape(FocusShape.ROUNDED_RECTANGLE)
-                .title("Each word has the length and optionally the first letter.\nIn order to solve the puzzle, you need to find specific hidden words for each level.")
-                .titleStyle(0, Gravity.BOTTOM or Gravity.CENTER)
-                .fitSystemWindows(true)
-                .build()
-
-        val fancyShowCaseView4 = FancyShowCaseView.Builder(this)
-                .focusOn(rvChunks)
-                .focusShape(FocusShape.ROUNDED_RECTANGLE)
-                .title("You have to use all these chunks.\n\nCorrect answers accepted automatically.\n\nThe words order doesn't matter.")
-                .titleStyle(0, Gravity.CENTER or Gravity.TOP)
-                .fitSystemWindows(true)
-                .build()
-
-        val fancyShowCaseView5 = FancyShowCaseView.Builder(this)
-                .focusOn(btnHint)
-                .focusShape(FocusShape.ROUNDED_RECTANGLE)
-                .title("The game will get trickier.\n\nIf you get stuck, you can use hints!")
-                .titleStyle(0, Gravity.CENTER or Gravity.TOP)
-                .fitSystemWindows(true)
-                .build()
-
-        val fancyShowCaseView6 = FancyShowCaseView.Builder(this)
-                .focusOn(btnShuffle)
-                .focusShape(FocusShape.ROUNDED_RECTANGLE)
-                .title("Or use shuffle!\n\nGood luck!")
-                .fitSystemWindows(true)
-                .build()
-
-        FancyShowCaseQueue()
-                .add(fancyShowCaseView1)
-                .add(fancyShowCaseView2)
-                .add(fancyShowCaseView3)
-                .add(fancyShowCaseView4)
-                .add(fancyShowCaseView5)
-                .add(fancyShowCaseView6)
-                .show()
-    }
-
     override fun onBackPressed() {
         super.onBackPressed()
         // If it's not a daily puzzle, back to the levels screen
@@ -177,4 +122,60 @@ class GameActivity : BaseGameActivity(), LevelSolvedDialog.LevelSolvedDialogList
             overridePendingTransition(R.anim.slide_from_left, R.anim.slide_to_right)
         }
     }
+
+    private fun showIntroTutorial() {
+        // Show Tutorial
+        val fancyShowCaseView1 = FancyShowCaseView.Builder(this)
+                .title("In WordChunks, your challenge is to reconstruct hidden words using a grid of chunks.")
+                .fitSystemWindows(true)
+                .build()
+
+        val fancyShowCaseView2 = FancyShowCaseView.Builder(this)
+                .focusOn(tvTitle)
+                .focusShape(FocusShape.ROUNDED_RECTANGLE)
+                .title("Each level has a specific theme that all words are associated with!")
+                .fitSystemWindows(true)
+                .build()
+
+        val fancyShowCaseView3 = FancyShowCaseView.Builder(this)
+                .focusOn(rvWords)
+                .focusShape(FocusShape.ROUNDED_RECTANGLE)
+                .title("Each word has the length and optionally the first letter.\nIn order to solve the puzzle, you need to find specific hidden words for each level.")
+                .titleStyle(0, Gravity.BOTTOM or Gravity.CENTER)
+                .fitSystemWindows(true)
+                .build()
+
+        val fancyShowCaseView4 = FancyShowCaseView.Builder(this)
+                .focusOn(rvChunks)
+                .focusShape(FocusShape.ROUNDED_RECTANGLE)
+                .title("You have to use all these chunks.\n\nCorrect answers accepted automatically.\n\nThe words order doesn't matter.")
+                .titleStyle(0, Gravity.CENTER or Gravity.TOP)
+                .fitSystemWindows(true)
+                .build()
+
+        val fancyShowCaseView5 = FancyShowCaseView.Builder(this)
+                .focusOn(btnHint)
+                .focusShape(FocusShape.ROUNDED_RECTANGLE)
+                .title("The game will get trickier.\n\nIf you get stuck, you can use hints!")
+                .titleStyle(0, Gravity.CENTER or Gravity.TOP)
+                .fitSystemWindows(true)
+                .build()
+
+        val fancyShowCaseView6 = FancyShowCaseView.Builder(this)
+                .focusOn(btnShuffle)
+                .focusShape(FocusShape.ROUNDED_RECTANGLE)
+                .title("Or use shuffle!\n\nGood luck!")
+                .fitSystemWindows(true)
+                .build()
+
+        FancyShowCaseQueue()
+                .add(fancyShowCaseView1)
+                .add(fancyShowCaseView2)
+                .add(fancyShowCaseView3)
+                .add(fancyShowCaseView4)
+                .add(fancyShowCaseView5)
+                .add(fancyShowCaseView6)
+                .show()
+    }
+
 }

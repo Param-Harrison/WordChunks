@@ -38,12 +38,12 @@
         <item name="android:padding">@dimen/cbtn_padding</item>
     </style>
 
-    <style name="CustomProgressDialog" parent="android:Theme.DeviceDefault.Dialog">
-        <item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>
-        <item name="DialogSpotColor">@color/shape_btn_packs</item>
-        <item name="DialogSpotCount">5</item>
-        <item name="android:fontFamily">@font/vag</item>
-    </style>
+    <!--<style name="CustomProgressDialog" parent="android:Theme.DeviceDefault.Dialog">-->
+    <!--<item name="DialogTitleAppearance">@android:style/TextAppearance.Medium</item>-->
+    <!--<item name="DialogSpotColor">@color/shape_btn_packs</item>-->
+    <!--<item name="DialogSpotCount">5</item>-->
+    <!--<item name="android:fontFamily">@font/vag</item>-->
+    <!--</style>-->
 
     <!--<style name="FancyShowCaseTitleStyle" parent="@android:style/Widget.TextView">-->
     <!--<item name="android:textSize">22dp</item>-->

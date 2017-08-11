@@ -24,5 +24,5 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 -dontwarn com.jeremyfeinstein.slidingmenu.lib.CustomViewAbove
--keep class dmax.dialog.** { *; }
+-keep class dmax.loadingDialog.** { *; }
 -keep class com.github.glomadrian.grav.** { *; }

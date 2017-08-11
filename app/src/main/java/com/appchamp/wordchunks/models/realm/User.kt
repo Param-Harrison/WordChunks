@@ -17,18 +17,16 @@
 package com.appchamp.wordchunks.models.realm
 
 import io.realm.RealmModel
-import io.realm.annotations.PrimaryKey
 import io.realm.annotations.RealmClass
-import io.realm.annotations.Required
 
 
 @RealmClass
 open class User : RealmModel {
 
-    @PrimaryKey
-    @Required
-    var id: String = ""
+    //    @PrimaryKey
+//    @Required
+//    var id: String = ""
     var email: String = ""
     var levelsSolved: Int = 0
-    var hints: Int = 0
+    var hints: Int = -1
 }

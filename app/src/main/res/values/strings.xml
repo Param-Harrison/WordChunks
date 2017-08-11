@@ -62,10 +62,7 @@
     <string name="send_feedback">SEND FEEDBACK</string>
     <string name="rate_the_app">RATE THE APP!</string>
     <string name="show_the">SHOW THE…</string>
-    <string name="sherlock_holmes">SHERLOCK HOLMES</string>
-    <string name="hint_amp_shuffle"><![CDATA[HINT & SHUFFLE]]></string>
     <string name="version" translatable="false">%s</string>
-    <string name="number_of_letters_ru">%d БУКВ</string>
 
     <string name="circle" translatable="false">
         M527.023,71.8233 C780.213,71.8233,985.464,277.075,985.464,530.265
@@ -133,6 +130,7 @@
     <string name="rate">RATE</string>
     <string name="language">LANGUAGE:</string>
     <string name="dot" translatable="false">&#160;&#160;\u25CF</string>
+    <string name="loading_levels">LOADING LEVELS…</string>
 
 
     <!-- END Settings Screen -->

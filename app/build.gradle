@@ -94,11 +94,10 @@ dependencies {
     compile 'com.github.aliab:circular-music-progressbar:v1.2.0'
     compile 'com.jeremyfeinstein.slidingmenu:library:1.3@aar'
     compile 'me.grantland:autofittextview:0.2.1'
-    compile 'com.github.d-max:spots-dialog:0.7@aar'
+    compile 'com.github.nipun-birla:BoxLoaderView:0.0.1'
     compile 'com.codemybrainsout.onboarding:onboarder:1.0.3'
     compile 'com.github.faruktoptas:FancyShowCaseView:0.1.1'
     compile 'com.github.GwonHyeok:StickySwitch:0.0.12'
-//    compile 'fr.tvbarthel.blurdialogfragment:lib:2.2.0'
 
     // Animations:
     compile 'com.github.glomadrian:Grav:1.1'
