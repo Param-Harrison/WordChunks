@@ -73,7 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
-                android:layout_marginTop="-12dp"
+                android:layout_marginTop="-15dp"
                 android:background="@drawable/shape_excellent_bg"
                 android:fontFamily="@font/vag"
                 android:gravity="center_horizontal"
@@ -83,31 +83,20 @@
                 android:paddingStart="30dp"
                 android:text="EXCELLENT!"
                 android:textColor="#ffffff"
-                android:textSize="18dp" />
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/tvHintsEarned"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
-                android:layout_marginTop="25dp"
+                android:layout_marginBottom="35dp"
+                android:layout_marginTop="30dp"
                 android:fontFamily="@font/vag"
                 android:gravity="center_horizontal"
                 android:text="+ 2 HINTS"
                 android:textColor="#ffffff"
                 android:textSize="18dp" />
-
-            <TextView
-                android:id="@+id/tvLevelsLeft"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center"
-                android:layout_marginTop="25dp"
-                android:fontFamily="@font/vag"
-                android:gravity="center_horizontal"
-                android:text="5 LEVELS LEFT IN PACK"
-                android:textColor="#f4f4f4"
-                android:textSize="14dp" />
 
             <TextView
                 android:id="@+id/btnNext"

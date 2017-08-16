@@ -32,25 +32,17 @@ class LoadingDialog : DialogFragment() {
         @JvmStatic
         fun newInstance(): LoadingDialog {
             val dialog = LoadingDialog()
-//            val args = Bundle()
-//            dialog.arguments = args
             return dialog
         }
     }
 
-    // Defines the listener interface with a method passing back data result.
-//    interface LevelSolvedDialogListener {
-//        fun onNextBtnClickedDialog()
-//    }
-
-    override fun
-
-            onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-                         savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         val view = inflater?.inflate(R.layout.dialog_loading, container, false)
         // Set background transparent for rounded corners in the dialog.
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(false)
         return view
     }
 }

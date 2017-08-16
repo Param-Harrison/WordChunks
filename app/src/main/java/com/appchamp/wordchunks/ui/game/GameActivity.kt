@@ -18,16 +18,24 @@ package com.appchamp.wordchunks.ui.game
 
 import android.arch.lifecycle.Observer
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
 import android.widget.Toast
 import com.appchamp.wordchunks.R
+import com.appchamp.wordchunks.models.realm.FINISHED
+import com.appchamp.wordchunks.models.realm.IN_PROGRESS
 import com.appchamp.wordchunks.models.realm.Level
 import com.appchamp.wordchunks.ui.customviews.LevelSolvedDialog
+import com.appchamp.wordchunks.ui.customviews.StoreDialog
 import com.appchamp.wordchunks.ui.levels.LevelsActivity
 import com.appchamp.wordchunks.util.ActivityUtils
 import com.appchamp.wordchunks.util.Constants.EXTRA_LEVEL_ID
 import com.appchamp.wordchunks.util.Constants.EXTRA_PACK_ID
+import com.appchamp.wordchunks.util.Constants.PREFS_NAME
+import com.appchamp.wordchunks.util.Constants.PREFS_TUTORIAL
+import com.appchamp.wordchunks.util.Constants.USER_DAILY_LEVEL_SOLVED_REWARD
+import com.appchamp.wordchunks.util.Constants.USER_LEVEL_SOLVED_REWARD
 import kotlinx.android.synthetic.main.frag_game.*
 import kotlinx.android.synthetic.main.titlebar.*
 import me.toptas.fancyshowcase.FancyShowCaseQueue
@@ -37,8 +45,10 @@ import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
 
 
-class GameActivity : BaseGameActivity(), LevelSolvedDialog.LevelSolvedDialogListener {
+class GameActivity : BaseGameActivity(), LevelSolvedDialog.LevelSolvedDialogListener,
+        StoreDialog.StoreDialogListener {
 
+    private val TAG: String = javaClass.simpleName
     private lateinit var prefs: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,8 +59,7 @@ class GameActivity : BaseGameActivity(), LevelSolvedDialog.LevelSolvedDialogList
                     R.id.fragment_container)
         }
         subscribeUi()
-        prefs = getSharedPreferences("com.appchamp.wordchunks", MODE_PRIVATE)
-//        showLevelSolvedDialog()
+        prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
     }
 
     override fun onStart() {
@@ -58,8 +67,8 @@ class GameActivity : BaseGameActivity(), LevelSolvedDialog.LevelSolvedDialogList
         // Setup click listeners
         btnBack.setOnClickListener { onBackPressed() }
 
-        if (prefs.getBoolean("TUTORIAL", true)) {
-            prefs.edit().putBoolean("TUTORIAL", false).apply()
+        if (prefs.getBoolean(PREFS_TUTORIAL, true)) {
+            prefs.edit().putBoolean(PREFS_TUTORIAL, false).apply()
             showIntroTutorial()
         }
     }
@@ -75,7 +84,34 @@ class GameActivity : BaseGameActivity(), LevelSolvedDialog.LevelSolvedDialogList
     // This method is invoked in the activity when the listener is triggered
     // Access the data result passed to the activity here
     override fun onNextBtnClickedDialog() {
-        Toast.makeText(this, "Hi, ", Toast.LENGTH_SHORT).show()
+        viewModel.makeLevelSolved()
+        if (viewModel.isDailyLevel()) {
+            onBackPressed()
+        } else {
+            // find next level to play
+            //Toast.makeText(this, "LOOKING FOR THE NEXT LEVEL", Toast.LENGTH_SHORT).show()
+            val nextLevel = viewModel.getNextLevel()
+            if (nextLevel != null) {
+                startGameActivity(nextLevel.id)
+            } else {
+                Toast.makeText(
+                        this,
+                        "Congratulations! You have solved all of the levels. New levels are coming!",
+                        Toast.LENGTH_LONG).show()
+                onBackPressed()
+            }
+        }
+    }
+
+    override fun onRewardUser() {
+        viewModel.increaseHints(1)
+        tvHintsCount.text = viewModel.getUser().value?.hints.toString()
+    }
+
+    private fun startGameActivity(nextLevelId: String) {
+        startActivity(intentFor<GameActivity>(EXTRA_LEVEL_ID to nextLevelId).clearTop())
+        finish()
+        overridePendingTransition(R.anim.slide_from_right, R.anim.slide_to_left)
     }
 
     private fun subscribeUi() {
@@ -92,23 +128,31 @@ class GameActivity : BaseGameActivity(), LevelSolvedDialog.LevelSolvedDialogList
             it?.let {
                 if (viewModel.isLevelSolved()) {
                     showLevelSolvedDialog()
+                    viewModel.makeLevelSolved()
+                    // restore level
                 }
             }
+        })
+        viewModel.getUser().observe(this, Observer {
+            tvHintsCount.text = it?.hints.toString()
         })
     }
 
     private fun showLevelSolvedDialog() {
-        val dialog = LevelSolvedDialog.newInstance()
+        val dialog = LevelSolvedDialog.newInstance(
+                Color.parseColor(viewModel.getNextLevelColor()),
+                viewModel.isDailyLevel(),
+                viewModel.getLiveLevel().value?.state == FINISHED)
         dialog.show(supportFragmentManager, "fragment_level_solved")
-        if (viewModel.isDailyLevel()) {
-            // add + 3 HINTS
-        } else {
-            // add + 2 HINTS
+        if (viewModel.getLiveLevel().value?.state == IN_PROGRESS) {
+            if (viewModel.isDailyLevel()) {
+                // adds + 3 HINTS
+                viewModel.increaseHints(USER_DAILY_LEVEL_SOLVED_REWARD)
+            } else {
+                // adds + 2 HINTS
+                viewModel.increaseHints(USER_LEVEL_SOLVED_REWARD)
+            }
         }
-        // pass levels left
-        // color
-        // number of hints added
-        // excellent words
     }
 
     /**
@@ -148,7 +192,7 @@ class GameActivity : BaseGameActivity(), LevelSolvedDialog.LevelSolvedDialogList
         val fancyShowCaseView4 = FancyShowCaseView.Builder(this)
                 .focusOn(rvChunks)
                 .focusShape(FocusShape.ROUNDED_RECTANGLE)
-                .title("You have to use all these chunks.\n\nCorrect answers accepted automatically.\n\nThe words order doesn't matter.")
+                .title("You have to use all these chunks.\nCorrect answers accepted automatically.\nThe words order doesn't matter.")
                 .titleStyle(0, Gravity.CENTER or Gravity.TOP)
                 .fitSystemWindows(true)
                 .build()
@@ -177,5 +221,4 @@ class GameActivity : BaseGameActivity(), LevelSolvedDialog.LevelSolvedDialogList
                 .add(fancyShowCaseView6)
                 .show()
     }
-
 }

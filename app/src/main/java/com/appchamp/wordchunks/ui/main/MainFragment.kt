@@ -16,7 +16,6 @@
 
 package com.appchamp.wordchunks.ui.main
 
-//import dmax.dialog.SpotsDialog
 import android.arch.lifecycle.LifecycleFragment
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -29,7 +28,6 @@ import com.appchamp.wordchunks.ui.customviews.StoreDialog
 import com.appchamp.wordchunks.ui.game.GameActivity
 import com.appchamp.wordchunks.ui.packs.PacksActivity
 import com.appchamp.wordchunks.util.Constants
-import kotlinx.android.synthetic.main.custom_button_subtitle.view.*
 import kotlinx.android.synthetic.main.frag_main.*
 import org.jetbrains.anko.clearTop
 import org.jetbrains.anko.intentFor
@@ -41,7 +39,6 @@ class MainFragment : LifecycleFragment() {
     private val TAG: String = javaClass.simpleName
     private val smallBang by lazy { SmallBang.attach2Window(activity) }
     private val viewModel by lazy { ViewModelProviders.of(activity).get(MainViewModel::class.java) }
-//    private lateinit var progressDialog: SpotsDialog
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -56,7 +53,6 @@ class MainFragment : LifecycleFragment() {
         btnPacks.setOnClickListener { startPacksActivity() }
         btnStore.setOnClickListener { onStoreClick() }
         blur.setOnClickListener { smallBang.bang(it) }
-        btnPlay.tvSubtitle.text = viewModel.getLevelTitle()
     }
 
     private fun onShareClick() {
@@ -64,8 +60,8 @@ class MainFragment : LifecycleFragment() {
     }
 
     private fun onPlayClick() {
-        val levelId = viewModel.getLevelId()
-        if (levelId != "") {
+        val levelId = viewModel.getLevel()?.id
+        if (levelId != null) {
             startGameActivity(levelId)
         } else {
             // All levels and packs were solved, show dialog
@@ -73,17 +69,14 @@ class MainFragment : LifecycleFragment() {
     }
 
     private fun onStoreClick() {
-        // show dialog
         val dialog = StoreDialog.newInstance()
         dialog.show(activity.supportFragmentManager, "fragment_store")
     }
 
     private fun onDailyClick() {
-//        progressDialog.show()
         viewModel.fetchDailyLevel()
         viewModel.isRealmLoaded().observe(this, Observer {
             if (it!!) {
-//                progressDialog.dismiss()
                 viewModel.getDailyPuzzleLevelId()?.let { startGameActivity(it) }
             }
         })

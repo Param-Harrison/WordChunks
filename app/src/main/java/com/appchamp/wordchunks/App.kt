@@ -19,11 +19,9 @@ package com.appchamp.wordchunks
 import android.app.Application
 import android.content.res.Configuration
 import com.appchamp.wordchunks.realmdb.utils.RealmFactory
-import com.appchamp.wordchunks.util.Constants.LANG_RU
 import com.appchamp.wordchunks.util.Constants.SUPPORTED_LOCALES
 import com.franmontiel.localechanger.LocaleChanger
 import io.realm.Realm
-import java.util.*
 
 /**
  * App initializes:
@@ -38,12 +36,12 @@ class App : Application() {
         super.onCreate()
 
         LocaleChanger.initialize(applicationContext, SUPPORTED_LOCALES)
-
-        when {
-        // User's system language is Russian
-            Locale.getDefault().language.contentEquals(LANG_RU) -> initRealm(SUPPORTED_LOCALES[1].displayLanguage)
-            else -> initRealm(SUPPORTED_LOCALES[0].displayLanguage)
-        }
+        initRealm(SUPPORTED_LOCALES[0].displayLanguage)
+//        when {
+//        // User's system language is Russian
+//            Locale.getDefault().language.contentEquals(LANG_RU) -> initRealm(SUPPORTED_LOCALES[1].displayLanguage)
+//            else ->
+//        }
     }
 
     override fun onConfigurationChanged(newConfig: Configuration) {

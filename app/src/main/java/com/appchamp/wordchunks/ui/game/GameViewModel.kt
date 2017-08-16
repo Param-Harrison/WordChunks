@@ -20,7 +20,6 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import android.util.Log
 import com.appchamp.wordchunks.extensions.isEven
 import com.appchamp.wordchunks.extensions.shuffleIntArray
 import com.appchamp.wordchunks.models.realm.*
@@ -37,13 +36,17 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
     private var level: LiveRealmObject<Level>
     private var chunks: LiveRealmResults<Chunk>
     private var words: LiveRealmResults<Word>
+    private var user: LiveRealmObject<User>
 
     init {
         // Loads levels, chunks, and words from the Realm realmDb as LiveData
         level = realmDb.levelModel().findLevelById(levelId)
         chunks = realmDb.chunkModel().findChunksByLevelId(levelId)
         words = realmDb.wordModel().findWordsByLevelId(levelId)
+        user = realmDb.userModel().findUser()!!
     }
+
+    fun getUser(): LiveRealmObject<User> = user
 
     fun getLiveLevel(): LiveRealmObject<Level> = level
 
@@ -55,18 +58,17 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
 
     fun getSelectedChunksString(): String = getSelectedChunks()?.chunksToString() ?: ""
 
-    fun getNextLevelColor(): String? {
-        return realmDb.levelModel().findLevelByState(LOCKED)?.color
-    }
+    fun getNextLevelColor(): String? = realmDb.levelModel()
+            .findLevelByState(LOCKED)?.color ?: level.value?.color
+
+    fun getNextLevel(): Level? = realmDb.levelModel().findLevelByState(LOCKED)
 
     /**
-     * Gets filtered and sorted by time-pressed chunks, and transforms them into string.
+     * Gets filtered and sorted by time-pressed chunks, and joins them into string.
      */
-    private fun getSelectedChunks(): List<Chunk>? {
-        return getLiveChunks().value
-                ?.filter { it.state > CHUNK_STATE_NORMAL }
-                ?.sortedBy { it.state }
-    }
+    private fun getSelectedChunks(): List<Chunk>? = getLiveChunks().value
+            ?.filter { it.state > CHUNK_STATE_NORMAL }
+            ?.sortedBy { it.state }
 
     /**
      * Returns the length of the selected chunks.
@@ -117,7 +119,8 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
      * Returns true if the level is solved, and false otherwise.
      */
     fun isLevelSolved() = words.value
-            ?.filter { it.state == WORD_STATE_NOT_SOLVED }?.isEmpty() ?: false
+            ?.filter { it.state == WORD_STATE_NOT_SOLVED }
+            ?.isEmpty() ?: false
 
     /**
      * Returns the list of indices of the selected chunks to be updated by the adapter in the fragment.
@@ -159,7 +162,6 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
     }
 
     fun setupWordsPositions() {
-        Log.d(TAG, "SETTING WORDS POSITIONS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         var wordPos = 0
         getLiveWords().value?.forEach {
             realmDb.wordModel().setWordPosition(it, wordPos++)
@@ -173,8 +175,6 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
                 ?.filter { it.state == WORD_STATE_NOT_SOLVED && it.visibleLettersNum < it.word.length }
                 ?.minBy { it.visibleLettersNum }
                 ?.let {
-                    Log.d(TAG, "IT.WORD = " + it.word)
-                    Log.d(TAG, "IT.POS = " + it.position)
                     realmDb.wordModel()
                             .setWordVisibleLettersNum(it, it.visibleLettersNum + 1)
                     return it.position
@@ -182,14 +182,21 @@ class GameViewModel(application: Application, levelId: String) : AndroidViewMode
         return -1
     }
 
-    fun getHintsCount(): Int = realmDb.where(User::class.java).findFirst().hints
-
-    fun decrementHint() {
-        realmDb.executeTransaction {
-            it.where(User::class.java).findFirst().hints -= 1
-        }
-
+    fun increaseHints(hintsNumber: Int) = user.value?.let {
+        realmDb.userModel().increaseUserHints(it, hintsNumber)
     }
+
+
+    fun decreaseHints(hintsNumber: Int) = user.value?.let {
+        realmDb.userModel().decreaseUserHints(it, hintsNumber)
+    }
+
+
+    fun makeLevelSolved() = level.value?.let {
+        realmDb.levelModel().setLevelState(it, FINISHED)
+    }
+
+
     /**
      * This method will be called when this ViewModel is no longer used and will be destroyed.
      *

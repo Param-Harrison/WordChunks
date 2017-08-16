@@ -149,7 +149,6 @@
                 android:fontFamily="@font/vag"
                 android:gravity="center"
                 android:text="&#160;"
-                android:textColor="#ffffff"
                 android:textSize="7dp"
                 android:textStyle="bold" />
 

@@ -26,11 +26,8 @@ object Constants {
             Locale("ru", "RU")
     )
 
-    const val WORDS_SEPARATOR = " "
-    const val CHUNKS_SEPARATOR = ","
-
-    const val WORD_CHUNKS_PREFS = "WORD_CHUNKS_PREFS"
-    const val PREFS_HOW_TO_PLAY = "PREFS_HOW_TO_PLAY"
+    const val PREFS_NAME = "com.appchamp.wordchunks"
+    const val PREFS_TUTORIAL = "PREFS_TUTORIAL"
     const val LANG_RU = "ru"
     const val LANG_EN = "en"
 
@@ -46,4 +43,13 @@ object Constants {
     const val WORDS_GRID_NUM = 1
     const val CHUNKS_GRID_NUM = 4
 
+    const val USER_INITIAL_HINTS = 4
+    const val USER_LEVEL_SOLVED_REWARD = 2
+    const val USER_DAILY_LEVEL_SOLVED_REWARD = 3
+
+    const val FIREBASE_PACKS_CHILD = "packs"
+    const val FIREBASE_LEVELS_CHILD = "levels"
+    const val FIREBASE_WORDS_CHILD = "words"
+    const val FIREBASE_CHUNKS_CHILD = "chunks"
+    const val FIREBASE_DAILY_CHILD = "daily"
 }

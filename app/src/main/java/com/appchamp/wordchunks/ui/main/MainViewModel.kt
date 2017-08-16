@@ -25,10 +25,21 @@ import com.appchamp.wordchunks.models.gson.ChunkGson
 import com.appchamp.wordchunks.models.gson.LevelGson
 import com.appchamp.wordchunks.models.gson.PackGson
 import com.appchamp.wordchunks.models.gson.WordGson
-import com.appchamp.wordchunks.models.realm.*
+import com.appchamp.wordchunks.models.realm.FINISHED
+import com.appchamp.wordchunks.models.realm.IN_PROGRESS
+import com.appchamp.wordchunks.models.realm.LOCKED
+import com.appchamp.wordchunks.models.realm.Level
 import com.appchamp.wordchunks.realmdb.firebaseDao.fetchFirebaseList
 import com.appchamp.wordchunks.realmdb.utils.*
-import com.appchamp.wordchunks.util.Constants
+import com.appchamp.wordchunks.util.Constants.FIREBASE_CHUNKS_CHILD
+import com.appchamp.wordchunks.util.Constants.FIREBASE_DAILY_CHILD
+import com.appchamp.wordchunks.util.Constants.FIREBASE_LEVELS_CHILD
+import com.appchamp.wordchunks.util.Constants.FIREBASE_PACKS_CHILD
+import com.appchamp.wordchunks.util.Constants.FIREBASE_WORDS_CHILD
+import com.appchamp.wordchunks.util.Constants.LANG_EN
+import com.appchamp.wordchunks.util.Constants.LANG_RU
+import com.appchamp.wordchunks.util.Constants.SUPPORTED_LOCALES
+import com.appchamp.wordchunks.util.Constants.USER_INITIAL_HINTS
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
@@ -54,50 +65,50 @@ class MainViewModel(application: Application?) : AndroidViewModel(application) {
         return isRealmLoaded
     }
 
-    fun getFirstLevelId(): String {
-        return realmDb.where(Level::class.java).findFirst().id
+    fun getFirstLevelIdForTutorial(): String {
+        return realmDb.levelModel().findFirstLevel()?.id!!
     }
 
-    fun getLevelId(): String {
+    fun getLevel(): Level? {
         val firstLevelInProgress = realmDb.levelModel().findLevelByState(IN_PROGRESS)
         if (firstLevelInProgress == null) {
             val firstLevelLocked = realmDb.levelModel().findLevelByState(LOCKED)
             if (firstLevelLocked != null) {
-                return firstLevelLocked.id
+                return firstLevelLocked
             }
         } else {
-            return firstLevelInProgress.id
+            return firstLevelInProgress
         }
-        return ""
+        return null
     }
 
     fun getDailyPuzzleLevelId() = dailyPuzzleLevelId
 
     fun fetchDailyLevel() {
         isRealmLoaded.postValue(false)
-        firebaseDb.fetchFirebaseList<LevelGson>({
-            loadLevelsIntoRealm(it)
-            dailyPuzzleLevelId = it.last().id
-            Log.d(TAG, "LAST ID" + it.last().id)
-        },
+        firebaseDb.fetchFirebaseList<LevelGson>(
+                {
+                    loadLevelsIntoRealm(it)
+                    dailyPuzzleLevelId = it.last().id
+                },
                 { Log.d(TAG, "ERROR:" + it) },
                 getLang(),
-                "daily/levels")
+                FIREBASE_DAILY_CHILD + "/" + FIREBASE_LEVELS_CHILD)
         firebaseDb.fetchFirebaseList<WordGson>(
                 { loadWordsIntoRealm(it) },
                 { Log.d(TAG, "ERROR:" + it) },
                 getLang(),
-                "daily/words")
+                FIREBASE_DAILY_CHILD + "/" + FIREBASE_WORDS_CHILD)
         firebaseDb.fetchFirebaseList<ChunkGson>(
                 { loadChunksIntoRealm(it) },
                 { Log.d(TAG, "ERROR:" + it) },
                 getLang(),
-                "daily/chunks")
+                FIREBASE_DAILY_CHILD + "/" + FIREBASE_CHUNKS_CHILD)
     }
 
     private fun getLang() = when (Locale.getDefault()) {
-        Constants.SUPPORTED_LOCALES[1] -> "rus"
-        else -> "eng"
+        SUPPORTED_LOCALES[1] -> LANG_RU
+        else -> LANG_EN
     }
 
     fun fetchDataFromFirebase() {
@@ -105,22 +116,22 @@ class MainViewModel(application: Application?) : AndroidViewModel(application) {
                 { loadPacksIntoRealm(it) },
                 { Log.d(TAG, "ERROR:" + it) },
                 getLang(),
-                "packs")
+                FIREBASE_PACKS_CHILD)
         firebaseDb.fetchFirebaseList<LevelGson>(
                 { loadLevelsIntoRealm(it) },
                 { Log.d(TAG, "ERROR:" + it) },
                 getLang(),
-                "levels")
+                FIREBASE_LEVELS_CHILD)
         firebaseDb.fetchFirebaseList<WordGson>(
                 { loadWordsIntoRealm(it) },
                 { Log.d(TAG, "ERROR:" + it) },
                 getLang(),
-                "words")
+                FIREBASE_WORDS_CHILD)
         firebaseDb.fetchFirebaseList<ChunkGson>(
                 { loadChunksIntoRealm(it) },
                 { Log.d(TAG, "ERROR:" + it) },
                 getLang(),
-                "chunks")
+                FIREBASE_CHUNKS_CHILD)
     }
 
     private fun loadPacksIntoRealm(firebaseList: MutableList<PackGson>) {
@@ -147,48 +158,22 @@ class MainViewModel(application: Application?) : AndroidViewModel(application) {
     }
 
     fun getCircularProgressValue(): Float {
-        realmDb.where(User::class.java).findAll().map {
-            Log.d(TAG, "USER====" + it)
+        val levels = realmDb.levelModel().findAllLevelsList()
+        levels.count { it.state == FINISHED }.let {
+            return it * 100F / (levels.size)
         }
-        realmDb.where(Level::class.java).findAll().map {
-            Log.d(TAG, "LEVEL====" + it)
-        }
-        realmDb.where(Word::class.java).findAll().map {
-            Log.d(TAG, "WORD====" + it)
-        }
-        val levels = realmDb.where(Level::class.java)
-                .equalTo("daily", false)
-                .findAll()
-        levels.count { it.state == FINISHED }
-                .let { return it * 100F / (levels.size) }
     }
 
     fun updateUser() {
-        val user = realmDb.where(User::class.java).findFirst()
-        if (user != null) {
-            Log.d(TAG, "USER NOT NULL")
-        } else {
-            Log.d(TAG, "USER IS NULL")
-            // Create user
-            realmDb.executeTransaction {
-                val newUser = realmDb.createObject(User::class.java)
-                newUser.hints = 10
+        if (realmDb.userModel().findUser() == null) {
+            val newUser = realmDb.userModel().createUser()
+            newUser?.let { user ->
+                realmDb.userModel().setUserHints(user, USER_INITIAL_HINTS)
             }
         }
     }
 
-    fun getLevelTitle(): String {
-        val firstLevelInProgress = realmDb.levelModel().findLevelByState(IN_PROGRESS)
-        if (firstLevelInProgress == null) {
-            val firstLevelLocked = realmDb.levelModel().findLevelByState(LOCKED)
-            if (firstLevelLocked != null) {
-                return firstLevelLocked.title
-            }
-        } else {
-            return firstLevelInProgress.title
-        }
-        return ""
-    }
+    fun isRealmDatabaseExists() = realmDb.levelModel().findFirstLevel() != null
 
     /**
      * This method will be called when this ViewModel is no longer used and will be destroyed.
@@ -199,9 +184,5 @@ class MainViewModel(application: Application?) : AndroidViewModel(application) {
     override fun onCleared() {
         realmDb.close()
         super.onCleared()
-    }
-
-    fun isRealmDatabaseExists(): Boolean {
-        return true
     }
 }

@@ -23,13 +23,13 @@ import android.graphics.Color
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.support.annotation.Nullable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.extensions.invisible
 import com.appchamp.wordchunks.extensions.visible
+import com.appchamp.wordchunks.ui.customviews.StoreDialog
 import com.appchamp.wordchunks.ui.game.adapters.ChunksAdapter
 import com.appchamp.wordchunks.ui.game.adapters.WordsAdapter
 import com.appchamp.wordchunks.util.Constants.CHUNKS_GRID_NUM
@@ -62,7 +62,6 @@ class GameFragment : LifecycleFragment() {
         setGameGradient()
         setupWordsAdapter()
         setupChunksAdapter()
-        tvHintsCount.text = viewModel.getHintsCount().toString()
 
         // Click listeners
         btnShuffle.setOnClickListener {
@@ -87,15 +86,19 @@ class GameFragment : LifecycleFragment() {
     }
 
     private fun onHintClicked() {
-        val wordPos = viewModel.onHintClicked()
-        Log.d(TAG, "POS = " + wordPos)
-        if (wordPos != -1) {
-            wordsAdapter.notifyItemChanged(wordPos)
-            smallBang?.bang(rlHintsView)
-            viewModel.decrementHint()
-            tvHintsCount.text = viewModel.getHintsCount().toString()
+        if (viewModel.getUser().value?.hints!! > 0) {
+            val wordPos = viewModel.onHintClicked()
+            if (wordPos != -1) {
+                wordsAdapter.notifyItemChanged(wordPos)
+                smallBang?.bang(rlHintsView)
+                viewModel.decreaseHints(1)
+//                tvHintsCount.text = viewModel.getHintsCount().toString()
 //            val hintedWordView = rvWords.findViewHolderForLayoutPosition(wordPos).itemView.tvLetters
 //            smallBang?.bang(hintedWordView)
+            }
+        } else {
+            val dialog = StoreDialog.newInstance()
+            dialog.show(activity.supportFragmentManager, "fragment_store")
         }
     }
 
@@ -103,7 +106,6 @@ class GameFragment : LifecycleFragment() {
         viewModel.getLiveLevel().observe(this, Observer {
             it?.let { wordsAdapter.setPackColor(it.color) }
         })
-
         viewModel.getLiveWords().observe(this, Observer {
             it?.let {
                 it.toList().let { words ->
@@ -114,7 +116,6 @@ class GameFragment : LifecycleFragment() {
                 }
             }
         })
-
         viewModel.getLiveChunks().observe(this, Observer {
             it?.let {
                 it.toList().let { chunks ->
@@ -167,14 +168,12 @@ class GameFragment : LifecycleFragment() {
         tvInputChunks.text = text
     }
 
-    private fun updateChunksCountView(length: Int?) {
+    private fun updateChunksCountView(length: Int) {
         tvChunksCount.text = length.toString()
-        updateChunksCountView(length != 0)
-    }
-
-    private fun updateChunksCountView(isVisible: Boolean) = when {
-        isVisible -> rlChunksCount.visible()
-        else -> rlChunksCount.invisible()
+        when {
+            length > 0 -> rlChunksCount.visible()
+            else -> rlChunksCount.invisible()
+        }
     }
 
     private fun updateClearIcon(isVisible: Boolean) = when {

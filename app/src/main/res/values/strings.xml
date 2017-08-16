@@ -42,7 +42,7 @@
     <string name="rate_us">RATE US!</string>
     <string name="level_already_completed">LEVEL ALREADY COMPLETED</string>
     <string name="back_to_levels">BACK TO LEVELS</string>
-    <string name="how_to_play">HOW TO PLAY?</string>
+
     <string name="tutorial3">3. Turn to TOOLS when stuck.</string>
     <string name="tutorial2">2. Click letter group AGAIN to UNDO the selected letters.</string>
     <string name="tutorial0">Answers register AUTOMATICALLY when correct.</string>
@@ -59,8 +59,7 @@
     <string name="only_one_level_left">ONLY ONE LEVEL LEFT IN PACK</string>
     <string name="you_finished_all_packs">YOU\'VE FINISHED ALL PACKS AND LEVELS</string>
     <string name="num_levels_left">%d LEVELS LEFT IN PACK</string>
-    <string name="send_feedback">SEND FEEDBACK</string>
-    <string name="rate_the_app">RATE THE APP!</string>
+
     <string name="show_the">SHOW THE…</string>
     <string name="version" translatable="false">%s</string>
 
@@ -71,8 +70,6 @@
         C68.5809,277.075,273.832,71.8233,527.023,71.8233 Z
     </string>
 
-    <string name="authentication">PROFILE:</string>
-    <string name="guest">GUEST</string>
     <string name="google" translatable="false">GOOGLE</string>
     <string name="dots" translatable="false">…</string>
 
@@ -131,7 +128,8 @@
     <string name="language">LANGUAGE:</string>
     <string name="dot" translatable="false">&#160;&#160;\u25CF</string>
     <string name="loading_levels">LOADING LEVELS…</string>
-
+    <string name="you_have">YOU HAVE %d HINTS</string>
+    <string name="you_have_one_hint">YOU HAVE ONE HINT</string>
 
     <!-- END Settings Screen -->
 </resources>

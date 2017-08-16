@@ -18,6 +18,6 @@
     android:shape="oval">
     <stroke
         android:width="2dp"
-        android:color="#ffffff" />
-    <solid android:color="#FF1536" />
+        android:color="#faa750" />
+    <solid android:color="#f27a31" />
 </shape>

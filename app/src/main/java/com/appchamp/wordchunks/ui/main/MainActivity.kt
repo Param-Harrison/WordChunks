@@ -18,6 +18,7 @@ package com.appchamp.wordchunks.ui.main
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -36,6 +37,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu
 import io.ghyeok.stickyswitch.widget.StickySwitch
 import kotlinx.android.synthetic.main.act_main.*
+import kotlinx.android.synthetic.main.custom_button_subtitle.view.*
 import kotlinx.android.synthetic.main.frag_main.*
 import kotlinx.android.synthetic.main.frag_sliding_menu.*
 import org.jetbrains.anko.browse
@@ -61,34 +63,50 @@ class MainActivity : BaseMainActivity() {
         setContentView(R.layout.act_main)
 
         firebaseAuth = FirebaseAuth.getInstance()
-        mHandler = WeakHandler()
+        loadingDialog = LoadingDialog.newInstance()
 
+        // lets check if the user has anonymously authenticated via firebase
+        if (!isUserAuthenticated()) {
+            loadingDialog.show(supportFragmentManager, "fragment_loading")
+            startAnonymousSignIn {
+                // ok, user authenticated, grab some data from the firebase database
+                // check if the realm database en/ru exists
+//                if (viewModel.isRealmDatabaseExists()) {
+//                    Log.d(TAG, "REALM DATABASE EXISTS")
+//                } else {
+//                    Log.d(TAG, "REALM DATABASE NOT EXISTS")
+//                }
+                viewModel.updateUser()
+                viewModel.fetchDataFromFirebase()
+                viewModel.isRealmLoaded().observe(this, android.arch.lifecycle.Observer {
+                    if (it == true) {
+                        loadingDialog.dismiss()
+                    }
+                })
+            }
+        } else {
+            // User already authenticated, fetch data and observe it
+            viewModel.fetchDataFromFirebase()
+            if (viewModel.isRealmDatabaseExists()) {
+                Log.d(TAG, "REALM DATABASE EXISTS")
+            } else {
+                loadingDialog.show(supportFragmentManager, "fragment_loading")
+                Log.d(TAG, "REALM DATABASE NOT EXISTS")
+                viewModel.updateUser()
+                viewModel.isRealmLoaded().observe(this, android.arch.lifecycle.Observer {
+                    if (it == true) {
+                        loadingDialog.dismiss()
+                    }
+                })
+            }
+        }
+        mHandler = WeakHandler()
         if (savedInstanceState == null) {
             addMainFragment()
         }
         setupSettingsMenu()
         setLanguageButton()
-        // todo check if the realm database en/ru exists
-        if (viewModel.isRealmDatabaseExists()) {
-
-            Log.d(TAG, "REALM DATABASE EXISTS")
-        } else {
-            Log.d(TAG, "REALM DATABASE NOT EXISTS")
-        }
-        if (!isUserAuthenticated()) {
-            startAnonymousSignIn({ subscribeUiFirstRun() })
-        } else {
-            // User already authenticated, fetch data and observe it
-            viewModel.fetchDataFromFirebase()
-        }
         prefs = getSharedPreferences("com.appchamp.wordchunks", MODE_PRIVATE)
-
-
-        // check if levels exists
-
-        loadingDialog = LoadingDialog.newInstance()
-        loadingDialog.show(supportFragmentManager, "fragment_loading")
-        loadingDialog.dismiss()
     }
 
     override fun onStart() {
@@ -98,6 +116,8 @@ class MainActivity : BaseMainActivity() {
         btnRate.setOnClickListener { onRateClick() }
         btnFeedback.setOnClickListener { onFeedbackClick() }
         tvVersion.text = resources.getString(R.string.version, BuildConfig.VERSION_NAME)
+        btnPlay.tvSubtitle.text = viewModel.getLevel()?.title ?: ""
+        btnPlay.tvSubtitle.setTextColor(Color.parseColor(viewModel.getLevel()?.color ?: "#ffffff"))
         setupGameProgressBar()
         setupLanguageChangeListener()
     }
@@ -108,8 +128,8 @@ class MainActivity : BaseMainActivity() {
             override fun onSelectedChange(@NotNull direction: StickySwitch.Direction, @NotNull text: String) {
                 mHandler.postDelayed({
                     when (direction) {
-                        StickySwitch.Direction.RIGHT -> changeLocaleAndRecreate(SUPPORTED_LOCALES[1])
-                        StickySwitch.Direction.LEFT -> changeLocaleAndRecreate(SUPPORTED_LOCALES[0])
+                        StickySwitch.Direction.RIGHT -> Toast.makeText(baseContext, "Sorry, we are still working under Russian translation.", Toast.LENGTH_SHORT).show()//changeLocaleAndRecreate(SUPPORTED_LOCALES[1])
+                    //StickySwitch.Direction.LEFT -> changeLocaleAndRecreate(SUPPORTED_LOCALES[0])
                     }
                 }, 600)
             }
@@ -133,19 +153,9 @@ class MainActivity : BaseMainActivity() {
         return currentUser != null
     }
 
-    private fun subscribeUiFirstRun() {
-        viewModel.updateUser()
-        viewModel.fetchDataFromFirebase()
-        viewModel.isRealmLoaded().observe(this, android.arch.lifecycle.Observer {
-            if (it == true) {
-//                progressDialog?.dismiss()
-            }
-        })
-    }
-
     private fun onTutorialClick() {
         prefs.edit().putBoolean("TUTORIAL", true).apply()
-        val levelId = viewModel.getFirstLevelId()
+        val levelId = viewModel.getFirstLevelIdForTutorial()
         if (levelId != "") {
             startGameActivity(levelId)
         }
@@ -160,6 +170,8 @@ class MainActivity : BaseMainActivity() {
     private fun setupGameProgressBar() {
         val value = viewModel.getCircularProgressValue()
         circularProgressBar.invalidate()
+        circularProgressBar.setBorderProgressColor(
+                Color.parseColor(viewModel.getLevel()?.color ?: "#ffffff"))
         circularProgressBar.setValue(value)
         circularProgressBar.invalidate()
 
@@ -206,10 +218,10 @@ class MainActivity : BaseMainActivity() {
     }
 
     private fun changeLocaleAndRecreate(locale: Locale) {
-        LocaleChanger.setLocale(locale)
-        reconfigureRealm(locale.displayLanguage)
-        subscribeUiFirstRun()
-        ActivityRecreationHelper.recreate(this, true)
+        Toast.makeText(this, "We are still working under translation.", Toast.LENGTH_SHORT).show()
+//        LocaleChanger.setLocale(locale)
+//        reconfigureRealm(locale.displayLanguage)
+//        ActivityRecreationHelper.recreate(this, true)
     }
 
     private fun reconfigureRealm(dbName: String) = RealmFactory().setRealmConfiguration(dbName)

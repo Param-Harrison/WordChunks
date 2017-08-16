@@ -43,6 +43,8 @@ class LevelDao(private val realm: Realm) {
         }
     }
 
+    fun findFirstLevel(): Level? = realm.where(Level::class.java).findFirst()
+
     /**
      * Custom finder methods.
      */
@@ -81,8 +83,6 @@ class LevelDao(private val realm: Realm) {
             .equalTo(REALM_FIELD_STATE, state)
             .equalTo("daily", false)
             .findFirst()
-//            .asLiveData()
-
 
     /**
      * Custom set methods.

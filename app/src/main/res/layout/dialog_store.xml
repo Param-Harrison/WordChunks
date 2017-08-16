@@ -17,6 +17,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -25,15 +26,16 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tvYouHave"
         android:layout_width="270dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
         android:layout_marginTop="15dp"
         android:fontFamily="@font/vag"
         android:gravity="center_horizontal"
-        android:text="YOU HAVE 2 HINTS"
         android:textColor="#ffffff"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        tools:text="YOU HAVE 2 HINTS" />
 
     <TextView
         android:layout_width="match_parent"
@@ -46,6 +48,7 @@
         android:textSize="14dp" />
 
     <com.appchamp.wordchunks.ui.customviews.CustomButtonSubtitle
+        android:id="@+id/btnFreeVideo"
         style="@style/CustomButtonStyle"
         app:cbs_bg="@drawable/shape_btn_store"
         app:cbs_color_subtitle="#b0dab2"
@@ -55,6 +58,7 @@
         app:cbs_title="1 FREE HINT!" />
 
     <com.appchamp.wordchunks.ui.customviews.CustomButtonSubtitle
+        android:id="@+id/btn20Hints"
         style="@style/CustomButtonStyle"
         app:cbs_bg="@drawable/shape_btn_packs"
         app:cbs_color_subtitle="#6bcff6"
@@ -64,6 +68,7 @@
         app:cbs_title="20 HINTS" />
 
     <com.appchamp.wordchunks.ui.customviews.CustomButtonSubtitle
+        android:id="@+id/btn50Hints"
         style="@style/CustomButtonStyle"
         app:cbs_bg="@drawable/shape_btn_daily"
         app:cbs_color_subtitle="#faa750"
@@ -73,6 +78,7 @@
         app:cbs_title="50 HINTS" />
 
     <com.appchamp.wordchunks.ui.customviews.CustomButtonSubtitle
+        android:id="@+id/btn150Hints"
         style="@style/CustomButtonStyle"
         android:layout_marginBottom="5dp"
         app:cbs_bg="@drawable/shape_btn_play"
@@ -83,7 +89,7 @@
         app:cbs_title="150 HINTS" />
 
     <TextView
-        android:id="@+id/btnNext"
+        android:id="@+id/btnClose"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"

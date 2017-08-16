@@ -17,6 +17,8 @@
 package com.appchamp.wordchunks.ui.customviews
 
 import android.graphics.Color
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
@@ -31,12 +33,19 @@ import nl.dionsegijn.konfetti.models.Size
 
 class LevelSolvedDialog : DialogFragment() {
 
+    private var nextLevelColor: Int? = null // it's own color for daily puzzle, and for game finished
+    private var isDaily: Boolean = false
+    private var isAlreadySolved: Boolean = false
+
     companion object {
         @JvmStatic
-        fun newInstance(): LevelSolvedDialog {
+        fun newInstance(color: Int, isDaily: Boolean, isAlreadySolved: Boolean = false): LevelSolvedDialog {
             val dialog = LevelSolvedDialog()
-//            val args = Bundle()
-//            dialog.arguments = args
+            val args = Bundle()
+            args.putInt("color", color)
+            args.putBoolean("isDaily", isDaily)
+            args.putBoolean("isAlreadySolved", isAlreadySolved)
+            dialog.arguments = args
             return dialog
         }
     }
@@ -44,6 +53,13 @@ class LevelSolvedDialog : DialogFragment() {
     // Defines the listener interface with a method passing back data result.
     interface LevelSolvedDialogListener {
         fun onNextBtnClickedDialog()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        nextLevelColor = arguments.getInt("color")
+        isDaily = arguments.getBoolean("isDaily")
+        isAlreadySolved = arguments.getBoolean("isAlreadySolved")
     }
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
@@ -57,6 +73,21 @@ class LevelSolvedDialog : DialogFragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // btn "Next" or "Go Back" @drawable/shape_dialog_button
+        btnNext.background.colorFilter = nextLevelColor?.let { PorterDuffColorFilter(it, PorterDuff.Mode.SRC_IN) }
+        if (isDaily) {
+            btnNext.text = "GO BACK"
+            tvHintsEarned.text = "+ 3 HINTS ADDED!"
+
+        } else {
+            btnNext.text = "NEXT"
+            if (isAlreadySolved) {
+                tvHintsEarned.text = "LEVEL WAS\nALREADY SOLVED!"
+            } else {
+                tvHintsEarned.text = "+ 2 HINTS ADDED!"
+            }
+        }
 
         // Return input text back to activity through the implemented listener
         val listener: LevelSolvedDialogListener = activity as LevelSolvedDialogListener
@@ -78,5 +109,4 @@ class LevelSolvedDialog : DialogFragment() {
                 ?.setPosition(0f, 700f, 0f, null)
                 ?.stream(200, 15000L)
     }
-
 }

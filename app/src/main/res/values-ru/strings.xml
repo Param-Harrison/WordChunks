@@ -72,7 +72,7 @@
     <!-- END Main Buttons titles -->
 
     <string name="complete">ПРОЙДЕНО</string>
-    <string name="changelog">ИЗМЕНЕНИЯ</string>
+
     <string name="downloading_levels">ЗАГРУЗКА УРОВНЕЙ…</string>
     <string name="downloading_daily">ЗАГРУЗКА…</string>
     <!-- Main Screen END -->
@@ -86,5 +86,7 @@
     <string name="feedback">НАПИСАТЬ НАМ</string>
 
     <string name="loading_levels">ЗАГРУЗКА УРОВНЕЙ…</string>
+    <string name="you_have">У ВАС ЕСТЬ %d ПОДСКАЗОК</string>
+    <string name="you_have_hint">У ВАС ЕСТЬ %d ПОДСКАЗКА</string>
     <!-- END Settings Screen -->
 </resources>

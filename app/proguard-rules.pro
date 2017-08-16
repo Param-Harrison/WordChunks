@@ -26,3 +26,6 @@
 -dontwarn com.jeremyfeinstein.slidingmenu.lib.CustomViewAbove
 -keep class dmax.loadingDialog.** { *; }
 -keep class com.github.glomadrian.grav.** { *; }
+-keep class com.android.vending.billing.**
+-keep public class com.google.android.gms.* { public *; }
+-dontwarn com.google.android.gms.**
