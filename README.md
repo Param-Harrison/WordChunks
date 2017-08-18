@@ -1,7 +1,7 @@
 WordChunks Word Game
 ====================
 
-<img src='https://github.com/jkozh/WordChunks/blob/master/images/logo.jpg' width='400' align="right" hspace="20">
+<img src='https://github.com/jkozh/WordChunks/blob/master/images/mockup-new.jpg'>
 
 *Find hidden words in a grid of chunks.*
 
