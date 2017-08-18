@@ -42,7 +42,11 @@ class WordDao(private val realm: Realm) {
     }
 
 
-    fun setWordPosition(word: Word, pos: Int) = realm.executeTransaction { word.position = pos }
+    fun setWordPosition(word: Word, pos: Int) {
+        if (!realm.isInTransaction) {
+            realm.executeTransaction { word.position = pos }
+        }
+    }
 
     /**
      * Custom finder methods.

@@ -80,7 +80,7 @@
         WordChunks is AWESOME and I think you\'ll love it. Get it! --\n
         https://play.google.com/store/apps/details?id=com.appchamp.wordchunks
     </string>
-    <string name="titlebar_main">WORD CHUNKS</string>
+    <string name="titlebar_main">WORDCHUNKS</string>
     <string name="share_subject" translatable="false">My current puzzle</string>
     <!-- END Main Title -->
     <!-- START Main Buttons titles -->

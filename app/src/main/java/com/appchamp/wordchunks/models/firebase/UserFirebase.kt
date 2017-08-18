@@ -16,8 +16,9 @@
 
 package com.appchamp.wordchunks.models.firebase
 
+import android.support.annotation.Keep
 
-class UserFirebase(
+@Keep class UserFirebase(
         var id: String = "",
         var email: String = "",
         var hints: Int = 0,

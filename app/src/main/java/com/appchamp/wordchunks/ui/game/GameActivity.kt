@@ -21,10 +21,8 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.view.Gravity
-import android.widget.Toast
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.models.realm.FINISHED
-import com.appchamp.wordchunks.models.realm.IN_PROGRESS
 import com.appchamp.wordchunks.models.realm.Level
 import com.appchamp.wordchunks.ui.customviews.LevelSolvedDialog
 import com.appchamp.wordchunks.ui.customviews.StoreDialog
@@ -36,6 +34,7 @@ import com.appchamp.wordchunks.util.Constants.PREFS_NAME
 import com.appchamp.wordchunks.util.Constants.PREFS_TUTORIAL
 import com.appchamp.wordchunks.util.Constants.USER_DAILY_LEVEL_SOLVED_REWARD
 import com.appchamp.wordchunks.util.Constants.USER_LEVEL_SOLVED_REWARD
+import com.appchamp.wordchunks.util.Constants.USER_VIDEO_REWARD
 import kotlinx.android.synthetic.main.frag_game.*
 import kotlinx.android.synthetic.main.titlebar.*
 import me.toptas.fancyshowcase.FancyShowCaseQueue
@@ -79,6 +78,7 @@ class GameActivity : BaseGameActivity(), LevelSolvedDialog.LevelSolvedDialogList
         if (!viewModel.isDailyLevel()) {
             backToLevelsActivity()
         }
+        finish()
     }
 
     // This method is invoked in the activity when the listener is triggered
@@ -90,21 +90,21 @@ class GameActivity : BaseGameActivity(), LevelSolvedDialog.LevelSolvedDialogList
         } else {
             // find next level to play
             //Toast.makeText(this, "LOOKING FOR THE NEXT LEVEL", Toast.LENGTH_SHORT).show()
-            val nextLevel = viewModel.getNextLevel()
-            if (nextLevel != null) {
-                startGameActivity(nextLevel.id)
-            } else {
-                Toast.makeText(
-                        this,
-                        "Congratulations! You have solved all of the levels. New levels are coming!",
-                        Toast.LENGTH_LONG).show()
-                onBackPressed()
-            }
+//            val nextLevel = viewModel.getNextLevel()
+//            if (nextLevel != null) {
+//                startGameActivity(nextLevel.id)
+//            } else {
+//                Toast.makeText(
+//                        this,
+//                        "Congratulations! You have solved all of the levels. New levels are coming!",
+//                        Toast.LENGTH_LONG).show()
+            onBackPressed()
+//            }
         }
     }
 
     override fun onRewardUser() {
-        viewModel.increaseHints(1)
+        viewModel.increaseHints(USER_VIDEO_REWARD)
         tvHintsCount.text = viewModel.getUser().value?.hints.toString()
     }
 
@@ -128,6 +128,7 @@ class GameActivity : BaseGameActivity(), LevelSolvedDialog.LevelSolvedDialogList
             it?.let {
                 if (viewModel.isLevelSolved()) {
                     showLevelSolvedDialog()
+                    rewardUser()
                     viewModel.makeLevelSolved()
                     // restore level
                 }
@@ -144,7 +145,10 @@ class GameActivity : BaseGameActivity(), LevelSolvedDialog.LevelSolvedDialogList
                 viewModel.isDailyLevel(),
                 viewModel.getLiveLevel().value?.state == FINISHED)
         dialog.show(supportFragmentManager, "fragment_level_solved")
-        if (viewModel.getLiveLevel().value?.state == IN_PROGRESS) {
+    }
+
+    private fun rewardUser() {
+        if (viewModel.getLiveLevel().value?.state != FINISHED) {
             if (viewModel.isDailyLevel()) {
                 // adds + 3 HINTS
                 viewModel.increaseHints(USER_DAILY_LEVEL_SOLVED_REWARD)
@@ -184,7 +188,7 @@ class GameActivity : BaseGameActivity(), LevelSolvedDialog.LevelSolvedDialogList
         val fancyShowCaseView3 = FancyShowCaseView.Builder(this)
                 .focusOn(rvWords)
                 .focusShape(FocusShape.ROUNDED_RECTANGLE)
-                .title("Each word has the length and optionally the first letter.\nIn order to solve the puzzle, you need to find specific hidden words for each level.")
+                .title("The already-provided first letter is also included in the matching chunk.\nIn order to solve the puzzle, you need to find specific hidden words for each level.")
                 .titleStyle(0, Gravity.BOTTOM or Gravity.CENTER)
                 .fitSystemWindows(true)
                 .build()
@@ -192,7 +196,7 @@ class GameActivity : BaseGameActivity(), LevelSolvedDialog.LevelSolvedDialogList
         val fancyShowCaseView4 = FancyShowCaseView.Builder(this)
                 .focusOn(rvChunks)
                 .focusShape(FocusShape.ROUNDED_RECTANGLE)
-                .title("You have to use all these chunks.\nCorrect answers accepted automatically.\nThe words order doesn't matter.")
+                .title("You have to use all these chunks.\nCorrect answers are accepted automatically.\nThe word order doesn't matter.")
                 .titleStyle(0, Gravity.CENTER or Gravity.TOP)
                 .fitSystemWindows(true)
                 .build()

@@ -16,19 +16,26 @@
 
 package com.appchamp.wordchunks.ui.main
 
+import android.arch.lifecycle.LifecycleRegistry
+import android.arch.lifecycle.LifecycleRegistryOwner
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import com.appchamp.wordchunks.BuildConfig
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.realmdb.utils.RealmFactory
 import com.appchamp.wordchunks.ui.customviews.LoadingDialog
+import com.appchamp.wordchunks.ui.customviews.StoreDialog
 import com.appchamp.wordchunks.ui.game.GameActivity
 import com.appchamp.wordchunks.util.Constants
+import com.appchamp.wordchunks.util.Constants.PREFS_NAME
+import com.appchamp.wordchunks.util.Constants.PREFS_TUTORIAL
 import com.appchamp.wordchunks.util.Constants.SUPPORTED_LOCALES
 import com.badoo.mobile.util.WeakHandler
 import com.franmontiel.localechanger.LocaleChanger
@@ -48,13 +55,18 @@ import org.jetbrains.annotations.NotNull
 import java.util.*
 
 
-class MainActivity : BaseMainActivity() {
+class MainActivity : AppCompatActivity(), LifecycleRegistryOwner, StoreDialog.StoreDialogListener {
+
     private val TAG: String = javaClass.simpleName
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var menu: SlidingMenu
     private lateinit var mHandler: WeakHandler
     private lateinit var prefs: SharedPreferences
     private lateinit var loadingDialog: LoadingDialog
+    private val lifecycleRegistry: LifecycleRegistry by lazy { LifecycleRegistry(this) }
+    private val viewModel: MainViewModel by lazy { ViewModelProviders.of(this).get(MainViewModel::class.java) }
+
+    override fun getLifecycle(): LifecycleRegistry = lifecycleRegistry
 
     override fun onCreate(savedInstanceState: Bundle?) {
         // Make sure setTheme is before calling super.onCreate
@@ -69,13 +81,6 @@ class MainActivity : BaseMainActivity() {
         if (!isUserAuthenticated()) {
             loadingDialog.show(supportFragmentManager, "fragment_loading")
             startAnonymousSignIn {
-                // ok, user authenticated, grab some data from the firebase database
-                // check if the realm database en/ru exists
-//                if (viewModel.isRealmDatabaseExists()) {
-//                    Log.d(TAG, "REALM DATABASE EXISTS")
-//                } else {
-//                    Log.d(TAG, "REALM DATABASE NOT EXISTS")
-//                }
                 viewModel.updateUser()
                 viewModel.fetchDataFromFirebase()
                 viewModel.isRealmLoaded().observe(this, android.arch.lifecycle.Observer {
@@ -87,11 +92,8 @@ class MainActivity : BaseMainActivity() {
         } else {
             // User already authenticated, fetch data and observe it
             viewModel.fetchDataFromFirebase()
-            if (viewModel.isRealmDatabaseExists()) {
-                Log.d(TAG, "REALM DATABASE EXISTS")
-            } else {
+            if (!viewModel.isRealmDatabaseExists()) {
                 loadingDialog.show(supportFragmentManager, "fragment_loading")
-                Log.d(TAG, "REALM DATABASE NOT EXISTS")
                 viewModel.updateUser()
                 viewModel.isRealmLoaded().observe(this, android.arch.lifecycle.Observer {
                     if (it == true) {
@@ -106,7 +108,7 @@ class MainActivity : BaseMainActivity() {
         }
         setupSettingsMenu()
         setLanguageButton()
-        prefs = getSharedPreferences("com.appchamp.wordchunks", MODE_PRIVATE)
+        prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
     }
 
     override fun onStart() {
@@ -122,15 +124,22 @@ class MainActivity : BaseMainActivity() {
         setupLanguageChangeListener()
     }
 
+    override fun onRewardUser() {
+        viewModel.increaseHints(Constants.USER_VIDEO_REWARD)
+    }
+
     private fun setupLanguageChangeListener() {
         // Set Selected Change Listener
         stickySwitch.onSelectedChangeListener = object : StickySwitch.OnSelectedChangeListener {
             override fun onSelectedChange(@NotNull direction: StickySwitch.Direction, @NotNull text: String) {
                 mHandler.postDelayed({
-                    when (direction) {
-                        StickySwitch.Direction.RIGHT -> Toast.makeText(baseContext, "Sorry, we are still working under Russian translation.", Toast.LENGTH_SHORT).show()//changeLocaleAndRecreate(SUPPORTED_LOCALES[1])
-                    //StickySwitch.Direction.LEFT -> changeLocaleAndRecreate(SUPPORTED_LOCALES[0])
+                    //                    when (direction) {
+                    if (direction == StickySwitch.Direction.RIGHT) {
+                        showSnackbar("Sorry, we are still working under Russian translation.")
                     }
+                    //changeLocaleAndRecreate(SUPPORTED_LOCALES[1])
+                    //StickySwitch.Direction.LEFT -> changeLocaleAndRecreate(SUPPORTED_LOCALES[0])
+//                    }
                 }, 600)
             }
         }
@@ -154,7 +163,7 @@ class MainActivity : BaseMainActivity() {
     }
 
     private fun onTutorialClick() {
-        prefs.edit().putBoolean("TUTORIAL", true).apply()
+        prefs.edit().putBoolean(PREFS_TUTORIAL, true).apply()
         val levelId = viewModel.getFirstLevelIdForTutorial()
         if (levelId != "") {
             startGameActivity(levelId)
@@ -217,12 +226,12 @@ class MainActivity : BaseMainActivity() {
         }
     }
 
-    private fun changeLocaleAndRecreate(locale: Locale) {
-        Toast.makeText(this, "We are still working under translation.", Toast.LENGTH_SHORT).show()
+//    private fun changeLocaleAndRecreate(locale: Locale) {
+//        Toast.makeText(this, "We are still working under translation.", Toast.LENGTH_SHORT).show()
 //        LocaleChanger.setLocale(locale)
 //        reconfigureRealm(locale.displayLanguage)
 //        ActivityRecreationHelper.recreate(this, true)
-    }
+//    }
 
     private fun reconfigureRealm(dbName: String) = RealmFactory().setRealmConfiguration(dbName)
 

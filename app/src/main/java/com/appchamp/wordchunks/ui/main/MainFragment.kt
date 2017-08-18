@@ -23,6 +23,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.appchamp.wordchunks.R
 import com.appchamp.wordchunks.ui.customviews.StoreDialog
 import com.appchamp.wordchunks.ui.game.GameActivity
@@ -65,6 +66,11 @@ class MainFragment : LifecycleFragment() {
             startGameActivity(levelId)
         } else {
             // All levels and packs were solved, show dialog
+            Toast.makeText(
+                    context,
+                    "Congratulations! You have solved all of the levels!",
+                    Toast.LENGTH_LONG)
+                    .show()
         }
     }
 
@@ -74,6 +80,7 @@ class MainFragment : LifecycleFragment() {
     }
 
     private fun onDailyClick() {
+        tvDailyBadge.visibility = View.INVISIBLE
         viewModel.fetchDailyLevel()
         viewModel.isRealmLoaded().observe(this, Observer {
             if (it!!) {

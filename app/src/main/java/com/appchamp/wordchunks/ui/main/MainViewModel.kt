@@ -175,6 +175,10 @@ class MainViewModel(application: Application?) : AndroidViewModel(application) {
 
     fun isRealmDatabaseExists() = realmDb.levelModel().findFirstLevel() != null
 
+    fun increaseHints(hintsNumber: Int) = realmDb.userModel().findUser()?.value?.let {
+        realmDb.userModel().increaseUserHints(it, hintsNumber)
+    }
+
     /**
      * This method will be called when this ViewModel is no longer used and will be destroyed.
      *
@@ -185,4 +189,5 @@ class MainViewModel(application: Application?) : AndroidViewModel(application) {
         realmDb.close()
         super.onCleared()
     }
+
 }

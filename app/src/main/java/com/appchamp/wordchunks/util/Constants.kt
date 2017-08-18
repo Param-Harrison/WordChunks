@@ -46,6 +46,7 @@ object Constants {
     const val USER_INITIAL_HINTS = 4
     const val USER_LEVEL_SOLVED_REWARD = 2
     const val USER_DAILY_LEVEL_SOLVED_REWARD = 3
+    const val USER_VIDEO_REWARD = 1
 
     const val FIREBASE_PACKS_CHILD = "packs"
     const val FIREBASE_LEVELS_CHILD = "levels"

@@ -68,31 +68,31 @@ class LevelSolvedDialog : DialogFragment() {
         // Set background transparent for rounded corners in the dialog.
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(false)
         return view
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // btn "Next" or "Go Back" @drawable/shape_dialog_button
+        // Return input text back to activity through the implemented listener
+        val listener: LevelSolvedDialogListener = activity as LevelSolvedDialogListener
+
+        btnNext.setOnClickListener { listener.onNextBtnClickedDialog() }
+
         btnNext.background.colorFilter = nextLevelColor?.let { PorterDuffColorFilter(it, PorterDuff.Mode.SRC_IN) }
         if (isDaily) {
-            btnNext.text = "GO BACK"
+            btnNext.text = "BACK"
             tvHintsEarned.text = "+ 3 HINTS ADDED!"
 
         } else {
             btnNext.text = "NEXT"
             if (isAlreadySolved) {
-                tvHintsEarned.text = "LEVEL WAS\nALREADY SOLVED!"
+                tvHintsEarned.text = "LEVEL WAS ALREADY SOLVED!"
             } else {
                 tvHintsEarned.text = "+ 2 HINTS ADDED!"
             }
         }
-
-        // Return input text back to activity through the implemented listener
-        val listener: LevelSolvedDialogListener = activity as LevelSolvedDialogListener
-
-        btnNext.setOnClickListener { listener.onNextBtnClickedDialog() }
 
         viewKonfetti?.build()
                 ?.addColors(
@@ -106,7 +106,12 @@ class LevelSolvedDialog : DialogFragment() {
                 ?.setTimeToLive(15000L)
                 ?.addShapes(Shape.RECT, Shape.CIRCLE)
                 ?.addSizes(Size(8), Size(8, 5f))
-                ?.setPosition(0f, 700f, 0f, null)
+                ?.setPosition(0f, 1100f, 0f, null)
                 ?.stream(200, 15000L)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+//        viewKonfetti.destroyDrawingCache()
     }
 }

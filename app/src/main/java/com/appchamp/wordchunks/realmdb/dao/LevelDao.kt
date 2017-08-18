@@ -40,7 +40,12 @@ class LevelDao(private val realm: Realm) {
 //                    else -> level.title = "LEVEL " + i.toString()
 //                }
 //            }
+            // todo
+//            it.where(Level::class.java).findAll().map { level ->
+//                level.state = FINISHED
+//            }
         }
+
     }
 
     fun findFirstLevel(): Level? = realm.where(Level::class.java).findFirst()

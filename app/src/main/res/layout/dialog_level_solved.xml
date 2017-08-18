@@ -28,8 +28,8 @@
 
         <nl.dionsegijn.konfetti.KonfettiView
             android:id="@+id/viewKonfetti"
-            android:layout_width="250dp"
-            android:layout_height="308dp" />
+            android:layout_width="280dp"
+            android:layout_height="300dp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="250dp"
+                android:layout_width="280dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="15dp"
@@ -96,7 +96,7 @@
                 android:gravity="center_horizontal"
                 android:text="+ 2 HINTS"
                 android:textColor="#ffffff"
-                android:textSize="18dp" />
+                android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/btnNext"
