@@ -1,7 +1,7 @@
 WordChunks Word Game
 ====================
 
-<img src='https://github.com/jkozh/WordChunks/blob/master/images/logo.jpg' width='400' align="right" hspace="20">
+<img src='https://github.com/jkozh/WordChunks/blob/master/images/mockup-new.jpg'>
 
 *Find hidden words in a grid of chunks.*
 
@@ -14,24 +14,19 @@ WordChunks is a word game that test your knowledge of dictionary and spelling. T
 - Made with love, and with pets.
 - No pay to play, no pay to win.
 
-### Screenshots
-
-<img src='https://github.com/jkozh/WordChunks/blob/master/images/Phone%20Screenshot%201.jpg' width=25% hspace="10"><img src='https://github.com/jkozh/WordChunks/blob/master/images/Phone%20Screenshot%202.jpg' width=25% hspace="10"><img src='https://github.com/jkozh/WordChunks/blob/master/images/Phone%20Screenshot%203.jpg' width=25% hspace="10">
-
-
-<img src='https://github.com/jkozh/WordChunks/blob/master/images/Phone%20Screenshot%204.jpg' width=25% hspace="10"><img src='https://github.com/jkozh/WordChunks/blob/master/images/Phone%20Screenshot%205.jpg' width=25% hspace="10">
-
 
 ### Changelog
 ##### [1.3.beta] - 7/17/2017
 ##### ADDED:
 - New anonymous authentication.
-- Now you can save your game progress by signing up via Google.
+- New store to purchase more hints.
 - New animations.
-- New Changelog section.
 
 ##### CHANGED:
 - Fix phrasing and spelling in Russian translation.
+
+### How my old app version looked like:
+<img src='https://github.com/jkozh/WordChunks/blob/master/images/snaller.jpg'>
 
 ### Some pleasant surprises for me while refactoring Java -> Kotlin
 
