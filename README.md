@@ -14,13 +14,6 @@ WordChunks is a word game that test your knowledge of dictionary and spelling. T
 - Made with love, and with pets.
 - No pay to play, no pay to win.
 
-### Screenshots
-
-<img src='https://github.com/jkozh/WordChunks/blob/master/images/Phone%20Screenshot%201.jpg' width=25% hspace="10"><img src='https://github.com/jkozh/WordChunks/blob/master/images/Phone%20Screenshot%202.jpg' width=25% hspace="10"><img src='https://github.com/jkozh/WordChunks/blob/master/images/Phone%20Screenshot%203.jpg' width=25% hspace="10">
-
-
-<img src='https://github.com/jkozh/WordChunks/blob/master/images/Phone%20Screenshot%204.jpg' width=25% hspace="10"><img src='https://github.com/jkozh/WordChunks/blob/master/images/Phone%20Screenshot%205.jpg' width=25% hspace="10">
-
 
 ### Changelog
 ##### [1.3.beta] - 7/17/2017
@@ -32,6 +25,9 @@ WordChunks is a word game that test your knowledge of dictionary and spelling. T
 
 ##### CHANGED:
 - Fix phrasing and spelling in Russian translation.
+
+### How my old app version looked like:
+<img src='https://github.com/jkozh/WordChunks/blob/master/images/snaller.jpg'>
 
 ### Some pleasant surprises for me while refactoring Java -> Kotlin
 
