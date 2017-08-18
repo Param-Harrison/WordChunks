@@ -19,9 +19,8 @@ WordChunks is a word game that test your knowledge of dictionary and spelling. T
 ##### [1.3.beta] - 7/17/2017
 ##### ADDED:
 - New anonymous authentication.
-- Now you can save your game progress by signing up via Google.
+- New store to purchase more hints.
 - New animations.
-- New Changelog section.
 
 ##### CHANGED:
 - Fix phrasing and spelling in Russian translation.
